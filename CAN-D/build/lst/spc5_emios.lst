@@ -1,0 +1,4315 @@
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 1
+
+
+   1              		.file	"spc5_emios.c"
+   2              		.section	".text","axv"
+   3              	.Ltext0:
+   4              		.cfi_sections	.debug_frame
+   5              		.section	.text.reset_emios0_active_ch_group,"axv",@progbits
+   6              		.align 1
+   7              		.p2align 4,,15
+   8              		.globl reset_emios0_active_ch_group
+   9              		.type	reset_emios0_active_ch_group, @function
+  10              	reset_emios0_active_ch_group:
+  11              	.LFB5:
+  12              		.file 1 "./components/spc560bxx_low_level_drivers_component_rla/lib/src/spc5_emios.c"
+  13              		.loc 1 65 0
+  14              		.cfi_startproc
+  15              		.loc 1 66 0
+  16 0000 4806     		se_li %r6,0
+  17 0002 70E0E000 		e_lis %r7,.LANCHOR0@ha
+  18 0006 54C70000 		e_stw %r6,.LANCHOR0@l(%r7)
+  19 000a 0004     		se_blr
+  20              		.cfi_endproc
+  21              	.LFE5:
+  22              		.size	reset_emios0_active_ch_group, .-reset_emios0_active_ch_group
+  23              		.section	.text.get_emios0_active_ch_group,"axv",@progbits
+  24              		.align 1
+  25              		.p2align 4,,15
+  26              		.globl get_emios0_active_ch_group
+  27              		.type	get_emios0_active_ch_group, @function
+  28              	get_emios0_active_ch_group:
+  29              	.LFB6:
+  30              		.loc 1 69 0
+  31              		.cfi_startproc
+  32              		.loc 1 70 0
+  33 0000 70E0E000 		e_lis %r7,.LANCHOR0@ha
+  34              		.loc 1 71 0
+  35 0004 50670000 		e_lwz %r3,.LANCHOR0@l(%r7)
+  36 0008 0004     		se_blr
+  37              		.cfi_endproc
+  38              	.LFE6:
+  39              		.size	get_emios0_active_ch_group, .-get_emios0_active_ch_group
+  40              		.section	.text.increase_emios0_active_ch_group,"axv",@progbits
+  41              		.align 1
+  42              		.p2align 4,,15
+  43              		.globl increase_emios0_active_ch_group
+  44              		.type	increase_emios0_active_ch_group, @function
+  45              	increase_emios0_active_ch_group:
+  46              	.LFB7:
+  47              		.loc 1 73 0
+  48              		.cfi_startproc
+  49              		.loc 1 74 0
+  50 0000 70C0E000 		e_lis %r6,.LANCHOR0@ha
+  51 0004 50E60000 		e_lwz %r7,.LANCHOR0@l(%r6)
+  52 0008 2007     		se_addi %r7,1
+  53 000a 54E60000 		e_stw %r7,.LANCHOR0@l(%r6)
+  54 000e 0004     		se_blr
+  55              		.cfi_endproc
+  56              	.LFE7:
+  57              		.size	increase_emios0_active_ch_group, .-increase_emios0_active_ch_group
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 2
+
+
+  58              		.section	.text.decrease_emios0_active_ch_group,"axv",@progbits
+  59              		.align 1
+  60              		.p2align 4,,15
+  61              		.globl decrease_emios0_active_ch_group
+  62              		.type	decrease_emios0_active_ch_group, @function
+  63              	decrease_emios0_active_ch_group:
+  64              	.LFB8:
+  65              		.loc 1 77 0
+  66              		.cfi_startproc
+  67              		.loc 1 78 0
+  68 0000 70C0E000 		e_lis %r6,.LANCHOR0@ha
+  69 0004 50E60000 		e_lwz %r7,.LANCHOR0@l(%r6)
+  70 0008 18E784FF 		e_addi %r7,%r7,-1
+  71 000c 54E60000 		e_stw %r7,.LANCHOR0@l(%r6)
+  72 0010 0004     		se_blr
+  73              		.cfi_endproc
+  74              	.LFE8:
+  75              		.size	decrease_emios0_active_ch_group, .-decrease_emios0_active_ch_group
+  76              		.section	.text.pwm_active_emios0_clock,"axv",@progbits
+  77              		.align 1
+  78              		.p2align 4,,15
+  79              		.globl pwm_active_emios0_clock
+  80              		.type	pwm_active_emios0_clock, @function
+  81              	pwm_active_emios0_clock:
+  82              	.LFB9:
+  83              		.loc 1 112 0
+  84              		.cfi_startproc
+  85              	.LVL0:
+  86 0000 182106F0 		e_stwu %r1,-16(%r1)
+  87              	.LCFI0:
+  88              		.cfi_def_cfa_offset 16
+  89 0004 0080     		se_mflr %r0
+  90 0006 1BC10908 		e_stmw %r30,8(%r1)
+  91              		.loc 1 114 0
+  92 000a 70E0E000 		e_lis %r7,.LANCHOR0@ha
+  93              		.loc 1 112 0
+  94 000e D501     		se_stw %r0,20(%r1)
+  95              		.cfi_offset 65, 4
+  96              		.cfi_offset 30, -8
+  97              		.cfi_offset 31, -4
+  98              		.loc 1 114 0
+  99 0010 53C70000 		e_lwz %r30,.LANCHOR0@l(%r7)
+ 100 0014 2A1E     		se_cmpi %r30,1
+ 101 0016 7A120010 		e_beq %cr0,.L8
+ 102              		.loc 1 128 0
+ 103 001a C501     		se_lwz %r0,20(%r1)
+ 104 001c 0090     		se_mtlr %r0
+ 105              		.cfi_remember_state
+ 106              		.cfi_restore 65
+ 107 001e 1BC10808 		e_lmw %r30,8(%r1)
+ 108 0022 20F1     		se_addi %r1,16
+ 109              	.LCFI1:
+ 110              		.cfi_restore 31
+ 111              		.cfi_restore 30
+ 112              		.cfi_def_cfa_offset 0
+ 113 0024 0004     		se_blr
+ 114              	.L8:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 3
+
+
+ 115              	.LCFI2:
+ 116              		.cfi_restore_state
+ 117 0026 013F     		se_mr %r31,%r3
+ 118              		.loc 1 115 0
+ 119 0028 4914     		se_li %r4,17
+ 120 002a 4C83     		se_li %r3,72
+ 121              	.LVL1:
+ 122 002c 78000001 		e_bl SPCSetPeripheralClockMode
+ 123              	.LVL2:
+ 124              		.loc 1 119 0
+ 125 0030 C27F     		se_lwz %r7,8(%r31)
+ 126 0032 4805     		se_li %r5,0
+ 127 0034 C067     		se_lwz %r6,0(%r7)
+ 128 0036 74A6D14A 		e_rlwimi %r6,%r5,26,5,5
+ 129 003a D067     		se_stw %r6,0(%r7)
+ 130              		.loc 1 120 0
+ 131 003c 70C20300 		e_li %r6,4864
+ 132 0040 C27F     		se_lwz %r7,8(%r31)
+ 133 0042 D067     		se_stw %r6,0(%r7)
+ 134              		.loc 1 121 0
+ 135 0044 C26F     		se_lwz %r6,8(%r31)
+ 136 0046 C076     		se_lwz %r7,0(%r6)
+ 137 0048 6457     		se_bseti %r7,5
+ 138 004a D076     		se_stw %r7,0(%r6)
+ 139              		.loc 1 123 0
+ 140 004c C27F     		se_lwz %r7,8(%r31)
+ 141 004e C067     		se_lwz %r6,0(%r7)
+ 142 0050 77C6E0C6 		e_rlwimi %r6,%r30,28,3,3
+ 143 0054 D067     		se_stw %r6,0(%r7)
+ 144              		.loc 1 125 0
+ 145 0056 2C06     		se_bmaski %r6,0
+ 146 0058 C27F     		se_lwz %r7,8(%r31)
+ 147 005a D367     		se_stw %r6,12(%r7)
+ 148              		.loc 1 128 0
+ 149 005c C501     		se_lwz %r0,20(%r1)
+ 150 005e 0090     		se_mtlr %r0
+ 151              		.cfi_restore 65
+ 152 0060 1BC10808 		e_lmw %r30,8(%r1)
+ 153              	.LVL3:
+ 154 0064 20F1     		se_addi %r1,16
+ 155              	.LCFI3:
+ 156              		.cfi_restore 30
+ 157              		.cfi_restore 31
+ 158              		.cfi_def_cfa_offset 0
+ 159 0066 0004     		se_blr
+ 160              		.cfi_endproc
+ 161              	.LFE9:
+ 162              		.size	pwm_active_emios0_clock, .-pwm_active_emios0_clock
+ 163              		.section	.text.pwm_deactive_emios0_clock,"axv",@progbits
+ 164              		.align 1
+ 165              		.p2align 4,,15
+ 166              		.globl pwm_deactive_emios0_clock
+ 167              		.type	pwm_deactive_emios0_clock, @function
+ 168              	pwm_deactive_emios0_clock:
+ 169              	.LFB10:
+ 170              		.loc 1 130 0
+ 171              		.cfi_startproc
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 4
+
+
+ 172              	.LVL4:
+ 173              		.loc 1 132 0
+ 174 0000 70E0E000 		e_lis %r7,.LANCHOR0@ha
+ 175 0004 50E70000 		e_lwz %r7,.LANCHOR0@l(%r7)
+ 176 0008 2A07     		se_cmpi %r7,0
+ 177 000a 7A02000E 		e_bne %cr0,.L9
+ 178              		.loc 1 133 0
+ 179 000e C273     		se_lwz %r7,8(%r3)
+ 180 0010 C377     		se_lwz %r7,12(%r7)
+ 181 0012 2A07     		se_cmpi %r7,0
+ 182 0014 7A120006 		e_beq %cr0,.L11
+ 183              	.L9:
+ 184 0018 0004     		se_blr
+ 185              	.L11:
+ 186              		.loc 1 134 0
+ 187 001a 4C83     		se_li %r3,72
+ 188              	.LVL5:
+ 189 001c 4804     		se_li %r4,0
+ 190              		.loc 1 138 0
+ 191              		.loc 1 134 0
+ 192 001e 78000000 		e_b SPCSetPeripheralClockMode
+ 193              	.LVL6:
+ 194              		.cfi_endproc
+ 195              	.LFE10:
+ 196              		.size	pwm_deactive_emios0_clock, .-pwm_deactive_emios0_clock
+ 197              		.section	.text.reset_emios1_active_ch_group,"axv",@progbits
+ 198              		.align 1
+ 199              		.p2align 4,,15
+ 200              		.globl reset_emios1_active_ch_group
+ 201              		.type	reset_emios1_active_ch_group, @function
+ 202              	reset_emios1_active_ch_group:
+ 203              	.LFB11:
+ 204              		.loc 1 152 0
+ 205              		.cfi_startproc
+ 206              		.loc 1 153 0
+ 207 0000 4806     		se_li %r6,0
+ 208 0002 70E0E000 		e_lis %r7,.LANCHOR1@ha
+ 209 0006 54C70000 		e_stw %r6,.LANCHOR1@l(%r7)
+ 210 000a 0004     		se_blr
+ 211              		.cfi_endproc
+ 212              	.LFE11:
+ 213              		.size	reset_emios1_active_ch_group, .-reset_emios1_active_ch_group
+ 214              		.section	.text.get_emios1_active_ch_group,"axv",@progbits
+ 215              		.align 1
+ 216              		.p2align 4,,15
+ 217              		.globl get_emios1_active_ch_group
+ 218              		.type	get_emios1_active_ch_group, @function
+ 219              	get_emios1_active_ch_group:
+ 220              	.LFB12:
+ 221              		.loc 1 156 0
+ 222              		.cfi_startproc
+ 223              		.loc 1 157 0
+ 224 0000 70E0E000 		e_lis %r7,.LANCHOR1@ha
+ 225              		.loc 1 158 0
+ 226 0004 50670000 		e_lwz %r3,.LANCHOR1@l(%r7)
+ 227 0008 0004     		se_blr
+ 228              		.cfi_endproc
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 5
+
+
+ 229              	.LFE12:
+ 230              		.size	get_emios1_active_ch_group, .-get_emios1_active_ch_group
+ 231              		.section	.text.increase_emios1_active_ch_group,"axv",@progbits
+ 232              		.align 1
+ 233              		.p2align 4,,15
+ 234              		.globl increase_emios1_active_ch_group
+ 235              		.type	increase_emios1_active_ch_group, @function
+ 236              	increase_emios1_active_ch_group:
+ 237              	.LFB13:
+ 238              		.loc 1 160 0
+ 239              		.cfi_startproc
+ 240              		.loc 1 161 0
+ 241 0000 70C0E000 		e_lis %r6,.LANCHOR1@ha
+ 242 0004 50E60000 		e_lwz %r7,.LANCHOR1@l(%r6)
+ 243 0008 2007     		se_addi %r7,1
+ 244 000a 54E60000 		e_stw %r7,.LANCHOR1@l(%r6)
+ 245 000e 0004     		se_blr
+ 246              		.cfi_endproc
+ 247              	.LFE13:
+ 248              		.size	increase_emios1_active_ch_group, .-increase_emios1_active_ch_group
+ 249              		.section	.text.decrease_emios1_active_ch_group,"axv",@progbits
+ 250              		.align 1
+ 251              		.p2align 4,,15
+ 252              		.globl decrease_emios1_active_ch_group
+ 253              		.type	decrease_emios1_active_ch_group, @function
+ 254              	decrease_emios1_active_ch_group:
+ 255              	.LFB14:
+ 256              		.loc 1 164 0
+ 257              		.cfi_startproc
+ 258              		.loc 1 165 0
+ 259 0000 70C0E000 		e_lis %r6,.LANCHOR1@ha
+ 260 0004 50E60000 		e_lwz %r7,.LANCHOR1@l(%r6)
+ 261 0008 18E784FF 		e_addi %r7,%r7,-1
+ 262 000c 54E60000 		e_stw %r7,.LANCHOR1@l(%r6)
+ 263 0010 0004     		se_blr
+ 264              		.cfi_endproc
+ 265              	.LFE14:
+ 266              		.size	decrease_emios1_active_ch_group, .-decrease_emios1_active_ch_group
+ 267              		.section	.text.pwm_active_emios1_clock,"axv",@progbits
+ 268              		.align 1
+ 269              		.p2align 4,,15
+ 270              		.globl pwm_active_emios1_clock
+ 271              		.type	pwm_active_emios1_clock, @function
+ 272              	pwm_active_emios1_clock:
+ 273              	.LFB15:
+ 274              		.loc 1 199 0
+ 275              		.cfi_startproc
+ 276              	.LVL7:
+ 277 0000 182106F0 		e_stwu %r1,-16(%r1)
+ 278              	.LCFI4:
+ 279              		.cfi_def_cfa_offset 16
+ 280 0004 0080     		se_mflr %r0
+ 281 0006 1BC10908 		e_stmw %r30,8(%r1)
+ 282              		.loc 1 201 0
+ 283 000a 70E0E000 		e_lis %r7,.LANCHOR1@ha
+ 284              		.loc 1 199 0
+ 285 000e D501     		se_stw %r0,20(%r1)
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 6
+
+
+ 286              		.cfi_offset 65, 4
+ 287              		.cfi_offset 30, -8
+ 288              		.cfi_offset 31, -4
+ 289              		.loc 1 201 0
+ 290 0010 53C70000 		e_lwz %r30,.LANCHOR1@l(%r7)
+ 291 0014 2A1E     		se_cmpi %r30,1
+ 292 0016 7A120010 		e_beq %cr0,.L18
+ 293              		.loc 1 215 0
+ 294 001a C501     		se_lwz %r0,20(%r1)
+ 295 001c 0090     		se_mtlr %r0
+ 296              		.cfi_remember_state
+ 297              		.cfi_restore 65
+ 298 001e 1BC10808 		e_lmw %r30,8(%r1)
+ 299 0022 20F1     		se_addi %r1,16
+ 300              	.LCFI5:
+ 301              		.cfi_restore 31
+ 302              		.cfi_restore 30
+ 303              		.cfi_def_cfa_offset 0
+ 304 0024 0004     		se_blr
+ 305              	.L18:
+ 306              	.LCFI6:
+ 307              		.cfi_restore_state
+ 308 0026 013F     		se_mr %r31,%r3
+ 309              		.loc 1 202 0
+ 310 0028 4914     		se_li %r4,17
+ 311 002a 4C93     		se_li %r3,73
+ 312              	.LVL8:
+ 313 002c 78000001 		e_bl SPCSetPeripheralClockMode
+ 314              	.LVL9:
+ 315              		.loc 1 206 0
+ 316 0030 C27F     		se_lwz %r7,8(%r31)
+ 317 0032 4805     		se_li %r5,0
+ 318 0034 C067     		se_lwz %r6,0(%r7)
+ 319 0036 74A6D14A 		e_rlwimi %r6,%r5,26,5,5
+ 320 003a D067     		se_stw %r6,0(%r7)
+ 321              		.loc 1 207 0
+ 322 003c 70C20300 		e_li %r6,4864
+ 323 0040 C27F     		se_lwz %r7,8(%r31)
+ 324 0042 D067     		se_stw %r6,0(%r7)
+ 325              		.loc 1 208 0
+ 326 0044 C26F     		se_lwz %r6,8(%r31)
+ 327 0046 C076     		se_lwz %r7,0(%r6)
+ 328 0048 6457     		se_bseti %r7,5
+ 329 004a D076     		se_stw %r7,0(%r6)
+ 330              		.loc 1 210 0
+ 331 004c C27F     		se_lwz %r7,8(%r31)
+ 332 004e C067     		se_lwz %r6,0(%r7)
+ 333 0050 77C6E0C6 		e_rlwimi %r6,%r30,28,3,3
+ 334 0054 D067     		se_stw %r6,0(%r7)
+ 335              		.loc 1 212 0
+ 336 0056 2C06     		se_bmaski %r6,0
+ 337 0058 C27F     		se_lwz %r7,8(%r31)
+ 338 005a D367     		se_stw %r6,12(%r7)
+ 339              		.loc 1 215 0
+ 340 005c C501     		se_lwz %r0,20(%r1)
+ 341 005e 0090     		se_mtlr %r0
+ 342              		.cfi_restore 65
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 7
+
+
+ 343 0060 1BC10808 		e_lmw %r30,8(%r1)
+ 344              	.LVL10:
+ 345 0064 20F1     		se_addi %r1,16
+ 346              	.LCFI7:
+ 347              		.cfi_restore 30
+ 348              		.cfi_restore 31
+ 349              		.cfi_def_cfa_offset 0
+ 350 0066 0004     		se_blr
+ 351              		.cfi_endproc
+ 352              	.LFE15:
+ 353              		.size	pwm_active_emios1_clock, .-pwm_active_emios1_clock
+ 354              		.section	.text.pwm_deactive_emios1_clock,"axv",@progbits
+ 355              		.align 1
+ 356              		.p2align 4,,15
+ 357              		.globl pwm_deactive_emios1_clock
+ 358              		.type	pwm_deactive_emios1_clock, @function
+ 359              	pwm_deactive_emios1_clock:
+ 360              	.LFB16:
+ 361              		.loc 1 217 0
+ 362              		.cfi_startproc
+ 363              	.LVL11:
+ 364              		.loc 1 219 0
+ 365 0000 70E0E000 		e_lis %r7,.LANCHOR1@ha
+ 366 0004 50E70000 		e_lwz %r7,.LANCHOR1@l(%r7)
+ 367 0008 2A07     		se_cmpi %r7,0
+ 368 000a 7A02000E 		e_bne %cr0,.L19
+ 369              		.loc 1 220 0
+ 370 000e C273     		se_lwz %r7,8(%r3)
+ 371 0010 C377     		se_lwz %r7,12(%r7)
+ 372 0012 2A07     		se_cmpi %r7,0
+ 373 0014 7A120006 		e_beq %cr0,.L21
+ 374              	.L19:
+ 375 0018 0004     		se_blr
+ 376              	.L21:
+ 377              		.loc 1 221 0
+ 378 001a 4C93     		se_li %r3,73
+ 379              	.LVL12:
+ 380 001c 4804     		se_li %r4,0
+ 381              		.loc 1 225 0
+ 382              		.loc 1 221 0
+ 383 001e 78000000 		e_b SPCSetPeripheralClockMode
+ 384              	.LVL13:
+ 385              		.cfi_endproc
+ 386              	.LFE16:
+ 387              		.size	pwm_deactive_emios1_clock, .-pwm_deactive_emios1_clock
+ 388              		.section	.text.vector152,"axv",@progbits
+ 389              		.align 1
+ 390              		.p2align 4,,15
+ 391              		.globl vector152
+ 392              		.type	vector152, @function
+ 393              	vector152:
+ 394              	.LFB17:
+ 395              		.loc 1 724 0
+ 396              		.cfi_startproc
+ 397              	.LVL14:
+ 398              	.LBB4:
+ 399              	.LBB5:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 8
+
+
+ 400              		.loc 1 61 0
+ 401 0000 70F8E3FA 		e_lis %r7,0xc3fa
+ 402 0004 C177     		se_lwz %r7,4(%r7)
+ 403              	.LBE5:
+ 404              	.LBE4:
+ 405              		.loc 1 743 0
+ 406 0006 6687     		se_btsti %r7,8
+ 407 0008 7A020006 		e_bne %cr0,.L24
+ 408 000c 0004     		se_blr
+ 409              	.L24:
+ 410              		.loc 1 745 0
+ 411 000e 7060E000 		e_lis %r3,PWMD1@ha
+ 412 0012 4974     		se_li %r4,23
+ 413 0014 1C630000 		e_la %r3,PWMD1@l(%r3)
+ 414              		.loc 1 752 0
+ 415              		.loc 1 745 0
+ 416 0018 78000000 		e_b pwm_lld_serve_period_interrupt
+ 417              	.LVL15:
+ 418              		.cfi_endproc
+ 419              	.LFE17:
+ 420              		.size	vector152, .-vector152
+ 421              		.section	.bss.emios1_active_ch_group,"aw",@nobits
+ 422              		.align 2
+ 423              		.set	.LANCHOR1,. + 0
+ 424              		.type	emios1_active_ch_group, @object
+ 425              		.size	emios1_active_ch_group, 4
+ 426              	emios1_active_ch_group:
+ 427 0000 00000000 		.zero	4
+ 428              		.section	.bss.emios0_active_ch_group,"aw",@nobits
+ 429              		.align 2
+ 430              		.set	.LANCHOR0,. + 0
+ 431              		.type	emios0_active_ch_group, @object
+ 432              		.size	emios0_active_ch_group, 4
+ 433              	emios0_active_ch_group:
+ 434 0000 00000000 		.zero	4
+ 435              		.section	".text","axv"
+ 436              	.Letext0:
+ 437              		.file 2 "c:\\spc5studio\\eclipse\\plugins\\com.st.tools.spc5.tools.gnu.gcc.ppcvle.win32_4.9.4.2018
+ 438              		.file 3 "c:\\spc5studio\\eclipse\\plugins\\com.st.tools.spc5.tools.gnu.gcc.ppcvle.win32_4.9.4.2018
+ 439              		.file 4 "./components/spc560bxx_platform_component_rla/lib/include/typedefs.h"
+ 440              		.file 5 "./components/spc560bxx_platform_component_rla/lib/include/xpc560b.h"
+ 441              		.file 6 "./components/spc560bxx_low_level_drivers_component_rla/lib/include/pwm_lld.h"
+ 442              		.file 7 "./components/spc560bxx_clock_component_rla/lib/include/clock.h"
+ 443              		.section	.debug_info,"",@progbits
+ 444              	.Ldebug_info0:
+ 445 0000 00000FD4 		.4byte	0xfd4
+ 446 0004 0002     		.2byte	0x2
+ 447 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 448 000a 04       		.byte	0x4
+ 449 000b 01       		.uleb128 0x1
+ 450 000c 00000000 		.4byte	.LASF128
+ 451 0010 01       		.byte	0x1
+ 452 0011 00000000 		.4byte	.LASF129
+ 453 0015 00000000 		.4byte	.LASF130
+ 454 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 455 001d 00000000 		.4byte	0
+ 456 0021 00000000 		.4byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 9
+
+
+ 457 0025 00000000 		.4byte	.Ldebug_line0
+ 458 0029 02       		.uleb128 0x2
+ 459 002a 01       		.byte	0x1
+ 460 002b 06       		.byte	0x6
+ 461 002c 00000000 		.4byte	.LASF0
+ 462 0030 03       		.uleb128 0x3
+ 463 0031 00000000 		.4byte	.LASF5
+ 464 0035 02       		.byte	0x2
+ 465 0036 1D       		.byte	0x1d
+ 466 0037 0000003B 		.4byte	0x3b
+ 467 003b 02       		.uleb128 0x2
+ 468 003c 01       		.byte	0x1
+ 469 003d 08       		.byte	0x8
+ 470 003e 00000000 		.4byte	.LASF1
+ 471 0042 02       		.uleb128 0x2
+ 472 0043 02       		.byte	0x2
+ 473 0044 05       		.byte	0x5
+ 474 0045 00000000 		.4byte	.LASF2
+ 475 0049 02       		.uleb128 0x2
+ 476 004a 02       		.byte	0x2
+ 477 004b 07       		.byte	0x7
+ 478 004c 00000000 		.4byte	.LASF3
+ 479 0050 02       		.uleb128 0x2
+ 480 0051 04       		.byte	0x4
+ 481 0052 05       		.byte	0x5
+ 482 0053 00000000 		.4byte	.LASF4
+ 483 0057 03       		.uleb128 0x3
+ 484 0058 00000000 		.4byte	.LASF6
+ 485 005c 02       		.byte	0x2
+ 486 005d 41       		.byte	0x41
+ 487 005e 00000062 		.4byte	0x62
+ 488 0062 02       		.uleb128 0x2
+ 489 0063 04       		.byte	0x4
+ 490 0064 07       		.byte	0x7
+ 491 0065 00000000 		.4byte	.LASF7
+ 492 0069 02       		.uleb128 0x2
+ 493 006a 08       		.byte	0x8
+ 494 006b 05       		.byte	0x5
+ 495 006c 00000000 		.4byte	.LASF8
+ 496 0070 02       		.uleb128 0x2
+ 497 0071 08       		.byte	0x8
+ 498 0072 07       		.byte	0x7
+ 499 0073 00000000 		.4byte	.LASF9
+ 500 0077 04       		.uleb128 0x4
+ 501 0078 04       		.byte	0x4
+ 502 0079 05       		.byte	0x5
+ 503 007a 696E7400 		.string	"int"
+ 504 007e 02       		.uleb128 0x2
+ 505 007f 04       		.byte	0x4
+ 506 0080 07       		.byte	0x7
+ 507 0081 00000000 		.4byte	.LASF10
+ 508 0085 03       		.uleb128 0x3
+ 509 0086 00000000 		.4byte	.LASF11
+ 510 008a 03       		.byte	0x3
+ 511 008b 15       		.byte	0x15
+ 512 008c 00000030 		.4byte	0x30
+ 513 0090 03       		.uleb128 0x3
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 10
+
+
+ 514 0091 00000000 		.4byte	.LASF12
+ 515 0095 03       		.byte	0x3
+ 516 0096 2D       		.byte	0x2d
+ 517 0097 00000057 		.4byte	0x57
+ 518 009b 03       		.uleb128 0x3
+ 519 009c 00000000 		.4byte	.LASF13
+ 520 00a0 04       		.byte	0x4
+ 521 00a1 25       		.byte	0x25
+ 522 00a2 000000A6 		.4byte	0xa6
+ 523 00a6 05       		.uleb128 0x5
+ 524 00a7 00000090 		.4byte	0x90
+ 525 00ab 02       		.uleb128 0x2
+ 526 00ac 04       		.byte	0x4
+ 527 00ad 07       		.byte	0x7
+ 528 00ae 00000000 		.4byte	.LASF14
+ 529 00b2 06       		.uleb128 0x6
+ 530 00b3 04       		.byte	0x4
+ 531 00b4 05       		.byte	0x5
+ 532 00b5 148E     		.2byte	0x148e
+ 533 00b7 000000CE 		.4byte	0xce
+ 534 00bb 07       		.uleb128 0x7
+ 535 00bc 00000000 		.4byte	.LASF15
+ 536 00c0 05       		.byte	0x5
+ 537 00c1 1490     		.2byte	0x1490
+ 538 00c3 0000009B 		.4byte	0x9b
+ 539 00c7 04       		.byte	0x4
+ 540 00c8 10       		.byte	0x10
+ 541 00c9 10       		.byte	0x10
+ 542 00ca 02       		.byte	0x2
+ 543 00cb 23       		.byte	0x23
+ 544 00cc 00       		.uleb128 0
+ 545 00cd 00       		.byte	0
+ 546 00ce 08       		.uleb128 0x8
+ 547 00cf 04       		.byte	0x4
+ 548 00d0 05       		.byte	0x5
+ 549 00d1 148C     		.2byte	0x148c
+ 550 00d3 000000EC 		.4byte	0xec
+ 551 00d7 09       		.uleb128 0x9
+ 552 00d8 5200     		.string	"R"
+ 553 00da 05       		.byte	0x5
+ 554 00db 148D     		.2byte	0x148d
+ 555 00dd 0000009B 		.4byte	0x9b
+ 556 00e1 09       		.uleb128 0x9
+ 557 00e2 4200     		.string	"B"
+ 558 00e4 05       		.byte	0x5
+ 559 00e5 1491     		.2byte	0x1491
+ 560 00e7 000000B2 		.4byte	0xb2
+ 561 00eb 00       		.byte	0
+ 562 00ec 06       		.uleb128 0x6
+ 563 00ed 04       		.byte	0x4
+ 564 00ee 05       		.byte	0x5
+ 565 00ef 1496     		.2byte	0x1496
+ 566 00f1 00000108 		.4byte	0x108
+ 567 00f5 07       		.uleb128 0x7
+ 568 00f6 00000000 		.4byte	.LASF16
+ 569 00fa 05       		.byte	0x5
+ 570 00fb 1498     		.2byte	0x1498
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 11
+
+
+ 571 00fd 0000009B 		.4byte	0x9b
+ 572 0101 04       		.byte	0x4
+ 573 0102 10       		.byte	0x10
+ 574 0103 10       		.byte	0x10
+ 575 0104 02       		.byte	0x2
+ 576 0105 23       		.byte	0x23
+ 577 0106 00       		.uleb128 0
+ 578 0107 00       		.byte	0
+ 579 0108 08       		.uleb128 0x8
+ 580 0109 04       		.byte	0x4
+ 581 010a 05       		.byte	0x5
+ 582 010b 1494     		.2byte	0x1494
+ 583 010d 00000126 		.4byte	0x126
+ 584 0111 09       		.uleb128 0x9
+ 585 0112 5200     		.string	"R"
+ 586 0114 05       		.byte	0x5
+ 587 0115 1495     		.2byte	0x1495
+ 588 0117 0000009B 		.4byte	0x9b
+ 589 011b 09       		.uleb128 0x9
+ 590 011c 4200     		.string	"B"
+ 591 011e 05       		.byte	0x5
+ 592 011f 1499     		.2byte	0x1499
+ 593 0121 000000EC 		.4byte	0xec
+ 594 0125 00       		.byte	0
+ 595 0126 06       		.uleb128 0x6
+ 596 0127 04       		.byte	0x4
+ 597 0128 05       		.byte	0x5
+ 598 0129 149E     		.2byte	0x149e
+ 599 012b 00000142 		.4byte	0x142
+ 600 012f 07       		.uleb128 0x7
+ 601 0130 00000000 		.4byte	.LASF17
+ 602 0134 05       		.byte	0x5
+ 603 0135 14A0     		.2byte	0x14a0
+ 604 0137 0000009B 		.4byte	0x9b
+ 605 013b 04       		.byte	0x4
+ 606 013c 10       		.byte	0x10
+ 607 013d 10       		.byte	0x10
+ 608 013e 02       		.byte	0x2
+ 609 013f 23       		.byte	0x23
+ 610 0140 00       		.uleb128 0
+ 611 0141 00       		.byte	0
+ 612 0142 08       		.uleb128 0x8
+ 613 0143 04       		.byte	0x4
+ 614 0144 05       		.byte	0x5
+ 615 0145 149C     		.2byte	0x149c
+ 616 0147 00000160 		.4byte	0x160
+ 617 014b 09       		.uleb128 0x9
+ 618 014c 5200     		.string	"R"
+ 619 014e 05       		.byte	0x5
+ 620 014f 149D     		.2byte	0x149d
+ 621 0151 0000009B 		.4byte	0x9b
+ 622 0155 09       		.uleb128 0x9
+ 623 0156 4200     		.string	"B"
+ 624 0158 05       		.byte	0x5
+ 625 0159 14A1     		.2byte	0x14a1
+ 626 015b 00000126 		.4byte	0x126
+ 627 015f 00       		.byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 12
+
+
+ 628 0160 06       		.uleb128 0x6
+ 629 0161 04       		.byte	0x4
+ 630 0162 05       		.byte	0x5
+ 631 0163 14A6     		.2byte	0x14a6
+ 632 0165 00000253 		.4byte	0x253
+ 633 0169 07       		.uleb128 0x7
+ 634 016a 00000000 		.4byte	.LASF18
+ 635 016e 05       		.byte	0x5
+ 636 016f 14A7     		.2byte	0x14a7
+ 637 0171 0000009B 		.4byte	0x9b
+ 638 0175 04       		.byte	0x4
+ 639 0176 01       		.byte	0x1
+ 640 0177 00       		.byte	0
+ 641 0178 02       		.byte	0x2
+ 642 0179 23       		.byte	0x23
+ 643 017a 00       		.uleb128 0
+ 644 017b 07       		.uleb128 0x7
+ 645 017c 00000000 		.4byte	.LASF19
+ 646 0180 05       		.byte	0x5
+ 647 0181 14A9     		.2byte	0x14a9
+ 648 0183 0000009B 		.4byte	0x9b
+ 649 0187 04       		.byte	0x4
+ 650 0188 02       		.byte	0x2
+ 651 0189 04       		.byte	0x4
+ 652 018a 02       		.byte	0x2
+ 653 018b 23       		.byte	0x23
+ 654 018c 00       		.uleb128 0
+ 655 018d 07       		.uleb128 0x7
+ 656 018e 00000000 		.4byte	.LASF20
+ 657 0192 05       		.byte	0x5
+ 658 0193 14AA     		.2byte	0x14aa
+ 659 0195 0000009B 		.4byte	0x9b
+ 660 0199 04       		.byte	0x4
+ 661 019a 01       		.byte	0x1
+ 662 019b 06       		.byte	0x6
+ 663 019c 02       		.byte	0x2
+ 664 019d 23       		.byte	0x23
+ 665 019e 00       		.uleb128 0
+ 666 019f 0A       		.uleb128 0xa
+ 667 01a0 444D4100 		.string	"DMA"
+ 668 01a4 05       		.byte	0x5
+ 669 01a5 14AB     		.2byte	0x14ab
+ 670 01a7 0000009B 		.4byte	0x9b
+ 671 01ab 04       		.byte	0x4
+ 672 01ac 01       		.byte	0x1
+ 673 01ad 07       		.byte	0x7
+ 674 01ae 02       		.byte	0x2
+ 675 01af 23       		.byte	0x23
+ 676 01b0 00       		.uleb128 0
+ 677 01b1 0A       		.uleb128 0xa
+ 678 01b2 494600   		.string	"IF"
+ 679 01b5 05       		.byte	0x5
+ 680 01b6 14AD     		.2byte	0x14ad
+ 681 01b8 0000009B 		.4byte	0x9b
+ 682 01bc 04       		.byte	0x4
+ 683 01bd 04       		.byte	0x4
+ 684 01be 09       		.byte	0x9
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 13
+
+
+ 685 01bf 02       		.byte	0x2
+ 686 01c0 23       		.byte	0x23
+ 687 01c1 00       		.uleb128 0
+ 688 01c2 0A       		.uleb128 0xa
+ 689 01c3 46434B00 		.string	"FCK"
+ 690 01c7 05       		.byte	0x5
+ 691 01c8 14AE     		.2byte	0x14ae
+ 692 01ca 0000009B 		.4byte	0x9b
+ 693 01ce 04       		.byte	0x4
+ 694 01cf 01       		.byte	0x1
+ 695 01d0 0D       		.byte	0xd
+ 696 01d1 02       		.byte	0x2
+ 697 01d2 23       		.byte	0x23
+ 698 01d3 00       		.uleb128 0
+ 699 01d4 0A       		.uleb128 0xa
+ 700 01d5 46454E00 		.string	"FEN"
+ 701 01d9 05       		.byte	0x5
+ 702 01da 14AF     		.2byte	0x14af
+ 703 01dc 0000009B 		.4byte	0x9b
+ 704 01e0 04       		.byte	0x4
+ 705 01e1 01       		.byte	0x1
+ 706 01e2 0E       		.byte	0xe
+ 707 01e3 02       		.byte	0x2
+ 708 01e4 23       		.byte	0x23
+ 709 01e5 00       		.uleb128 0
+ 710 01e6 07       		.uleb128 0x7
+ 711 01e7 00000000 		.4byte	.LASF21
+ 712 01eb 05       		.byte	0x5
+ 713 01ec 14B1     		.2byte	0x14b1
+ 714 01ee 0000009B 		.4byte	0x9b
+ 715 01f2 04       		.byte	0x4
+ 716 01f3 01       		.byte	0x1
+ 717 01f4 12       		.byte	0x12
+ 718 01f5 02       		.byte	0x2
+ 719 01f6 23       		.byte	0x23
+ 720 01f7 00       		.uleb128 0
+ 721 01f8 07       		.uleb128 0x7
+ 722 01f9 00000000 		.4byte	.LASF22
+ 723 01fd 05       		.byte	0x5
+ 724 01fe 14B2     		.2byte	0x14b2
+ 725 0200 0000009B 		.4byte	0x9b
+ 726 0204 04       		.byte	0x4
+ 727 0205 01       		.byte	0x1
+ 728 0206 13       		.byte	0x13
+ 729 0207 02       		.byte	0x2
+ 730 0208 23       		.byte	0x23
+ 731 0209 00       		.uleb128 0
+ 732 020a 0A       		.uleb128 0xa
+ 733 020b 42534C00 		.string	"BSL"
+ 734 020f 05       		.byte	0x5
+ 735 0210 14B4     		.2byte	0x14b4
+ 736 0212 0000009B 		.4byte	0x9b
+ 737 0216 04       		.byte	0x4
+ 738 0217 02       		.byte	0x2
+ 739 0218 15       		.byte	0x15
+ 740 0219 02       		.byte	0x2
+ 741 021a 23       		.byte	0x23
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 14
+
+
+ 742 021b 00       		.uleb128 0
+ 743 021c 07       		.uleb128 0x7
+ 744 021d 00000000 		.4byte	.LASF23
+ 745 0221 05       		.byte	0x5
+ 746 0222 14B5     		.2byte	0x14b5
+ 747 0224 0000009B 		.4byte	0x9b
+ 748 0228 04       		.byte	0x4
+ 749 0229 01       		.byte	0x1
+ 750 022a 17       		.byte	0x17
+ 751 022b 02       		.byte	0x2
+ 752 022c 23       		.byte	0x23
+ 753 022d 00       		.uleb128 0
+ 754 022e 07       		.uleb128 0x7
+ 755 022f 00000000 		.4byte	.LASF24
+ 756 0233 05       		.byte	0x5
+ 757 0234 14B6     		.2byte	0x14b6
+ 758 0236 0000009B 		.4byte	0x9b
+ 759 023a 04       		.byte	0x4
+ 760 023b 01       		.byte	0x1
+ 761 023c 18       		.byte	0x18
+ 762 023d 02       		.byte	0x2
+ 763 023e 23       		.byte	0x23
+ 764 023f 00       		.uleb128 0
+ 765 0240 07       		.uleb128 0x7
+ 766 0241 00000000 		.4byte	.LASF25
+ 767 0245 05       		.byte	0x5
+ 768 0246 14B7     		.2byte	0x14b7
+ 769 0248 0000009B 		.4byte	0x9b
+ 770 024c 04       		.byte	0x4
+ 771 024d 07       		.byte	0x7
+ 772 024e 19       		.byte	0x19
+ 773 024f 02       		.byte	0x2
+ 774 0250 23       		.byte	0x23
+ 775 0251 00       		.uleb128 0
+ 776 0252 00       		.byte	0
+ 777 0253 08       		.uleb128 0x8
+ 778 0254 04       		.byte	0x4
+ 779 0255 05       		.byte	0x5
+ 780 0256 14A4     		.2byte	0x14a4
+ 781 0258 00000271 		.4byte	0x271
+ 782 025c 09       		.uleb128 0x9
+ 783 025d 5200     		.string	"R"
+ 784 025f 05       		.byte	0x5
+ 785 0260 14A5     		.2byte	0x14a5
+ 786 0262 0000009B 		.4byte	0x9b
+ 787 0266 09       		.uleb128 0x9
+ 788 0267 4200     		.string	"B"
+ 789 0269 05       		.byte	0x5
+ 790 026a 14B8     		.2byte	0x14b8
+ 791 026c 00000160 		.4byte	0x160
+ 792 0270 00       		.byte	0
+ 793 0271 06       		.uleb128 0x6
+ 794 0272 04       		.byte	0x4
+ 795 0273 05       		.byte	0x5
+ 796 0274 14BD     		.2byte	0x14bd
+ 797 0276 000002D5 		.4byte	0x2d5
+ 798 027a 0A       		.uleb128 0xa
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 15
+
+
+ 799 027b 4F565200 		.string	"OVR"
+ 800 027f 05       		.byte	0x5
+ 801 0280 14BE     		.2byte	0x14be
+ 802 0282 0000009B 		.4byte	0x9b
+ 803 0286 04       		.byte	0x4
+ 804 0287 01       		.byte	0x1
+ 805 0288 00       		.byte	0
+ 806 0289 02       		.byte	0x2
+ 807 028a 23       		.byte	0x23
+ 808 028b 00       		.uleb128 0
+ 809 028c 07       		.uleb128 0x7
+ 810 028d 00000000 		.4byte	.LASF26
+ 811 0291 05       		.byte	0x5
+ 812 0292 14C0     		.2byte	0x14c0
+ 813 0294 0000009B 		.4byte	0x9b
+ 814 0298 04       		.byte	0x4
+ 815 0299 01       		.byte	0x1
+ 816 029a 10       		.byte	0x10
+ 817 029b 02       		.byte	0x2
+ 818 029c 23       		.byte	0x23
+ 819 029d 00       		.uleb128 0
+ 820 029e 07       		.uleb128 0x7
+ 821 029f 00000000 		.4byte	.LASF27
+ 822 02a3 05       		.byte	0x5
+ 823 02a4 14C2     		.2byte	0x14c2
+ 824 02a6 0000009B 		.4byte	0x9b
+ 825 02aa 04       		.byte	0x4
+ 826 02ab 01       		.byte	0x1
+ 827 02ac 1D       		.byte	0x1d
+ 828 02ad 02       		.byte	0x2
+ 829 02ae 23       		.byte	0x23
+ 830 02af 00       		.uleb128 0
+ 831 02b0 07       		.uleb128 0x7
+ 832 02b1 00000000 		.4byte	.LASF28
+ 833 02b5 05       		.byte	0x5
+ 834 02b6 14C3     		.2byte	0x14c3
+ 835 02b8 0000009B 		.4byte	0x9b
+ 836 02bc 04       		.byte	0x4
+ 837 02bd 01       		.byte	0x1
+ 838 02be 1E       		.byte	0x1e
+ 839 02bf 02       		.byte	0x2
+ 840 02c0 23       		.byte	0x23
+ 841 02c1 00       		.uleb128 0
+ 842 02c2 07       		.uleb128 0x7
+ 843 02c3 00000000 		.4byte	.LASF29
+ 844 02c7 05       		.byte	0x5
+ 845 02c8 14C4     		.2byte	0x14c4
+ 846 02ca 0000009B 		.4byte	0x9b
+ 847 02ce 04       		.byte	0x4
+ 848 02cf 01       		.byte	0x1
+ 849 02d0 1F       		.byte	0x1f
+ 850 02d1 02       		.byte	0x2
+ 851 02d2 23       		.byte	0x23
+ 852 02d3 00       		.uleb128 0
+ 853 02d4 00       		.byte	0
+ 854 02d5 08       		.uleb128 0x8
+ 855 02d6 04       		.byte	0x4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 16
+
+
+ 856 02d7 05       		.byte	0x5
+ 857 02d8 14BB     		.2byte	0x14bb
+ 858 02da 000002F3 		.4byte	0x2f3
+ 859 02de 09       		.uleb128 0x9
+ 860 02df 5200     		.string	"R"
+ 861 02e1 05       		.byte	0x5
+ 862 02e2 14BC     		.2byte	0x14bc
+ 863 02e4 0000009B 		.4byte	0x9b
+ 864 02e8 09       		.uleb128 0x9
+ 865 02e9 4200     		.string	"B"
+ 866 02eb 05       		.byte	0x5
+ 867 02ec 14C5     		.2byte	0x14c5
+ 868 02ee 00000271 		.4byte	0x271
+ 869 02f2 00       		.byte	0
+ 870 02f3 06       		.uleb128 0x6
+ 871 02f4 04       		.byte	0x4
+ 872 02f5 05       		.byte	0x5
+ 873 02f6 14CA     		.2byte	0x14ca
+ 874 02f8 0000030F 		.4byte	0x30f
+ 875 02fc 07       		.uleb128 0x7
+ 876 02fd 00000000 		.4byte	.LASF30
+ 877 0301 05       		.byte	0x5
+ 878 0302 14CC     		.2byte	0x14cc
+ 879 0304 0000009B 		.4byte	0x9b
+ 880 0308 04       		.byte	0x4
+ 881 0309 10       		.byte	0x10
+ 882 030a 10       		.byte	0x10
+ 883 030b 02       		.byte	0x2
+ 884 030c 23       		.byte	0x23
+ 885 030d 00       		.uleb128 0
+ 886 030e 00       		.byte	0
+ 887 030f 08       		.uleb128 0x8
+ 888 0310 04       		.byte	0x4
+ 889 0311 05       		.byte	0x5
+ 890 0312 14C8     		.2byte	0x14c8
+ 891 0314 0000032D 		.4byte	0x32d
+ 892 0318 09       		.uleb128 0x9
+ 893 0319 5200     		.string	"R"
+ 894 031b 05       		.byte	0x5
+ 895 031c 14C9     		.2byte	0x14c9
+ 896 031e 0000009B 		.4byte	0x9b
+ 897 0322 09       		.uleb128 0x9
+ 898 0323 4200     		.string	"B"
+ 899 0325 05       		.byte	0x5
+ 900 0326 14CD     		.2byte	0x14cd
+ 901 0328 000002F3 		.4byte	0x2f3
+ 902 032c 00       		.byte	0
+ 903 032d 0B       		.uleb128 0xb
+ 904 032e 00000000 		.4byte	.LASF91
+ 905 0332 20       		.byte	0x20
+ 906 0333 05       		.byte	0x5
+ 907 0334 148B     		.2byte	0x148b
+ 908 0336 000003A4 		.4byte	0x3a4
+ 909 033a 0C       		.uleb128 0xc
+ 910 033b 00000000 		.4byte	.LASF15
+ 911 033f 05       		.byte	0x5
+ 912 0340 1492     		.2byte	0x1492
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 17
+
+
+ 913 0342 000000CE 		.4byte	0xce
+ 914 0346 02       		.byte	0x2
+ 915 0347 23       		.byte	0x23
+ 916 0348 00       		.uleb128 0
+ 917 0349 0C       		.uleb128 0xc
+ 918 034a 00000000 		.4byte	.LASF16
+ 919 034e 05       		.byte	0x5
+ 920 034f 149A     		.2byte	0x149a
+ 921 0351 00000108 		.4byte	0x108
+ 922 0355 02       		.byte	0x2
+ 923 0356 23       		.byte	0x23
+ 924 0357 04       		.uleb128 0x4
+ 925 0358 0C       		.uleb128 0xc
+ 926 0359 00000000 		.4byte	.LASF17
+ 927 035d 05       		.byte	0x5
+ 928 035e 14A2     		.2byte	0x14a2
+ 929 0360 00000142 		.4byte	0x142
+ 930 0364 02       		.byte	0x2
+ 931 0365 23       		.byte	0x23
+ 932 0366 08       		.uleb128 0x8
+ 933 0367 0D       		.uleb128 0xd
+ 934 0368 43435200 		.string	"CCR"
+ 935 036c 05       		.byte	0x5
+ 936 036d 14B9     		.2byte	0x14b9
+ 937 036f 00000253 		.4byte	0x253
+ 938 0373 02       		.byte	0x2
+ 939 0374 23       		.byte	0x23
+ 940 0375 0C       		.uleb128 0xc
+ 941 0376 0D       		.uleb128 0xd
+ 942 0377 43535200 		.string	"CSR"
+ 943 037b 05       		.byte	0x5
+ 944 037c 14C6     		.2byte	0x14c6
+ 945 037e 000002D5 		.4byte	0x2d5
+ 946 0382 02       		.byte	0x2
+ 947 0383 23       		.byte	0x23
+ 948 0384 10       		.uleb128 0x10
+ 949 0385 0C       		.uleb128 0xc
+ 950 0386 00000000 		.4byte	.LASF31
+ 951 038a 05       		.byte	0x5
+ 952 038b 14CE     		.2byte	0x14ce
+ 953 038d 0000030F 		.4byte	0x30f
+ 954 0391 02       		.byte	0x2
+ 955 0392 23       		.byte	0x23
+ 956 0393 14       		.uleb128 0x14
+ 957 0394 0C       		.uleb128 0xc
+ 958 0395 00000000 		.4byte	.LASF32
+ 959 0399 05       		.byte	0x5
+ 960 039a 14D0     		.2byte	0x14d0
+ 961 039c 000003A4 		.4byte	0x3a4
+ 962 03a0 02       		.byte	0x2
+ 963 03a1 23       		.byte	0x23
+ 964 03a2 18       		.uleb128 0x18
+ 965 03a3 00       		.byte	0
+ 966 03a4 0E       		.uleb128 0xe
+ 967 03a5 00000090 		.4byte	0x90
+ 968 03a9 000003B4 		.4byte	0x3b4
+ 969 03ad 0F       		.uleb128 0xf
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 18
+
+
+ 970 03ae 000000AB 		.4byte	0xab
+ 971 03b2 01       		.byte	0x1
+ 972 03b3 00       		.byte	0
+ 973 03b4 06       		.uleb128 0x6
+ 974 03b5 04       		.byte	0x4
+ 975 03b6 05       		.byte	0x5
+ 976 03b7 14D7     		.2byte	0x14d7
+ 977 03b9 00000418 		.4byte	0x418
+ 978 03bd 07       		.uleb128 0x7
+ 979 03be 00000000 		.4byte	.LASF33
+ 980 03c2 05       		.byte	0x5
+ 981 03c3 14D9     		.2byte	0x14d9
+ 982 03c5 0000009B 		.4byte	0x9b
+ 983 03c9 04       		.byte	0x4
+ 984 03ca 01       		.byte	0x1
+ 985 03cb 01       		.byte	0x1
+ 986 03cc 02       		.byte	0x2
+ 987 03cd 23       		.byte	0x23
+ 988 03ce 00       		.uleb128 0
+ 989 03cf 0A       		.uleb128 0xa
+ 990 03d0 46525A00 		.string	"FRZ"
+ 991 03d4 05       		.byte	0x5
+ 992 03d5 14DA     		.2byte	0x14da
+ 993 03d7 0000009B 		.4byte	0x9b
+ 994 03db 04       		.byte	0x4
+ 995 03dc 01       		.byte	0x1
+ 996 03dd 02       		.byte	0x2
+ 997 03de 02       		.byte	0x2
+ 998 03df 23       		.byte	0x23
+ 999 03e0 00       		.uleb128 0
+ 1000 03e1 07       		.uleb128 0x7
+ 1001 03e2 00000000 		.4byte	.LASF34
+ 1002 03e6 05       		.byte	0x5
+ 1003 03e7 14DB     		.2byte	0x14db
+ 1004 03e9 0000009B 		.4byte	0x9b
+ 1005 03ed 04       		.byte	0x4
+ 1006 03ee 01       		.byte	0x1
+ 1007 03ef 03       		.byte	0x3
+ 1008 03f0 02       		.byte	0x2
+ 1009 03f1 23       		.byte	0x23
+ 1010 03f2 00       		.uleb128 0
+ 1011 03f3 07       		.uleb128 0x7
+ 1012 03f4 00000000 		.4byte	.LASF35
+ 1013 03f8 05       		.byte	0x5
+ 1014 03f9 14DD     		.2byte	0x14dd
+ 1015 03fb 0000009B 		.4byte	0x9b
+ 1016 03ff 04       		.byte	0x4
+ 1017 0400 01       		.byte	0x1
+ 1018 0401 05       		.byte	0x5
+ 1019 0402 02       		.byte	0x2
+ 1020 0403 23       		.byte	0x23
+ 1021 0404 00       		.uleb128 0
+ 1022 0405 07       		.uleb128 0x7
+ 1023 0406 00000000 		.4byte	.LASF36
+ 1024 040a 05       		.byte	0x5
+ 1025 040b 14DF     		.2byte	0x14df
+ 1026 040d 0000009B 		.4byte	0x9b
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 19
+
+
+ 1027 0411 04       		.byte	0x4
+ 1028 0412 08       		.byte	0x8
+ 1029 0413 10       		.byte	0x10
+ 1030 0414 02       		.byte	0x2
+ 1031 0415 23       		.byte	0x23
+ 1032 0416 00       		.uleb128 0
+ 1033 0417 00       		.byte	0
+ 1034 0418 08       		.uleb128 0x8
+ 1035 0419 04       		.byte	0x4
+ 1036 041a 05       		.byte	0x5
+ 1037 041b 14D5     		.2byte	0x14d5
+ 1038 041d 00000436 		.4byte	0x436
+ 1039 0421 09       		.uleb128 0x9
+ 1040 0422 5200     		.string	"R"
+ 1041 0424 05       		.byte	0x5
+ 1042 0425 14D6     		.2byte	0x14d6
+ 1043 0427 0000009B 		.4byte	0x9b
+ 1044 042b 09       		.uleb128 0x9
+ 1045 042c 4200     		.string	"B"
+ 1046 042e 05       		.byte	0x5
+ 1047 042f 14E1     		.2byte	0x14e1
+ 1048 0431 000003B4 		.4byte	0x3b4
+ 1049 0435 00       		.byte	0
+ 1050 0436 06       		.uleb128 0x6
+ 1051 0437 04       		.byte	0x4
+ 1052 0438 05       		.byte	0x5
+ 1053 0439 14E6     		.2byte	0x14e6
+ 1054 043b 00000676 		.4byte	0x676
+ 1055 043f 0A       		.uleb128 0xa
+ 1056 0440 46333100 		.string	"F31"
+ 1057 0444 05       		.byte	0x5
+ 1058 0445 14E7     		.2byte	0x14e7
+ 1059 0447 0000009B 		.4byte	0x9b
+ 1060 044b 04       		.byte	0x4
+ 1061 044c 01       		.byte	0x1
+ 1062 044d 00       		.byte	0
+ 1063 044e 02       		.byte	0x2
+ 1064 044f 23       		.byte	0x23
+ 1065 0450 00       		.uleb128 0
+ 1066 0451 0A       		.uleb128 0xa
+ 1067 0452 46333000 		.string	"F30"
+ 1068 0456 05       		.byte	0x5
+ 1069 0457 14E8     		.2byte	0x14e8
+ 1070 0459 0000009B 		.4byte	0x9b
+ 1071 045d 04       		.byte	0x4
+ 1072 045e 01       		.byte	0x1
+ 1073 045f 01       		.byte	0x1
+ 1074 0460 02       		.byte	0x2
+ 1075 0461 23       		.byte	0x23
+ 1076 0462 00       		.uleb128 0
+ 1077 0463 0A       		.uleb128 0xa
+ 1078 0464 46323900 		.string	"F29"
+ 1079 0468 05       		.byte	0x5
+ 1080 0469 14E9     		.2byte	0x14e9
+ 1081 046b 0000009B 		.4byte	0x9b
+ 1082 046f 04       		.byte	0x4
+ 1083 0470 01       		.byte	0x1
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 20
+
+
+ 1084 0471 02       		.byte	0x2
+ 1085 0472 02       		.byte	0x2
+ 1086 0473 23       		.byte	0x23
+ 1087 0474 00       		.uleb128 0
+ 1088 0475 0A       		.uleb128 0xa
+ 1089 0476 46323800 		.string	"F28"
+ 1090 047a 05       		.byte	0x5
+ 1091 047b 14EA     		.2byte	0x14ea
+ 1092 047d 0000009B 		.4byte	0x9b
+ 1093 0481 04       		.byte	0x4
+ 1094 0482 01       		.byte	0x1
+ 1095 0483 03       		.byte	0x3
+ 1096 0484 02       		.byte	0x2
+ 1097 0485 23       		.byte	0x23
+ 1098 0486 00       		.uleb128 0
+ 1099 0487 0A       		.uleb128 0xa
+ 1100 0488 46323700 		.string	"F27"
+ 1101 048c 05       		.byte	0x5
+ 1102 048d 14EB     		.2byte	0x14eb
+ 1103 048f 0000009B 		.4byte	0x9b
+ 1104 0493 04       		.byte	0x4
+ 1105 0494 01       		.byte	0x1
+ 1106 0495 04       		.byte	0x4
+ 1107 0496 02       		.byte	0x2
+ 1108 0497 23       		.byte	0x23
+ 1109 0498 00       		.uleb128 0
+ 1110 0499 0A       		.uleb128 0xa
+ 1111 049a 46323600 		.string	"F26"
+ 1112 049e 05       		.byte	0x5
+ 1113 049f 14EC     		.2byte	0x14ec
+ 1114 04a1 0000009B 		.4byte	0x9b
+ 1115 04a5 04       		.byte	0x4
+ 1116 04a6 01       		.byte	0x1
+ 1117 04a7 05       		.byte	0x5
+ 1118 04a8 02       		.byte	0x2
+ 1119 04a9 23       		.byte	0x23
+ 1120 04aa 00       		.uleb128 0
+ 1121 04ab 0A       		.uleb128 0xa
+ 1122 04ac 46323500 		.string	"F25"
+ 1123 04b0 05       		.byte	0x5
+ 1124 04b1 14ED     		.2byte	0x14ed
+ 1125 04b3 0000009B 		.4byte	0x9b
+ 1126 04b7 04       		.byte	0x4
+ 1127 04b8 01       		.byte	0x1
+ 1128 04b9 06       		.byte	0x6
+ 1129 04ba 02       		.byte	0x2
+ 1130 04bb 23       		.byte	0x23
+ 1131 04bc 00       		.uleb128 0
+ 1132 04bd 0A       		.uleb128 0xa
+ 1133 04be 46323400 		.string	"F24"
+ 1134 04c2 05       		.byte	0x5
+ 1135 04c3 14EE     		.2byte	0x14ee
+ 1136 04c5 0000009B 		.4byte	0x9b
+ 1137 04c9 04       		.byte	0x4
+ 1138 04ca 01       		.byte	0x1
+ 1139 04cb 07       		.byte	0x7
+ 1140 04cc 02       		.byte	0x2
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 21
+
+
+ 1141 04cd 23       		.byte	0x23
+ 1142 04ce 00       		.uleb128 0
+ 1143 04cf 0A       		.uleb128 0xa
+ 1144 04d0 46323300 		.string	"F23"
+ 1145 04d4 05       		.byte	0x5
+ 1146 04d5 14EF     		.2byte	0x14ef
+ 1147 04d7 0000009B 		.4byte	0x9b
+ 1148 04db 04       		.byte	0x4
+ 1149 04dc 01       		.byte	0x1
+ 1150 04dd 08       		.byte	0x8
+ 1151 04de 02       		.byte	0x2
+ 1152 04df 23       		.byte	0x23
+ 1153 04e0 00       		.uleb128 0
+ 1154 04e1 0A       		.uleb128 0xa
+ 1155 04e2 46323200 		.string	"F22"
+ 1156 04e6 05       		.byte	0x5
+ 1157 04e7 14F0     		.2byte	0x14f0
+ 1158 04e9 0000009B 		.4byte	0x9b
+ 1159 04ed 04       		.byte	0x4
+ 1160 04ee 01       		.byte	0x1
+ 1161 04ef 09       		.byte	0x9
+ 1162 04f0 02       		.byte	0x2
+ 1163 04f1 23       		.byte	0x23
+ 1164 04f2 00       		.uleb128 0
+ 1165 04f3 0A       		.uleb128 0xa
+ 1166 04f4 46323100 		.string	"F21"
+ 1167 04f8 05       		.byte	0x5
+ 1168 04f9 14F1     		.2byte	0x14f1
+ 1169 04fb 0000009B 		.4byte	0x9b
+ 1170 04ff 04       		.byte	0x4
+ 1171 0500 01       		.byte	0x1
+ 1172 0501 0A       		.byte	0xa
+ 1173 0502 02       		.byte	0x2
+ 1174 0503 23       		.byte	0x23
+ 1175 0504 00       		.uleb128 0
+ 1176 0505 0A       		.uleb128 0xa
+ 1177 0506 46323000 		.string	"F20"
+ 1178 050a 05       		.byte	0x5
+ 1179 050b 14F2     		.2byte	0x14f2
+ 1180 050d 0000009B 		.4byte	0x9b
+ 1181 0511 04       		.byte	0x4
+ 1182 0512 01       		.byte	0x1
+ 1183 0513 0B       		.byte	0xb
+ 1184 0514 02       		.byte	0x2
+ 1185 0515 23       		.byte	0x23
+ 1186 0516 00       		.uleb128 0
+ 1187 0517 0A       		.uleb128 0xa
+ 1188 0518 46313900 		.string	"F19"
+ 1189 051c 05       		.byte	0x5
+ 1190 051d 14F3     		.2byte	0x14f3
+ 1191 051f 0000009B 		.4byte	0x9b
+ 1192 0523 04       		.byte	0x4
+ 1193 0524 01       		.byte	0x1
+ 1194 0525 0C       		.byte	0xc
+ 1195 0526 02       		.byte	0x2
+ 1196 0527 23       		.byte	0x23
+ 1197 0528 00       		.uleb128 0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 22
+
+
+ 1198 0529 0A       		.uleb128 0xa
+ 1199 052a 46313800 		.string	"F18"
+ 1200 052e 05       		.byte	0x5
+ 1201 052f 14F4     		.2byte	0x14f4
+ 1202 0531 0000009B 		.4byte	0x9b
+ 1203 0535 04       		.byte	0x4
+ 1204 0536 01       		.byte	0x1
+ 1205 0537 0D       		.byte	0xd
+ 1206 0538 02       		.byte	0x2
+ 1207 0539 23       		.byte	0x23
+ 1208 053a 00       		.uleb128 0
+ 1209 053b 0A       		.uleb128 0xa
+ 1210 053c 46313700 		.string	"F17"
+ 1211 0540 05       		.byte	0x5
+ 1212 0541 14F5     		.2byte	0x14f5
+ 1213 0543 0000009B 		.4byte	0x9b
+ 1214 0547 04       		.byte	0x4
+ 1215 0548 01       		.byte	0x1
+ 1216 0549 0E       		.byte	0xe
+ 1217 054a 02       		.byte	0x2
+ 1218 054b 23       		.byte	0x23
+ 1219 054c 00       		.uleb128 0
+ 1220 054d 0A       		.uleb128 0xa
+ 1221 054e 46313600 		.string	"F16"
+ 1222 0552 05       		.byte	0x5
+ 1223 0553 14F6     		.2byte	0x14f6
+ 1224 0555 0000009B 		.4byte	0x9b
+ 1225 0559 04       		.byte	0x4
+ 1226 055a 01       		.byte	0x1
+ 1227 055b 0F       		.byte	0xf
+ 1228 055c 02       		.byte	0x2
+ 1229 055d 23       		.byte	0x23
+ 1230 055e 00       		.uleb128 0
+ 1231 055f 0A       		.uleb128 0xa
+ 1232 0560 46313500 		.string	"F15"
+ 1233 0564 05       		.byte	0x5
+ 1234 0565 14F7     		.2byte	0x14f7
+ 1235 0567 0000009B 		.4byte	0x9b
+ 1236 056b 04       		.byte	0x4
+ 1237 056c 01       		.byte	0x1
+ 1238 056d 10       		.byte	0x10
+ 1239 056e 02       		.byte	0x2
+ 1240 056f 23       		.byte	0x23
+ 1241 0570 00       		.uleb128 0
+ 1242 0571 0A       		.uleb128 0xa
+ 1243 0572 46313400 		.string	"F14"
+ 1244 0576 05       		.byte	0x5
+ 1245 0577 14F8     		.2byte	0x14f8
+ 1246 0579 0000009B 		.4byte	0x9b
+ 1247 057d 04       		.byte	0x4
+ 1248 057e 01       		.byte	0x1
+ 1249 057f 11       		.byte	0x11
+ 1250 0580 02       		.byte	0x2
+ 1251 0581 23       		.byte	0x23
+ 1252 0582 00       		.uleb128 0
+ 1253 0583 0A       		.uleb128 0xa
+ 1254 0584 46313300 		.string	"F13"
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 23
+
+
+ 1255 0588 05       		.byte	0x5
+ 1256 0589 14F9     		.2byte	0x14f9
+ 1257 058b 0000009B 		.4byte	0x9b
+ 1258 058f 04       		.byte	0x4
+ 1259 0590 01       		.byte	0x1
+ 1260 0591 12       		.byte	0x12
+ 1261 0592 02       		.byte	0x2
+ 1262 0593 23       		.byte	0x23
+ 1263 0594 00       		.uleb128 0
+ 1264 0595 0A       		.uleb128 0xa
+ 1265 0596 46313200 		.string	"F12"
+ 1266 059a 05       		.byte	0x5
+ 1267 059b 14FA     		.2byte	0x14fa
+ 1268 059d 0000009B 		.4byte	0x9b
+ 1269 05a1 04       		.byte	0x4
+ 1270 05a2 01       		.byte	0x1
+ 1271 05a3 13       		.byte	0x13
+ 1272 05a4 02       		.byte	0x2
+ 1273 05a5 23       		.byte	0x23
+ 1274 05a6 00       		.uleb128 0
+ 1275 05a7 0A       		.uleb128 0xa
+ 1276 05a8 46313100 		.string	"F11"
+ 1277 05ac 05       		.byte	0x5
+ 1278 05ad 14FB     		.2byte	0x14fb
+ 1279 05af 0000009B 		.4byte	0x9b
+ 1280 05b3 04       		.byte	0x4
+ 1281 05b4 01       		.byte	0x1
+ 1282 05b5 14       		.byte	0x14
+ 1283 05b6 02       		.byte	0x2
+ 1284 05b7 23       		.byte	0x23
+ 1285 05b8 00       		.uleb128 0
+ 1286 05b9 0A       		.uleb128 0xa
+ 1287 05ba 46313000 		.string	"F10"
+ 1288 05be 05       		.byte	0x5
+ 1289 05bf 14FC     		.2byte	0x14fc
+ 1290 05c1 0000009B 		.4byte	0x9b
+ 1291 05c5 04       		.byte	0x4
+ 1292 05c6 01       		.byte	0x1
+ 1293 05c7 15       		.byte	0x15
+ 1294 05c8 02       		.byte	0x2
+ 1295 05c9 23       		.byte	0x23
+ 1296 05ca 00       		.uleb128 0
+ 1297 05cb 0A       		.uleb128 0xa
+ 1298 05cc 463900   		.string	"F9"
+ 1299 05cf 05       		.byte	0x5
+ 1300 05d0 14FD     		.2byte	0x14fd
+ 1301 05d2 0000009B 		.4byte	0x9b
+ 1302 05d6 04       		.byte	0x4
+ 1303 05d7 01       		.byte	0x1
+ 1304 05d8 16       		.byte	0x16
+ 1305 05d9 02       		.byte	0x2
+ 1306 05da 23       		.byte	0x23
+ 1307 05db 00       		.uleb128 0
+ 1308 05dc 0A       		.uleb128 0xa
+ 1309 05dd 463800   		.string	"F8"
+ 1310 05e0 05       		.byte	0x5
+ 1311 05e1 14FE     		.2byte	0x14fe
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 24
+
+
+ 1312 05e3 0000009B 		.4byte	0x9b
+ 1313 05e7 04       		.byte	0x4
+ 1314 05e8 01       		.byte	0x1
+ 1315 05e9 17       		.byte	0x17
+ 1316 05ea 02       		.byte	0x2
+ 1317 05eb 23       		.byte	0x23
+ 1318 05ec 00       		.uleb128 0
+ 1319 05ed 0A       		.uleb128 0xa
+ 1320 05ee 463700   		.string	"F7"
+ 1321 05f1 05       		.byte	0x5
+ 1322 05f2 14FF     		.2byte	0x14ff
+ 1323 05f4 0000009B 		.4byte	0x9b
+ 1324 05f8 04       		.byte	0x4
+ 1325 05f9 01       		.byte	0x1
+ 1326 05fa 18       		.byte	0x18
+ 1327 05fb 02       		.byte	0x2
+ 1328 05fc 23       		.byte	0x23
+ 1329 05fd 00       		.uleb128 0
+ 1330 05fe 0A       		.uleb128 0xa
+ 1331 05ff 463600   		.string	"F6"
+ 1332 0602 05       		.byte	0x5
+ 1333 0603 1500     		.2byte	0x1500
+ 1334 0605 0000009B 		.4byte	0x9b
+ 1335 0609 04       		.byte	0x4
+ 1336 060a 01       		.byte	0x1
+ 1337 060b 19       		.byte	0x19
+ 1338 060c 02       		.byte	0x2
+ 1339 060d 23       		.byte	0x23
+ 1340 060e 00       		.uleb128 0
+ 1341 060f 0A       		.uleb128 0xa
+ 1342 0610 463500   		.string	"F5"
+ 1343 0613 05       		.byte	0x5
+ 1344 0614 1501     		.2byte	0x1501
+ 1345 0616 0000009B 		.4byte	0x9b
+ 1346 061a 04       		.byte	0x4
+ 1347 061b 01       		.byte	0x1
+ 1348 061c 1A       		.byte	0x1a
+ 1349 061d 02       		.byte	0x2
+ 1350 061e 23       		.byte	0x23
+ 1351 061f 00       		.uleb128 0
+ 1352 0620 0A       		.uleb128 0xa
+ 1353 0621 463400   		.string	"F4"
+ 1354 0624 05       		.byte	0x5
+ 1355 0625 1502     		.2byte	0x1502
+ 1356 0627 0000009B 		.4byte	0x9b
+ 1357 062b 04       		.byte	0x4
+ 1358 062c 01       		.byte	0x1
+ 1359 062d 1B       		.byte	0x1b
+ 1360 062e 02       		.byte	0x2
+ 1361 062f 23       		.byte	0x23
+ 1362 0630 00       		.uleb128 0
+ 1363 0631 0A       		.uleb128 0xa
+ 1364 0632 463300   		.string	"F3"
+ 1365 0635 05       		.byte	0x5
+ 1366 0636 1503     		.2byte	0x1503
+ 1367 0638 0000009B 		.4byte	0x9b
+ 1368 063c 04       		.byte	0x4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 25
+
+
+ 1369 063d 01       		.byte	0x1
+ 1370 063e 1C       		.byte	0x1c
+ 1371 063f 02       		.byte	0x2
+ 1372 0640 23       		.byte	0x23
+ 1373 0641 00       		.uleb128 0
+ 1374 0642 0A       		.uleb128 0xa
+ 1375 0643 463200   		.string	"F2"
+ 1376 0646 05       		.byte	0x5
+ 1377 0647 1504     		.2byte	0x1504
+ 1378 0649 0000009B 		.4byte	0x9b
+ 1379 064d 04       		.byte	0x4
+ 1380 064e 01       		.byte	0x1
+ 1381 064f 1D       		.byte	0x1d
+ 1382 0650 02       		.byte	0x2
+ 1383 0651 23       		.byte	0x23
+ 1384 0652 00       		.uleb128 0
+ 1385 0653 0A       		.uleb128 0xa
+ 1386 0654 463100   		.string	"F1"
+ 1387 0657 05       		.byte	0x5
+ 1388 0658 1505     		.2byte	0x1505
+ 1389 065a 0000009B 		.4byte	0x9b
+ 1390 065e 04       		.byte	0x4
+ 1391 065f 01       		.byte	0x1
+ 1392 0660 1E       		.byte	0x1e
+ 1393 0661 02       		.byte	0x2
+ 1394 0662 23       		.byte	0x23
+ 1395 0663 00       		.uleb128 0
+ 1396 0664 0A       		.uleb128 0xa
+ 1397 0665 463000   		.string	"F0"
+ 1398 0668 05       		.byte	0x5
+ 1399 0669 1506     		.2byte	0x1506
+ 1400 066b 0000009B 		.4byte	0x9b
+ 1401 066f 04       		.byte	0x4
+ 1402 0670 01       		.byte	0x1
+ 1403 0671 1F       		.byte	0x1f
+ 1404 0672 02       		.byte	0x2
+ 1405 0673 23       		.byte	0x23
+ 1406 0674 00       		.uleb128 0
+ 1407 0675 00       		.byte	0
+ 1408 0676 08       		.uleb128 0x8
+ 1409 0677 04       		.byte	0x4
+ 1410 0678 05       		.byte	0x5
+ 1411 0679 14E4     		.2byte	0x14e4
+ 1412 067b 00000694 		.4byte	0x694
+ 1413 067f 09       		.uleb128 0x9
+ 1414 0680 5200     		.string	"R"
+ 1415 0682 05       		.byte	0x5
+ 1416 0683 14E5     		.2byte	0x14e5
+ 1417 0685 0000009B 		.4byte	0x9b
+ 1418 0689 09       		.uleb128 0x9
+ 1419 068a 4200     		.string	"B"
+ 1420 068c 05       		.byte	0x5
+ 1421 068d 1507     		.2byte	0x1507
+ 1422 068f 00000436 		.4byte	0x436
+ 1423 0693 00       		.byte	0
+ 1424 0694 06       		.uleb128 0x6
+ 1425 0695 04       		.byte	0x4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 26
+
+
+ 1426 0696 05       		.byte	0x5
+ 1427 0697 150C     		.2byte	0x150c
+ 1428 0699 000008DE 		.4byte	0x8de
+ 1429 069d 07       		.uleb128 0x7
+ 1430 069e 00000000 		.4byte	.LASF37
+ 1431 06a2 05       		.byte	0x5
+ 1432 06a3 150D     		.2byte	0x150d
+ 1433 06a5 0000009B 		.4byte	0x9b
+ 1434 06a9 04       		.byte	0x4
+ 1435 06aa 01       		.byte	0x1
+ 1436 06ab 00       		.byte	0
+ 1437 06ac 02       		.byte	0x2
+ 1438 06ad 23       		.byte	0x23
+ 1439 06ae 00       		.uleb128 0
+ 1440 06af 07       		.uleb128 0x7
+ 1441 06b0 00000000 		.4byte	.LASF38
+ 1442 06b4 05       		.byte	0x5
+ 1443 06b5 150E     		.2byte	0x150e
+ 1444 06b7 0000009B 		.4byte	0x9b
+ 1445 06bb 04       		.byte	0x4
+ 1446 06bc 01       		.byte	0x1
+ 1447 06bd 01       		.byte	0x1
+ 1448 06be 02       		.byte	0x2
+ 1449 06bf 23       		.byte	0x23
+ 1450 06c0 00       		.uleb128 0
+ 1451 06c1 07       		.uleb128 0x7
+ 1452 06c2 00000000 		.4byte	.LASF39
+ 1453 06c6 05       		.byte	0x5
+ 1454 06c7 150F     		.2byte	0x150f
+ 1455 06c9 0000009B 		.4byte	0x9b
+ 1456 06cd 04       		.byte	0x4
+ 1457 06ce 01       		.byte	0x1
+ 1458 06cf 02       		.byte	0x2
+ 1459 06d0 02       		.byte	0x2
+ 1460 06d1 23       		.byte	0x23
+ 1461 06d2 00       		.uleb128 0
+ 1462 06d3 07       		.uleb128 0x7
+ 1463 06d4 00000000 		.4byte	.LASF40
+ 1464 06d8 05       		.byte	0x5
+ 1465 06d9 1510     		.2byte	0x1510
+ 1466 06db 0000009B 		.4byte	0x9b
+ 1467 06df 04       		.byte	0x4
+ 1468 06e0 01       		.byte	0x1
+ 1469 06e1 03       		.byte	0x3
+ 1470 06e2 02       		.byte	0x2
+ 1471 06e3 23       		.byte	0x23
+ 1472 06e4 00       		.uleb128 0
+ 1473 06e5 07       		.uleb128 0x7
+ 1474 06e6 00000000 		.4byte	.LASF41
+ 1475 06ea 05       		.byte	0x5
+ 1476 06eb 1511     		.2byte	0x1511
+ 1477 06ed 0000009B 		.4byte	0x9b
+ 1478 06f1 04       		.byte	0x4
+ 1479 06f2 01       		.byte	0x1
+ 1480 06f3 04       		.byte	0x4
+ 1481 06f4 02       		.byte	0x2
+ 1482 06f5 23       		.byte	0x23
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 27
+
+
+ 1483 06f6 00       		.uleb128 0
+ 1484 06f7 07       		.uleb128 0x7
+ 1485 06f8 00000000 		.4byte	.LASF42
+ 1486 06fc 05       		.byte	0x5
+ 1487 06fd 1512     		.2byte	0x1512
+ 1488 06ff 0000009B 		.4byte	0x9b
+ 1489 0703 04       		.byte	0x4
+ 1490 0704 01       		.byte	0x1
+ 1491 0705 05       		.byte	0x5
+ 1492 0706 02       		.byte	0x2
+ 1493 0707 23       		.byte	0x23
+ 1494 0708 00       		.uleb128 0
+ 1495 0709 07       		.uleb128 0x7
+ 1496 070a 00000000 		.4byte	.LASF43
+ 1497 070e 05       		.byte	0x5
+ 1498 070f 1513     		.2byte	0x1513
+ 1499 0711 0000009B 		.4byte	0x9b
+ 1500 0715 04       		.byte	0x4
+ 1501 0716 01       		.byte	0x1
+ 1502 0717 06       		.byte	0x6
+ 1503 0718 02       		.byte	0x2
+ 1504 0719 23       		.byte	0x23
+ 1505 071a 00       		.uleb128 0
+ 1506 071b 07       		.uleb128 0x7
+ 1507 071c 00000000 		.4byte	.LASF44
+ 1508 0720 05       		.byte	0x5
+ 1509 0721 1514     		.2byte	0x1514
+ 1510 0723 0000009B 		.4byte	0x9b
+ 1511 0727 04       		.byte	0x4
+ 1512 0728 01       		.byte	0x1
+ 1513 0729 07       		.byte	0x7
+ 1514 072a 02       		.byte	0x2
+ 1515 072b 23       		.byte	0x23
+ 1516 072c 00       		.uleb128 0
+ 1517 072d 07       		.uleb128 0x7
+ 1518 072e 00000000 		.4byte	.LASF45
+ 1519 0732 05       		.byte	0x5
+ 1520 0733 1515     		.2byte	0x1515
+ 1521 0735 0000009B 		.4byte	0x9b
+ 1522 0739 04       		.byte	0x4
+ 1523 073a 01       		.byte	0x1
+ 1524 073b 08       		.byte	0x8
+ 1525 073c 02       		.byte	0x2
+ 1526 073d 23       		.byte	0x23
+ 1527 073e 00       		.uleb128 0
+ 1528 073f 07       		.uleb128 0x7
+ 1529 0740 00000000 		.4byte	.LASF46
+ 1530 0744 05       		.byte	0x5
+ 1531 0745 1516     		.2byte	0x1516
+ 1532 0747 0000009B 		.4byte	0x9b
+ 1533 074b 04       		.byte	0x4
+ 1534 074c 01       		.byte	0x1
+ 1535 074d 09       		.byte	0x9
+ 1536 074e 02       		.byte	0x2
+ 1537 074f 23       		.byte	0x23
+ 1538 0750 00       		.uleb128 0
+ 1539 0751 07       		.uleb128 0x7
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 28
+
+
+ 1540 0752 00000000 		.4byte	.LASF47
+ 1541 0756 05       		.byte	0x5
+ 1542 0757 1517     		.2byte	0x1517
+ 1543 0759 0000009B 		.4byte	0x9b
+ 1544 075d 04       		.byte	0x4
+ 1545 075e 01       		.byte	0x1
+ 1546 075f 0A       		.byte	0xa
+ 1547 0760 02       		.byte	0x2
+ 1548 0761 23       		.byte	0x23
+ 1549 0762 00       		.uleb128 0
+ 1550 0763 07       		.uleb128 0x7
+ 1551 0764 00000000 		.4byte	.LASF48
+ 1552 0768 05       		.byte	0x5
+ 1553 0769 1518     		.2byte	0x1518
+ 1554 076b 0000009B 		.4byte	0x9b
+ 1555 076f 04       		.byte	0x4
+ 1556 0770 01       		.byte	0x1
+ 1557 0771 0B       		.byte	0xb
+ 1558 0772 02       		.byte	0x2
+ 1559 0773 23       		.byte	0x23
+ 1560 0774 00       		.uleb128 0
+ 1561 0775 07       		.uleb128 0x7
+ 1562 0776 00000000 		.4byte	.LASF49
+ 1563 077a 05       		.byte	0x5
+ 1564 077b 1519     		.2byte	0x1519
+ 1565 077d 0000009B 		.4byte	0x9b
+ 1566 0781 04       		.byte	0x4
+ 1567 0782 01       		.byte	0x1
+ 1568 0783 0C       		.byte	0xc
+ 1569 0784 02       		.byte	0x2
+ 1570 0785 23       		.byte	0x23
+ 1571 0786 00       		.uleb128 0
+ 1572 0787 07       		.uleb128 0x7
+ 1573 0788 00000000 		.4byte	.LASF50
+ 1574 078c 05       		.byte	0x5
+ 1575 078d 151A     		.2byte	0x151a
+ 1576 078f 0000009B 		.4byte	0x9b
+ 1577 0793 04       		.byte	0x4
+ 1578 0794 01       		.byte	0x1
+ 1579 0795 0D       		.byte	0xd
+ 1580 0796 02       		.byte	0x2
+ 1581 0797 23       		.byte	0x23
+ 1582 0798 00       		.uleb128 0
+ 1583 0799 07       		.uleb128 0x7
+ 1584 079a 00000000 		.4byte	.LASF51
+ 1585 079e 05       		.byte	0x5
+ 1586 079f 151B     		.2byte	0x151b
+ 1587 07a1 0000009B 		.4byte	0x9b
+ 1588 07a5 04       		.byte	0x4
+ 1589 07a6 01       		.byte	0x1
+ 1590 07a7 0E       		.byte	0xe
+ 1591 07a8 02       		.byte	0x2
+ 1592 07a9 23       		.byte	0x23
+ 1593 07aa 00       		.uleb128 0
+ 1594 07ab 07       		.uleb128 0x7
+ 1595 07ac 00000000 		.4byte	.LASF52
+ 1596 07b0 05       		.byte	0x5
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 29
+
+
+ 1597 07b1 151C     		.2byte	0x151c
+ 1598 07b3 0000009B 		.4byte	0x9b
+ 1599 07b7 04       		.byte	0x4
+ 1600 07b8 01       		.byte	0x1
+ 1601 07b9 0F       		.byte	0xf
+ 1602 07ba 02       		.byte	0x2
+ 1603 07bb 23       		.byte	0x23
+ 1604 07bc 00       		.uleb128 0
+ 1605 07bd 07       		.uleb128 0x7
+ 1606 07be 00000000 		.4byte	.LASF53
+ 1607 07c2 05       		.byte	0x5
+ 1608 07c3 151D     		.2byte	0x151d
+ 1609 07c5 0000009B 		.4byte	0x9b
+ 1610 07c9 04       		.byte	0x4
+ 1611 07ca 01       		.byte	0x1
+ 1612 07cb 10       		.byte	0x10
+ 1613 07cc 02       		.byte	0x2
+ 1614 07cd 23       		.byte	0x23
+ 1615 07ce 00       		.uleb128 0
+ 1616 07cf 07       		.uleb128 0x7
+ 1617 07d0 00000000 		.4byte	.LASF54
+ 1618 07d4 05       		.byte	0x5
+ 1619 07d5 151E     		.2byte	0x151e
+ 1620 07d7 0000009B 		.4byte	0x9b
+ 1621 07db 04       		.byte	0x4
+ 1622 07dc 01       		.byte	0x1
+ 1623 07dd 11       		.byte	0x11
+ 1624 07de 02       		.byte	0x2
+ 1625 07df 23       		.byte	0x23
+ 1626 07e0 00       		.uleb128 0
+ 1627 07e1 07       		.uleb128 0x7
+ 1628 07e2 00000000 		.4byte	.LASF55
+ 1629 07e6 05       		.byte	0x5
+ 1630 07e7 151F     		.2byte	0x151f
+ 1631 07e9 0000009B 		.4byte	0x9b
+ 1632 07ed 04       		.byte	0x4
+ 1633 07ee 01       		.byte	0x1
+ 1634 07ef 12       		.byte	0x12
+ 1635 07f0 02       		.byte	0x2
+ 1636 07f1 23       		.byte	0x23
+ 1637 07f2 00       		.uleb128 0
+ 1638 07f3 07       		.uleb128 0x7
+ 1639 07f4 00000000 		.4byte	.LASF56
+ 1640 07f8 05       		.byte	0x5
+ 1641 07f9 1520     		.2byte	0x1520
+ 1642 07fb 0000009B 		.4byte	0x9b
+ 1643 07ff 04       		.byte	0x4
+ 1644 0800 01       		.byte	0x1
+ 1645 0801 13       		.byte	0x13
+ 1646 0802 02       		.byte	0x2
+ 1647 0803 23       		.byte	0x23
+ 1648 0804 00       		.uleb128 0
+ 1649 0805 07       		.uleb128 0x7
+ 1650 0806 00000000 		.4byte	.LASF57
+ 1651 080a 05       		.byte	0x5
+ 1652 080b 1521     		.2byte	0x1521
+ 1653 080d 0000009B 		.4byte	0x9b
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 30
+
+
+ 1654 0811 04       		.byte	0x4
+ 1655 0812 01       		.byte	0x1
+ 1656 0813 14       		.byte	0x14
+ 1657 0814 02       		.byte	0x2
+ 1658 0815 23       		.byte	0x23
+ 1659 0816 00       		.uleb128 0
+ 1660 0817 07       		.uleb128 0x7
+ 1661 0818 00000000 		.4byte	.LASF58
+ 1662 081c 05       		.byte	0x5
+ 1663 081d 1522     		.2byte	0x1522
+ 1664 081f 0000009B 		.4byte	0x9b
+ 1665 0823 04       		.byte	0x4
+ 1666 0824 01       		.byte	0x1
+ 1667 0825 15       		.byte	0x15
+ 1668 0826 02       		.byte	0x2
+ 1669 0827 23       		.byte	0x23
+ 1670 0828 00       		.uleb128 0
+ 1671 0829 0A       		.uleb128 0xa
+ 1672 082a 4F553900 		.string	"OU9"
+ 1673 082e 05       		.byte	0x5
+ 1674 082f 1523     		.2byte	0x1523
+ 1675 0831 0000009B 		.4byte	0x9b
+ 1676 0835 04       		.byte	0x4
+ 1677 0836 01       		.byte	0x1
+ 1678 0837 16       		.byte	0x16
+ 1679 0838 02       		.byte	0x2
+ 1680 0839 23       		.byte	0x23
+ 1681 083a 00       		.uleb128 0
+ 1682 083b 0A       		.uleb128 0xa
+ 1683 083c 4F553800 		.string	"OU8"
+ 1684 0840 05       		.byte	0x5
+ 1685 0841 1524     		.2byte	0x1524
+ 1686 0843 0000009B 		.4byte	0x9b
+ 1687 0847 04       		.byte	0x4
+ 1688 0848 01       		.byte	0x1
+ 1689 0849 17       		.byte	0x17
+ 1690 084a 02       		.byte	0x2
+ 1691 084b 23       		.byte	0x23
+ 1692 084c 00       		.uleb128 0
+ 1693 084d 0A       		.uleb128 0xa
+ 1694 084e 4F553700 		.string	"OU7"
+ 1695 0852 05       		.byte	0x5
+ 1696 0853 1525     		.2byte	0x1525
+ 1697 0855 0000009B 		.4byte	0x9b
+ 1698 0859 04       		.byte	0x4
+ 1699 085a 01       		.byte	0x1
+ 1700 085b 18       		.byte	0x18
+ 1701 085c 02       		.byte	0x2
+ 1702 085d 23       		.byte	0x23
+ 1703 085e 00       		.uleb128 0
+ 1704 085f 0A       		.uleb128 0xa
+ 1705 0860 4F553600 		.string	"OU6"
+ 1706 0864 05       		.byte	0x5
+ 1707 0865 1526     		.2byte	0x1526
+ 1708 0867 0000009B 		.4byte	0x9b
+ 1709 086b 04       		.byte	0x4
+ 1710 086c 01       		.byte	0x1
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 31
+
+
+ 1711 086d 19       		.byte	0x19
+ 1712 086e 02       		.byte	0x2
+ 1713 086f 23       		.byte	0x23
+ 1714 0870 00       		.uleb128 0
+ 1715 0871 0A       		.uleb128 0xa
+ 1716 0872 4F553500 		.string	"OU5"
+ 1717 0876 05       		.byte	0x5
+ 1718 0877 1527     		.2byte	0x1527
+ 1719 0879 0000009B 		.4byte	0x9b
+ 1720 087d 04       		.byte	0x4
+ 1721 087e 01       		.byte	0x1
+ 1722 087f 1A       		.byte	0x1a
+ 1723 0880 02       		.byte	0x2
+ 1724 0881 23       		.byte	0x23
+ 1725 0882 00       		.uleb128 0
+ 1726 0883 0A       		.uleb128 0xa
+ 1727 0884 4F553400 		.string	"OU4"
+ 1728 0888 05       		.byte	0x5
+ 1729 0889 1528     		.2byte	0x1528
+ 1730 088b 0000009B 		.4byte	0x9b
+ 1731 088f 04       		.byte	0x4
+ 1732 0890 01       		.byte	0x1
+ 1733 0891 1B       		.byte	0x1b
+ 1734 0892 02       		.byte	0x2
+ 1735 0893 23       		.byte	0x23
+ 1736 0894 00       		.uleb128 0
+ 1737 0895 0A       		.uleb128 0xa
+ 1738 0896 4F553300 		.string	"OU3"
+ 1739 089a 05       		.byte	0x5
+ 1740 089b 1529     		.2byte	0x1529
+ 1741 089d 0000009B 		.4byte	0x9b
+ 1742 08a1 04       		.byte	0x4
+ 1743 08a2 01       		.byte	0x1
+ 1744 08a3 1C       		.byte	0x1c
+ 1745 08a4 02       		.byte	0x2
+ 1746 08a5 23       		.byte	0x23
+ 1747 08a6 00       		.uleb128 0
+ 1748 08a7 0A       		.uleb128 0xa
+ 1749 08a8 4F553200 		.string	"OU2"
+ 1750 08ac 05       		.byte	0x5
+ 1751 08ad 152A     		.2byte	0x152a
+ 1752 08af 0000009B 		.4byte	0x9b
+ 1753 08b3 04       		.byte	0x4
+ 1754 08b4 01       		.byte	0x1
+ 1755 08b5 1D       		.byte	0x1d
+ 1756 08b6 02       		.byte	0x2
+ 1757 08b7 23       		.byte	0x23
+ 1758 08b8 00       		.uleb128 0
+ 1759 08b9 0A       		.uleb128 0xa
+ 1760 08ba 4F553100 		.string	"OU1"
+ 1761 08be 05       		.byte	0x5
+ 1762 08bf 152B     		.2byte	0x152b
+ 1763 08c1 0000009B 		.4byte	0x9b
+ 1764 08c5 04       		.byte	0x4
+ 1765 08c6 01       		.byte	0x1
+ 1766 08c7 1E       		.byte	0x1e
+ 1767 08c8 02       		.byte	0x2
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 32
+
+
+ 1768 08c9 23       		.byte	0x23
+ 1769 08ca 00       		.uleb128 0
+ 1770 08cb 0A       		.uleb128 0xa
+ 1771 08cc 4F553000 		.string	"OU0"
+ 1772 08d0 05       		.byte	0x5
+ 1773 08d1 152C     		.2byte	0x152c
+ 1774 08d3 0000009B 		.4byte	0x9b
+ 1775 08d7 04       		.byte	0x4
+ 1776 08d8 01       		.byte	0x1
+ 1777 08d9 1F       		.byte	0x1f
+ 1778 08da 02       		.byte	0x2
+ 1779 08db 23       		.byte	0x23
+ 1780 08dc 00       		.uleb128 0
+ 1781 08dd 00       		.byte	0
+ 1782 08de 08       		.uleb128 0x8
+ 1783 08df 04       		.byte	0x4
+ 1784 08e0 05       		.byte	0x5
+ 1785 08e1 150A     		.2byte	0x150a
+ 1786 08e3 000008FC 		.4byte	0x8fc
+ 1787 08e7 09       		.uleb128 0x9
+ 1788 08e8 5200     		.string	"R"
+ 1789 08ea 05       		.byte	0x5
+ 1790 08eb 150B     		.2byte	0x150b
+ 1791 08ed 0000009B 		.4byte	0x9b
+ 1792 08f1 09       		.uleb128 0x9
+ 1793 08f2 4200     		.string	"B"
+ 1794 08f4 05       		.byte	0x5
+ 1795 08f5 152D     		.2byte	0x152d
+ 1796 08f7 00000694 		.4byte	0x694
+ 1797 08fb 00       		.byte	0
+ 1798 08fc 06       		.uleb128 0x6
+ 1799 08fd 04       		.byte	0x4
+ 1800 08fe 05       		.byte	0x5
+ 1801 08ff 1532     		.2byte	0x1532
+ 1802 0901 00000B46 		.4byte	0xb46
+ 1803 0905 07       		.uleb128 0x7
+ 1804 0906 00000000 		.4byte	.LASF59
+ 1805 090a 05       		.byte	0x5
+ 1806 090b 1533     		.2byte	0x1533
+ 1807 090d 0000009B 		.4byte	0x9b
+ 1808 0911 04       		.byte	0x4
+ 1809 0912 01       		.byte	0x1
+ 1810 0913 00       		.byte	0
+ 1811 0914 02       		.byte	0x2
+ 1812 0915 23       		.byte	0x23
+ 1813 0916 00       		.uleb128 0
+ 1814 0917 07       		.uleb128 0x7
+ 1815 0918 00000000 		.4byte	.LASF60
+ 1816 091c 05       		.byte	0x5
+ 1817 091d 1534     		.2byte	0x1534
+ 1818 091f 0000009B 		.4byte	0x9b
+ 1819 0923 04       		.byte	0x4
+ 1820 0924 01       		.byte	0x1
+ 1821 0925 01       		.byte	0x1
+ 1822 0926 02       		.byte	0x2
+ 1823 0927 23       		.byte	0x23
+ 1824 0928 00       		.uleb128 0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 33
+
+
+ 1825 0929 07       		.uleb128 0x7
+ 1826 092a 00000000 		.4byte	.LASF61
+ 1827 092e 05       		.byte	0x5
+ 1828 092f 1535     		.2byte	0x1535
+ 1829 0931 0000009B 		.4byte	0x9b
+ 1830 0935 04       		.byte	0x4
+ 1831 0936 01       		.byte	0x1
+ 1832 0937 02       		.byte	0x2
+ 1833 0938 02       		.byte	0x2
+ 1834 0939 23       		.byte	0x23
+ 1835 093a 00       		.uleb128 0
+ 1836 093b 07       		.uleb128 0x7
+ 1837 093c 00000000 		.4byte	.LASF62
+ 1838 0940 05       		.byte	0x5
+ 1839 0941 1536     		.2byte	0x1536
+ 1840 0943 0000009B 		.4byte	0x9b
+ 1841 0947 04       		.byte	0x4
+ 1842 0948 01       		.byte	0x1
+ 1843 0949 03       		.byte	0x3
+ 1844 094a 02       		.byte	0x2
+ 1845 094b 23       		.byte	0x23
+ 1846 094c 00       		.uleb128 0
+ 1847 094d 07       		.uleb128 0x7
+ 1848 094e 00000000 		.4byte	.LASF63
+ 1849 0952 05       		.byte	0x5
+ 1850 0953 1537     		.2byte	0x1537
+ 1851 0955 0000009B 		.4byte	0x9b
+ 1852 0959 04       		.byte	0x4
+ 1853 095a 01       		.byte	0x1
+ 1854 095b 04       		.byte	0x4
+ 1855 095c 02       		.byte	0x2
+ 1856 095d 23       		.byte	0x23
+ 1857 095e 00       		.uleb128 0
+ 1858 095f 07       		.uleb128 0x7
+ 1859 0960 00000000 		.4byte	.LASF64
+ 1860 0964 05       		.byte	0x5
+ 1861 0965 1538     		.2byte	0x1538
+ 1862 0967 0000009B 		.4byte	0x9b
+ 1863 096b 04       		.byte	0x4
+ 1864 096c 01       		.byte	0x1
+ 1865 096d 05       		.byte	0x5
+ 1866 096e 02       		.byte	0x2
+ 1867 096f 23       		.byte	0x23
+ 1868 0970 00       		.uleb128 0
+ 1869 0971 07       		.uleb128 0x7
+ 1870 0972 00000000 		.4byte	.LASF65
+ 1871 0976 05       		.byte	0x5
+ 1872 0977 1539     		.2byte	0x1539
+ 1873 0979 0000009B 		.4byte	0x9b
+ 1874 097d 04       		.byte	0x4
+ 1875 097e 01       		.byte	0x1
+ 1876 097f 06       		.byte	0x6
+ 1877 0980 02       		.byte	0x2
+ 1878 0981 23       		.byte	0x23
+ 1879 0982 00       		.uleb128 0
+ 1880 0983 07       		.uleb128 0x7
+ 1881 0984 00000000 		.4byte	.LASF66
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 34
+
+
+ 1882 0988 05       		.byte	0x5
+ 1883 0989 153A     		.2byte	0x153a
+ 1884 098b 0000009B 		.4byte	0x9b
+ 1885 098f 04       		.byte	0x4
+ 1886 0990 01       		.byte	0x1
+ 1887 0991 07       		.byte	0x7
+ 1888 0992 02       		.byte	0x2
+ 1889 0993 23       		.byte	0x23
+ 1890 0994 00       		.uleb128 0
+ 1891 0995 07       		.uleb128 0x7
+ 1892 0996 00000000 		.4byte	.LASF67
+ 1893 099a 05       		.byte	0x5
+ 1894 099b 153B     		.2byte	0x153b
+ 1895 099d 0000009B 		.4byte	0x9b
+ 1896 09a1 04       		.byte	0x4
+ 1897 09a2 01       		.byte	0x1
+ 1898 09a3 08       		.byte	0x8
+ 1899 09a4 02       		.byte	0x2
+ 1900 09a5 23       		.byte	0x23
+ 1901 09a6 00       		.uleb128 0
+ 1902 09a7 07       		.uleb128 0x7
+ 1903 09a8 00000000 		.4byte	.LASF68
+ 1904 09ac 05       		.byte	0x5
+ 1905 09ad 153C     		.2byte	0x153c
+ 1906 09af 0000009B 		.4byte	0x9b
+ 1907 09b3 04       		.byte	0x4
+ 1908 09b4 01       		.byte	0x1
+ 1909 09b5 09       		.byte	0x9
+ 1910 09b6 02       		.byte	0x2
+ 1911 09b7 23       		.byte	0x23
+ 1912 09b8 00       		.uleb128 0
+ 1913 09b9 07       		.uleb128 0x7
+ 1914 09ba 00000000 		.4byte	.LASF69
+ 1915 09be 05       		.byte	0x5
+ 1916 09bf 153D     		.2byte	0x153d
+ 1917 09c1 0000009B 		.4byte	0x9b
+ 1918 09c5 04       		.byte	0x4
+ 1919 09c6 01       		.byte	0x1
+ 1920 09c7 0A       		.byte	0xa
+ 1921 09c8 02       		.byte	0x2
+ 1922 09c9 23       		.byte	0x23
+ 1923 09ca 00       		.uleb128 0
+ 1924 09cb 07       		.uleb128 0x7
+ 1925 09cc 00000000 		.4byte	.LASF70
+ 1926 09d0 05       		.byte	0x5
+ 1927 09d1 153E     		.2byte	0x153e
+ 1928 09d3 0000009B 		.4byte	0x9b
+ 1929 09d7 04       		.byte	0x4
+ 1930 09d8 01       		.byte	0x1
+ 1931 09d9 0B       		.byte	0xb
+ 1932 09da 02       		.byte	0x2
+ 1933 09db 23       		.byte	0x23
+ 1934 09dc 00       		.uleb128 0
+ 1935 09dd 07       		.uleb128 0x7
+ 1936 09de 00000000 		.4byte	.LASF71
+ 1937 09e2 05       		.byte	0x5
+ 1938 09e3 153F     		.2byte	0x153f
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 35
+
+
+ 1939 09e5 0000009B 		.4byte	0x9b
+ 1940 09e9 04       		.byte	0x4
+ 1941 09ea 01       		.byte	0x1
+ 1942 09eb 0C       		.byte	0xc
+ 1943 09ec 02       		.byte	0x2
+ 1944 09ed 23       		.byte	0x23
+ 1945 09ee 00       		.uleb128 0
+ 1946 09ef 07       		.uleb128 0x7
+ 1947 09f0 00000000 		.4byte	.LASF72
+ 1948 09f4 05       		.byte	0x5
+ 1949 09f5 1540     		.2byte	0x1540
+ 1950 09f7 0000009B 		.4byte	0x9b
+ 1951 09fb 04       		.byte	0x4
+ 1952 09fc 01       		.byte	0x1
+ 1953 09fd 0D       		.byte	0xd
+ 1954 09fe 02       		.byte	0x2
+ 1955 09ff 23       		.byte	0x23
+ 1956 0a00 00       		.uleb128 0
+ 1957 0a01 07       		.uleb128 0x7
+ 1958 0a02 00000000 		.4byte	.LASF73
+ 1959 0a06 05       		.byte	0x5
+ 1960 0a07 1541     		.2byte	0x1541
+ 1961 0a09 0000009B 		.4byte	0x9b
+ 1962 0a0d 04       		.byte	0x4
+ 1963 0a0e 01       		.byte	0x1
+ 1964 0a0f 0E       		.byte	0xe
+ 1965 0a10 02       		.byte	0x2
+ 1966 0a11 23       		.byte	0x23
+ 1967 0a12 00       		.uleb128 0
+ 1968 0a13 07       		.uleb128 0x7
+ 1969 0a14 00000000 		.4byte	.LASF74
+ 1970 0a18 05       		.byte	0x5
+ 1971 0a19 1542     		.2byte	0x1542
+ 1972 0a1b 0000009B 		.4byte	0x9b
+ 1973 0a1f 04       		.byte	0x4
+ 1974 0a20 01       		.byte	0x1
+ 1975 0a21 0F       		.byte	0xf
+ 1976 0a22 02       		.byte	0x2
+ 1977 0a23 23       		.byte	0x23
+ 1978 0a24 00       		.uleb128 0
+ 1979 0a25 07       		.uleb128 0x7
+ 1980 0a26 00000000 		.4byte	.LASF75
+ 1981 0a2a 05       		.byte	0x5
+ 1982 0a2b 1543     		.2byte	0x1543
+ 1983 0a2d 0000009B 		.4byte	0x9b
+ 1984 0a31 04       		.byte	0x4
+ 1985 0a32 01       		.byte	0x1
+ 1986 0a33 10       		.byte	0x10
+ 1987 0a34 02       		.byte	0x2
+ 1988 0a35 23       		.byte	0x23
+ 1989 0a36 00       		.uleb128 0
+ 1990 0a37 07       		.uleb128 0x7
+ 1991 0a38 00000000 		.4byte	.LASF76
+ 1992 0a3c 05       		.byte	0x5
+ 1993 0a3d 1544     		.2byte	0x1544
+ 1994 0a3f 0000009B 		.4byte	0x9b
+ 1995 0a43 04       		.byte	0x4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 36
+
+
+ 1996 0a44 01       		.byte	0x1
+ 1997 0a45 11       		.byte	0x11
+ 1998 0a46 02       		.byte	0x2
+ 1999 0a47 23       		.byte	0x23
+ 2000 0a48 00       		.uleb128 0
+ 2001 0a49 07       		.uleb128 0x7
+ 2002 0a4a 00000000 		.4byte	.LASF77
+ 2003 0a4e 05       		.byte	0x5
+ 2004 0a4f 1545     		.2byte	0x1545
+ 2005 0a51 0000009B 		.4byte	0x9b
+ 2006 0a55 04       		.byte	0x4
+ 2007 0a56 01       		.byte	0x1
+ 2008 0a57 12       		.byte	0x12
+ 2009 0a58 02       		.byte	0x2
+ 2010 0a59 23       		.byte	0x23
+ 2011 0a5a 00       		.uleb128 0
+ 2012 0a5b 07       		.uleb128 0x7
+ 2013 0a5c 00000000 		.4byte	.LASF78
+ 2014 0a60 05       		.byte	0x5
+ 2015 0a61 1546     		.2byte	0x1546
+ 2016 0a63 0000009B 		.4byte	0x9b
+ 2017 0a67 04       		.byte	0x4
+ 2018 0a68 01       		.byte	0x1
+ 2019 0a69 13       		.byte	0x13
+ 2020 0a6a 02       		.byte	0x2
+ 2021 0a6b 23       		.byte	0x23
+ 2022 0a6c 00       		.uleb128 0
+ 2023 0a6d 07       		.uleb128 0x7
+ 2024 0a6e 00000000 		.4byte	.LASF79
+ 2025 0a72 05       		.byte	0x5
+ 2026 0a73 1547     		.2byte	0x1547
+ 2027 0a75 0000009B 		.4byte	0x9b
+ 2028 0a79 04       		.byte	0x4
+ 2029 0a7a 01       		.byte	0x1
+ 2030 0a7b 14       		.byte	0x14
+ 2031 0a7c 02       		.byte	0x2
+ 2032 0a7d 23       		.byte	0x23
+ 2033 0a7e 00       		.uleb128 0
+ 2034 0a7f 07       		.uleb128 0x7
+ 2035 0a80 00000000 		.4byte	.LASF80
+ 2036 0a84 05       		.byte	0x5
+ 2037 0a85 1548     		.2byte	0x1548
+ 2038 0a87 0000009B 		.4byte	0x9b
+ 2039 0a8b 04       		.byte	0x4
+ 2040 0a8c 01       		.byte	0x1
+ 2041 0a8d 15       		.byte	0x15
+ 2042 0a8e 02       		.byte	0x2
+ 2043 0a8f 23       		.byte	0x23
+ 2044 0a90 00       		.uleb128 0
+ 2045 0a91 07       		.uleb128 0x7
+ 2046 0a92 00000000 		.4byte	.LASF81
+ 2047 0a96 05       		.byte	0x5
+ 2048 0a97 1549     		.2byte	0x1549
+ 2049 0a99 0000009B 		.4byte	0x9b
+ 2050 0a9d 04       		.byte	0x4
+ 2051 0a9e 01       		.byte	0x1
+ 2052 0a9f 16       		.byte	0x16
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 37
+
+
+ 2053 0aa0 02       		.byte	0x2
+ 2054 0aa1 23       		.byte	0x23
+ 2055 0aa2 00       		.uleb128 0
+ 2056 0aa3 07       		.uleb128 0x7
+ 2057 0aa4 00000000 		.4byte	.LASF82
+ 2058 0aa8 05       		.byte	0x5
+ 2059 0aa9 154A     		.2byte	0x154a
+ 2060 0aab 0000009B 		.4byte	0x9b
+ 2061 0aaf 04       		.byte	0x4
+ 2062 0ab0 01       		.byte	0x1
+ 2063 0ab1 17       		.byte	0x17
+ 2064 0ab2 02       		.byte	0x2
+ 2065 0ab3 23       		.byte	0x23
+ 2066 0ab4 00       		.uleb128 0
+ 2067 0ab5 07       		.uleb128 0x7
+ 2068 0ab6 00000000 		.4byte	.LASF83
+ 2069 0aba 05       		.byte	0x5
+ 2070 0abb 154B     		.2byte	0x154b
+ 2071 0abd 0000009B 		.4byte	0x9b
+ 2072 0ac1 04       		.byte	0x4
+ 2073 0ac2 01       		.byte	0x1
+ 2074 0ac3 18       		.byte	0x18
+ 2075 0ac4 02       		.byte	0x2
+ 2076 0ac5 23       		.byte	0x23
+ 2077 0ac6 00       		.uleb128 0
+ 2078 0ac7 07       		.uleb128 0x7
+ 2079 0ac8 00000000 		.4byte	.LASF84
+ 2080 0acc 05       		.byte	0x5
+ 2081 0acd 154C     		.2byte	0x154c
+ 2082 0acf 0000009B 		.4byte	0x9b
+ 2083 0ad3 04       		.byte	0x4
+ 2084 0ad4 01       		.byte	0x1
+ 2085 0ad5 19       		.byte	0x19
+ 2086 0ad6 02       		.byte	0x2
+ 2087 0ad7 23       		.byte	0x23
+ 2088 0ad8 00       		.uleb128 0
+ 2089 0ad9 07       		.uleb128 0x7
+ 2090 0ada 00000000 		.4byte	.LASF85
+ 2091 0ade 05       		.byte	0x5
+ 2092 0adf 154D     		.2byte	0x154d
+ 2093 0ae1 0000009B 		.4byte	0x9b
+ 2094 0ae5 04       		.byte	0x4
+ 2095 0ae6 01       		.byte	0x1
+ 2096 0ae7 1A       		.byte	0x1a
+ 2097 0ae8 02       		.byte	0x2
+ 2098 0ae9 23       		.byte	0x23
+ 2099 0aea 00       		.uleb128 0
+ 2100 0aeb 07       		.uleb128 0x7
+ 2101 0aec 00000000 		.4byte	.LASF86
+ 2102 0af0 05       		.byte	0x5
+ 2103 0af1 154E     		.2byte	0x154e
+ 2104 0af3 0000009B 		.4byte	0x9b
+ 2105 0af7 04       		.byte	0x4
+ 2106 0af8 01       		.byte	0x1
+ 2107 0af9 1B       		.byte	0x1b
+ 2108 0afa 02       		.byte	0x2
+ 2109 0afb 23       		.byte	0x23
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 38
+
+
+ 2110 0afc 00       		.uleb128 0
+ 2111 0afd 07       		.uleb128 0x7
+ 2112 0afe 00000000 		.4byte	.LASF87
+ 2113 0b02 05       		.byte	0x5
+ 2114 0b03 154F     		.2byte	0x154f
+ 2115 0b05 0000009B 		.4byte	0x9b
+ 2116 0b09 04       		.byte	0x4
+ 2117 0b0a 01       		.byte	0x1
+ 2118 0b0b 1C       		.byte	0x1c
+ 2119 0b0c 02       		.byte	0x2
+ 2120 0b0d 23       		.byte	0x23
+ 2121 0b0e 00       		.uleb128 0
+ 2122 0b0f 07       		.uleb128 0x7
+ 2123 0b10 00000000 		.4byte	.LASF88
+ 2124 0b14 05       		.byte	0x5
+ 2125 0b15 1550     		.2byte	0x1550
+ 2126 0b17 0000009B 		.4byte	0x9b
+ 2127 0b1b 04       		.byte	0x4
+ 2128 0b1c 01       		.byte	0x1
+ 2129 0b1d 1D       		.byte	0x1d
+ 2130 0b1e 02       		.byte	0x2
+ 2131 0b1f 23       		.byte	0x23
+ 2132 0b20 00       		.uleb128 0
+ 2133 0b21 07       		.uleb128 0x7
+ 2134 0b22 00000000 		.4byte	.LASF89
+ 2135 0b26 05       		.byte	0x5
+ 2136 0b27 1551     		.2byte	0x1551
+ 2137 0b29 0000009B 		.4byte	0x9b
+ 2138 0b2d 04       		.byte	0x4
+ 2139 0b2e 01       		.byte	0x1
+ 2140 0b2f 1E       		.byte	0x1e
+ 2141 0b30 02       		.byte	0x2
+ 2142 0b31 23       		.byte	0x23
+ 2143 0b32 00       		.uleb128 0
+ 2144 0b33 07       		.uleb128 0x7
+ 2145 0b34 00000000 		.4byte	.LASF90
+ 2146 0b38 05       		.byte	0x5
+ 2147 0b39 1552     		.2byte	0x1552
+ 2148 0b3b 0000009B 		.4byte	0x9b
+ 2149 0b3f 04       		.byte	0x4
+ 2150 0b40 01       		.byte	0x1
+ 2151 0b41 1F       		.byte	0x1f
+ 2152 0b42 02       		.byte	0x2
+ 2153 0b43 23       		.byte	0x23
+ 2154 0b44 00       		.uleb128 0
+ 2155 0b45 00       		.byte	0
+ 2156 0b46 08       		.uleb128 0x8
+ 2157 0b47 04       		.byte	0x4
+ 2158 0b48 05       		.byte	0x5
+ 2159 0b49 1530     		.2byte	0x1530
+ 2160 0b4b 00000B64 		.4byte	0xb64
+ 2161 0b4f 09       		.uleb128 0x9
+ 2162 0b50 5200     		.string	"R"
+ 2163 0b52 05       		.byte	0x5
+ 2164 0b53 1531     		.2byte	0x1531
+ 2165 0b55 0000009B 		.4byte	0x9b
+ 2166 0b59 09       		.uleb128 0x9
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 39
+
+
+ 2167 0b5a 4200     		.string	"B"
+ 2168 0b5c 05       		.byte	0x5
+ 2169 0b5d 1553     		.2byte	0x1553
+ 2170 0b5f 000008FC 		.4byte	0x8fc
+ 2171 0b63 00       		.byte	0
+ 2172 0b64 10       		.uleb128 0x10
+ 2173 0b65 00000000 		.4byte	.LASF92
+ 2174 0b69 0420     		.2byte	0x420
+ 2175 0b6b 05       		.byte	0x5
+ 2176 0b6c 14D4     		.2byte	0x14d4
+ 2177 0b6e 00000BCC 		.4byte	0xbcc
+ 2178 0b72 0D       		.uleb128 0xd
+ 2179 0b73 4D435200 		.string	"MCR"
+ 2180 0b77 05       		.byte	0x5
+ 2181 0b78 14E2     		.2byte	0x14e2
+ 2182 0b7a 00000418 		.4byte	0x418
+ 2183 0b7e 02       		.byte	0x2
+ 2184 0b7f 23       		.byte	0x23
+ 2185 0b80 00       		.uleb128 0
+ 2186 0b81 0D       		.uleb128 0xd
+ 2187 0b82 47465200 		.string	"GFR"
+ 2188 0b86 05       		.byte	0x5
+ 2189 0b87 1508     		.2byte	0x1508
+ 2190 0b89 00000676 		.4byte	0x676
+ 2191 0b8d 02       		.byte	0x2
+ 2192 0b8e 23       		.byte	0x23
+ 2193 0b8f 04       		.uleb128 0x4
+ 2194 0b90 0C       		.uleb128 0xc
+ 2195 0b91 00000000 		.4byte	.LASF93
+ 2196 0b95 05       		.byte	0x5
+ 2197 0b96 152E     		.2byte	0x152e
+ 2198 0b98 000008DE 		.4byte	0x8de
+ 2199 0b9c 02       		.byte	0x2
+ 2200 0b9d 23       		.byte	0x23
+ 2201 0b9e 08       		.uleb128 0x8
+ 2202 0b9f 0C       		.uleb128 0xc
+ 2203 0ba0 00000000 		.4byte	.LASF94
+ 2204 0ba4 05       		.byte	0x5
+ 2205 0ba5 1554     		.2byte	0x1554
+ 2206 0ba7 00000B46 		.4byte	0xb46
+ 2207 0bab 02       		.byte	0x2
+ 2208 0bac 23       		.byte	0x23
+ 2209 0bad 0C       		.uleb128 0xc
+ 2210 0bae 0C       		.uleb128 0xc
+ 2211 0baf 00000000 		.4byte	.LASF95
+ 2212 0bb3 05       		.byte	0x5
+ 2213 0bb4 1556     		.2byte	0x1556
+ 2214 0bb6 00000BCC 		.4byte	0xbcc
+ 2215 0bba 02       		.byte	0x2
+ 2216 0bbb 23       		.byte	0x23
+ 2217 0bbc 10       		.uleb128 0x10
+ 2218 0bbd 0D       		.uleb128 0xd
+ 2219 0bbe 434800   		.string	"CH"
+ 2220 0bc1 05       		.byte	0x5
+ 2221 0bc2 1558     		.2byte	0x1558
+ 2222 0bc4 00000BDC 		.4byte	0xbdc
+ 2223 0bc8 02       		.byte	0x2
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 40
+
+
+ 2224 0bc9 23       		.byte	0x23
+ 2225 0bca 20       		.uleb128 0x20
+ 2226 0bcb 00       		.byte	0
+ 2227 0bcc 0E       		.uleb128 0xe
+ 2228 0bcd 00000090 		.4byte	0x90
+ 2229 0bd1 00000BDC 		.4byte	0xbdc
+ 2230 0bd5 0F       		.uleb128 0xf
+ 2231 0bd6 000000AB 		.4byte	0xab
+ 2232 0bda 03       		.byte	0x3
+ 2233 0bdb 00       		.byte	0
+ 2234 0bdc 0E       		.uleb128 0xe
+ 2235 0bdd 0000032D 		.4byte	0x32d
+ 2236 0be1 00000BEC 		.4byte	0xbec
+ 2237 0be5 0F       		.uleb128 0xf
+ 2238 0be6 000000AB 		.4byte	0xab
+ 2239 0bea 1F       		.byte	0x1f
+ 2240 0beb 00       		.byte	0
+ 2241 0bec 02       		.uleb128 0x2
+ 2242 0bed 01       		.byte	0x1
+ 2243 0bee 08       		.byte	0x8
+ 2244 0bef 00000000 		.4byte	.LASF96
+ 2245 0bf3 11       		.uleb128 0x11
+ 2246 0bf4 00000000 		.4byte	.LASF97
+ 2247 0bf8 06       		.byte	0x6
+ 2248 0bf9 0412     		.2byte	0x412
+ 2249 0bfb 00000BFF 		.4byte	0xbff
+ 2250 0bff 0B       		.uleb128 0xb
+ 2251 0c00 00000000 		.4byte	.LASF97
+ 2252 0c04 10       		.byte	0x10
+ 2253 0c05 06       		.byte	0x6
+ 2254 0c06 0461     		.2byte	0x461
+ 2255 0c08 00000C49 		.4byte	0xc49
+ 2256 0c0c 0C       		.uleb128 0xc
+ 2257 0c0d 00000000 		.4byte	.LASF98
+ 2258 0c11 06       		.byte	0x6
+ 2259 0c12 0465     		.2byte	0x465
+ 2260 0c14 00000D38 		.4byte	0xd38
+ 2261 0c18 02       		.byte	0x2
+ 2262 0c19 23       		.byte	0x23
+ 2263 0c1a 00       		.uleb128 0
+ 2264 0c1b 0C       		.uleb128 0xc
+ 2265 0c1c 00000000 		.4byte	.LASF99
+ 2266 0c20 06       		.byte	0x6
+ 2267 0c21 0469     		.2byte	0x469
+ 2268 0c23 00000C85 		.4byte	0xc85
+ 2269 0c27 02       		.byte	0x2
+ 2270 0c28 23       		.byte	0x23
+ 2271 0c29 04       		.uleb128 0x4
+ 2272 0c2a 0C       		.uleb128 0xc
+ 2273 0c2b 00000000 		.4byte	.LASF100
+ 2274 0c2f 06       		.byte	0x6
+ 2275 0c30 0471     		.2byte	0x471
+ 2276 0c32 00000D43 		.4byte	0xd43
+ 2277 0c36 02       		.byte	0x2
+ 2278 0c37 23       		.byte	0x23
+ 2279 0c38 08       		.uleb128 0x8
+ 2280 0c39 0C       		.uleb128 0xc
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 41
+
+
+ 2281 0c3a 00000000 		.4byte	.LASF101
+ 2282 0c3e 06       		.byte	0x6
+ 2283 0c3f 0476     		.2byte	0x476
+ 2284 0c41 00000C79 		.4byte	0xc79
+ 2285 0c45 02       		.byte	0x2
+ 2286 0c46 23       		.byte	0x23
+ 2287 0c47 0C       		.uleb128 0xc
+ 2288 0c48 00       		.byte	0
+ 2289 0c49 11       		.uleb128 0x11
+ 2290 0c4a 00000000 		.4byte	.LASF102
+ 2291 0c4e 06       		.byte	0x6
+ 2292 0c4f 0419     		.2byte	0x419
+ 2293 0c51 00000C55 		.4byte	0xc55
+ 2294 0c55 12       		.uleb128 0x12
+ 2295 0c56 04       		.byte	0x4
+ 2296 0c57 00000C5B 		.4byte	0xc5b
+ 2297 0c5b 13       		.uleb128 0x13
+ 2298 0c5c 01       		.byte	0x1
+ 2299 0c5d 00000C67 		.4byte	0xc67
+ 2300 0c61 14       		.uleb128 0x14
+ 2301 0c62 00000C67 		.4byte	0xc67
+ 2302 0c66 00       		.byte	0
+ 2303 0c67 12       		.uleb128 0x12
+ 2304 0c68 04       		.byte	0x4
+ 2305 0c69 00000BF3 		.4byte	0xbf3
+ 2306 0c6d 11       		.uleb128 0x11
+ 2307 0c6e 00000000 		.4byte	.LASF103
+ 2308 0c72 06       		.byte	0x6
+ 2309 0c73 041E     		.2byte	0x41e
+ 2310 0c75 00000090 		.4byte	0x90
+ 2311 0c79 11       		.uleb128 0x11
+ 2312 0c7a 00000000 		.4byte	.LASF104
+ 2313 0c7e 06       		.byte	0x6
+ 2314 0c7f 0423     		.2byte	0x423
+ 2315 0c81 00000085 		.4byte	0x85
+ 2316 0c85 11       		.uleb128 0x11
+ 2317 0c86 00000000 		.4byte	.LASF105
+ 2318 0c8a 06       		.byte	0x6
+ 2319 0c8b 0428     		.2byte	0x428
+ 2320 0c8d 00000090 		.4byte	0x90
+ 2321 0c91 06       		.uleb128 0x6
+ 2322 0c92 08       		.byte	0x8
+ 2323 0c93 06       		.byte	0x6
+ 2324 0c94 042F     		.2byte	0x42f
+ 2325 0c96 00000CB9 		.4byte	0xcb9
+ 2326 0c9a 0C       		.uleb128 0xc
+ 2327 0c9b 00000000 		.4byte	.LASF106
+ 2328 0c9f 06       		.byte	0x6
+ 2329 0ca0 0433     		.2byte	0x433
+ 2330 0ca2 00000C6D 		.4byte	0xc6d
+ 2331 0ca6 02       		.byte	0x2
+ 2332 0ca7 23       		.byte	0x23
+ 2333 0ca8 00       		.uleb128 0
+ 2334 0ca9 0C       		.uleb128 0xc
+ 2335 0caa 00000000 		.4byte	.LASF107
+ 2336 0cae 06       		.byte	0x6
+ 2337 0caf 0439     		.2byte	0x439
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 42
+
+
+ 2338 0cb1 00000C49 		.4byte	0xc49
+ 2339 0cb5 02       		.byte	0x2
+ 2340 0cb6 23       		.byte	0x23
+ 2341 0cb7 04       		.uleb128 0x4
+ 2342 0cb8 00       		.byte	0
+ 2343 0cb9 11       		.uleb128 0x11
+ 2344 0cba 00000000 		.4byte	.LASF108
+ 2345 0cbe 06       		.byte	0x6
+ 2346 0cbf 043B     		.2byte	0x43b
+ 2347 0cc1 00000C91 		.4byte	0xc91
+ 2348 0cc5 15       		.uleb128 0x15
+ 2349 0cc6 0108     		.2byte	0x108
+ 2350 0cc8 06       		.byte	0x6
+ 2351 0cc9 0442     		.2byte	0x442
+ 2352 0ccb 00000D1C 		.4byte	0xd1c
+ 2353 0ccf 0D       		.uleb128 0xd
+ 2354 0cd0 70736300 		.string	"psc"
+ 2355 0cd4 06       		.byte	0x6
+ 2356 0cd5 0446     		.2byte	0x446
+ 2357 0cd7 00000085 		.4byte	0x85
+ 2358 0cdb 02       		.byte	0x2
+ 2359 0cdc 23       		.byte	0x23
+ 2360 0cdd 00       		.uleb128 0
+ 2361 0cde 0C       		.uleb128 0xc
+ 2362 0cdf 00000000 		.4byte	.LASF99
+ 2363 0ce3 06       		.byte	0x6
+ 2364 0ce4 044A     		.2byte	0x44a
+ 2365 0ce6 00000C85 		.4byte	0xc85
+ 2366 0cea 02       		.byte	0x2
+ 2367 0ceb 23       		.byte	0x23
+ 2368 0cec 04       		.uleb128 0x4
+ 2369 0ced 0C       		.uleb128 0xc
+ 2370 0cee 00000000 		.4byte	.LASF107
+ 2371 0cf2 06       		.byte	0x6
+ 2372 0cf3 0450     		.2byte	0x450
+ 2373 0cf5 00000C49 		.4byte	0xc49
+ 2374 0cf9 02       		.byte	0x2
+ 2375 0cfa 23       		.byte	0x23
+ 2376 0cfb 08       		.uleb128 0x8
+ 2377 0cfc 0C       		.uleb128 0xc
+ 2378 0cfd 00000000 		.4byte	.LASF109
+ 2379 0d01 06       		.byte	0x6
+ 2380 0d02 0454     		.2byte	0x454
+ 2381 0d04 00000D1C 		.4byte	0xd1c
+ 2382 0d08 02       		.byte	0x2
+ 2383 0d09 23       		.byte	0x23
+ 2384 0d0a 0C       		.uleb128 0xc
+ 2385 0d0b 0C       		.uleb128 0xc
+ 2386 0d0c 00000000 		.4byte	.LASF106
+ 2387 0d10 06       		.byte	0x6
+ 2388 0d11 0459     		.2byte	0x459
+ 2389 0d13 00000C6D 		.4byte	0xc6d
+ 2390 0d17 03       		.byte	0x3
+ 2391 0d18 23       		.byte	0x23
+ 2392 0d19 8402     		.uleb128 0x104
+ 2393 0d1b 00       		.byte	0
+ 2394 0d1c 0E       		.uleb128 0xe
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 43
+
+
+ 2395 0d1d 00000CB9 		.4byte	0xcb9
+ 2396 0d21 00000D2C 		.4byte	0xd2c
+ 2397 0d25 0F       		.uleb128 0xf
+ 2398 0d26 000000AB 		.4byte	0xab
+ 2399 0d2a 1E       		.byte	0x1e
+ 2400 0d2b 00       		.byte	0
+ 2401 0d2c 11       		.uleb128 0x11
+ 2402 0d2d 00000000 		.4byte	.LASF110
+ 2403 0d31 06       		.byte	0x6
+ 2404 0d32 045A     		.2byte	0x45a
+ 2405 0d34 00000CC5 		.4byte	0xcc5
+ 2406 0d38 12       		.uleb128 0x12
+ 2407 0d39 04       		.byte	0x4
+ 2408 0d3a 00000D3E 		.4byte	0xd3e
+ 2409 0d3e 16       		.uleb128 0x16
+ 2410 0d3f 00000D2C 		.4byte	0xd2c
+ 2411 0d43 12       		.uleb128 0x12
+ 2412 0d44 04       		.byte	0x4
+ 2413 0d45 00000D49 		.4byte	0xd49
+ 2414 0d49 05       		.uleb128 0x5
+ 2415 0d4a 00000B64 		.4byte	0xb64
+ 2416 0d4e 17       		.uleb128 0x17
+ 2417 0d4f 00000000 		.4byte	.LASF131
+ 2418 0d53 01       		.byte	0x1
+ 2419 0d54 39       		.byte	0x39
+ 2420 0d55 01       		.byte	0x1
+ 2421 0d56 00000090 		.4byte	0x90
+ 2422 0d5a 01       		.byte	0x1
+ 2423 0d5b 00000D6B 		.4byte	0xd6b
+ 2424 0d5f 18       		.uleb128 0x18
+ 2425 0d60 00000000 		.4byte	.LASF125
+ 2426 0d64 01       		.byte	0x1
+ 2427 0d65 3A       		.byte	0x3a
+ 2428 0d66 00000D43 		.4byte	0xd43
+ 2429 0d6a 00       		.byte	0
+ 2430 0d6b 19       		.uleb128 0x19
+ 2431 0d6c 01       		.byte	0x1
+ 2432 0d6d 00000000 		.4byte	.LASF111
+ 2433 0d71 01       		.byte	0x1
+ 2434 0d72 41       		.byte	0x41
+ 2435 0d73 01       		.byte	0x1
+ 2436 0d74 00000000 		.4byte	.LFB5
+ 2437 0d78 00000000 		.4byte	.LFE5
+ 2438 0d7c 02       		.byte	0x2
+ 2439 0d7d 71       		.byte	0x71
+ 2440 0d7e 00       		.sleb128 0
+ 2441 0d7f 01       		.byte	0x1
+ 2442 0d80 1A       		.uleb128 0x1a
+ 2443 0d81 01       		.byte	0x1
+ 2444 0d82 00000000 		.4byte	.LASF118
+ 2445 0d86 01       		.byte	0x1
+ 2446 0d87 45       		.byte	0x45
+ 2447 0d88 01       		.byte	0x1
+ 2448 0d89 00000090 		.4byte	0x90
+ 2449 0d8d 00000000 		.4byte	.LFB6
+ 2450 0d91 00000000 		.4byte	.LFE6
+ 2451 0d95 02       		.byte	0x2
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 44
+
+
+ 2452 0d96 71       		.byte	0x71
+ 2453 0d97 00       		.sleb128 0
+ 2454 0d98 01       		.byte	0x1
+ 2455 0d99 19       		.uleb128 0x19
+ 2456 0d9a 01       		.byte	0x1
+ 2457 0d9b 00000000 		.4byte	.LASF112
+ 2458 0d9f 01       		.byte	0x1
+ 2459 0da0 49       		.byte	0x49
+ 2460 0da1 01       		.byte	0x1
+ 2461 0da2 00000000 		.4byte	.LFB7
+ 2462 0da6 00000000 		.4byte	.LFE7
+ 2463 0daa 02       		.byte	0x2
+ 2464 0dab 71       		.byte	0x71
+ 2465 0dac 00       		.sleb128 0
+ 2466 0dad 01       		.byte	0x1
+ 2467 0dae 19       		.uleb128 0x19
+ 2468 0daf 01       		.byte	0x1
+ 2469 0db0 00000000 		.4byte	.LASF113
+ 2470 0db4 01       		.byte	0x1
+ 2471 0db5 4D       		.byte	0x4d
+ 2472 0db6 01       		.byte	0x1
+ 2473 0db7 00000000 		.4byte	.LFB8
+ 2474 0dbb 00000000 		.4byte	.LFE8
+ 2475 0dbf 02       		.byte	0x2
+ 2476 0dc0 71       		.byte	0x71
+ 2477 0dc1 00       		.sleb128 0
+ 2478 0dc2 01       		.byte	0x1
+ 2479 0dc3 1B       		.uleb128 0x1b
+ 2480 0dc4 01       		.byte	0x1
+ 2481 0dc5 00000000 		.4byte	.LASF114
+ 2482 0dc9 01       		.byte	0x1
+ 2483 0dca 70       		.byte	0x70
+ 2484 0dcb 01       		.byte	0x1
+ 2485 0dcc 00000000 		.4byte	.LFB9
+ 2486 0dd0 00000000 		.4byte	.LFE9
+ 2487 0dd4 00000000 		.4byte	.LLST0
+ 2488 0dd8 01       		.byte	0x1
+ 2489 0dd9 00000E02 		.4byte	0xe02
+ 2490 0ddd 1C       		.uleb128 0x1c
+ 2491 0dde 00000000 		.4byte	.LASF116
+ 2492 0de2 01       		.byte	0x1
+ 2493 0de3 70       		.byte	0x70
+ 2494 0de4 00000C67 		.4byte	0xc67
+ 2495 0de8 00000000 		.4byte	.LLST1
+ 2496 0dec 1D       		.uleb128 0x1d
+ 2497 0ded 00000000 		.4byte	.LVL2
+ 2498 0df1 00000FA7 		.4byte	0xfa7
+ 2499 0df5 1E       		.uleb128 0x1e
+ 2500 0df6 01       		.byte	0x1
+ 2501 0df7 54       		.byte	0x54
+ 2502 0df8 01       		.byte	0x1
+ 2503 0df9 41       		.byte	0x41
+ 2504 0dfa 1E       		.uleb128 0x1e
+ 2505 0dfb 01       		.byte	0x1
+ 2506 0dfc 53       		.byte	0x53
+ 2507 0dfd 02       		.byte	0x2
+ 2508 0dfe 08       		.byte	0x8
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 45
+
+
+ 2509 0dff 48       		.byte	0x48
+ 2510 0e00 00       		.byte	0
+ 2511 0e01 00       		.byte	0
+ 2512 0e02 1F       		.uleb128 0x1f
+ 2513 0e03 01       		.byte	0x1
+ 2514 0e04 00000000 		.4byte	.LASF115
+ 2515 0e08 01       		.byte	0x1
+ 2516 0e09 82       		.byte	0x82
+ 2517 0e0a 01       		.byte	0x1
+ 2518 0e0b 00000000 		.4byte	.LFB10
+ 2519 0e0f 00000000 		.4byte	.LFE10
+ 2520 0e13 02       		.byte	0x2
+ 2521 0e14 71       		.byte	0x71
+ 2522 0e15 00       		.sleb128 0
+ 2523 0e16 01       		.byte	0x1
+ 2524 0e17 00000E41 		.4byte	0xe41
+ 2525 0e1b 1C       		.uleb128 0x1c
+ 2526 0e1c 00000000 		.4byte	.LASF116
+ 2527 0e20 01       		.byte	0x1
+ 2528 0e21 82       		.byte	0x82
+ 2529 0e22 00000C67 		.4byte	0xc67
+ 2530 0e26 00000000 		.4byte	.LLST2
+ 2531 0e2a 20       		.uleb128 0x20
+ 2532 0e2b 00000000 		.4byte	.LVL6
+ 2533 0e2f 01       		.byte	0x1
+ 2534 0e30 00000FA7 		.4byte	0xfa7
+ 2535 0e34 1E       		.uleb128 0x1e
+ 2536 0e35 01       		.byte	0x1
+ 2537 0e36 54       		.byte	0x54
+ 2538 0e37 01       		.byte	0x1
+ 2539 0e38 30       		.byte	0x30
+ 2540 0e39 1E       		.uleb128 0x1e
+ 2541 0e3a 01       		.byte	0x1
+ 2542 0e3b 53       		.byte	0x53
+ 2543 0e3c 02       		.byte	0x2
+ 2544 0e3d 08       		.byte	0x8
+ 2545 0e3e 48       		.byte	0x48
+ 2546 0e3f 00       		.byte	0
+ 2547 0e40 00       		.byte	0
+ 2548 0e41 19       		.uleb128 0x19
+ 2549 0e42 01       		.byte	0x1
+ 2550 0e43 00000000 		.4byte	.LASF117
+ 2551 0e47 01       		.byte	0x1
+ 2552 0e48 98       		.byte	0x98
+ 2553 0e49 01       		.byte	0x1
+ 2554 0e4a 00000000 		.4byte	.LFB11
+ 2555 0e4e 00000000 		.4byte	.LFE11
+ 2556 0e52 02       		.byte	0x2
+ 2557 0e53 71       		.byte	0x71
+ 2558 0e54 00       		.sleb128 0
+ 2559 0e55 01       		.byte	0x1
+ 2560 0e56 1A       		.uleb128 0x1a
+ 2561 0e57 01       		.byte	0x1
+ 2562 0e58 00000000 		.4byte	.LASF119
+ 2563 0e5c 01       		.byte	0x1
+ 2564 0e5d 9C       		.byte	0x9c
+ 2565 0e5e 01       		.byte	0x1
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 46
+
+
+ 2566 0e5f 00000090 		.4byte	0x90
+ 2567 0e63 00000000 		.4byte	.LFB12
+ 2568 0e67 00000000 		.4byte	.LFE12
+ 2569 0e6b 02       		.byte	0x2
+ 2570 0e6c 71       		.byte	0x71
+ 2571 0e6d 00       		.sleb128 0
+ 2572 0e6e 01       		.byte	0x1
+ 2573 0e6f 19       		.uleb128 0x19
+ 2574 0e70 01       		.byte	0x1
+ 2575 0e71 00000000 		.4byte	.LASF120
+ 2576 0e75 01       		.byte	0x1
+ 2577 0e76 A0       		.byte	0xa0
+ 2578 0e77 01       		.byte	0x1
+ 2579 0e78 00000000 		.4byte	.LFB13
+ 2580 0e7c 00000000 		.4byte	.LFE13
+ 2581 0e80 02       		.byte	0x2
+ 2582 0e81 71       		.byte	0x71
+ 2583 0e82 00       		.sleb128 0
+ 2584 0e83 01       		.byte	0x1
+ 2585 0e84 19       		.uleb128 0x19
+ 2586 0e85 01       		.byte	0x1
+ 2587 0e86 00000000 		.4byte	.LASF121
+ 2588 0e8a 01       		.byte	0x1
+ 2589 0e8b A4       		.byte	0xa4
+ 2590 0e8c 01       		.byte	0x1
+ 2591 0e8d 00000000 		.4byte	.LFB14
+ 2592 0e91 00000000 		.4byte	.LFE14
+ 2593 0e95 02       		.byte	0x2
+ 2594 0e96 71       		.byte	0x71
+ 2595 0e97 00       		.sleb128 0
+ 2596 0e98 01       		.byte	0x1
+ 2597 0e99 1B       		.uleb128 0x1b
+ 2598 0e9a 01       		.byte	0x1
+ 2599 0e9b 00000000 		.4byte	.LASF122
+ 2600 0e9f 01       		.byte	0x1
+ 2601 0ea0 C7       		.byte	0xc7
+ 2602 0ea1 01       		.byte	0x1
+ 2603 0ea2 00000000 		.4byte	.LFB15
+ 2604 0ea6 00000000 		.4byte	.LFE15
+ 2605 0eaa 00000000 		.4byte	.LLST3
+ 2606 0eae 01       		.byte	0x1
+ 2607 0eaf 00000ED8 		.4byte	0xed8
+ 2608 0eb3 1C       		.uleb128 0x1c
+ 2609 0eb4 00000000 		.4byte	.LASF116
+ 2610 0eb8 01       		.byte	0x1
+ 2611 0eb9 C7       		.byte	0xc7
+ 2612 0eba 00000C67 		.4byte	0xc67
+ 2613 0ebe 00000000 		.4byte	.LLST4
+ 2614 0ec2 1D       		.uleb128 0x1d
+ 2615 0ec3 00000000 		.4byte	.LVL9
+ 2616 0ec7 00000FA7 		.4byte	0xfa7
+ 2617 0ecb 1E       		.uleb128 0x1e
+ 2618 0ecc 01       		.byte	0x1
+ 2619 0ecd 54       		.byte	0x54
+ 2620 0ece 01       		.byte	0x1
+ 2621 0ecf 41       		.byte	0x41
+ 2622 0ed0 1E       		.uleb128 0x1e
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 47
+
+
+ 2623 0ed1 01       		.byte	0x1
+ 2624 0ed2 53       		.byte	0x53
+ 2625 0ed3 02       		.byte	0x2
+ 2626 0ed4 08       		.byte	0x8
+ 2627 0ed5 49       		.byte	0x49
+ 2628 0ed6 00       		.byte	0
+ 2629 0ed7 00       		.byte	0
+ 2630 0ed8 1F       		.uleb128 0x1f
+ 2631 0ed9 01       		.byte	0x1
+ 2632 0eda 00000000 		.4byte	.LASF123
+ 2633 0ede 01       		.byte	0x1
+ 2634 0edf D9       		.byte	0xd9
+ 2635 0ee0 01       		.byte	0x1
+ 2636 0ee1 00000000 		.4byte	.LFB16
+ 2637 0ee5 00000000 		.4byte	.LFE16
+ 2638 0ee9 02       		.byte	0x2
+ 2639 0eea 71       		.byte	0x71
+ 2640 0eeb 00       		.sleb128 0
+ 2641 0eec 01       		.byte	0x1
+ 2642 0eed 00000F17 		.4byte	0xf17
+ 2643 0ef1 1C       		.uleb128 0x1c
+ 2644 0ef2 00000000 		.4byte	.LASF116
+ 2645 0ef6 01       		.byte	0x1
+ 2646 0ef7 D9       		.byte	0xd9
+ 2647 0ef8 00000C67 		.4byte	0xc67
+ 2648 0efc 00000000 		.4byte	.LLST5
+ 2649 0f00 20       		.uleb128 0x20
+ 2650 0f01 00000000 		.4byte	.LVL13
+ 2651 0f05 01       		.byte	0x1
+ 2652 0f06 00000FA7 		.4byte	0xfa7
+ 2653 0f0a 1E       		.uleb128 0x1e
+ 2654 0f0b 01       		.byte	0x1
+ 2655 0f0c 54       		.byte	0x54
+ 2656 0f0d 01       		.byte	0x1
+ 2657 0f0e 30       		.byte	0x30
+ 2658 0f0f 1E       		.uleb128 0x1e
+ 2659 0f10 01       		.byte	0x1
+ 2660 0f11 53       		.byte	0x53
+ 2661 0f12 02       		.byte	0x2
+ 2662 0f13 08       		.byte	0x8
+ 2663 0f14 49       		.byte	0x49
+ 2664 0f15 00       		.byte	0
+ 2665 0f16 00       		.byte	0
+ 2666 0f17 21       		.uleb128 0x21
+ 2667 0f18 01       		.byte	0x1
+ 2668 0f19 00000000 		.4byte	.LASF124
+ 2669 0f1d 01       		.byte	0x1
+ 2670 0f1e 02D4     		.2byte	0x2d4
+ 2671 0f20 01       		.byte	0x1
+ 2672 0f21 00000000 		.4byte	.LFB17
+ 2673 0f25 00000000 		.4byte	.LFE17
+ 2674 0f29 02       		.byte	0x2
+ 2675 0f2a 71       		.byte	0x71
+ 2676 0f2b 00       		.sleb128 0
+ 2677 0f2c 01       		.byte	0x1
+ 2678 0f2d 00000F77 		.4byte	0xf77
+ 2679 0f31 22       		.uleb128 0x22
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 48
+
+
+ 2680 0f32 67667200 		.string	"gfr"
+ 2681 0f36 01       		.byte	0x1
+ 2682 0f37 02D8     		.2byte	0x2d8
+ 2683 0f39 00000090 		.4byte	0x90
+ 2684 0f3d 23       		.uleb128 0x23
+ 2685 0f3e 00000D4E 		.4byte	0xd4e
+ 2686 0f42 00000000 		.4byte	.LBB4
+ 2687 0f46 00000000 		.4byte	.LBE4
+ 2688 0f4a 01       		.byte	0x1
+ 2689 0f4b 02DC     		.2byte	0x2dc
+ 2690 0f4d 00000F66 		.4byte	0xf66
+ 2691 0f51 24       		.uleb128 0x24
+ 2692 0f52 00000000 		.4byte	.LBB5
+ 2693 0f56 00000000 		.4byte	.LBE5
+ 2694 0f5a 25       		.uleb128 0x25
+ 2695 0f5b 00000D5F 		.4byte	0xd5f
+ 2696 0f5f 8080E89F 		.sleb128 -1007026176
+ 2696      7C
+ 2697 0f64 00       		.byte	0
+ 2698 0f65 00       		.byte	0
+ 2699 0f66 20       		.uleb128 0x20
+ 2700 0f67 00000000 		.4byte	.LVL15
+ 2701 0f6b 01       		.byte	0x1
+ 2702 0f6c 00000FC1 		.4byte	0xfc1
+ 2703 0f70 1E       		.uleb128 0x1e
+ 2704 0f71 01       		.byte	0x1
+ 2705 0f72 54       		.byte	0x54
+ 2706 0f73 01       		.byte	0x1
+ 2707 0f74 47       		.byte	0x47
+ 2708 0f75 00       		.byte	0
+ 2709 0f76 00       		.byte	0
+ 2710 0f77 26       		.uleb128 0x26
+ 2711 0f78 00000000 		.4byte	.LASF126
+ 2712 0f7c 01       		.byte	0x1
+ 2713 0f7d 2D       		.byte	0x2d
+ 2714 0f7e 00000090 		.4byte	0x90
+ 2715 0f82 05       		.byte	0x5
+ 2716 0f83 03       		.byte	0x3
+ 2717 0f84 00000000 		.4byte	emios0_active_ch_group
+ 2718 0f88 26       		.uleb128 0x26
+ 2719 0f89 00000000 		.4byte	.LASF127
+ 2720 0f8d 01       		.byte	0x1
+ 2721 0f8e 30       		.byte	0x30
+ 2722 0f8f 00000090 		.4byte	0x90
+ 2723 0f93 05       		.byte	0x5
+ 2724 0f94 03       		.byte	0x3
+ 2725 0f95 00000000 		.4byte	emios1_active_ch_group
+ 2726 0f99 27       		.uleb128 0x27
+ 2727 0f9a 00000000 		.4byte	.LASF132
+ 2728 0f9e 06       		.byte	0x6
+ 2729 0f9f 04BA     		.2byte	0x4ba
+ 2730 0fa1 00000BF3 		.4byte	0xbf3
+ 2731 0fa5 01       		.byte	0x1
+ 2732 0fa6 01       		.byte	0x1
+ 2733 0fa7 28       		.uleb128 0x28
+ 2734 0fa8 01       		.byte	0x1
+ 2735 0fa9 00000000 		.4byte	.LASF133
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 49
+
+
+ 2736 0fad 07       		.byte	0x7
+ 2737 0fae 03C7     		.2byte	0x3c7
+ 2738 0fb0 01       		.byte	0x1
+ 2739 0fb1 01       		.byte	0x1
+ 2740 0fb2 00000FC1 		.4byte	0xfc1
+ 2741 0fb6 14       		.uleb128 0x14
+ 2742 0fb7 00000090 		.4byte	0x90
+ 2743 0fbb 14       		.uleb128 0x14
+ 2744 0fbc 00000090 		.4byte	0x90
+ 2745 0fc0 00       		.byte	0
+ 2746 0fc1 29       		.uleb128 0x29
+ 2747 0fc2 01       		.byte	0x1
+ 2748 0fc3 00000000 		.4byte	.LASF134
+ 2749 0fc7 06       		.byte	0x6
+ 2750 0fc8 04E6     		.2byte	0x4e6
+ 2751 0fca 01       		.byte	0x1
+ 2752 0fcb 01       		.byte	0x1
+ 2753 0fcc 14       		.uleb128 0x14
+ 2754 0fcd 00000C67 		.4byte	0xc67
+ 2755 0fd1 14       		.uleb128 0x14
+ 2756 0fd2 00000C79 		.4byte	0xc79
+ 2757 0fd6 00       		.byte	0
+ 2758 0fd7 00       		.byte	0
+ 2759              		.section	.debug_abbrev,"",@progbits
+ 2760              	.Ldebug_abbrev0:
+ 2761 0000 01       		.uleb128 0x1
+ 2762 0001 11       		.uleb128 0x11
+ 2763 0002 01       		.byte	0x1
+ 2764 0003 25       		.uleb128 0x25
+ 2765 0004 0E       		.uleb128 0xe
+ 2766 0005 13       		.uleb128 0x13
+ 2767 0006 0B       		.uleb128 0xb
+ 2768 0007 03       		.uleb128 0x3
+ 2769 0008 0E       		.uleb128 0xe
+ 2770 0009 1B       		.uleb128 0x1b
+ 2771 000a 0E       		.uleb128 0xe
+ 2772 000b 55       		.uleb128 0x55
+ 2773 000c 06       		.uleb128 0x6
+ 2774 000d 11       		.uleb128 0x11
+ 2775 000e 01       		.uleb128 0x1
+ 2776 000f 52       		.uleb128 0x52
+ 2777 0010 01       		.uleb128 0x1
+ 2778 0011 10       		.uleb128 0x10
+ 2779 0012 06       		.uleb128 0x6
+ 2780 0013 00       		.byte	0
+ 2781 0014 00       		.byte	0
+ 2782 0015 02       		.uleb128 0x2
+ 2783 0016 24       		.uleb128 0x24
+ 2784 0017 00       		.byte	0
+ 2785 0018 0B       		.uleb128 0xb
+ 2786 0019 0B       		.uleb128 0xb
+ 2787 001a 3E       		.uleb128 0x3e
+ 2788 001b 0B       		.uleb128 0xb
+ 2789 001c 03       		.uleb128 0x3
+ 2790 001d 0E       		.uleb128 0xe
+ 2791 001e 00       		.byte	0
+ 2792 001f 00       		.byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 50
+
+
+ 2793 0020 03       		.uleb128 0x3
+ 2794 0021 16       		.uleb128 0x16
+ 2795 0022 00       		.byte	0
+ 2796 0023 03       		.uleb128 0x3
+ 2797 0024 0E       		.uleb128 0xe
+ 2798 0025 3A       		.uleb128 0x3a
+ 2799 0026 0B       		.uleb128 0xb
+ 2800 0027 3B       		.uleb128 0x3b
+ 2801 0028 0B       		.uleb128 0xb
+ 2802 0029 49       		.uleb128 0x49
+ 2803 002a 13       		.uleb128 0x13
+ 2804 002b 00       		.byte	0
+ 2805 002c 00       		.byte	0
+ 2806 002d 04       		.uleb128 0x4
+ 2807 002e 24       		.uleb128 0x24
+ 2808 002f 00       		.byte	0
+ 2809 0030 0B       		.uleb128 0xb
+ 2810 0031 0B       		.uleb128 0xb
+ 2811 0032 3E       		.uleb128 0x3e
+ 2812 0033 0B       		.uleb128 0xb
+ 2813 0034 03       		.uleb128 0x3
+ 2814 0035 08       		.uleb128 0x8
+ 2815 0036 00       		.byte	0
+ 2816 0037 00       		.byte	0
+ 2817 0038 05       		.uleb128 0x5
+ 2818 0039 35       		.uleb128 0x35
+ 2819 003a 00       		.byte	0
+ 2820 003b 49       		.uleb128 0x49
+ 2821 003c 13       		.uleb128 0x13
+ 2822 003d 00       		.byte	0
+ 2823 003e 00       		.byte	0
+ 2824 003f 06       		.uleb128 0x6
+ 2825 0040 13       		.uleb128 0x13
+ 2826 0041 01       		.byte	0x1
+ 2827 0042 0B       		.uleb128 0xb
+ 2828 0043 0B       		.uleb128 0xb
+ 2829 0044 3A       		.uleb128 0x3a
+ 2830 0045 0B       		.uleb128 0xb
+ 2831 0046 3B       		.uleb128 0x3b
+ 2832 0047 05       		.uleb128 0x5
+ 2833 0048 01       		.uleb128 0x1
+ 2834 0049 13       		.uleb128 0x13
+ 2835 004a 00       		.byte	0
+ 2836 004b 00       		.byte	0
+ 2837 004c 07       		.uleb128 0x7
+ 2838 004d 0D       		.uleb128 0xd
+ 2839 004e 00       		.byte	0
+ 2840 004f 03       		.uleb128 0x3
+ 2841 0050 0E       		.uleb128 0xe
+ 2842 0051 3A       		.uleb128 0x3a
+ 2843 0052 0B       		.uleb128 0xb
+ 2844 0053 3B       		.uleb128 0x3b
+ 2845 0054 05       		.uleb128 0x5
+ 2846 0055 49       		.uleb128 0x49
+ 2847 0056 13       		.uleb128 0x13
+ 2848 0057 0B       		.uleb128 0xb
+ 2849 0058 0B       		.uleb128 0xb
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 51
+
+
+ 2850 0059 0D       		.uleb128 0xd
+ 2851 005a 0B       		.uleb128 0xb
+ 2852 005b 0C       		.uleb128 0xc
+ 2853 005c 0B       		.uleb128 0xb
+ 2854 005d 38       		.uleb128 0x38
+ 2855 005e 0A       		.uleb128 0xa
+ 2856 005f 00       		.byte	0
+ 2857 0060 00       		.byte	0
+ 2858 0061 08       		.uleb128 0x8
+ 2859 0062 17       		.uleb128 0x17
+ 2860 0063 01       		.byte	0x1
+ 2861 0064 0B       		.uleb128 0xb
+ 2862 0065 0B       		.uleb128 0xb
+ 2863 0066 3A       		.uleb128 0x3a
+ 2864 0067 0B       		.uleb128 0xb
+ 2865 0068 3B       		.uleb128 0x3b
+ 2866 0069 05       		.uleb128 0x5
+ 2867 006a 01       		.uleb128 0x1
+ 2868 006b 13       		.uleb128 0x13
+ 2869 006c 00       		.byte	0
+ 2870 006d 00       		.byte	0
+ 2871 006e 09       		.uleb128 0x9
+ 2872 006f 0D       		.uleb128 0xd
+ 2873 0070 00       		.byte	0
+ 2874 0071 03       		.uleb128 0x3
+ 2875 0072 08       		.uleb128 0x8
+ 2876 0073 3A       		.uleb128 0x3a
+ 2877 0074 0B       		.uleb128 0xb
+ 2878 0075 3B       		.uleb128 0x3b
+ 2879 0076 05       		.uleb128 0x5
+ 2880 0077 49       		.uleb128 0x49
+ 2881 0078 13       		.uleb128 0x13
+ 2882 0079 00       		.byte	0
+ 2883 007a 00       		.byte	0
+ 2884 007b 0A       		.uleb128 0xa
+ 2885 007c 0D       		.uleb128 0xd
+ 2886 007d 00       		.byte	0
+ 2887 007e 03       		.uleb128 0x3
+ 2888 007f 08       		.uleb128 0x8
+ 2889 0080 3A       		.uleb128 0x3a
+ 2890 0081 0B       		.uleb128 0xb
+ 2891 0082 3B       		.uleb128 0x3b
+ 2892 0083 05       		.uleb128 0x5
+ 2893 0084 49       		.uleb128 0x49
+ 2894 0085 13       		.uleb128 0x13
+ 2895 0086 0B       		.uleb128 0xb
+ 2896 0087 0B       		.uleb128 0xb
+ 2897 0088 0D       		.uleb128 0xd
+ 2898 0089 0B       		.uleb128 0xb
+ 2899 008a 0C       		.uleb128 0xc
+ 2900 008b 0B       		.uleb128 0xb
+ 2901 008c 38       		.uleb128 0x38
+ 2902 008d 0A       		.uleb128 0xa
+ 2903 008e 00       		.byte	0
+ 2904 008f 00       		.byte	0
+ 2905 0090 0B       		.uleb128 0xb
+ 2906 0091 13       		.uleb128 0x13
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 52
+
+
+ 2907 0092 01       		.byte	0x1
+ 2908 0093 03       		.uleb128 0x3
+ 2909 0094 0E       		.uleb128 0xe
+ 2910 0095 0B       		.uleb128 0xb
+ 2911 0096 0B       		.uleb128 0xb
+ 2912 0097 3A       		.uleb128 0x3a
+ 2913 0098 0B       		.uleb128 0xb
+ 2914 0099 3B       		.uleb128 0x3b
+ 2915 009a 05       		.uleb128 0x5
+ 2916 009b 01       		.uleb128 0x1
+ 2917 009c 13       		.uleb128 0x13
+ 2918 009d 00       		.byte	0
+ 2919 009e 00       		.byte	0
+ 2920 009f 0C       		.uleb128 0xc
+ 2921 00a0 0D       		.uleb128 0xd
+ 2922 00a1 00       		.byte	0
+ 2923 00a2 03       		.uleb128 0x3
+ 2924 00a3 0E       		.uleb128 0xe
+ 2925 00a4 3A       		.uleb128 0x3a
+ 2926 00a5 0B       		.uleb128 0xb
+ 2927 00a6 3B       		.uleb128 0x3b
+ 2928 00a7 05       		.uleb128 0x5
+ 2929 00a8 49       		.uleb128 0x49
+ 2930 00a9 13       		.uleb128 0x13
+ 2931 00aa 38       		.uleb128 0x38
+ 2932 00ab 0A       		.uleb128 0xa
+ 2933 00ac 00       		.byte	0
+ 2934 00ad 00       		.byte	0
+ 2935 00ae 0D       		.uleb128 0xd
+ 2936 00af 0D       		.uleb128 0xd
+ 2937 00b0 00       		.byte	0
+ 2938 00b1 03       		.uleb128 0x3
+ 2939 00b2 08       		.uleb128 0x8
+ 2940 00b3 3A       		.uleb128 0x3a
+ 2941 00b4 0B       		.uleb128 0xb
+ 2942 00b5 3B       		.uleb128 0x3b
+ 2943 00b6 05       		.uleb128 0x5
+ 2944 00b7 49       		.uleb128 0x49
+ 2945 00b8 13       		.uleb128 0x13
+ 2946 00b9 38       		.uleb128 0x38
+ 2947 00ba 0A       		.uleb128 0xa
+ 2948 00bb 00       		.byte	0
+ 2949 00bc 00       		.byte	0
+ 2950 00bd 0E       		.uleb128 0xe
+ 2951 00be 01       		.uleb128 0x1
+ 2952 00bf 01       		.byte	0x1
+ 2953 00c0 49       		.uleb128 0x49
+ 2954 00c1 13       		.uleb128 0x13
+ 2955 00c2 01       		.uleb128 0x1
+ 2956 00c3 13       		.uleb128 0x13
+ 2957 00c4 00       		.byte	0
+ 2958 00c5 00       		.byte	0
+ 2959 00c6 0F       		.uleb128 0xf
+ 2960 00c7 21       		.uleb128 0x21
+ 2961 00c8 00       		.byte	0
+ 2962 00c9 49       		.uleb128 0x49
+ 2963 00ca 13       		.uleb128 0x13
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 53
+
+
+ 2964 00cb 2F       		.uleb128 0x2f
+ 2965 00cc 0B       		.uleb128 0xb
+ 2966 00cd 00       		.byte	0
+ 2967 00ce 00       		.byte	0
+ 2968 00cf 10       		.uleb128 0x10
+ 2969 00d0 13       		.uleb128 0x13
+ 2970 00d1 01       		.byte	0x1
+ 2971 00d2 03       		.uleb128 0x3
+ 2972 00d3 0E       		.uleb128 0xe
+ 2973 00d4 0B       		.uleb128 0xb
+ 2974 00d5 05       		.uleb128 0x5
+ 2975 00d6 3A       		.uleb128 0x3a
+ 2976 00d7 0B       		.uleb128 0xb
+ 2977 00d8 3B       		.uleb128 0x3b
+ 2978 00d9 05       		.uleb128 0x5
+ 2979 00da 01       		.uleb128 0x1
+ 2980 00db 13       		.uleb128 0x13
+ 2981 00dc 00       		.byte	0
+ 2982 00dd 00       		.byte	0
+ 2983 00de 11       		.uleb128 0x11
+ 2984 00df 16       		.uleb128 0x16
+ 2985 00e0 00       		.byte	0
+ 2986 00e1 03       		.uleb128 0x3
+ 2987 00e2 0E       		.uleb128 0xe
+ 2988 00e3 3A       		.uleb128 0x3a
+ 2989 00e4 0B       		.uleb128 0xb
+ 2990 00e5 3B       		.uleb128 0x3b
+ 2991 00e6 05       		.uleb128 0x5
+ 2992 00e7 49       		.uleb128 0x49
+ 2993 00e8 13       		.uleb128 0x13
+ 2994 00e9 00       		.byte	0
+ 2995 00ea 00       		.byte	0
+ 2996 00eb 12       		.uleb128 0x12
+ 2997 00ec 0F       		.uleb128 0xf
+ 2998 00ed 00       		.byte	0
+ 2999 00ee 0B       		.uleb128 0xb
+ 3000 00ef 0B       		.uleb128 0xb
+ 3001 00f0 49       		.uleb128 0x49
+ 3002 00f1 13       		.uleb128 0x13
+ 3003 00f2 00       		.byte	0
+ 3004 00f3 00       		.byte	0
+ 3005 00f4 13       		.uleb128 0x13
+ 3006 00f5 15       		.uleb128 0x15
+ 3007 00f6 01       		.byte	0x1
+ 3008 00f7 27       		.uleb128 0x27
+ 3009 00f8 0C       		.uleb128 0xc
+ 3010 00f9 01       		.uleb128 0x1
+ 3011 00fa 13       		.uleb128 0x13
+ 3012 00fb 00       		.byte	0
+ 3013 00fc 00       		.byte	0
+ 3014 00fd 14       		.uleb128 0x14
+ 3015 00fe 05       		.uleb128 0x5
+ 3016 00ff 00       		.byte	0
+ 3017 0100 49       		.uleb128 0x49
+ 3018 0101 13       		.uleb128 0x13
+ 3019 0102 00       		.byte	0
+ 3020 0103 00       		.byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 54
+
+
+ 3021 0104 15       		.uleb128 0x15
+ 3022 0105 13       		.uleb128 0x13
+ 3023 0106 01       		.byte	0x1
+ 3024 0107 0B       		.uleb128 0xb
+ 3025 0108 05       		.uleb128 0x5
+ 3026 0109 3A       		.uleb128 0x3a
+ 3027 010a 0B       		.uleb128 0xb
+ 3028 010b 3B       		.uleb128 0x3b
+ 3029 010c 05       		.uleb128 0x5
+ 3030 010d 01       		.uleb128 0x1
+ 3031 010e 13       		.uleb128 0x13
+ 3032 010f 00       		.byte	0
+ 3033 0110 00       		.byte	0
+ 3034 0111 16       		.uleb128 0x16
+ 3035 0112 26       		.uleb128 0x26
+ 3036 0113 00       		.byte	0
+ 3037 0114 49       		.uleb128 0x49
+ 3038 0115 13       		.uleb128 0x13
+ 3039 0116 00       		.byte	0
+ 3040 0117 00       		.byte	0
+ 3041 0118 17       		.uleb128 0x17
+ 3042 0119 2E       		.uleb128 0x2e
+ 3043 011a 01       		.byte	0x1
+ 3044 011b 03       		.uleb128 0x3
+ 3045 011c 0E       		.uleb128 0xe
+ 3046 011d 3A       		.uleb128 0x3a
+ 3047 011e 0B       		.uleb128 0xb
+ 3048 011f 3B       		.uleb128 0x3b
+ 3049 0120 0B       		.uleb128 0xb
+ 3050 0121 27       		.uleb128 0x27
+ 3051 0122 0C       		.uleb128 0xc
+ 3052 0123 49       		.uleb128 0x49
+ 3053 0124 13       		.uleb128 0x13
+ 3054 0125 20       		.uleb128 0x20
+ 3055 0126 0B       		.uleb128 0xb
+ 3056 0127 01       		.uleb128 0x1
+ 3057 0128 13       		.uleb128 0x13
+ 3058 0129 00       		.byte	0
+ 3059 012a 00       		.byte	0
+ 3060 012b 18       		.uleb128 0x18
+ 3061 012c 34       		.uleb128 0x34
+ 3062 012d 00       		.byte	0
+ 3063 012e 03       		.uleb128 0x3
+ 3064 012f 0E       		.uleb128 0xe
+ 3065 0130 3A       		.uleb128 0x3a
+ 3066 0131 0B       		.uleb128 0xb
+ 3067 0132 3B       		.uleb128 0x3b
+ 3068 0133 0B       		.uleb128 0xb
+ 3069 0134 49       		.uleb128 0x49
+ 3070 0135 13       		.uleb128 0x13
+ 3071 0136 00       		.byte	0
+ 3072 0137 00       		.byte	0
+ 3073 0138 19       		.uleb128 0x19
+ 3074 0139 2E       		.uleb128 0x2e
+ 3075 013a 00       		.byte	0
+ 3076 013b 3F       		.uleb128 0x3f
+ 3077 013c 0C       		.uleb128 0xc
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 55
+
+
+ 3078 013d 03       		.uleb128 0x3
+ 3079 013e 0E       		.uleb128 0xe
+ 3080 013f 3A       		.uleb128 0x3a
+ 3081 0140 0B       		.uleb128 0xb
+ 3082 0141 3B       		.uleb128 0x3b
+ 3083 0142 0B       		.uleb128 0xb
+ 3084 0143 27       		.uleb128 0x27
+ 3085 0144 0C       		.uleb128 0xc
+ 3086 0145 11       		.uleb128 0x11
+ 3087 0146 01       		.uleb128 0x1
+ 3088 0147 12       		.uleb128 0x12
+ 3089 0148 01       		.uleb128 0x1
+ 3090 0149 40       		.uleb128 0x40
+ 3091 014a 0A       		.uleb128 0xa
+ 3092 014b 9742     		.uleb128 0x2117
+ 3093 014d 0C       		.uleb128 0xc
+ 3094 014e 00       		.byte	0
+ 3095 014f 00       		.byte	0
+ 3096 0150 1A       		.uleb128 0x1a
+ 3097 0151 2E       		.uleb128 0x2e
+ 3098 0152 00       		.byte	0
+ 3099 0153 3F       		.uleb128 0x3f
+ 3100 0154 0C       		.uleb128 0xc
+ 3101 0155 03       		.uleb128 0x3
+ 3102 0156 0E       		.uleb128 0xe
+ 3103 0157 3A       		.uleb128 0x3a
+ 3104 0158 0B       		.uleb128 0xb
+ 3105 0159 3B       		.uleb128 0x3b
+ 3106 015a 0B       		.uleb128 0xb
+ 3107 015b 27       		.uleb128 0x27
+ 3108 015c 0C       		.uleb128 0xc
+ 3109 015d 49       		.uleb128 0x49
+ 3110 015e 13       		.uleb128 0x13
+ 3111 015f 11       		.uleb128 0x11
+ 3112 0160 01       		.uleb128 0x1
+ 3113 0161 12       		.uleb128 0x12
+ 3114 0162 01       		.uleb128 0x1
+ 3115 0163 40       		.uleb128 0x40
+ 3116 0164 0A       		.uleb128 0xa
+ 3117 0165 9742     		.uleb128 0x2117
+ 3118 0167 0C       		.uleb128 0xc
+ 3119 0168 00       		.byte	0
+ 3120 0169 00       		.byte	0
+ 3121 016a 1B       		.uleb128 0x1b
+ 3122 016b 2E       		.uleb128 0x2e
+ 3123 016c 01       		.byte	0x1
+ 3124 016d 3F       		.uleb128 0x3f
+ 3125 016e 0C       		.uleb128 0xc
+ 3126 016f 03       		.uleb128 0x3
+ 3127 0170 0E       		.uleb128 0xe
+ 3128 0171 3A       		.uleb128 0x3a
+ 3129 0172 0B       		.uleb128 0xb
+ 3130 0173 3B       		.uleb128 0x3b
+ 3131 0174 0B       		.uleb128 0xb
+ 3132 0175 27       		.uleb128 0x27
+ 3133 0176 0C       		.uleb128 0xc
+ 3134 0177 11       		.uleb128 0x11
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 56
+
+
+ 3135 0178 01       		.uleb128 0x1
+ 3136 0179 12       		.uleb128 0x12
+ 3137 017a 01       		.uleb128 0x1
+ 3138 017b 40       		.uleb128 0x40
+ 3139 017c 06       		.uleb128 0x6
+ 3140 017d 9742     		.uleb128 0x2117
+ 3141 017f 0C       		.uleb128 0xc
+ 3142 0180 01       		.uleb128 0x1
+ 3143 0181 13       		.uleb128 0x13
+ 3144 0182 00       		.byte	0
+ 3145 0183 00       		.byte	0
+ 3146 0184 1C       		.uleb128 0x1c
+ 3147 0185 05       		.uleb128 0x5
+ 3148 0186 00       		.byte	0
+ 3149 0187 03       		.uleb128 0x3
+ 3150 0188 0E       		.uleb128 0xe
+ 3151 0189 3A       		.uleb128 0x3a
+ 3152 018a 0B       		.uleb128 0xb
+ 3153 018b 3B       		.uleb128 0x3b
+ 3154 018c 0B       		.uleb128 0xb
+ 3155 018d 49       		.uleb128 0x49
+ 3156 018e 13       		.uleb128 0x13
+ 3157 018f 02       		.uleb128 0x2
+ 3158 0190 06       		.uleb128 0x6
+ 3159 0191 00       		.byte	0
+ 3160 0192 00       		.byte	0
+ 3161 0193 1D       		.uleb128 0x1d
+ 3162 0194 898201   		.uleb128 0x4109
+ 3163 0197 01       		.byte	0x1
+ 3164 0198 11       		.uleb128 0x11
+ 3165 0199 01       		.uleb128 0x1
+ 3166 019a 31       		.uleb128 0x31
+ 3167 019b 13       		.uleb128 0x13
+ 3168 019c 00       		.byte	0
+ 3169 019d 00       		.byte	0
+ 3170 019e 1E       		.uleb128 0x1e
+ 3171 019f 8A8201   		.uleb128 0x410a
+ 3172 01a2 00       		.byte	0
+ 3173 01a3 02       		.uleb128 0x2
+ 3174 01a4 0A       		.uleb128 0xa
+ 3175 01a5 9142     		.uleb128 0x2111
+ 3176 01a7 0A       		.uleb128 0xa
+ 3177 01a8 00       		.byte	0
+ 3178 01a9 00       		.byte	0
+ 3179 01aa 1F       		.uleb128 0x1f
+ 3180 01ab 2E       		.uleb128 0x2e
+ 3181 01ac 01       		.byte	0x1
+ 3182 01ad 3F       		.uleb128 0x3f
+ 3183 01ae 0C       		.uleb128 0xc
+ 3184 01af 03       		.uleb128 0x3
+ 3185 01b0 0E       		.uleb128 0xe
+ 3186 01b1 3A       		.uleb128 0x3a
+ 3187 01b2 0B       		.uleb128 0xb
+ 3188 01b3 3B       		.uleb128 0x3b
+ 3189 01b4 0B       		.uleb128 0xb
+ 3190 01b5 27       		.uleb128 0x27
+ 3191 01b6 0C       		.uleb128 0xc
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 57
+
+
+ 3192 01b7 11       		.uleb128 0x11
+ 3193 01b8 01       		.uleb128 0x1
+ 3194 01b9 12       		.uleb128 0x12
+ 3195 01ba 01       		.uleb128 0x1
+ 3196 01bb 40       		.uleb128 0x40
+ 3197 01bc 0A       		.uleb128 0xa
+ 3198 01bd 9742     		.uleb128 0x2117
+ 3199 01bf 0C       		.uleb128 0xc
+ 3200 01c0 01       		.uleb128 0x1
+ 3201 01c1 13       		.uleb128 0x13
+ 3202 01c2 00       		.byte	0
+ 3203 01c3 00       		.byte	0
+ 3204 01c4 20       		.uleb128 0x20
+ 3205 01c5 898201   		.uleb128 0x4109
+ 3206 01c8 01       		.byte	0x1
+ 3207 01c9 11       		.uleb128 0x11
+ 3208 01ca 01       		.uleb128 0x1
+ 3209 01cb 9542     		.uleb128 0x2115
+ 3210 01cd 0C       		.uleb128 0xc
+ 3211 01ce 31       		.uleb128 0x31
+ 3212 01cf 13       		.uleb128 0x13
+ 3213 01d0 00       		.byte	0
+ 3214 01d1 00       		.byte	0
+ 3215 01d2 21       		.uleb128 0x21
+ 3216 01d3 2E       		.uleb128 0x2e
+ 3217 01d4 01       		.byte	0x1
+ 3218 01d5 3F       		.uleb128 0x3f
+ 3219 01d6 0C       		.uleb128 0xc
+ 3220 01d7 03       		.uleb128 0x3
+ 3221 01d8 0E       		.uleb128 0xe
+ 3222 01d9 3A       		.uleb128 0x3a
+ 3223 01da 0B       		.uleb128 0xb
+ 3224 01db 3B       		.uleb128 0x3b
+ 3225 01dc 05       		.uleb128 0x5
+ 3226 01dd 27       		.uleb128 0x27
+ 3227 01de 0C       		.uleb128 0xc
+ 3228 01df 11       		.uleb128 0x11
+ 3229 01e0 01       		.uleb128 0x1
+ 3230 01e1 12       		.uleb128 0x12
+ 3231 01e2 01       		.uleb128 0x1
+ 3232 01e3 40       		.uleb128 0x40
+ 3233 01e4 0A       		.uleb128 0xa
+ 3234 01e5 9742     		.uleb128 0x2117
+ 3235 01e7 0C       		.uleb128 0xc
+ 3236 01e8 01       		.uleb128 0x1
+ 3237 01e9 13       		.uleb128 0x13
+ 3238 01ea 00       		.byte	0
+ 3239 01eb 00       		.byte	0
+ 3240 01ec 22       		.uleb128 0x22
+ 3241 01ed 34       		.uleb128 0x34
+ 3242 01ee 00       		.byte	0
+ 3243 01ef 03       		.uleb128 0x3
+ 3244 01f0 08       		.uleb128 0x8
+ 3245 01f1 3A       		.uleb128 0x3a
+ 3246 01f2 0B       		.uleb128 0xb
+ 3247 01f3 3B       		.uleb128 0x3b
+ 3248 01f4 05       		.uleb128 0x5
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 58
+
+
+ 3249 01f5 49       		.uleb128 0x49
+ 3250 01f6 13       		.uleb128 0x13
+ 3251 01f7 00       		.byte	0
+ 3252 01f8 00       		.byte	0
+ 3253 01f9 23       		.uleb128 0x23
+ 3254 01fa 1D       		.uleb128 0x1d
+ 3255 01fb 01       		.byte	0x1
+ 3256 01fc 31       		.uleb128 0x31
+ 3257 01fd 13       		.uleb128 0x13
+ 3258 01fe 11       		.uleb128 0x11
+ 3259 01ff 01       		.uleb128 0x1
+ 3260 0200 12       		.uleb128 0x12
+ 3261 0201 01       		.uleb128 0x1
+ 3262 0202 58       		.uleb128 0x58
+ 3263 0203 0B       		.uleb128 0xb
+ 3264 0204 59       		.uleb128 0x59
+ 3265 0205 05       		.uleb128 0x5
+ 3266 0206 01       		.uleb128 0x1
+ 3267 0207 13       		.uleb128 0x13
+ 3268 0208 00       		.byte	0
+ 3269 0209 00       		.byte	0
+ 3270 020a 24       		.uleb128 0x24
+ 3271 020b 0B       		.uleb128 0xb
+ 3272 020c 01       		.byte	0x1
+ 3273 020d 11       		.uleb128 0x11
+ 3274 020e 01       		.uleb128 0x1
+ 3275 020f 12       		.uleb128 0x12
+ 3276 0210 01       		.uleb128 0x1
+ 3277 0211 00       		.byte	0
+ 3278 0212 00       		.byte	0
+ 3279 0213 25       		.uleb128 0x25
+ 3280 0214 34       		.uleb128 0x34
+ 3281 0215 00       		.byte	0
+ 3282 0216 31       		.uleb128 0x31
+ 3283 0217 13       		.uleb128 0x13
+ 3284 0218 1C       		.uleb128 0x1c
+ 3285 0219 0D       		.uleb128 0xd
+ 3286 021a 00       		.byte	0
+ 3287 021b 00       		.byte	0
+ 3288 021c 26       		.uleb128 0x26
+ 3289 021d 34       		.uleb128 0x34
+ 3290 021e 00       		.byte	0
+ 3291 021f 03       		.uleb128 0x3
+ 3292 0220 0E       		.uleb128 0xe
+ 3293 0221 3A       		.uleb128 0x3a
+ 3294 0222 0B       		.uleb128 0xb
+ 3295 0223 3B       		.uleb128 0x3b
+ 3296 0224 0B       		.uleb128 0xb
+ 3297 0225 49       		.uleb128 0x49
+ 3298 0226 13       		.uleb128 0x13
+ 3299 0227 02       		.uleb128 0x2
+ 3300 0228 0A       		.uleb128 0xa
+ 3301 0229 00       		.byte	0
+ 3302 022a 00       		.byte	0
+ 3303 022b 27       		.uleb128 0x27
+ 3304 022c 34       		.uleb128 0x34
+ 3305 022d 00       		.byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 59
+
+
+ 3306 022e 03       		.uleb128 0x3
+ 3307 022f 0E       		.uleb128 0xe
+ 3308 0230 3A       		.uleb128 0x3a
+ 3309 0231 0B       		.uleb128 0xb
+ 3310 0232 3B       		.uleb128 0x3b
+ 3311 0233 05       		.uleb128 0x5
+ 3312 0234 49       		.uleb128 0x49
+ 3313 0235 13       		.uleb128 0x13
+ 3314 0236 3F       		.uleb128 0x3f
+ 3315 0237 0C       		.uleb128 0xc
+ 3316 0238 3C       		.uleb128 0x3c
+ 3317 0239 0C       		.uleb128 0xc
+ 3318 023a 00       		.byte	0
+ 3319 023b 00       		.byte	0
+ 3320 023c 28       		.uleb128 0x28
+ 3321 023d 2E       		.uleb128 0x2e
+ 3322 023e 01       		.byte	0x1
+ 3323 023f 3F       		.uleb128 0x3f
+ 3324 0240 0C       		.uleb128 0xc
+ 3325 0241 03       		.uleb128 0x3
+ 3326 0242 0E       		.uleb128 0xe
+ 3327 0243 3A       		.uleb128 0x3a
+ 3328 0244 0B       		.uleb128 0xb
+ 3329 0245 3B       		.uleb128 0x3b
+ 3330 0246 05       		.uleb128 0x5
+ 3331 0247 27       		.uleb128 0x27
+ 3332 0248 0C       		.uleb128 0xc
+ 3333 0249 3C       		.uleb128 0x3c
+ 3334 024a 0C       		.uleb128 0xc
+ 3335 024b 01       		.uleb128 0x1
+ 3336 024c 13       		.uleb128 0x13
+ 3337 024d 00       		.byte	0
+ 3338 024e 00       		.byte	0
+ 3339 024f 29       		.uleb128 0x29
+ 3340 0250 2E       		.uleb128 0x2e
+ 3341 0251 01       		.byte	0x1
+ 3342 0252 3F       		.uleb128 0x3f
+ 3343 0253 0C       		.uleb128 0xc
+ 3344 0254 03       		.uleb128 0x3
+ 3345 0255 0E       		.uleb128 0xe
+ 3346 0256 3A       		.uleb128 0x3a
+ 3347 0257 0B       		.uleb128 0xb
+ 3348 0258 3B       		.uleb128 0x3b
+ 3349 0259 05       		.uleb128 0x5
+ 3350 025a 27       		.uleb128 0x27
+ 3351 025b 0C       		.uleb128 0xc
+ 3352 025c 3C       		.uleb128 0x3c
+ 3353 025d 0C       		.uleb128 0xc
+ 3354 025e 00       		.byte	0
+ 3355 025f 00       		.byte	0
+ 3356 0260 00       		.byte	0
+ 3357              		.section	.debug_loc,"",@progbits
+ 3358              	.Ldebug_loc0:
+ 3359              	.LLST0:
+ 3360 0000 00000000 		.4byte	.LFB9
+ 3361 0004 00000000 		.4byte	.LCFI0
+ 3362 0008 0002     		.2byte	0x2
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 60
+
+
+ 3363 000a 71       		.byte	0x71
+ 3364 000b 00       		.sleb128 0
+ 3365 000c 00000000 		.4byte	.LCFI0
+ 3366 0010 00000000 		.4byte	.LCFI1
+ 3367 0014 0002     		.2byte	0x2
+ 3368 0016 71       		.byte	0x71
+ 3369 0017 10       		.sleb128 16
+ 3370 0018 00000000 		.4byte	.LCFI1
+ 3371 001c 00000000 		.4byte	.LCFI2
+ 3372 0020 0002     		.2byte	0x2
+ 3373 0022 71       		.byte	0x71
+ 3374 0023 00       		.sleb128 0
+ 3375 0024 00000000 		.4byte	.LCFI2
+ 3376 0028 00000000 		.4byte	.LCFI3
+ 3377 002c 0002     		.2byte	0x2
+ 3378 002e 71       		.byte	0x71
+ 3379 002f 10       		.sleb128 16
+ 3380 0030 00000000 		.4byte	.LCFI3
+ 3381 0034 00000000 		.4byte	.LFE9
+ 3382 0038 0002     		.2byte	0x2
+ 3383 003a 71       		.byte	0x71
+ 3384 003b 00       		.sleb128 0
+ 3385 003c 00000000 		.4byte	0
+ 3386 0040 00000000 		.4byte	0
+ 3387              	.LLST1:
+ 3388 0044 00000000 		.4byte	.LVL0
+ 3389 0048 00000000 		.4byte	.LVL1
+ 3390 004c 0001     		.2byte	0x1
+ 3391 004e 53       		.byte	0x53
+ 3392 004f 00000000 		.4byte	.LVL1
+ 3393 0053 00000000 		.4byte	.LVL3
+ 3394 0057 0001     		.2byte	0x1
+ 3395 0059 6F       		.byte	0x6f
+ 3396 005a 00000000 		.4byte	.LVL3
+ 3397 005e 00000000 		.4byte	.LFE9
+ 3398 0062 0004     		.2byte	0x4
+ 3399 0064 F3       		.byte	0xf3
+ 3400 0065 01       		.uleb128 0x1
+ 3401 0066 53       		.byte	0x53
+ 3402 0067 9F       		.byte	0x9f
+ 3403 0068 00000000 		.4byte	0
+ 3404 006c 00000000 		.4byte	0
+ 3405              	.LLST2:
+ 3406 0070 00000000 		.4byte	.LVL4
+ 3407 0074 00000000 		.4byte	.LVL5
+ 3408 0078 0001     		.2byte	0x1
+ 3409 007a 53       		.byte	0x53
+ 3410 007b 00000000 		.4byte	.LVL5
+ 3411 007f 00000000 		.4byte	.LFE10
+ 3412 0083 0004     		.2byte	0x4
+ 3413 0085 F3       		.byte	0xf3
+ 3414 0086 01       		.uleb128 0x1
+ 3415 0087 53       		.byte	0x53
+ 3416 0088 9F       		.byte	0x9f
+ 3417 0089 00000000 		.4byte	0
+ 3418 008d 00000000 		.4byte	0
+ 3419              	.LLST3:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 61
+
+
+ 3420 0091 00000000 		.4byte	.LFB15
+ 3421 0095 00000000 		.4byte	.LCFI4
+ 3422 0099 0002     		.2byte	0x2
+ 3423 009b 71       		.byte	0x71
+ 3424 009c 00       		.sleb128 0
+ 3425 009d 00000000 		.4byte	.LCFI4
+ 3426 00a1 00000000 		.4byte	.LCFI5
+ 3427 00a5 0002     		.2byte	0x2
+ 3428 00a7 71       		.byte	0x71
+ 3429 00a8 10       		.sleb128 16
+ 3430 00a9 00000000 		.4byte	.LCFI5
+ 3431 00ad 00000000 		.4byte	.LCFI6
+ 3432 00b1 0002     		.2byte	0x2
+ 3433 00b3 71       		.byte	0x71
+ 3434 00b4 00       		.sleb128 0
+ 3435 00b5 00000000 		.4byte	.LCFI6
+ 3436 00b9 00000000 		.4byte	.LCFI7
+ 3437 00bd 0002     		.2byte	0x2
+ 3438 00bf 71       		.byte	0x71
+ 3439 00c0 10       		.sleb128 16
+ 3440 00c1 00000000 		.4byte	.LCFI7
+ 3441 00c5 00000000 		.4byte	.LFE15
+ 3442 00c9 0002     		.2byte	0x2
+ 3443 00cb 71       		.byte	0x71
+ 3444 00cc 00       		.sleb128 0
+ 3445 00cd 00000000 		.4byte	0
+ 3446 00d1 00000000 		.4byte	0
+ 3447              	.LLST4:
+ 3448 00d5 00000000 		.4byte	.LVL7
+ 3449 00d9 00000000 		.4byte	.LVL8
+ 3450 00dd 0001     		.2byte	0x1
+ 3451 00df 53       		.byte	0x53
+ 3452 00e0 00000000 		.4byte	.LVL8
+ 3453 00e4 00000000 		.4byte	.LVL10
+ 3454 00e8 0001     		.2byte	0x1
+ 3455 00ea 6F       		.byte	0x6f
+ 3456 00eb 00000000 		.4byte	.LVL10
+ 3457 00ef 00000000 		.4byte	.LFE15
+ 3458 00f3 0004     		.2byte	0x4
+ 3459 00f5 F3       		.byte	0xf3
+ 3460 00f6 01       		.uleb128 0x1
+ 3461 00f7 53       		.byte	0x53
+ 3462 00f8 9F       		.byte	0x9f
+ 3463 00f9 00000000 		.4byte	0
+ 3464 00fd 00000000 		.4byte	0
+ 3465              	.LLST5:
+ 3466 0101 00000000 		.4byte	.LVL11
+ 3467 0105 00000000 		.4byte	.LVL12
+ 3468 0109 0001     		.2byte	0x1
+ 3469 010b 53       		.byte	0x53
+ 3470 010c 00000000 		.4byte	.LVL12
+ 3471 0110 00000000 		.4byte	.LFE16
+ 3472 0114 0004     		.2byte	0x4
+ 3473 0116 F3       		.byte	0xf3
+ 3474 0117 01       		.uleb128 0x1
+ 3475 0118 53       		.byte	0x53
+ 3476 0119 9F       		.byte	0x9f
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 62
+
+
+ 3477 011a 00000000 		.4byte	0
+ 3478 011e 00000000 		.4byte	0
+ 3479              		.section	.debug_aranges,"",@progbits
+ 3480 0000 0000007C 		.4byte	0x7c
+ 3481 0004 0002     		.2byte	0x2
+ 3482 0006 00000000 		.4byte	.Ldebug_info0
+ 3483 000a 04       		.byte	0x4
+ 3484 000b 00       		.byte	0
+ 3485 000c 0000     		.2byte	0
+ 3486 000e 0000     		.2byte	0
+ 3487 0010 00000000 		.4byte	.LFB5
+ 3488 0014 0000000C 		.4byte	.LFE5-.LFB5
+ 3489 0018 00000000 		.4byte	.LFB6
+ 3490 001c 0000000A 		.4byte	.LFE6-.LFB6
+ 3491 0020 00000000 		.4byte	.LFB7
+ 3492 0024 00000010 		.4byte	.LFE7-.LFB7
+ 3493 0028 00000000 		.4byte	.LFB8
+ 3494 002c 00000012 		.4byte	.LFE8-.LFB8
+ 3495 0030 00000000 		.4byte	.LFB9
+ 3496 0034 00000068 		.4byte	.LFE9-.LFB9
+ 3497 0038 00000000 		.4byte	.LFB10
+ 3498 003c 00000022 		.4byte	.LFE10-.LFB10
+ 3499 0040 00000000 		.4byte	.LFB11
+ 3500 0044 0000000C 		.4byte	.LFE11-.LFB11
+ 3501 0048 00000000 		.4byte	.LFB12
+ 3502 004c 0000000A 		.4byte	.LFE12-.LFB12
+ 3503 0050 00000000 		.4byte	.LFB13
+ 3504 0054 00000010 		.4byte	.LFE13-.LFB13
+ 3505 0058 00000000 		.4byte	.LFB14
+ 3506 005c 00000012 		.4byte	.LFE14-.LFB14
+ 3507 0060 00000000 		.4byte	.LFB15
+ 3508 0064 00000068 		.4byte	.LFE15-.LFB15
+ 3509 0068 00000000 		.4byte	.LFB16
+ 3510 006c 00000022 		.4byte	.LFE16-.LFB16
+ 3511 0070 00000000 		.4byte	.LFB17
+ 3512 0074 0000001C 		.4byte	.LFE17-.LFB17
+ 3513 0078 00000000 		.4byte	0
+ 3514 007c 00000000 		.4byte	0
+ 3515              		.section	.debug_ranges,"",@progbits
+ 3516              	.Ldebug_ranges0:
+ 3517 0000 00000000 		.4byte	.LFB5
+ 3518 0004 00000000 		.4byte	.LFE5
+ 3519 0008 00000000 		.4byte	.LFB6
+ 3520 000c 00000000 		.4byte	.LFE6
+ 3521 0010 00000000 		.4byte	.LFB7
+ 3522 0014 00000000 		.4byte	.LFE7
+ 3523 0018 00000000 		.4byte	.LFB8
+ 3524 001c 00000000 		.4byte	.LFE8
+ 3525 0020 00000000 		.4byte	.LFB9
+ 3526 0024 00000000 		.4byte	.LFE9
+ 3527 0028 00000000 		.4byte	.LFB10
+ 3528 002c 00000000 		.4byte	.LFE10
+ 3529 0030 00000000 		.4byte	.LFB11
+ 3530 0034 00000000 		.4byte	.LFE11
+ 3531 0038 00000000 		.4byte	.LFB12
+ 3532 003c 00000000 		.4byte	.LFE12
+ 3533 0040 00000000 		.4byte	.LFB13
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 63
+
+
+ 3534 0044 00000000 		.4byte	.LFE13
+ 3535 0048 00000000 		.4byte	.LFB14
+ 3536 004c 00000000 		.4byte	.LFE14
+ 3537 0050 00000000 		.4byte	.LFB15
+ 3538 0054 00000000 		.4byte	.LFE15
+ 3539 0058 00000000 		.4byte	.LFB16
+ 3540 005c 00000000 		.4byte	.LFE16
+ 3541 0060 00000000 		.4byte	.LFB17
+ 3542 0064 00000000 		.4byte	.LFE17
+ 3543 0068 00000000 		.4byte	0
+ 3544 006c 00000000 		.4byte	0
+ 3545              		.section	.debug_line,"",@progbits
+ 3546              	.Ldebug_line0:
+ 3547 0000 00000386 		.section	.debug_str,"MS",@progbits,1
+ 3547      00020000 
+ 3547      02710201 
+ 3547      FB0E0D00 
+ 3547      01010101 
+ 3548              	.LASF104:
+ 3549 0000 70776D63 		.string	"pwmchannel_t"
+ 3549      68616E6E 
+ 3549      656C5F74 
+ 3549      00
+ 3550              	.LASF67:
+ 3551 000d 43484449 		.string	"CHDIS23"
+ 3551      53323300 
+ 3552              	.LASF80:
+ 3553 0015 43484449 		.string	"CHDIS10"
+ 3553      53313000 
+ 3554              	.LASF126:
+ 3555 001d 656D696F 		.string	"emios0_active_ch_group"
+ 3555      73305F61 
+ 3555      63746976 
+ 3555      655F6368 
+ 3555      5F67726F 
+ 3556              	.LASF5:
+ 3557 0034 5F5F7569 		.string	"__uint8_t"
+ 3557      6E74385F 
+ 3557      7400
+ 3558              	.LASF72:
+ 3559 003e 43484449 		.string	"CHDIS18"
+ 3559      53313800 
+ 3560              	.LASF4:
+ 3561 0046 6C6F6E67 		.string	"long int"
+ 3561      20696E74 
+ 3561      00
+ 3562              	.LASF48:
+ 3563 004f 4F553230 		.string	"OU20"
+ 3563      00
+ 3564              	.LASF47:
+ 3565 0054 4F553231 		.string	"OU21"
+ 3565      00
+ 3566              	.LASF46:
+ 3567 0059 4F553232 		.string	"OU22"
+ 3567      00
+ 3568              	.LASF45:
+ 3569 005e 4F553233 		.string	"OU23"
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 64
+
+
+ 3569      00
+ 3570              	.LASF44:
+ 3571 0063 4F553234 		.string	"OU24"
+ 3571      00
+ 3572              	.LASF42:
+ 3573 0068 4F553236 		.string	"OU26"
+ 3573      00
+ 3574              	.LASF41:
+ 3575 006d 4F553237 		.string	"OU27"
+ 3575      00
+ 3576              	.LASF40:
+ 3577 0072 4F553238 		.string	"OU28"
+ 3577      00
+ 3578              	.LASF39:
+ 3579 0077 4F553239 		.string	"OU29"
+ 3579      00
+ 3580              	.LASF124:
+ 3581 007c 76656374 		.string	"vector152"
+ 3581      6F723135 
+ 3581      3200
+ 3582              	.LASF43:
+ 3583 0086 4F553235 		.string	"OU25"
+ 3583      00
+ 3584              	.LASF36:
+ 3585 008b 47505245 		.string	"GPRE"
+ 3585      00
+ 3586              	.LASF8:
+ 3587 0090 6C6F6E67 		.string	"long long int"
+ 3587      206C6F6E 
+ 3587      6720696E 
+ 3587      7400
+ 3588              	.LASF0:
+ 3589 009e 7369676E 		.string	"signed char"
+ 3589      65642063 
+ 3589      68617200 
+ 3590              	.LASF117:
+ 3591 00aa 72657365 		.string	"reset_emios1_active_ch_group"
+ 3591      745F656D 
+ 3591      696F7331 
+ 3591      5F616374 
+ 3591      6976655F 
+ 3592              	.LASF103:
+ 3593 00c7 70776D6D 		.string	"pwmmode_t"
+ 3593      6F64655F 
+ 3593      7400
+ 3594              	.LASF132:
+ 3595 00d1 50574D44 		.string	"PWMD1"
+ 3595      3100
+ 3596              	.LASF18:
+ 3597 00d7 4652454E 		.string	"FREN"
+ 3597      00
+ 3598              	.LASF90:
+ 3599 00dc 43484449 		.string	"CHDIS0"
+ 3599      533000
+ 3600              	.LASF89:
+ 3601 00e3 43484449 		.string	"CHDIS1"
+ 3601      533100
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 65
+
+
+ 3602              	.LASF88:
+ 3603 00ea 43484449 		.string	"CHDIS2"
+ 3603      533200
+ 3604              	.LASF87:
+ 3605 00f1 43484449 		.string	"CHDIS3"
+ 3605      533300
+ 3606              	.LASF86:
+ 3607 00f8 43484449 		.string	"CHDIS4"
+ 3607      533400
+ 3608              	.LASF85:
+ 3609 00ff 43484449 		.string	"CHDIS5"
+ 3609      533500
+ 3610              	.LASF84:
+ 3611 0106 43484449 		.string	"CHDIS6"
+ 3611      533600
+ 3612              	.LASF83:
+ 3613 010d 43484449 		.string	"CHDIS7"
+ 3613      533700
+ 3614              	.LASF82:
+ 3615 0114 43484449 		.string	"CHDIS8"
+ 3615      533800
+ 3616              	.LASF81:
+ 3617 011b 43484449 		.string	"CHDIS9"
+ 3617      533900
+ 3618              	.LASF38:
+ 3619 0122 4F553330 		.string	"OU30"
+ 3619      00
+ 3620              	.LASF37:
+ 3621 0127 4F553331 		.string	"OU31"
+ 3621      00
+ 3622              	.LASF22:
+ 3623 012c 464F5243 		.string	"FORCMB"
+ 3623      4D4200
+ 3624              	.LASF128:
+ 3625 0133 474E5520 		.ascii	"GNU C 4.9.4 20160726 (Sat May 27 11:09:55 CDT 2017         b"
+ 3625      4320342E 
+ 3625      392E3420 
+ 3625      32303136 
+ 3625      30373236 
+ 3626 016f 75696C64 		.ascii	"uild.sh rev=gd8b6c"
+ 3626      2E736820 
+ 3626      7265763D 
+ 3626      67643862 
+ 3626      3663
+ 3627 0181 32302073 		.string	"20 s=F494 ELe200 -V release_gd8b6c20_build_Fed_ELe200_ML0) -mcall-sysv -mcpu=e200z0 -mvle
+ 3627      3D463439 
+ 3627      3420454C 
+ 3627      65323030 
+ 3627      202D5620 
+ 3628              	.LASF111:
+ 3629 0282 72657365 		.string	"reset_emios0_active_ch_group"
+ 3629      745F656D 
+ 3629      696F7330 
+ 3629      5F616374 
+ 3629      6976655F 
+ 3630              	.LASF105:
+ 3631 029f 70776D63 		.string	"pwmcnt_t"
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 66
+
+
+ 3631      6E745F74 
+ 3631      00
+ 3632              	.LASF9:
+ 3633 02a8 6C6F6E67 		.string	"long long unsigned int"
+ 3633      206C6F6E 
+ 3633      6720756E 
+ 3633      7369676E 
+ 3633      65642069 
+ 3634              	.LASF114:
+ 3635 02bf 70776D5F 		.string	"pwm_active_emios0_clock"
+ 3635      61637469 
+ 3635      76655F65 
+ 3635      6D696F73 
+ 3635      305F636C 
+ 3636              	.LASF20:
+ 3637 02d7 55435045 		.string	"UCPEN"
+ 3637      4E00
+ 3638              	.LASF16:
+ 3639 02dd 43424452 		.string	"CBDR"
+ 3639      00
+ 3640              	.LASF122:
+ 3641 02e2 70776D5F 		.string	"pwm_active_emios1_clock"
+ 3641      61637469 
+ 3641      76655F65 
+ 3641      6D696F73 
+ 3641      315F636C 
+ 3642              	.LASF6:
+ 3643 02fa 5F5F7569 		.string	"__uint32_t"
+ 3643      6E743332 
+ 3643      5F7400
+ 3644              	.LASF113:
+ 3645 0305 64656372 		.string	"decrease_emios0_active_ch_group"
+ 3645      65617365 
+ 3645      5F656D69 
+ 3645      6F73305F 
+ 3645      61637469 
+ 3646              	.LASF17:
+ 3647 0325 43434E54 		.string	"CCNTR"
+ 3647      5200
+ 3648              	.LASF68:
+ 3649 032b 43484449 		.string	"CHDIS22"
+ 3649      53323200 
+ 3650              	.LASF100:
+ 3651 0333 656D696F 		.string	"emiosp"
+ 3651      737000
+ 3652              	.LASF10:
+ 3653 033a 756E7369 		.string	"unsigned int"
+ 3653      676E6564 
+ 3653      20696E74 
+ 3653      00
+ 3654              	.LASF95:
+ 3655 0347 656D696F 		.string	"emios_reserved1"
+ 3655      735F7265 
+ 3655      73657276 
+ 3655      65643100 
+ 3656              	.LASF134:
+ 3657 0357 70776D5F 		.string	"pwm_lld_serve_period_interrupt"
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 67
+
+
+ 3657      6C6C645F 
+ 3657      73657276 
+ 3657      655F7065 
+ 3657      72696F64 
+ 3658              	.LASF131:
+ 3659 0376 6765745F 		.string	"get_emios0_gfr"
+ 3659      656D696F 
+ 3659      73305F67 
+ 3659      667200
+ 3660              	.LASF7:
+ 3661 0385 6C6F6E67 		.string	"long unsigned int"
+ 3661      20756E73 
+ 3661      69676E65 
+ 3661      6420696E 
+ 3661      7400
+ 3662              	.LASF101:
+ 3663 0397 70657269 		.string	"period_ch"
+ 3663      6F645F63 
+ 3663      6800
+ 3664              	.LASF21:
+ 3665 03a1 464F5243 		.string	"FORCMA"
+ 3665      4D4100
+ 3666              	.LASF3:
+ 3667 03a8 73686F72 		.string	"short unsigned int"
+ 3667      7420756E 
+ 3667      7369676E 
+ 3667      65642069 
+ 3667      6E7400
+ 3668              	.LASF24:
+ 3669 03bb 4544504F 		.string	"EDPOL"
+ 3669      4C00
+ 3670              	.LASF13:
+ 3671 03c1 7675696E 		.string	"vuint32_t"
+ 3671      7433325F 
+ 3671      7400
+ 3672              	.LASF109:
+ 3673 03cb 6368616E 		.string	"channels"
+ 3673      6E656C73 
+ 3673      00
+ 3674              	.LASF107:
+ 3675 03d4 63616C6C 		.string	"callback"
+ 3675      6261636B 
+ 3675      00
+ 3676              	.LASF2:
+ 3677 03dd 73686F72 		.string	"short int"
+ 3677      7420696E 
+ 3677      7400
+ 3678              	.LASF15:
+ 3679 03e7 43414452 		.string	"CADR"
+ 3679      00
+ 3680              	.LASF115:
+ 3681 03ec 70776D5F 		.string	"pwm_deactive_emios0_clock"
+ 3681      64656163 
+ 3681      74697665 
+ 3681      5F656D69 
+ 3681      6F73305F 
+ 3682              	.LASF91:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 68
+
+
+ 3683 0406 454D494F 		.string	"EMIOS_CHANNEL_tag"
+ 3683      535F4348 
+ 3683      414E4E45 
+ 3683      4C5F7461 
+ 3683      6700
+ 3684              	.LASF116:
+ 3685 0418 70776D70 		.string	"pwmp"
+ 3685      00
+ 3686              	.LASF33:
+ 3687 041d 4D444953 		.string	"MDIS"
+ 3687      00
+ 3688              	.LASF79:
+ 3689 0422 43484449 		.string	"CHDIS11"
+ 3689      53313100 
+ 3690              	.LASF78:
+ 3691 042a 43484449 		.string	"CHDIS12"
+ 3691      53313200 
+ 3692              	.LASF77:
+ 3693 0432 43484449 		.string	"CHDIS13"
+ 3693      53313300 
+ 3694              	.LASF76:
+ 3695 043a 43484449 		.string	"CHDIS14"
+ 3695      53313400 
+ 3696              	.LASF75:
+ 3697 0442 43484449 		.string	"CHDIS15"
+ 3697      53313500 
+ 3698              	.LASF74:
+ 3699 044a 43484449 		.string	"CHDIS16"
+ 3699      53313600 
+ 3700              	.LASF73:
+ 3701 0452 43484449 		.string	"CHDIS17"
+ 3701      53313700 
+ 3702              	.LASF71:
+ 3703 045a 43484449 		.string	"CHDIS19"
+ 3703      53313900 
+ 3704              	.LASF94:
+ 3705 0462 55434449 		.string	"UCDIS"
+ 3705      5300
+ 3706              	.LASF129:
+ 3707 0468 2E2F636F 		.string	"./components/spc560bxx_low_level_drivers_component_rla/lib/src/spc5_emios.c"
+ 3707      6D706F6E 
+ 3707      656E7473 
+ 3707      2F737063 
+ 3707      35363062 
+ 3708              	.LASF14:
+ 3709 04b4 73697A65 		.string	"sizetype"
+ 3709      74797065 
+ 3709      00
+ 3710              	.LASF93:
+ 3711 04bd 4F554452 		.string	"OUDR"
+ 3711      00
+ 3712              	.LASF120:
+ 3713 04c2 696E6372 		.string	"increase_emios1_active_ch_group"
+ 3713      65617365 
+ 3713      5F656D69 
+ 3713      6F73315F 
+ 3713      61637469 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 69
+
+
+ 3714              	.LASF121:
+ 3715 04e2 64656372 		.string	"decrease_emios1_active_ch_group"
+ 3715      65617365 
+ 3715      5F656D69 
+ 3715      6F73315F 
+ 3715      61637469 
+ 3716              	.LASF23:
+ 3717 0502 45445345 		.string	"EDSEL"
+ 3717      4C00
+ 3718              	.LASF32:
+ 3719 0508 656D696F 		.string	"emios_channel_reserved"
+ 3719      735F6368 
+ 3719      616E6E65 
+ 3719      6C5F7265 
+ 3719      73657276 
+ 3720              	.LASF28:
+ 3721 051f 55434F55 		.string	"UCOUT"
+ 3721      5400
+ 3722              	.LASF26:
+ 3723 0525 4F56464C 		.string	"OVFL"
+ 3723      00
+ 3724              	.LASF92:
+ 3725 052a 454D494F 		.string	"EMIOS_tag"
+ 3725      535F7461 
+ 3725      6700
+ 3726              	.LASF70:
+ 3727 0534 43484449 		.string	"CHDIS20"
+ 3727      53323000 
+ 3728              	.LASF69:
+ 3729 053c 43484449 		.string	"CHDIS21"
+ 3729      53323100 
+ 3730              	.LASF102:
+ 3731 0544 70776D63 		.string	"pwmcallback_t"
+ 3731      616C6C62 
+ 3731      61636B5F 
+ 3731      7400
+ 3732              	.LASF130:
+ 3733 0552 433A5C53 		.string	"C:\\SPC5Studio\\workspace\\SPC560Bxx_RLA FreeRTOS SERIAL Test Application for Discovery"
+ 3733      50433553 
+ 3733      74756469 
+ 3733      6F5C776F 
+ 3733      726B7370 
+ 3734              	.LASF66:
+ 3735 05a7 43484449 		.string	"CHDIS24"
+ 3735      53323400 
+ 3736              	.LASF65:
+ 3737 05af 43484449 		.string	"CHDIS25"
+ 3737      53323500 
+ 3738              	.LASF64:
+ 3739 05b7 43484449 		.string	"CHDIS26"
+ 3739      53323600 
+ 3740              	.LASF63:
+ 3741 05bf 43484449 		.string	"CHDIS27"
+ 3741      53323700 
+ 3742              	.LASF62:
+ 3743 05c7 43484449 		.string	"CHDIS28"
+ 3743      53323800 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 70
+
+
+ 3744              	.LASF61:
+ 3745 05cf 43484449 		.string	"CHDIS29"
+ 3745      53323900 
+ 3746              	.LASF112:
+ 3747 05d7 696E6372 		.string	"increase_emios0_active_ch_group"
+ 3747      65617365 
+ 3747      5F656D69 
+ 3747      6F73305F 
+ 3747      61637469 
+ 3748              	.LASF1:
+ 3749 05f7 756E7369 		.string	"unsigned char"
+ 3749      676E6564 
+ 3749      20636861 
+ 3749      7200
+ 3750              	.LASF35:
+ 3751 0605 47505245 		.string	"GPREN"
+ 3751      4E00
+ 3752              	.LASF119:
+ 3753 060b 6765745F 		.string	"get_emios1_active_ch_group"
+ 3753      656D696F 
+ 3753      73315F61 
+ 3753      63746976 
+ 3753      655F6368 
+ 3754              	.LASF118:
+ 3755 0626 6765745F 		.string	"get_emios0_active_ch_group"
+ 3755      656D696F 
+ 3755      73305F61 
+ 3755      63746976 
+ 3755      655F6368 
+ 3756              	.LASF29:
+ 3757 0641 464C4147 		.string	"FLAG"
+ 3757      00
+ 3758              	.LASF60:
+ 3759 0646 43484449 		.string	"CHDIS30"
+ 3759      53333000 
+ 3760              	.LASF59:
+ 3761 064e 43484449 		.string	"CHDIS31"
+ 3761      53333100 
+ 3762              	.LASF12:
+ 3763 0656 75696E74 		.string	"uint32_t"
+ 3763      33325F74 
+ 3763      00
+ 3764              	.LASF110:
+ 3765 065f 50574D43 		.string	"PWMConfig"
+ 3765      6F6E6669 
+ 3765      6700
+ 3766              	.LASF30:
+ 3767 0669 414C5441 		.string	"ALTA"
+ 3767      00
+ 3768              	.LASF27:
+ 3769 066e 5543494E 		.string	"UCIN"
+ 3769      00
+ 3770              	.LASF96:
+ 3771 0673 63686172 		.string	"char"
+ 3771      00
+ 3772              	.LASF106:
+ 3773 0678 6D6F6465 		.string	"mode"
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 71
+
+
+ 3773      00
+ 3774              	.LASF31:
+ 3775 067d 414C5443 		.string	"ALTCADR"
+ 3775      41445200 
+ 3776              	.LASF98:
+ 3777 0685 636F6E66 		.string	"config"
+ 3777      696700
+ 3778              	.LASF133:
+ 3779 068c 53504353 		.string	"SPCSetPeripheralClockMode"
+ 3779      65745065 
+ 3779      72697068 
+ 3779      6572616C 
+ 3779      436C6F63 
+ 3780              	.LASF25:
+ 3781 06a6 4D4F4445 		.string	"MODE"
+ 3781      00
+ 3782              	.LASF99:
+ 3783 06ab 70657269 		.string	"period"
+ 3783      6F6400
+ 3784              	.LASF34:
+ 3785 06b2 47544245 		.string	"GTBE"
+ 3785      00
+ 3786              	.LASF108:
+ 3787 06b7 50574D43 		.string	"PWMChannelConfig"
+ 3787      68616E6E 
+ 3787      656C436F 
+ 3787      6E666967 
+ 3787      00
+ 3788              	.LASF125:
+ 3789 06c8 656D696F 		.string	"emiosp0"
+ 3789      73703000 
+ 3790              	.LASF19:
+ 3791 06d0 55435052 		.string	"UCPRE"
+ 3791      4500
+ 3792              	.LASF127:
+ 3793 06d6 656D696F 		.string	"emios1_active_ch_group"
+ 3793      73315F61 
+ 3793      63746976 
+ 3793      655F6368 
+ 3793      5F67726F 
+ 3794              	.LASF11:
+ 3795 06ed 75696E74 		.string	"uint8_t"
+ 3795      385F7400 
+ 3796              	.LASF97:
+ 3797 06f5 50574D44 		.string	"PWMDriver"
+ 3797      72697665 
+ 3797      7200
+ 3798              	.LASF58:
+ 3799 06ff 4F553130 		.string	"OU10"
+ 3799      00
+ 3800              	.LASF57:
+ 3801 0704 4F553131 		.string	"OU11"
+ 3801      00
+ 3802              	.LASF56:
+ 3803 0709 4F553132 		.string	"OU12"
+ 3803      00
+ 3804              	.LASF55:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 72
+
+
+ 3805 070e 4F553133 		.string	"OU13"
+ 3805      00
+ 3806              	.LASF54:
+ 3807 0713 4F553134 		.string	"OU14"
+ 3807      00
+ 3808              	.LASF53:
+ 3809 0718 4F553135 		.string	"OU15"
+ 3809      00
+ 3810              	.LASF52:
+ 3811 071d 4F553136 		.string	"OU16"
+ 3811      00
+ 3812              	.LASF51:
+ 3813 0722 4F553137 		.string	"OU17"
+ 3813      00
+ 3814              	.LASF50:
+ 3815 0727 4F553138 		.string	"OU18"
+ 3815      00
+ 3816              	.LASF49:
+ 3817 072c 4F553139 		.string	"OU19"
+ 3817      00
+ 3818              	.LASF123:
+ 3819 0731 70776D5F 		.string	"pwm_deactive_emios1_clock"
+ 3819      64656163 
+ 3819      74697665 
+ 3819      5F656D69 
+ 3819      6F73315F 
+ 3820              		.ident	"GCC: (GNU) 4.9.4 20160726 (Sat May 27 11:09:55 CDT 2017         build.sh rev=gd8b6c20 s=F4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s 			page 73
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spc5_emios.c
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:10     .text.reset_emios0_active_ch_group:00000000 reset_emios0_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:28     .text.get_emios0_active_ch_group:00000000 get_emios0_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:45     .text.increase_emios0_active_ch_group:00000000 increase_emios0_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:63     .text.decrease_emios0_active_ch_group:00000000 decrease_emios0_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:81     .text.pwm_active_emios0_clock:00000000 pwm_active_emios0_clock
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:168    .text.pwm_deactive_emios0_clock:00000000 pwm_deactive_emios0_clock
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:202    .text.reset_emios1_active_ch_group:00000000 reset_emios1_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:219    .text.get_emios1_active_ch_group:00000000 get_emios1_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:236    .text.increase_emios1_active_ch_group:00000000 increase_emios1_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:254    .text.decrease_emios1_active_ch_group:00000000 decrease_emios1_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:272    .text.pwm_active_emios1_clock:00000000 pwm_active_emios1_clock
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:359    .text.pwm_deactive_emios1_clock:00000000 pwm_deactive_emios1_clock
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:393    .text.vector152:00000000 vector152
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:426    .bss.emios1_active_ch_group:00000000 emios1_active_ch_group
+C:\Users\marky\AppData\Local\Temp\ccDkf0tP.s:433    .bss.emios0_active_ch_group:00000000 emios0_active_ch_group
+
+UNDEFINED SYMBOLS
+SPCSetPeripheralClockMode
+PWMD1
+pwm_lld_serve_period_interrupt

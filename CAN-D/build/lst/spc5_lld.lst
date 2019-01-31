@@ -1,0 +1,477 @@
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 1
+
+
+   1              		.file	"spc5_lld.c"
+   2              		.section	".text","axv"
+   3              	.Ltext0:
+   4              		.cfi_sections	.debug_frame
+   5              		.section	.text.spc5LLDInit,"axv",@progbits
+   6              		.align 1
+   7              		.p2align 4,,15
+   8              		.globl spc5LLDInit
+   9              		.type	spc5LLDInit, @function
+  10              	spc5LLDInit:
+  11              	.LFB4:
+  12              		.file 1 "./components/spc560bxx_low_level_drivers_component_rla/lib/src/spc5_lld.c"
+  13              		.loc 1 48 0
+  14              		.cfi_startproc
+  15 0000 182106F8 		e_stwu %r1,-8(%r1)
+  16              	.LCFI0:
+  17              		.cfi_def_cfa_offset 8
+  18 0004 0080     		se_mflr %r0
+  19 0006 D301     		se_stw %r0,12(%r1)
+  20              		.cfi_offset 65, 4
+  21              		.loc 1 51 0
+  22 0008 78000001 		e_bl edmaInit
+  23              	.LVL0:
+  24              		.loc 1 60 0
+  25 000c 78000001 		e_bl sd_lld_init
+  26              	.LVL1:
+  27              		.loc 1 66 0
+  28 0010 78000001 		e_bl pwm_lld_init
+  29              	.LVL2:
+  30              		.loc 1 72 0
+  31 0014 78000001 		e_bl can_lld_init
+  32              	.LVL3:
+  33              		.loc 1 104 0
+  34 0018 C301     		se_lwz %r0,12(%r1)
+  35 001a 0090     		se_mtlr %r0
+  36              		.cfi_restore 65
+  37 001c 2071     		se_addi %r1,8
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 0
+  40              		.loc 1 75 0
+  41 001e 78000000 		e_b spi_lld_init
+  42              	.LVL4:
+  43              		.cfi_endproc
+  44              	.LFE4:
+  45              		.size	spc5LLDInit, .-spc5LLDInit
+  46              		.section	".text","axv"
+  47              	.Letext0:
+  48              		.file 2 "./components/spc560bxx_low_level_drivers_component_rla/lib/include/spc5_edma.h"
+  49              		.file 3 "./components/spc560bxx_low_level_drivers_component_rla/lib/include/serial_lld.h"
+  50              		.file 4 "./components/spc560bxx_low_level_drivers_component_rla/lib/include/pwm_lld.h"
+  51              		.file 5 "./components/spc560bxx_low_level_drivers_component_rla/lib/include/can_lld.h"
+  52              		.file 6 "./components/spc560bxx_low_level_drivers_component_rla/lib/include/spi_lld.h"
+  53              		.section	.debug_info,"",@progbits
+  54              	.Ldebug_info0:
+  55 0000 000000FA 		.4byte	0xfa
+  56 0004 0002     		.2byte	0x2
+  57 0006 00000000 		.4byte	.Ldebug_abbrev0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 2
+
+
+  58 000a 04       		.byte	0x4
+  59 000b 01       		.uleb128 0x1
+  60 000c 00000000 		.4byte	.LASF16
+  61 0010 01       		.byte	0x1
+  62 0011 00000000 		.4byte	.LASF17
+  63 0015 00000000 		.4byte	.LASF18
+  64 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  65 001d 00000000 		.4byte	0
+  66 0021 00000000 		.4byte	0
+  67 0025 00000000 		.4byte	.Ldebug_line0
+  68 0029 02       		.uleb128 0x2
+  69 002a 01       		.byte	0x1
+  70 002b 06       		.byte	0x6
+  71 002c 00000000 		.4byte	.LASF0
+  72 0030 02       		.uleb128 0x2
+  73 0031 01       		.byte	0x1
+  74 0032 08       		.byte	0x8
+  75 0033 00000000 		.4byte	.LASF1
+  76 0037 02       		.uleb128 0x2
+  77 0038 02       		.byte	0x2
+  78 0039 05       		.byte	0x5
+  79 003a 00000000 		.4byte	.LASF2
+  80 003e 02       		.uleb128 0x2
+  81 003f 02       		.byte	0x2
+  82 0040 07       		.byte	0x7
+  83 0041 00000000 		.4byte	.LASF3
+  84 0045 02       		.uleb128 0x2
+  85 0046 04       		.byte	0x4
+  86 0047 05       		.byte	0x5
+  87 0048 00000000 		.4byte	.LASF4
+  88 004c 02       		.uleb128 0x2
+  89 004d 04       		.byte	0x4
+  90 004e 07       		.byte	0x7
+  91 004f 00000000 		.4byte	.LASF5
+  92 0053 02       		.uleb128 0x2
+  93 0054 08       		.byte	0x8
+  94 0055 05       		.byte	0x5
+  95 0056 00000000 		.4byte	.LASF6
+  96 005a 02       		.uleb128 0x2
+  97 005b 08       		.byte	0x8
+  98 005c 07       		.byte	0x7
+  99 005d 00000000 		.4byte	.LASF7
+ 100 0061 03       		.uleb128 0x3
+ 101 0062 04       		.byte	0x4
+ 102 0063 05       		.byte	0x5
+ 103 0064 696E7400 		.string	"int"
+ 104 0068 02       		.uleb128 0x2
+ 105 0069 04       		.byte	0x4
+ 106 006a 07       		.byte	0x7
+ 107 006b 00000000 		.4byte	.LASF8
+ 108 006f 02       		.uleb128 0x2
+ 109 0070 04       		.byte	0x4
+ 110 0071 07       		.byte	0x7
+ 111 0072 00000000 		.4byte	.LASF9
+ 112 0076 02       		.uleb128 0x2
+ 113 0077 01       		.byte	0x1
+ 114 0078 08       		.byte	0x8
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 3
+
+
+ 115 0079 00000000 		.4byte	.LASF10
+ 116 007d 04       		.uleb128 0x4
+ 117 007e 01       		.byte	0x1
+ 118 007f 00000000 		.4byte	.LASF19
+ 119 0083 01       		.byte	0x1
+ 120 0084 30       		.byte	0x30
+ 121 0085 01       		.byte	0x1
+ 122 0086 00000000 		.4byte	.LFB4
+ 123 008a 00000000 		.4byte	.LFE4
+ 124 008e 00000000 		.4byte	.LLST0
+ 125 0092 01       		.byte	0x1
+ 126 0093 000000C6 		.4byte	0xc6
+ 127 0097 05       		.uleb128 0x5
+ 128 0098 00000000 		.4byte	.LVL0
+ 129 009c 000000C6 		.4byte	0xc6
+ 130 00a0 05       		.uleb128 0x5
+ 131 00a1 00000000 		.4byte	.LVL1
+ 132 00a5 000000D1 		.4byte	0xd1
+ 133 00a9 05       		.uleb128 0x5
+ 134 00aa 00000000 		.4byte	.LVL2
+ 135 00ae 000000DC 		.4byte	0xdc
+ 136 00b2 05       		.uleb128 0x5
+ 137 00b3 00000000 		.4byte	.LVL3
+ 138 00b7 000000E7 		.4byte	0xe7
+ 139 00bb 06       		.uleb128 0x6
+ 140 00bc 00000000 		.4byte	.LVL4
+ 141 00c0 01       		.byte	0x1
+ 142 00c1 000000F2 		.4byte	0xf2
+ 143 00c5 00       		.byte	0
+ 144 00c6 07       		.uleb128 0x7
+ 145 00c7 01       		.byte	0x1
+ 146 00c8 00000000 		.4byte	.LASF11
+ 147 00cc 02       		.byte	0x2
+ 148 00cd 0468     		.2byte	0x468
+ 149 00cf 01       		.byte	0x1
+ 150 00d0 01       		.byte	0x1
+ 151 00d1 07       		.uleb128 0x7
+ 152 00d2 01       		.byte	0x1
+ 153 00d3 00000000 		.4byte	.LASF12
+ 154 00d7 03       		.byte	0x3
+ 155 00d8 01BB     		.2byte	0x1bb
+ 156 00da 01       		.byte	0x1
+ 157 00db 01       		.byte	0x1
+ 158 00dc 07       		.uleb128 0x7
+ 159 00dd 01       		.byte	0x1
+ 160 00de 00000000 		.4byte	.LASF13
+ 161 00e2 04       		.byte	0x4
+ 162 00e3 04DD     		.2byte	0x4dd
+ 163 00e5 01       		.byte	0x1
+ 164 00e6 01       		.byte	0x1
+ 165 00e7 07       		.uleb128 0x7
+ 166 00e8 01       		.byte	0x1
+ 167 00e9 00000000 		.4byte	.LASF14
+ 168 00ed 05       		.byte	0x5
+ 169 00ee 0391     		.2byte	0x391
+ 170 00f0 01       		.byte	0x1
+ 171 00f1 01       		.byte	0x1
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 4
+
+
+ 172 00f2 07       		.uleb128 0x7
+ 173 00f3 01       		.byte	0x1
+ 174 00f4 00000000 		.4byte	.LASF15
+ 175 00f8 06       		.byte	0x6
+ 176 00f9 0429     		.2byte	0x429
+ 177 00fb 01       		.byte	0x1
+ 178 00fc 01       		.byte	0x1
+ 179 00fd 00       		.byte	0
+ 180              		.section	.debug_abbrev,"",@progbits
+ 181              	.Ldebug_abbrev0:
+ 182 0000 01       		.uleb128 0x1
+ 183 0001 11       		.uleb128 0x11
+ 184 0002 01       		.byte	0x1
+ 185 0003 25       		.uleb128 0x25
+ 186 0004 0E       		.uleb128 0xe
+ 187 0005 13       		.uleb128 0x13
+ 188 0006 0B       		.uleb128 0xb
+ 189 0007 03       		.uleb128 0x3
+ 190 0008 0E       		.uleb128 0xe
+ 191 0009 1B       		.uleb128 0x1b
+ 192 000a 0E       		.uleb128 0xe
+ 193 000b 55       		.uleb128 0x55
+ 194 000c 06       		.uleb128 0x6
+ 195 000d 11       		.uleb128 0x11
+ 196 000e 01       		.uleb128 0x1
+ 197 000f 52       		.uleb128 0x52
+ 198 0010 01       		.uleb128 0x1
+ 199 0011 10       		.uleb128 0x10
+ 200 0012 06       		.uleb128 0x6
+ 201 0013 00       		.byte	0
+ 202 0014 00       		.byte	0
+ 203 0015 02       		.uleb128 0x2
+ 204 0016 24       		.uleb128 0x24
+ 205 0017 00       		.byte	0
+ 206 0018 0B       		.uleb128 0xb
+ 207 0019 0B       		.uleb128 0xb
+ 208 001a 3E       		.uleb128 0x3e
+ 209 001b 0B       		.uleb128 0xb
+ 210 001c 03       		.uleb128 0x3
+ 211 001d 0E       		.uleb128 0xe
+ 212 001e 00       		.byte	0
+ 213 001f 00       		.byte	0
+ 214 0020 03       		.uleb128 0x3
+ 215 0021 24       		.uleb128 0x24
+ 216 0022 00       		.byte	0
+ 217 0023 0B       		.uleb128 0xb
+ 218 0024 0B       		.uleb128 0xb
+ 219 0025 3E       		.uleb128 0x3e
+ 220 0026 0B       		.uleb128 0xb
+ 221 0027 03       		.uleb128 0x3
+ 222 0028 08       		.uleb128 0x8
+ 223 0029 00       		.byte	0
+ 224 002a 00       		.byte	0
+ 225 002b 04       		.uleb128 0x4
+ 226 002c 2E       		.uleb128 0x2e
+ 227 002d 01       		.byte	0x1
+ 228 002e 3F       		.uleb128 0x3f
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 5
+
+
+ 229 002f 0C       		.uleb128 0xc
+ 230 0030 03       		.uleb128 0x3
+ 231 0031 0E       		.uleb128 0xe
+ 232 0032 3A       		.uleb128 0x3a
+ 233 0033 0B       		.uleb128 0xb
+ 234 0034 3B       		.uleb128 0x3b
+ 235 0035 0B       		.uleb128 0xb
+ 236 0036 27       		.uleb128 0x27
+ 237 0037 0C       		.uleb128 0xc
+ 238 0038 11       		.uleb128 0x11
+ 239 0039 01       		.uleb128 0x1
+ 240 003a 12       		.uleb128 0x12
+ 241 003b 01       		.uleb128 0x1
+ 242 003c 40       		.uleb128 0x40
+ 243 003d 06       		.uleb128 0x6
+ 244 003e 9742     		.uleb128 0x2117
+ 245 0040 0C       		.uleb128 0xc
+ 246 0041 01       		.uleb128 0x1
+ 247 0042 13       		.uleb128 0x13
+ 248 0043 00       		.byte	0
+ 249 0044 00       		.byte	0
+ 250 0045 05       		.uleb128 0x5
+ 251 0046 898201   		.uleb128 0x4109
+ 252 0049 00       		.byte	0
+ 253 004a 11       		.uleb128 0x11
+ 254 004b 01       		.uleb128 0x1
+ 255 004c 31       		.uleb128 0x31
+ 256 004d 13       		.uleb128 0x13
+ 257 004e 00       		.byte	0
+ 258 004f 00       		.byte	0
+ 259 0050 06       		.uleb128 0x6
+ 260 0051 898201   		.uleb128 0x4109
+ 261 0054 00       		.byte	0
+ 262 0055 11       		.uleb128 0x11
+ 263 0056 01       		.uleb128 0x1
+ 264 0057 9542     		.uleb128 0x2115
+ 265 0059 0C       		.uleb128 0xc
+ 266 005a 31       		.uleb128 0x31
+ 267 005b 13       		.uleb128 0x13
+ 268 005c 00       		.byte	0
+ 269 005d 00       		.byte	0
+ 270 005e 07       		.uleb128 0x7
+ 271 005f 2E       		.uleb128 0x2e
+ 272 0060 00       		.byte	0
+ 273 0061 3F       		.uleb128 0x3f
+ 274 0062 0C       		.uleb128 0xc
+ 275 0063 03       		.uleb128 0x3
+ 276 0064 0E       		.uleb128 0xe
+ 277 0065 3A       		.uleb128 0x3a
+ 278 0066 0B       		.uleb128 0xb
+ 279 0067 3B       		.uleb128 0x3b
+ 280 0068 05       		.uleb128 0x5
+ 281 0069 27       		.uleb128 0x27
+ 282 006a 0C       		.uleb128 0xc
+ 283 006b 3C       		.uleb128 0x3c
+ 284 006c 0C       		.uleb128 0xc
+ 285 006d 00       		.byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 6
+
+
+ 286 006e 00       		.byte	0
+ 287 006f 00       		.byte	0
+ 288              		.section	.debug_loc,"",@progbits
+ 289              	.Ldebug_loc0:
+ 290              	.LLST0:
+ 291 0000 00000000 		.4byte	.LFB4
+ 292 0004 00000000 		.4byte	.LCFI0
+ 293 0008 0002     		.2byte	0x2
+ 294 000a 71       		.byte	0x71
+ 295 000b 00       		.sleb128 0
+ 296 000c 00000000 		.4byte	.LCFI0
+ 297 0010 00000000 		.4byte	.LCFI1
+ 298 0014 0002     		.2byte	0x2
+ 299 0016 71       		.byte	0x71
+ 300 0017 08       		.sleb128 8
+ 301 0018 00000000 		.4byte	.LCFI1
+ 302 001c 00000000 		.4byte	.LFE4
+ 303 0020 0002     		.2byte	0x2
+ 304 0022 71       		.byte	0x71
+ 305 0023 00       		.sleb128 0
+ 306 0024 00000000 		.4byte	0
+ 307 0028 00000000 		.4byte	0
+ 308              		.section	.debug_aranges,"",@progbits
+ 309 0000 0000001C 		.4byte	0x1c
+ 310 0004 0002     		.2byte	0x2
+ 311 0006 00000000 		.4byte	.Ldebug_info0
+ 312 000a 04       		.byte	0x4
+ 313 000b 00       		.byte	0
+ 314 000c 0000     		.2byte	0
+ 315 000e 0000     		.2byte	0
+ 316 0010 00000000 		.4byte	.LFB4
+ 317 0014 00000022 		.4byte	.LFE4-.LFB4
+ 318 0018 00000000 		.4byte	0
+ 319 001c 00000000 		.4byte	0
+ 320              		.section	.debug_ranges,"",@progbits
+ 321              	.Ldebug_ranges0:
+ 322 0000 00000000 		.4byte	.LFB4
+ 323 0004 00000000 		.4byte	.LFE4
+ 324 0008 00000000 		.4byte	0
+ 325 000c 00000000 		.4byte	0
+ 326              		.section	.debug_line,"",@progbits
+ 327              	.Ldebug_line0:
+ 328 0000 0000010A 		.section	.debug_str,"MS",@progbits,1
+ 328      00020000 
+ 328      00E90201 
+ 328      FB0E0D00 
+ 328      01010101 
+ 329              	.LASF6:
+ 330 0000 6C6F6E67 		.string	"long long int"
+ 330      206C6F6E 
+ 330      6720696E 
+ 330      7400
+ 331              	.LASF13:
+ 332 000e 70776D5F 		.string	"pwm_lld_init"
+ 332      6C6C645F 
+ 332      696E6974 
+ 332      00
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 7
+
+
+ 333              	.LASF8:
+ 334 001b 756E7369 		.string	"unsigned int"
+ 334      676E6564 
+ 334      20696E74 
+ 334      00
+ 335              	.LASF11:
+ 336 0028 65646D61 		.string	"edmaInit"
+ 336      496E6974 
+ 336      00
+ 337              	.LASF16:
+ 338 0031 474E5520 		.ascii	"GNU C 4.9.4 20160726 (Sat May 27 11:09:55 CDT 2017         b"
+ 338      4320342E 
+ 338      392E3420 
+ 338      32303136 
+ 338      30373236 
+ 339 006d 75696C64 		.ascii	"uild.sh rev=gd8b6c"
+ 339      2E736820 
+ 339      7265763D 
+ 339      67643862 
+ 339      3663
+ 340 007f 32302073 		.string	"20 s=F494 ELe200 -V release_gd8b6c20_build_Fed_ELe200_ML0) -mcall-sysv -mcpu=e200z0 -mvle
+ 340      3D463439 
+ 340      3420454C 
+ 340      65323030 
+ 340      202D5620 
+ 341              	.LASF0:
+ 342 0180 7369676E 		.string	"signed char"
+ 342      65642063 
+ 342      68617200 
+ 343              	.LASF15:
+ 344 018c 7370695F 		.string	"spi_lld_init"
+ 344      6C6C645F 
+ 344      696E6974 
+ 344      00
+ 345              	.LASF7:
+ 346 0199 6C6F6E67 		.string	"long long unsigned int"
+ 346      206C6F6E 
+ 346      6720756E 
+ 346      7369676E 
+ 346      65642069 
+ 347              	.LASF1:
+ 348 01b0 756E7369 		.string	"unsigned char"
+ 348      676E6564 
+ 348      20636861 
+ 348      7200
+ 349              	.LASF14:
+ 350 01be 63616E5F 		.string	"can_lld_init"
+ 350      6C6C645F 
+ 350      696E6974 
+ 350      00
+ 351              	.LASF10:
+ 352 01cb 63686172 		.string	"char"
+ 352      00
+ 353              	.LASF12:
+ 354 01d0 73645F6C 		.string	"sd_lld_init"
+ 354      6C645F69 
+ 354      6E697400 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 8
+
+
+ 355              	.LASF4:
+ 356 01dc 6C6F6E67 		.string	"long int"
+ 356      20696E74 
+ 356      00
+ 357              	.LASF5:
+ 358 01e5 6C6F6E67 		.string	"long unsigned int"
+ 358      20756E73 
+ 358      69676E65 
+ 358      6420696E 
+ 358      7400
+ 359              	.LASF3:
+ 360 01f7 73686F72 		.string	"short unsigned int"
+ 360      7420756E 
+ 360      7369676E 
+ 360      65642069 
+ 360      6E7400
+ 361              	.LASF18:
+ 362 020a 433A5C53 		.string	"C:\\SPC5Studio\\workspace\\SPC560Bxx_RLA FreeRTOS SERIAL Test Application for Discovery"
+ 362      50433553 
+ 362      74756469 
+ 362      6F5C776F 
+ 362      726B7370 
+ 363              	.LASF2:
+ 364 025f 73686F72 		.string	"short int"
+ 364      7420696E 
+ 364      7400
+ 365              	.LASF17:
+ 366 0269 2E2F636F 		.string	"./components/spc560bxx_low_level_drivers_component_rla/lib/src/spc5_lld.c"
+ 366      6D706F6E 
+ 366      656E7473 
+ 366      2F737063 
+ 366      35363062 
+ 367              	.LASF19:
+ 368 02b3 73706335 		.string	"spc5LLDInit"
+ 368      4C4C4449 
+ 368      6E697400 
+ 369              	.LASF9:
+ 370 02bf 73697A65 		.string	"sizetype"
+ 370      74797065 
+ 370      00
+ 371              		.ident	"GCC: (GNU) 4.9.4 20160726 (Sat May 27 11:09:55 CDT 2017         build.sh rev=gd8b6c20 s=F4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cczk04fh.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spc5_lld.c
+C:\Users\marky\AppData\Local\Temp\cczk04fh.s:10     .text.spc5LLDInit:00000000 spc5LLDInit
+
+UNDEFINED SYMBOLS
+edmaInit
+sd_lld_init
+pwm_lld_init
+can_lld_init
+spi_lld_init
