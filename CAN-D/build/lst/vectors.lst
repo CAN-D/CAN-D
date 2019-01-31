@@ -1,0 +1,901 @@
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 1
+
+
+   1              	# 1 "./components/spc560bxx_irq_component_rla/lib/src/vectors.s"
+   1              	/*
+   0              	
+   0              	
+   2              	    SPC5 RLA - Copyright (C) 2015 STMicroelectronics
+   3              	
+   4              	    Licensed under the Apache License, Version 2.0 (the "License").
+   5              	    You may not use this file except in compliance with the License.
+   6              	    You may obtain a copy of the License at
+   7              	
+   8              	        http://www.apache.org/licenses/LICENSE-2.0
+   9              	
+  10              	    Unless required by applicable law or agreed to in writing, software
+  11              	    distributed under the License is distributed on an "AS IS" BASIS,
+  12              	    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13              	    See the License for the specific language governing permissions and
+  14              	    limitations under the License.
+  15              	*/
+  16              	
+  17              	/**
+  18              	 * @file    vectors.s
+  19              	 * @brief   SPC560Bxx vectors table.
+  20              	 *
+  21              	 * @addtogroup VECTORS
+  22              	 * @{
+  23              	 */
+  24              	
+  25              	/*
+  26              	 * Imports the configuration headers.
+  27              	 */
+  28              	#define _FROM_ASM_
+  29              	#include "platform.h"
+   1              	/*
+   2              	    SPC5 RLA - Copyright (C) 2015 STMicroelectronics
+   3              	
+   4              	    Licensed under the Apache License, Version 2.0 (the "License").
+   5              	    You may not use this file except in compliance with the License.
+   6              	    You may obtain a copy of the License at
+   7              	
+   8              	        http://www.apache.org/licenses/LICENSE-2.0
+   9              	
+  10              	    Unless required by applicable law or agreed to in writing, software
+  11              	    distributed under the License is distributed on an "AS IS" BASIS,
+  12              	    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13              	    See the License for the specific language governing permissions and
+  14              	    limitations under the License.
+  15              	*/
+  16              	
+  17              	/**
+  18              	 * @file    platform.h
+  19              	 * @brief   platform file.
+  20              	 */
+  21              	
+  22              	#ifndef _PLATFORM_H_
+  23              	#define _PLATFORM_H_
+  24              	
+  25              	#include "core.h"
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 2
+
+
+   1              	/*
+  26              	#include "toolchain.h"
+   1              	/*
+  27              	#include "intc.h"
+   1              	/*
+  28              	#if !defined(_FROM_ASM_)
+  30              	#include "irq_cfg.h"
+   1              	/*
+  31              	
+  32              	#if !defined(__DOXYGEN__)
+  33              	
+  34              	        /* Software vectors table. The vectors are accessed from the IVOR4
+  35              	           handler only. In order to declare an interrupt handler just create
+  36              	           a function withe the same name of a vector, the symbol will
+  37              	           override the weak symbol declared here.*/
+  38              	
+  39              	        .section    .vectors, "axv"
+  40              	_VLE
+  41              	        .align      4
+  42              	        .globl      _vectors
+  43              	_vectors:
+  44 0000 00000000 	        .long       vector0,    vector1,    vector2,    vector3
+  44      00000000 
+  44      00000000 
+  44      00000000 
+  45 0010 00000000 	        .long       vector4,    vector5,    vector6,    vector7
+  45      00000000 
+  45      00000000 
+  45      00000000 
+  46 0020 00000000 	        .long       vector8,    vector9,    vector10,   vector11
+  46      00000000 
+  46      00000000 
+  46      00000000 
+  47 0030 00000000 	        .long       vector12,   vector13,   vector14,   vector15
+  47      00000000 
+  47      00000000 
+  47      00000000 
+  48 0040 00000000 	        .long       vector16,   vector17,   vector18,   vector19
+  48      00000000 
+  48      00000000 
+  48      00000000 
+  49 0050 00000000 	        .long       vector20,   vector21,   vector22,   vector23
+  49      00000000 
+  49      00000000 
+  49      00000000 
+  50 0060 00000000 	        .long       vector24,   vector25,   vector26,   vector27
+  50      00000000 
+  50      00000000 
+  50      00000000 
+  51 0070 00000000 	        .long       vector28,   vector29,   vector30,   vector31
+  51      00000000 
+  51      00000000 
+  51      00000000 
+  52 0080 00000000 	        .long       vector32,   vector33,   vector34,   vector35
+  52      00000000 
+  52      00000000 
+  52      00000000 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 3
+
+
+  53 0090 00000000 	        .long       vector36,   vector37,   vector38,   vector39
+  53      00000000 
+  53      00000000 
+  53      00000000 
+  54 00a0 00000000 	        .long       vector40,   vector41,   vector42,   vector43
+  54      00000000 
+  54      00000000 
+  54      00000000 
+  55 00b0 00000000 	        .long       vector44,   vector45,   vector46,   vector47
+  55      00000000 
+  55      00000000 
+  55      00000000 
+  56 00c0 00000000 	        .long       vector48,   vector49,   vector50,   vector51
+  56      00000000 
+  56      00000000 
+  56      00000000 
+  57 00d0 00000000 	        .long       vector52,   vector53,   vector54,   vector55
+  57      00000000 
+  57      00000000 
+  57      00000000 
+  58 00e0 00000000 	        .long       vector56,   vector57,   vector58,   vector59
+  58      00000000 
+  58      00000000 
+  58      00000000 
+  59 00f0 00000000 	        .long       vector60,   vector61,   vector62,   vector63
+  59      00000000 
+  59      00000000 
+  59      00000000 
+  60 0100 00000000 	        .long       vector64,   vector65,   vector66,   vector67
+  60      00000000 
+  60      00000000 
+  60      00000000 
+  61 0110 00000000 	        .long       vector68,   vector69,   vector70,   vector71
+  61      00000000 
+  61      00000000 
+  61      00000000 
+  62 0120 00000000 	        .long       vector72,   vector73,   vector74,   vector75
+  62      00000000 
+  62      00000000 
+  62      00000000 
+  63 0130 00000000 	        .long       vector76,   vector77,   vector78,   vector79
+  63      00000000 
+  63      00000000 
+  63      00000000 
+  64 0140 00000000 	        .long       vector80,   vector81,   vector82,   vector83
+  64      00000000 
+  64      00000000 
+  64      00000000 
+  65 0150 00000000 	        .long       vector84,   vector85,   vector86,   vector87
+  65      00000000 
+  65      00000000 
+  65      00000000 
+  66 0160 00000000 	        .long       vector88,   vector89,   vector90,   vector91
+  66      00000000 
+  66      00000000 
+  66      00000000 
+  67 0170 00000000 	        .long       vector92,   vector93,   vector94,   vector95
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 4
+
+
+  67      00000000 
+  67      00000000 
+  67      00000000 
+  68 0180 00000000 	        .long       vector96,   vector97,   vector98,   vector99
+  68      00000000 
+  68      00000000 
+  68      00000000 
+  69 0190 00000000 	        .long       vector100,  vector101,  vector102,  vector103
+  69      00000000 
+  69      00000000 
+  69      00000000 
+  70 01a0 00000000 	        .long       vector104,  vector105,  vector106,  vector107
+  70      00000000 
+  70      00000000 
+  70      00000000 
+  71 01b0 00000000 	        .long       vector108,  vector109,  vector110,  vector111
+  71      00000000 
+  71      00000000 
+  71      00000000 
+  72 01c0 00000000 	        .long       vector112,  vector113,  vector114,  vector115
+  72      00000000 
+  72      00000000 
+  72      00000000 
+  73 01d0 00000000 	        .long       vector116,  vector117,  vector118,  vector119
+  73      00000000 
+  73      00000000 
+  73      00000000 
+  74 01e0 00000000 	        .long       vector120,  vector121,  vector122,  vector123
+  74      00000000 
+  74      00000000 
+  74      00000000 
+  75 01f0 00000000 	        .long       vector124,  vector125,  vector126,  vector127
+  75      00000000 
+  75      00000000 
+  75      00000000 
+  76 0200 00000000 	        .long       vector128,  vector129,  vector130,  vector131
+  76      00000000 
+  76      00000000 
+  76      00000000 
+  77 0210 00000000 	        .long       vector132,  vector133,  vector134,  vector135
+  77      00000000 
+  77      00000000 
+  77      00000000 
+  78 0220 00000000 	        .long       vector136,  vector137,  vector138,  vector139
+  78      00000000 
+  78      00000000 
+  78      00000000 
+  79 0230 00000000 	        .long       vector140,  vector141,  vector142,  vector143
+  79      00000000 
+  79      00000000 
+  79      00000000 
+  80 0240 00000000 	        .long       vector144,  vector145,  vector146,  vector147
+  80      00000000 
+  80      00000000 
+  80      00000000 
+  81 0250 00000000 	        .long       vector148,  vector149,  vector150,  vector151
+  81      00000000 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 5
+
+
+  81      00000000 
+  81      00000000 
+  82 0260 00000000 	        .long       vector152,  vector153,  vector154,  vector155
+  82      00000000 
+  82      00000000 
+  82      00000000 
+  83 0270 00000000 	        .long       vector156,  vector157,  vector158,  vector159
+  83      00000000 
+  83      00000000 
+  83      00000000 
+  84 0280 00000000 	        .long       vector160,  vector161,  vector162,  vector163
+  84      00000000 
+  84      00000000 
+  84      00000000 
+  85 0290 00000000 	        .long       vector164,  vector165,  vector166,  vector167
+  85      00000000 
+  85      00000000 
+  85      00000000 
+  86 02a0 00000000 	        .long       vector168,  vector169,  vector170,  vector171
+  86      00000000 
+  86      00000000 
+  86      00000000 
+  87 02b0 00000000 	        .long       vector172,  vector173,  vector174,  vector175
+  87      00000000 
+  87      00000000 
+  87      00000000 
+  88 02c0 00000000 	        .long       vector176,  vector177,  vector178,  vector179
+  88      00000000 
+  88      00000000 
+  88      00000000 
+  89 02d0 00000000 	        .long       vector180,  vector181,  vector182,  vector183
+  89      00000000 
+  89      00000000 
+  89      00000000 
+  90 02e0 00000000 	        .long       vector184,  vector185,  vector186,  vector187
+  90      00000000 
+  90      00000000 
+  90      00000000 
+  91 02f0 00000000 	        .long       vector188,  vector189,  vector190,  vector191
+  91      00000000 
+  91      00000000 
+  91      00000000 
+  92 0300 00000000 	        .long       vector192,  vector193,  vector194,  vector195
+  92      00000000 
+  92      00000000 
+  92      00000000 
+  93 0310 00000000 	        .long       vector196,  vector197,  vector198,  vector199
+  93      00000000 
+  93      00000000 
+  93      00000000 
+  94 0320 00000000 	        .long       vector200,  vector201,  vector202,  vector203
+  94      00000000 
+  94      00000000 
+  94      00000000 
+  95 0330 00000000 	        .long       vector204,  vector205,  vector206,  vector207
+  95      00000000 
+  95      00000000 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 6
+
+
+  95      00000000 
+  96 0340 00000000 	        .long       vector208,  vector209,  vector210,  vector211
+  96      00000000 
+  96      00000000 
+  96      00000000 
+  97 0350 00000000 	        .long       vector212,  vector213,  vector214,  vector215
+  97      00000000 
+  97      00000000 
+  97      00000000 
+  98 0360 00000000 	        .long       vector216,  vector217,  vector218,  vector219
+  98      00000000 
+  98      00000000 
+  98      00000000 
+  99 0370 00000000 	        .long       vector220,  vector221,  vector222,  vector223
+  99      00000000 
+  99      00000000 
+  99      00000000 
+ 100 0380 00000000 	        .long       vector224,  vector225,  vector226,  vector227
+ 100      00000000 
+ 100      00000000 
+ 100      00000000 
+ 101 0390 00000000 	        .long       vector228,  vector229,  vector230,  vector231
+ 101      00000000 
+ 101      00000000 
+ 101      00000000 
+ 102 03a0 00000000 	        .long       vector232,  vector233
+ 102      00000000 
+ 103              	
+ 104              	        .align      2
+ 105              	        
+ 106              	        .weak       vector0,    vector1,    vector2,    vector3
+ 107              	        .weak       vector4,    vector5,    vector6,    vector7
+ 108              	        .weak       vector8,    vector9,    vector10,   vector11
+ 109              	        .weak       vector12,   vector13,   vector14,   vector15
+ 110              	        .weak       vector16,   vector17,   vector18,   vector19
+ 111              	        .weak       vector20,   vector21,   vector22,   vector23
+ 112              	        .weak       vector24,   vector25,   vector26,   vector27
+ 113              	        .weak       vector28,   vector29,   vector30,   vector31
+ 114              	        .weak       vector32,   vector33,   vector34,   vector35
+ 115              	        .weak       vector36,   vector37,   vector38,   vector39
+ 116              	        .weak       vector40,   vector41,   vector42,   vector43
+ 117              	        .weak       vector44,   vector45,   vector46,   vector47
+ 118              	        .weak       vector48,   vector49,   vector50,   vector51
+ 119              	        .weak       vector52,   vector53,   vector54,   vector55
+ 120              	        .weak       vector56,   vector57,   vector58,   vector59
+ 121              	        .weak       vector60,   vector61,   vector62,   vector63
+ 122              	        .weak       vector64,   vector65,   vector66,   vector67
+ 123              	        .weak       vector68,   vector69,   vector70,   vector71
+ 124              	        .weak       vector72,   vector73,   vector74,   vector75
+ 125              	        .weak       vector76,   vector77,   vector78,   vector79
+ 126              	        .weak       vector80,   vector81,   vector82,   vector83
+ 127              	        .weak       vector84,   vector85,   vector86,   vector87
+ 128              	        .weak       vector88,   vector89,   vector90,   vector91
+ 129              	        .weak       vector92,   vector93,   vector94,   vector95
+ 130              	        .weak       vector96,   vector97,   vector98,   vector99
+ 131              	        .weak       vector100,  vector101,  vector102,  vector103
+ 132              	        .weak       vector104,  vector105,  vector106,  vector107
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 7
+
+
+ 133              	        .weak       vector108,  vector109,  vector110,  vector111
+ 134              	        .weak       vector112,  vector113,  vector114,  vector115
+ 135              	        .weak       vector116,  vector117,  vector118,  vector119
+ 136              	        .weak       vector120,  vector121,  vector122,  vector123
+ 137              	        .weak       vector124,  vector125,  vector126,  vector127
+ 138              	        .weak       vector128,  vector129,  vector130,  vector131
+ 139              	        .weak       vector132,  vector133,  vector134,  vector135
+ 140              	        .weak       vector136,  vector137,  vector138,  vector139
+ 141              	        .weak       vector140,  vector141,  vector142,  vector143
+ 142              	        .weak       vector144,  vector145,  vector146,  vector147
+ 143              	        .weak       vector148,  vector149,  vector150,  vector151
+ 144              	        .weak       vector152,  vector153,  vector154,  vector155
+ 145              	        .weak       vector156,  vector157,  vector158,  vector159
+ 146              	        .weak       vector160,  vector161,  vector162,  vector163
+ 147              	        .weak       vector164,  vector165,  vector166,  vector167
+ 148              	        .weak       vector168,  vector169,  vector170,  vector171
+ 149              	        .weak       vector172,  vector173,  vector174,  vector175
+ 150              	        .weak       vector176,  vector177,  vector178,  vector179
+ 151              	        .weak       vector180,  vector181,  vector182,  vector183
+ 152              	        .weak       vector184,  vector185,  vector186,  vector187
+ 153              	        .weak       vector188,  vector189,  vector190,  vector191
+ 154              	        .weak       vector192,  vector193,  vector194,  vector195
+ 155              	        .weak       vector196,  vector197,  vector198,  vector199
+ 156              	        .weak       vector200,  vector201,  vector202,  vector203
+ 157              	        .weak       vector204,  vector205,  vector206,  vector207
+ 158              	        .weak       vector208,  vector209,  vector210,  vector211
+ 159              	        .weak       vector212,  vector213,  vector214,  vector215
+ 160              	        .weak       vector216,  vector217,  vector218,  vector219
+ 161              	        .weak       vector220,  vector221,  vector222,  vector223
+ 162              	        .weak       vector224,  vector225,  vector226,  vector227
+ 163              	        .weak       vector228,  vector229,  vector230,  vector231
+ 164              	        .weak       vector232,  vector233
+ 165              	
+ 166              	vector0:
+ 167              	vector1:
+ 168              	vector2:
+ 169              	vector3:
+ 170              	vector4:
+ 171              	vector5:
+ 172              	vector6:
+ 173              	vector7:
+ 174              	vector8:
+ 175              	vector9:
+ 176              	vector10:
+ 177              	vector11:
+ 178              	vector12:
+ 179              	vector13:
+ 180              	vector14:
+ 181              	vector15:
+ 182              	vector16:
+ 183              	vector17:
+ 184              	vector18:
+ 185              	vector19:
+ 186              	vector20:
+ 187              	vector21:
+ 188              	vector22:
+ 189              	vector23:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 8
+
+
+ 190              	vector24:
+ 191              	vector25:
+ 192              	vector26:
+ 193              	vector27:
+ 194              	vector28:
+ 195              	vector29:
+ 196              	vector30:
+ 197              	vector31:
+ 198              	vector32:
+ 199              	vector33:
+ 200              	vector34:
+ 201              	vector35:
+ 202              	vector36:
+ 203              	vector37:
+ 204              	vector38:
+ 205              	vector39:
+ 206              	vector40:
+ 207              	vector41:
+ 208              	vector42:
+ 209              	vector43:
+ 210              	vector44:
+ 211              	vector45:
+ 212              	vector46:
+ 213              	vector47:
+ 214              	vector48:
+ 215              	vector49:
+ 216              	vector50:
+ 217              	vector51:
+ 218              	vector52:
+ 219              	vector53:
+ 220              	vector54:
+ 221              	vector55:
+ 222              	vector56:
+ 223              	vector57:
+ 224              	vector58:
+ 225              	vector59:
+ 226              	vector60:
+ 227              	vector61:
+ 228              	vector62:
+ 229              	vector63:
+ 230              	vector64:
+ 231              	vector65:
+ 232              	vector66:
+ 233              	vector67:
+ 234              	vector68:
+ 235              	vector69:
+ 236              	vector70:
+ 237              	vector71:
+ 238              	vector72:
+ 239              	vector73:
+ 240              	vector74:
+ 241              	vector75:
+ 242              	vector76:
+ 243              	vector77:
+ 244              	vector78:
+ 245              	vector79:
+ 246              	vector80:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 9
+
+
+ 247              	vector81:
+ 248              	vector82:
+ 249              	vector83:
+ 250              	vector84:
+ 251              	vector85:
+ 252              	vector86:
+ 253              	vector87:
+ 254              	vector88:
+ 255              	vector89:
+ 256              	vector90:
+ 257              	vector91:
+ 258              	vector92:
+ 259              	vector93:
+ 260              	vector94:
+ 261              	vector95:
+ 262              	vector96:
+ 263              	vector97:
+ 264              	vector98:
+ 265              	vector99:
+ 266              	vector100:
+ 267              	vector101:
+ 268              	vector102:
+ 269              	vector103:
+ 270              	vector104:
+ 271              	vector105:
+ 272              	vector106:
+ 273              	vector107:
+ 274              	vector108:
+ 275              	vector109:
+ 276              	vector110:
+ 277              	vector111:
+ 278              	vector112:
+ 279              	vector113:
+ 280              	vector114:
+ 281              	vector115:
+ 282              	vector116:
+ 283              	vector117:
+ 284              	vector118:
+ 285              	vector119:
+ 286              	vector120:
+ 287              	vector121:
+ 288              	vector122:
+ 289              	vector123:
+ 290              	vector124:
+ 291              	vector125:
+ 292              	vector126:
+ 293              	vector127:
+ 294              	vector128:
+ 295              	vector129:
+ 296              	vector130:
+ 297              	vector131:
+ 298              	vector132:
+ 299              	vector133:
+ 300              	vector134:
+ 301              	vector135:
+ 302              	vector136:
+ 303              	vector137:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 10
+
+
+ 304              	vector138:
+ 305              	vector139:
+ 306              	vector140:
+ 307              	vector141:
+ 308              	vector142:
+ 309              	vector143:
+ 310              	vector144:
+ 311              	vector145:
+ 312              	vector146:
+ 313              	vector147:
+ 314              	vector148:
+ 315              	vector149:
+ 316              	vector150:
+ 317              	vector151:
+ 318              	vector152:
+ 319              	vector153:
+ 320              	vector154:
+ 321              	vector155:
+ 322              	vector156:
+ 323              	vector157:
+ 324              	vector158:
+ 325              	vector159:
+ 326              	vector160:
+ 327              	vector161:
+ 328              	vector162:
+ 329              	vector163:
+ 330              	vector164:
+ 331              	vector165:
+ 332              	vector166:
+ 333              	vector167:
+ 334              	vector168:
+ 335              	vector169:
+ 336              	vector170:
+ 337              	vector171:
+ 338              	vector172:
+ 339              	vector173:
+ 340              	vector174:
+ 341              	vector175:
+ 342              	vector176:
+ 343              	vector177:
+ 344              	vector178:
+ 345              	vector179:
+ 346              	vector180:
+ 347              	vector181:
+ 348              	vector182:
+ 349              	vector183:
+ 350              	vector184:
+ 351              	vector185:
+ 352              	vector186:
+ 353              	vector187:
+ 354              	vector188:
+ 355              	vector189:
+ 356              	vector190:
+ 357              	vector191:
+ 358              	vector192:
+ 359              	vector193:
+ 360              	vector194:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 11
+
+
+ 361              	vector195:
+ 362              	vector196:
+ 363              	vector197:
+ 364              	vector198:
+ 365              	vector199:
+ 366              	vector200:
+ 367              	vector201:
+ 368              	vector202:
+ 369              	vector203:
+ 370              	vector204:
+ 371              	vector205:
+ 372              	vector206:
+ 373              	vector207:
+ 374              	vector208:
+ 375              	vector209:
+ 376              	vector210:
+ 377              	vector211:
+ 378              	vector212:
+ 379              	vector213:
+ 380              	vector214:
+ 381              	vector215:
+ 382              	vector216:
+ 383              	vector217:
+ 384              	vector218:
+ 385              	vector219:
+ 386              	vector220:
+ 387              	vector221:
+ 388              	vector222:
+ 389              	vector223:
+ 390              	vector224:
+ 391              	vector225:
+ 392              	vector226:
+ 393              	vector227:
+ 394              	vector228:
+ 395              	vector229:
+ 396              	vector230:
+ 397              	vector231:
+ 398              	vector232:
+ 399              	vector233:
+ 400              	
+ 401              	        .weak       _unhandled_irq
+ 402              	        .type       _unhandled_irq, @function
+ 403              	_unhandled_irq:
+ 404 03a8 E800     	         se_b       _unhandled_irq
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 12
+
+
+DEFINED SYMBOLS
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:43     .vectors:00000000 _vectors
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:166    .vectors:000003a8 vector0
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:167    .vectors:000003a8 vector1
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:168    .vectors:000003a8 vector2
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:169    .vectors:000003a8 vector3
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:170    .vectors:000003a8 vector4
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:171    .vectors:000003a8 vector5
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:172    .vectors:000003a8 vector6
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:173    .vectors:000003a8 vector7
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:174    .vectors:000003a8 vector8
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:175    .vectors:000003a8 vector9
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:176    .vectors:000003a8 vector10
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:177    .vectors:000003a8 vector11
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:178    .vectors:000003a8 vector12
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:179    .vectors:000003a8 vector13
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:180    .vectors:000003a8 vector14
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:181    .vectors:000003a8 vector15
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:182    .vectors:000003a8 vector16
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:183    .vectors:000003a8 vector17
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:184    .vectors:000003a8 vector18
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:185    .vectors:000003a8 vector19
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:186    .vectors:000003a8 vector20
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:187    .vectors:000003a8 vector21
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:188    .vectors:000003a8 vector22
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:189    .vectors:000003a8 vector23
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:190    .vectors:000003a8 vector24
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:191    .vectors:000003a8 vector25
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:192    .vectors:000003a8 vector26
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:193    .vectors:000003a8 vector27
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:194    .vectors:000003a8 vector28
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:195    .vectors:000003a8 vector29
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:196    .vectors:000003a8 vector30
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:197    .vectors:000003a8 vector31
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:198    .vectors:000003a8 vector32
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:199    .vectors:000003a8 vector33
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:200    .vectors:000003a8 vector34
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:201    .vectors:000003a8 vector35
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:202    .vectors:000003a8 vector36
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:203    .vectors:000003a8 vector37
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:204    .vectors:000003a8 vector38
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:205    .vectors:000003a8 vector39
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:206    .vectors:000003a8 vector40
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:207    .vectors:000003a8 vector41
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:208    .vectors:000003a8 vector42
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:209    .vectors:000003a8 vector43
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:210    .vectors:000003a8 vector44
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:211    .vectors:000003a8 vector45
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:212    .vectors:000003a8 vector46
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:213    .vectors:000003a8 vector47
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:214    .vectors:000003a8 vector48
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:215    .vectors:000003a8 vector49
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:216    .vectors:000003a8 vector50
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:217    .vectors:000003a8 vector51
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:218    .vectors:000003a8 vector52
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:219    .vectors:000003a8 vector53
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:220    .vectors:000003a8 vector54
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 13
+
+
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:221    .vectors:000003a8 vector55
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:222    .vectors:000003a8 vector56
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:223    .vectors:000003a8 vector57
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:224    .vectors:000003a8 vector58
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:225    .vectors:000003a8 vector59
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:226    .vectors:000003a8 vector60
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:227    .vectors:000003a8 vector61
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:228    .vectors:000003a8 vector62
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:229    .vectors:000003a8 vector63
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:230    .vectors:000003a8 vector64
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:231    .vectors:000003a8 vector65
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:232    .vectors:000003a8 vector66
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:233    .vectors:000003a8 vector67
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:234    .vectors:000003a8 vector68
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:235    .vectors:000003a8 vector69
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:236    .vectors:000003a8 vector70
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:237    .vectors:000003a8 vector71
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:238    .vectors:000003a8 vector72
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:239    .vectors:000003a8 vector73
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:240    .vectors:000003a8 vector74
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:241    .vectors:000003a8 vector75
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:242    .vectors:000003a8 vector76
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:243    .vectors:000003a8 vector77
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:244    .vectors:000003a8 vector78
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:245    .vectors:000003a8 vector79
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:246    .vectors:000003a8 vector80
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:247    .vectors:000003a8 vector81
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:248    .vectors:000003a8 vector82
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:249    .vectors:000003a8 vector83
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:250    .vectors:000003a8 vector84
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:251    .vectors:000003a8 vector85
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:252    .vectors:000003a8 vector86
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:253    .vectors:000003a8 vector87
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:254    .vectors:000003a8 vector88
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:255    .vectors:000003a8 vector89
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:256    .vectors:000003a8 vector90
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:257    .vectors:000003a8 vector91
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:258    .vectors:000003a8 vector92
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:259    .vectors:000003a8 vector93
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:260    .vectors:000003a8 vector94
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:261    .vectors:000003a8 vector95
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:262    .vectors:000003a8 vector96
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:263    .vectors:000003a8 vector97
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:264    .vectors:000003a8 vector98
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:265    .vectors:000003a8 vector99
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:266    .vectors:000003a8 vector100
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:267    .vectors:000003a8 vector101
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:268    .vectors:000003a8 vector102
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:269    .vectors:000003a8 vector103
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:270    .vectors:000003a8 vector104
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:271    .vectors:000003a8 vector105
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:272    .vectors:000003a8 vector106
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:273    .vectors:000003a8 vector107
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:274    .vectors:000003a8 vector108
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:275    .vectors:000003a8 vector109
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:276    .vectors:000003a8 vector110
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:277    .vectors:000003a8 vector111
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 14
+
+
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:278    .vectors:000003a8 vector112
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:279    .vectors:000003a8 vector113
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:280    .vectors:000003a8 vector114
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:281    .vectors:000003a8 vector115
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:282    .vectors:000003a8 vector116
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:283    .vectors:000003a8 vector117
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:284    .vectors:000003a8 vector118
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:285    .vectors:000003a8 vector119
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:286    .vectors:000003a8 vector120
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:287    .vectors:000003a8 vector121
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:288    .vectors:000003a8 vector122
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:289    .vectors:000003a8 vector123
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:290    .vectors:000003a8 vector124
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:291    .vectors:000003a8 vector125
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:292    .vectors:000003a8 vector126
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:293    .vectors:000003a8 vector127
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:294    .vectors:000003a8 vector128
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:295    .vectors:000003a8 vector129
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:296    .vectors:000003a8 vector130
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:297    .vectors:000003a8 vector131
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:298    .vectors:000003a8 vector132
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:299    .vectors:000003a8 vector133
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:300    .vectors:000003a8 vector134
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:301    .vectors:000003a8 vector135
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:302    .vectors:000003a8 vector136
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:303    .vectors:000003a8 vector137
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:304    .vectors:000003a8 vector138
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:305    .vectors:000003a8 vector139
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:306    .vectors:000003a8 vector140
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:307    .vectors:000003a8 vector141
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:308    .vectors:000003a8 vector142
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:309    .vectors:000003a8 vector143
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:310    .vectors:000003a8 vector144
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:311    .vectors:000003a8 vector145
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:312    .vectors:000003a8 vector146
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:313    .vectors:000003a8 vector147
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:314    .vectors:000003a8 vector148
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:315    .vectors:000003a8 vector149
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:316    .vectors:000003a8 vector150
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:317    .vectors:000003a8 vector151
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:318    .vectors:000003a8 vector152
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:319    .vectors:000003a8 vector153
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:320    .vectors:000003a8 vector154
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:321    .vectors:000003a8 vector155
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:322    .vectors:000003a8 vector156
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:323    .vectors:000003a8 vector157
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:324    .vectors:000003a8 vector158
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:325    .vectors:000003a8 vector159
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:326    .vectors:000003a8 vector160
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:327    .vectors:000003a8 vector161
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:328    .vectors:000003a8 vector162
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:329    .vectors:000003a8 vector163
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:330    .vectors:000003a8 vector164
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:331    .vectors:000003a8 vector165
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:332    .vectors:000003a8 vector166
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:333    .vectors:000003a8 vector167
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:334    .vectors:000003a8 vector168
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 15
+
+
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:335    .vectors:000003a8 vector169
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:336    .vectors:000003a8 vector170
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:337    .vectors:000003a8 vector171
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:338    .vectors:000003a8 vector172
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:339    .vectors:000003a8 vector173
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:340    .vectors:000003a8 vector174
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:341    .vectors:000003a8 vector175
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:342    .vectors:000003a8 vector176
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:343    .vectors:000003a8 vector177
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:344    .vectors:000003a8 vector178
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:345    .vectors:000003a8 vector179
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:346    .vectors:000003a8 vector180
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:347    .vectors:000003a8 vector181
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:348    .vectors:000003a8 vector182
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:349    .vectors:000003a8 vector183
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:350    .vectors:000003a8 vector184
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:351    .vectors:000003a8 vector185
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:352    .vectors:000003a8 vector186
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:353    .vectors:000003a8 vector187
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:354    .vectors:000003a8 vector188
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:355    .vectors:000003a8 vector189
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:356    .vectors:000003a8 vector190
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:357    .vectors:000003a8 vector191
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:358    .vectors:000003a8 vector192
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:359    .vectors:000003a8 vector193
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:360    .vectors:000003a8 vector194
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:361    .vectors:000003a8 vector195
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:362    .vectors:000003a8 vector196
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:363    .vectors:000003a8 vector197
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:364    .vectors:000003a8 vector198
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:365    .vectors:000003a8 vector199
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:366    .vectors:000003a8 vector200
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:367    .vectors:000003a8 vector201
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:368    .vectors:000003a8 vector202
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:369    .vectors:000003a8 vector203
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:370    .vectors:000003a8 vector204
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:371    .vectors:000003a8 vector205
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:372    .vectors:000003a8 vector206
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:373    .vectors:000003a8 vector207
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:374    .vectors:000003a8 vector208
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:375    .vectors:000003a8 vector209
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:376    .vectors:000003a8 vector210
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:377    .vectors:000003a8 vector211
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:378    .vectors:000003a8 vector212
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:379    .vectors:000003a8 vector213
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:380    .vectors:000003a8 vector214
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:381    .vectors:000003a8 vector215
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:382    .vectors:000003a8 vector216
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:383    .vectors:000003a8 vector217
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:384    .vectors:000003a8 vector218
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:385    .vectors:000003a8 vector219
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:386    .vectors:000003a8 vector220
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:387    .vectors:000003a8 vector221
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:388    .vectors:000003a8 vector222
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:389    .vectors:000003a8 vector223
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:390    .vectors:000003a8 vector224
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:391    .vectors:000003a8 vector225
+GAS LISTING C:\Users\marky\AppData\Local\Temp\cc8ytn2w.s 			page 16
+
+
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:392    .vectors:000003a8 vector226
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:393    .vectors:000003a8 vector227
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:394    .vectors:000003a8 vector228
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:395    .vectors:000003a8 vector229
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:396    .vectors:000003a8 vector230
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:397    .vectors:000003a8 vector231
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:398    .vectors:000003a8 vector232
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:399    .vectors:000003a8 vector233
+./components/spc560bxx_irq_component_rla/lib/src/vectors.s:403    .vectors:000003a8 _unhandled_irq
+
+NO UNDEFINED SYMBOLS

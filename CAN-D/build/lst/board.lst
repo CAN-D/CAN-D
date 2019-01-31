@@ -1,0 +1,797 @@
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 1
+
+
+   1              		.file	"board.c"
+   2              		.section	".text","axv"
+   3              	.Ltext0:
+   4              		.cfi_sections	.debug_frame
+   5              		.section	.text.boardInit,"axv",@progbits
+   6              		.align 1
+   7              		.p2align 4,,15
+   8              		.globl boardInit
+   9              		.type	boardInit, @function
+  10              	boardInit:
+  11              	.LFB4:
+  12              		.file 1 "./components/spc560bxx_board_initialization_component_rla/cfg/board.c"
+  13              		.loc 1 53 0
+  14              		.cfi_startproc
+  15              		.loc 1 55 0
+  16 0000 7060E000 		e_lis %r3,.LANCHOR0@ha
+  17              		.loc 1 56 0
+  18              		.loc 1 55 0
+  19 0004 1C630000 		e_la %r3,.LANCHOR0@l(%r3)
+  20 0008 78000000 		e_b pal_init
+  21              	.LVL0:
+  22              		.cfi_endproc
+  23              	.LFE4:
+  24              		.size	boardInit, .-boardInit
+  25              		.section	.rodata.spc_siu_init,"a",@progbits
+  26              		.align 2
+  27              		.type	spc_siu_init, @object
+  28              		.size	spc_siu_init, 40
+  29              	spc_siu_init:
+  30 0000 00000012 		.long	18
+  31 0004 01       		.byte	1
+  32 0005 00       		.zero	1
+  33 0006 0700     		.short	1792
+  34 0008 00000013 		.long	19
+  35 000c 01       		.byte	1
+  36 000d 00       		.zero	1
+  37 000e 0100     		.short	256
+  38 0010 00000022 		.long	34
+  39 0014 00       		.byte	0
+  40 0015 00       		.zero	1
+  41 0016 0300     		.short	768
+  42 0018 00000023 		.long	35
+  43 001c 00       		.byte	0
+  44 001d 00       		.zero	1
+  45 001e 0300     		.short	768
+  46 0020 FFFFFFFF 		.long	-1
+  47 0024 00       		.byte	0
+  48 0025 00       		.zero	1
+  49 0026 0000     		.short	0
+  50              		.section	.rodata.pal_default_config,"a",@progbits
+  51              		.align 2
+  52              		.set	.LANCHOR0,. + 0
+  53              		.type	pal_default_config, @object
+  54              		.size	pal_default_config, 12
+  55              	pal_default_config:
+  56 0000 0003     		.short	3
+  57 0002 0000     		.zero	2
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 2
+
+
+  58 0004 00000000 		.long	spc_siu_init
+  59 0008 00000000 		.long	spc_padsels_init
+  60              		.section	.rodata.spc_padsels_init,"a",@progbits
+  61              		.align 2
+  62              		.type	spc_padsels_init, @object
+  63              		.size	spc_padsels_init, 64
+  64              	spc_padsels_init:
+  65 0000 00000000 		.zero	64
+  65      00000000 
+  65      00000000 
+  65      00000000 
+  65      00000000 
+  66              		.section	".text","axv"
+  67              	.Letext0:
+  68              		.file 2 "c:\\spc5studio\\eclipse\\plugins\\com.st.tools.spc5.tools.gnu.gcc.ppcvle.win32_4.9.4.2018
+  69              		.file 3 "c:\\spc5studio\\eclipse\\plugins\\com.st.tools.spc5.tools.gnu.gcc.ppcvle.win32_4.9.4.2018
+  70              		.file 4 "./components/spc560bxx_board_initialization_component_rla/lib/include/pal.h"
+  71              		.section	.debug_info,"",@progbits
+  72              	.Ldebug_info0:
+  73 0000 00000213 		.4byte	0x213
+  74 0004 0002     		.2byte	0x2
+  75 0006 00000000 		.4byte	.Ldebug_abbrev0
+  76 000a 04       		.byte	0x4
+  77 000b 01       		.uleb128 0x1
+  78 000c 00000000 		.4byte	.LASF30
+  79 0010 01       		.byte	0x1
+  80 0011 00000000 		.4byte	.LASF31
+  81 0015 00000000 		.4byte	.LASF32
+  82 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  83 001d 00000000 		.4byte	0
+  84 0021 00000000 		.4byte	0
+  85 0025 00000000 		.4byte	.Ldebug_line0
+  86 0029 02       		.uleb128 0x2
+  87 002a 01       		.byte	0x1
+  88 002b 06       		.byte	0x6
+  89 002c 00000000 		.4byte	.LASF0
+  90 0030 03       		.uleb128 0x3
+  91 0031 00000000 		.4byte	.LASF3
+  92 0035 02       		.byte	0x2
+  93 0036 1D       		.byte	0x1d
+  94 0037 0000003B 		.4byte	0x3b
+  95 003b 02       		.uleb128 0x2
+  96 003c 01       		.byte	0x1
+  97 003d 08       		.byte	0x8
+  98 003e 00000000 		.4byte	.LASF1
+  99 0042 02       		.uleb128 0x2
+ 100 0043 02       		.byte	0x2
+ 101 0044 05       		.byte	0x5
+ 102 0045 00000000 		.4byte	.LASF2
+ 103 0049 03       		.uleb128 0x3
+ 104 004a 00000000 		.4byte	.LASF4
+ 105 004e 02       		.byte	0x2
+ 106 004f 2B       		.byte	0x2b
+ 107 0050 00000054 		.4byte	0x54
+ 108 0054 02       		.uleb128 0x2
+ 109 0055 02       		.byte	0x2
+ 110 0056 07       		.byte	0x7
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 3
+
+
+ 111 0057 00000000 		.4byte	.LASF5
+ 112 005b 03       		.uleb128 0x3
+ 113 005c 00000000 		.4byte	.LASF6
+ 114 0060 02       		.byte	0x2
+ 115 0061 3F       		.byte	0x3f
+ 116 0062 00000066 		.4byte	0x66
+ 117 0066 02       		.uleb128 0x2
+ 118 0067 04       		.byte	0x4
+ 119 0068 05       		.byte	0x5
+ 120 0069 00000000 		.4byte	.LASF7
+ 121 006d 03       		.uleb128 0x3
+ 122 006e 00000000 		.4byte	.LASF8
+ 123 0072 02       		.byte	0x2
+ 124 0073 41       		.byte	0x41
+ 125 0074 00000078 		.4byte	0x78
+ 126 0078 02       		.uleb128 0x2
+ 127 0079 04       		.byte	0x4
+ 128 007a 07       		.byte	0x7
+ 129 007b 00000000 		.4byte	.LASF9
+ 130 007f 02       		.uleb128 0x2
+ 131 0080 08       		.byte	0x8
+ 132 0081 05       		.byte	0x5
+ 133 0082 00000000 		.4byte	.LASF10
+ 134 0086 02       		.uleb128 0x2
+ 135 0087 08       		.byte	0x8
+ 136 0088 07       		.byte	0x7
+ 137 0089 00000000 		.4byte	.LASF11
+ 138 008d 04       		.uleb128 0x4
+ 139 008e 04       		.byte	0x4
+ 140 008f 05       		.byte	0x5
+ 141 0090 696E7400 		.string	"int"
+ 142 0094 02       		.uleb128 0x2
+ 143 0095 04       		.byte	0x4
+ 144 0096 07       		.byte	0x7
+ 145 0097 00000000 		.4byte	.LASF12
+ 146 009b 03       		.uleb128 0x3
+ 147 009c 00000000 		.4byte	.LASF13
+ 148 00a0 03       		.byte	0x3
+ 149 00a1 15       		.byte	0x15
+ 150 00a2 00000030 		.4byte	0x30
+ 151 00a6 03       		.uleb128 0x3
+ 152 00a7 00000000 		.4byte	.LASF14
+ 153 00ab 03       		.byte	0x3
+ 154 00ac 21       		.byte	0x21
+ 155 00ad 00000049 		.4byte	0x49
+ 156 00b1 03       		.uleb128 0x3
+ 157 00b2 00000000 		.4byte	.LASF15
+ 158 00b6 03       		.byte	0x3
+ 159 00b7 2C       		.byte	0x2c
+ 160 00b8 0000005B 		.4byte	0x5b
+ 161 00bc 03       		.uleb128 0x3
+ 162 00bd 00000000 		.4byte	.LASF16
+ 163 00c1 03       		.byte	0x3
+ 164 00c2 2D       		.byte	0x2d
+ 165 00c3 0000006D 		.4byte	0x6d
+ 166 00c7 02       		.uleb128 0x2
+ 167 00c8 04       		.byte	0x4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 4
+
+
+ 168 00c9 07       		.byte	0x7
+ 169 00ca 00000000 		.4byte	.LASF17
+ 170 00ce 03       		.uleb128 0x3
+ 171 00cf 00000000 		.4byte	.LASF18
+ 172 00d3 04       		.byte	0x4
+ 173 00d4 9A       		.byte	0x9a
+ 174 00d5 000000A6 		.4byte	0xa6
+ 175 00d9 05       		.uleb128 0x5
+ 176 00da 08       		.byte	0x8
+ 177 00db 04       		.byte	0x4
+ 178 00dc A7       		.byte	0xa7
+ 179 00dd 0000010C 		.4byte	0x10c
+ 180 00e1 06       		.uleb128 0x6
+ 181 00e2 00000000 		.4byte	.LASF19
+ 182 00e6 04       		.byte	0x4
+ 183 00e7 A8       		.byte	0xa8
+ 184 00e8 000000B1 		.4byte	0xb1
+ 185 00ec 02       		.byte	0x2
+ 186 00ed 23       		.byte	0x23
+ 187 00ee 00       		.uleb128 0
+ 188 00ef 06       		.uleb128 0x6
+ 189 00f0 00000000 		.4byte	.LASF20
+ 190 00f4 04       		.byte	0x4
+ 191 00f5 A9       		.byte	0xa9
+ 192 00f6 0000009B 		.4byte	0x9b
+ 193 00fa 02       		.byte	0x2
+ 194 00fb 23       		.byte	0x23
+ 195 00fc 04       		.uleb128 0x4
+ 196 00fd 06       		.uleb128 0x6
+ 197 00fe 00000000 		.4byte	.LASF21
+ 198 0102 04       		.byte	0x4
+ 199 0103 AA       		.byte	0xaa
+ 200 0104 000000CE 		.4byte	0xce
+ 201 0108 02       		.byte	0x2
+ 202 0109 23       		.byte	0x23
+ 203 010a 06       		.uleb128 0x6
+ 204 010b 00       		.byte	0
+ 205 010c 03       		.uleb128 0x3
+ 206 010d 00000000 		.4byte	.LASF22
+ 207 0111 04       		.byte	0x4
+ 208 0112 AB       		.byte	0xab
+ 209 0113 000000D9 		.4byte	0xd9
+ 210 0117 05       		.uleb128 0x5
+ 211 0118 0C       		.byte	0xc
+ 212 0119 04       		.byte	0x4
+ 213 011a B6       		.byte	0xb6
+ 214 011b 0000014A 		.4byte	0x14a
+ 215 011f 06       		.uleb128 0x6
+ 216 0120 00000000 		.4byte	.LASF23
+ 217 0124 04       		.byte	0x4
+ 218 0125 B7       		.byte	0xb7
+ 219 0126 000000CE 		.4byte	0xce
+ 220 012a 02       		.byte	0x2
+ 221 012b 23       		.byte	0x23
+ 222 012c 00       		.uleb128 0
+ 223 012d 06       		.uleb128 0x6
+ 224 012e 00000000 		.4byte	.LASF24
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 5
+
+
+ 225 0132 04       		.byte	0x4
+ 226 0133 B8       		.byte	0xb8
+ 227 0134 0000014A 		.4byte	0x14a
+ 228 0138 02       		.byte	0x2
+ 229 0139 23       		.byte	0x23
+ 230 013a 04       		.uleb128 0x4
+ 231 013b 06       		.uleb128 0x6
+ 232 013c 00000000 		.4byte	.LASF25
+ 233 0140 04       		.byte	0x4
+ 234 0141 B9       		.byte	0xb9
+ 235 0142 00000155 		.4byte	0x155
+ 236 0146 02       		.byte	0x2
+ 237 0147 23       		.byte	0x23
+ 238 0148 08       		.uleb128 0x8
+ 239 0149 00       		.byte	0
+ 240 014a 07       		.uleb128 0x7
+ 241 014b 04       		.byte	0x4
+ 242 014c 00000150 		.4byte	0x150
+ 243 0150 08       		.uleb128 0x8
+ 244 0151 0000010C 		.4byte	0x10c
+ 245 0155 07       		.uleb128 0x7
+ 246 0156 04       		.byte	0x4
+ 247 0157 0000015B 		.4byte	0x15b
+ 248 015b 08       		.uleb128 0x8
+ 249 015c 0000009B 		.4byte	0x9b
+ 250 0160 03       		.uleb128 0x3
+ 251 0161 00000000 		.4byte	.LASF26
+ 252 0165 04       		.byte	0x4
+ 253 0166 BA       		.byte	0xba
+ 254 0167 00000117 		.4byte	0x117
+ 255 016b 09       		.uleb128 0x9
+ 256 016c 01       		.byte	0x1
+ 257 016d 00000000 		.4byte	.LASF33
+ 258 0171 01       		.byte	0x1
+ 259 0172 35       		.byte	0x35
+ 260 0173 01       		.byte	0x1
+ 261 0174 00000000 		.4byte	.LFB4
+ 262 0178 00000000 		.4byte	.LFE4
+ 263 017c 02       		.byte	0x2
+ 264 017d 71       		.byte	0x71
+ 265 017e 00       		.sleb128 0
+ 266 017f 01       		.byte	0x1
+ 267 0180 00000199 		.4byte	0x199
+ 268 0184 0A       		.uleb128 0xa
+ 269 0185 00000000 		.4byte	.LVL0
+ 270 0189 01       		.byte	0x1
+ 271 018a 000001FB 		.4byte	0x1fb
+ 272 018e 0B       		.uleb128 0xb
+ 273 018f 01       		.byte	0x1
+ 274 0190 53       		.byte	0x53
+ 275 0191 05       		.byte	0x5
+ 276 0192 03       		.byte	0x3
+ 277 0193 00000000 		.4byte	.LANCHOR0
+ 278 0197 00       		.byte	0
+ 279 0198 00       		.byte	0
+ 280 0199 0C       		.uleb128 0xc
+ 281 019a 0000010C 		.4byte	0x10c
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 6
+
+
+ 282 019e 000001A9 		.4byte	0x1a9
+ 283 01a2 0D       		.uleb128 0xd
+ 284 01a3 000000C7 		.4byte	0xc7
+ 285 01a7 04       		.byte	0x4
+ 286 01a8 00       		.byte	0
+ 287 01a9 0E       		.uleb128 0xe
+ 288 01aa 00000000 		.4byte	.LASF27
+ 289 01ae 01       		.byte	0x1
+ 290 01af 15       		.byte	0x15
+ 291 01b0 000001BA 		.4byte	0x1ba
+ 292 01b4 05       		.byte	0x5
+ 293 01b5 03       		.byte	0x3
+ 294 01b6 00000000 		.4byte	spc_siu_init
+ 295 01ba 08       		.uleb128 0x8
+ 296 01bb 00000199 		.4byte	0x199
+ 297 01bf 0C       		.uleb128 0xc
+ 298 01c0 0000009B 		.4byte	0x9b
+ 299 01c4 000001CF 		.4byte	0x1cf
+ 300 01c8 0D       		.uleb128 0xd
+ 301 01c9 000000C7 		.4byte	0xc7
+ 302 01cd 3F       		.byte	0x3f
+ 303 01ce 00       		.byte	0
+ 304 01cf 0E       		.uleb128 0xe
+ 305 01d0 00000000 		.4byte	.LASF28
+ 306 01d4 01       		.byte	0x1
+ 307 01d5 1E       		.byte	0x1e
+ 308 01d6 000001E0 		.4byte	0x1e0
+ 309 01da 05       		.byte	0x5
+ 310 01db 03       		.byte	0x3
+ 311 01dc 00000000 		.4byte	spc_padsels_init
+ 312 01e0 08       		.uleb128 0x8
+ 313 01e1 000001BF 		.4byte	0x1bf
+ 314 01e5 0E       		.uleb128 0xe
+ 315 01e6 00000000 		.4byte	.LASF29
+ 316 01ea 01       		.byte	0x1
+ 317 01eb 2C       		.byte	0x2c
+ 318 01ec 000001F6 		.4byte	0x1f6
+ 319 01f0 05       		.byte	0x5
+ 320 01f1 03       		.byte	0x3
+ 321 01f2 00000000 		.4byte	pal_default_config
+ 322 01f6 08       		.uleb128 0x8
+ 323 01f7 00000160 		.4byte	0x160
+ 324 01fb 0F       		.uleb128 0xf
+ 325 01fc 01       		.byte	0x1
+ 326 01fd 00000000 		.4byte	.LASF34
+ 327 0201 04       		.byte	0x4
+ 328 0202 016D     		.2byte	0x16d
+ 329 0204 01       		.byte	0x1
+ 330 0205 01       		.byte	0x1
+ 331 0206 00000210 		.4byte	0x210
+ 332 020a 10       		.uleb128 0x10
+ 333 020b 00000210 		.4byte	0x210
+ 334 020f 00       		.byte	0
+ 335 0210 07       		.uleb128 0x7
+ 336 0211 04       		.byte	0x4
+ 337 0212 000001F6 		.4byte	0x1f6
+ 338 0216 00       		.byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 7
+
+
+ 339              		.section	.debug_abbrev,"",@progbits
+ 340              	.Ldebug_abbrev0:
+ 341 0000 01       		.uleb128 0x1
+ 342 0001 11       		.uleb128 0x11
+ 343 0002 01       		.byte	0x1
+ 344 0003 25       		.uleb128 0x25
+ 345 0004 0E       		.uleb128 0xe
+ 346 0005 13       		.uleb128 0x13
+ 347 0006 0B       		.uleb128 0xb
+ 348 0007 03       		.uleb128 0x3
+ 349 0008 0E       		.uleb128 0xe
+ 350 0009 1B       		.uleb128 0x1b
+ 351 000a 0E       		.uleb128 0xe
+ 352 000b 55       		.uleb128 0x55
+ 353 000c 06       		.uleb128 0x6
+ 354 000d 11       		.uleb128 0x11
+ 355 000e 01       		.uleb128 0x1
+ 356 000f 52       		.uleb128 0x52
+ 357 0010 01       		.uleb128 0x1
+ 358 0011 10       		.uleb128 0x10
+ 359 0012 06       		.uleb128 0x6
+ 360 0013 00       		.byte	0
+ 361 0014 00       		.byte	0
+ 362 0015 02       		.uleb128 0x2
+ 363 0016 24       		.uleb128 0x24
+ 364 0017 00       		.byte	0
+ 365 0018 0B       		.uleb128 0xb
+ 366 0019 0B       		.uleb128 0xb
+ 367 001a 3E       		.uleb128 0x3e
+ 368 001b 0B       		.uleb128 0xb
+ 369 001c 03       		.uleb128 0x3
+ 370 001d 0E       		.uleb128 0xe
+ 371 001e 00       		.byte	0
+ 372 001f 00       		.byte	0
+ 373 0020 03       		.uleb128 0x3
+ 374 0021 16       		.uleb128 0x16
+ 375 0022 00       		.byte	0
+ 376 0023 03       		.uleb128 0x3
+ 377 0024 0E       		.uleb128 0xe
+ 378 0025 3A       		.uleb128 0x3a
+ 379 0026 0B       		.uleb128 0xb
+ 380 0027 3B       		.uleb128 0x3b
+ 381 0028 0B       		.uleb128 0xb
+ 382 0029 49       		.uleb128 0x49
+ 383 002a 13       		.uleb128 0x13
+ 384 002b 00       		.byte	0
+ 385 002c 00       		.byte	0
+ 386 002d 04       		.uleb128 0x4
+ 387 002e 24       		.uleb128 0x24
+ 388 002f 00       		.byte	0
+ 389 0030 0B       		.uleb128 0xb
+ 390 0031 0B       		.uleb128 0xb
+ 391 0032 3E       		.uleb128 0x3e
+ 392 0033 0B       		.uleb128 0xb
+ 393 0034 03       		.uleb128 0x3
+ 394 0035 08       		.uleb128 0x8
+ 395 0036 00       		.byte	0
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 8
+
+
+ 396 0037 00       		.byte	0
+ 397 0038 05       		.uleb128 0x5
+ 398 0039 13       		.uleb128 0x13
+ 399 003a 01       		.byte	0x1
+ 400 003b 0B       		.uleb128 0xb
+ 401 003c 0B       		.uleb128 0xb
+ 402 003d 3A       		.uleb128 0x3a
+ 403 003e 0B       		.uleb128 0xb
+ 404 003f 3B       		.uleb128 0x3b
+ 405 0040 0B       		.uleb128 0xb
+ 406 0041 01       		.uleb128 0x1
+ 407 0042 13       		.uleb128 0x13
+ 408 0043 00       		.byte	0
+ 409 0044 00       		.byte	0
+ 410 0045 06       		.uleb128 0x6
+ 411 0046 0D       		.uleb128 0xd
+ 412 0047 00       		.byte	0
+ 413 0048 03       		.uleb128 0x3
+ 414 0049 0E       		.uleb128 0xe
+ 415 004a 3A       		.uleb128 0x3a
+ 416 004b 0B       		.uleb128 0xb
+ 417 004c 3B       		.uleb128 0x3b
+ 418 004d 0B       		.uleb128 0xb
+ 419 004e 49       		.uleb128 0x49
+ 420 004f 13       		.uleb128 0x13
+ 421 0050 38       		.uleb128 0x38
+ 422 0051 0A       		.uleb128 0xa
+ 423 0052 00       		.byte	0
+ 424 0053 00       		.byte	0
+ 425 0054 07       		.uleb128 0x7
+ 426 0055 0F       		.uleb128 0xf
+ 427 0056 00       		.byte	0
+ 428 0057 0B       		.uleb128 0xb
+ 429 0058 0B       		.uleb128 0xb
+ 430 0059 49       		.uleb128 0x49
+ 431 005a 13       		.uleb128 0x13
+ 432 005b 00       		.byte	0
+ 433 005c 00       		.byte	0
+ 434 005d 08       		.uleb128 0x8
+ 435 005e 26       		.uleb128 0x26
+ 436 005f 00       		.byte	0
+ 437 0060 49       		.uleb128 0x49
+ 438 0061 13       		.uleb128 0x13
+ 439 0062 00       		.byte	0
+ 440 0063 00       		.byte	0
+ 441 0064 09       		.uleb128 0x9
+ 442 0065 2E       		.uleb128 0x2e
+ 443 0066 01       		.byte	0x1
+ 444 0067 3F       		.uleb128 0x3f
+ 445 0068 0C       		.uleb128 0xc
+ 446 0069 03       		.uleb128 0x3
+ 447 006a 0E       		.uleb128 0xe
+ 448 006b 3A       		.uleb128 0x3a
+ 449 006c 0B       		.uleb128 0xb
+ 450 006d 3B       		.uleb128 0x3b
+ 451 006e 0B       		.uleb128 0xb
+ 452 006f 27       		.uleb128 0x27
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 9
+
+
+ 453 0070 0C       		.uleb128 0xc
+ 454 0071 11       		.uleb128 0x11
+ 455 0072 01       		.uleb128 0x1
+ 456 0073 12       		.uleb128 0x12
+ 457 0074 01       		.uleb128 0x1
+ 458 0075 40       		.uleb128 0x40
+ 459 0076 0A       		.uleb128 0xa
+ 460 0077 9742     		.uleb128 0x2117
+ 461 0079 0C       		.uleb128 0xc
+ 462 007a 01       		.uleb128 0x1
+ 463 007b 13       		.uleb128 0x13
+ 464 007c 00       		.byte	0
+ 465 007d 00       		.byte	0
+ 466 007e 0A       		.uleb128 0xa
+ 467 007f 898201   		.uleb128 0x4109
+ 468 0082 01       		.byte	0x1
+ 469 0083 11       		.uleb128 0x11
+ 470 0084 01       		.uleb128 0x1
+ 471 0085 9542     		.uleb128 0x2115
+ 472 0087 0C       		.uleb128 0xc
+ 473 0088 31       		.uleb128 0x31
+ 474 0089 13       		.uleb128 0x13
+ 475 008a 00       		.byte	0
+ 476 008b 00       		.byte	0
+ 477 008c 0B       		.uleb128 0xb
+ 478 008d 8A8201   		.uleb128 0x410a
+ 479 0090 00       		.byte	0
+ 480 0091 02       		.uleb128 0x2
+ 481 0092 0A       		.uleb128 0xa
+ 482 0093 9142     		.uleb128 0x2111
+ 483 0095 0A       		.uleb128 0xa
+ 484 0096 00       		.byte	0
+ 485 0097 00       		.byte	0
+ 486 0098 0C       		.uleb128 0xc
+ 487 0099 01       		.uleb128 0x1
+ 488 009a 01       		.byte	0x1
+ 489 009b 49       		.uleb128 0x49
+ 490 009c 13       		.uleb128 0x13
+ 491 009d 01       		.uleb128 0x1
+ 492 009e 13       		.uleb128 0x13
+ 493 009f 00       		.byte	0
+ 494 00a0 00       		.byte	0
+ 495 00a1 0D       		.uleb128 0xd
+ 496 00a2 21       		.uleb128 0x21
+ 497 00a3 00       		.byte	0
+ 498 00a4 49       		.uleb128 0x49
+ 499 00a5 13       		.uleb128 0x13
+ 500 00a6 2F       		.uleb128 0x2f
+ 501 00a7 0B       		.uleb128 0xb
+ 502 00a8 00       		.byte	0
+ 503 00a9 00       		.byte	0
+ 504 00aa 0E       		.uleb128 0xe
+ 505 00ab 34       		.uleb128 0x34
+ 506 00ac 00       		.byte	0
+ 507 00ad 03       		.uleb128 0x3
+ 508 00ae 0E       		.uleb128 0xe
+ 509 00af 3A       		.uleb128 0x3a
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 10
+
+
+ 510 00b0 0B       		.uleb128 0xb
+ 511 00b1 3B       		.uleb128 0x3b
+ 512 00b2 0B       		.uleb128 0xb
+ 513 00b3 49       		.uleb128 0x49
+ 514 00b4 13       		.uleb128 0x13
+ 515 00b5 02       		.uleb128 0x2
+ 516 00b6 0A       		.uleb128 0xa
+ 517 00b7 00       		.byte	0
+ 518 00b8 00       		.byte	0
+ 519 00b9 0F       		.uleb128 0xf
+ 520 00ba 2E       		.uleb128 0x2e
+ 521 00bb 01       		.byte	0x1
+ 522 00bc 3F       		.uleb128 0x3f
+ 523 00bd 0C       		.uleb128 0xc
+ 524 00be 03       		.uleb128 0x3
+ 525 00bf 0E       		.uleb128 0xe
+ 526 00c0 3A       		.uleb128 0x3a
+ 527 00c1 0B       		.uleb128 0xb
+ 528 00c2 3B       		.uleb128 0x3b
+ 529 00c3 05       		.uleb128 0x5
+ 530 00c4 27       		.uleb128 0x27
+ 531 00c5 0C       		.uleb128 0xc
+ 532 00c6 3C       		.uleb128 0x3c
+ 533 00c7 0C       		.uleb128 0xc
+ 534 00c8 01       		.uleb128 0x1
+ 535 00c9 13       		.uleb128 0x13
+ 536 00ca 00       		.byte	0
+ 537 00cb 00       		.byte	0
+ 538 00cc 10       		.uleb128 0x10
+ 539 00cd 05       		.uleb128 0x5
+ 540 00ce 00       		.byte	0
+ 541 00cf 49       		.uleb128 0x49
+ 542 00d0 13       		.uleb128 0x13
+ 543 00d1 00       		.byte	0
+ 544 00d2 00       		.byte	0
+ 545 00d3 00       		.byte	0
+ 546              		.section	.debug_aranges,"",@progbits
+ 547 0000 0000001C 		.4byte	0x1c
+ 548 0004 0002     		.2byte	0x2
+ 549 0006 00000000 		.4byte	.Ldebug_info0
+ 550 000a 04       		.byte	0x4
+ 551 000b 00       		.byte	0
+ 552 000c 0000     		.2byte	0
+ 553 000e 0000     		.2byte	0
+ 554 0010 00000000 		.4byte	.LFB4
+ 555 0014 0000000C 		.4byte	.LFE4-.LFB4
+ 556 0018 00000000 		.4byte	0
+ 557 001c 00000000 		.4byte	0
+ 558              		.section	.debug_ranges,"",@progbits
+ 559              	.Ldebug_ranges0:
+ 560 0000 00000000 		.4byte	.LFB4
+ 561 0004 00000000 		.4byte	.LFE4
+ 562 0008 00000000 		.4byte	0
+ 563 000c 00000000 		.4byte	0
+ 564              		.section	.debug_line,"",@progbits
+ 565              	.Ldebug_line0:
+ 566 0000 000001EB 		.section	.debug_str,"MS",@progbits,1
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 11
+
+
+ 566      00020000 
+ 566      01D30201 
+ 566      FB0E0D00 
+ 566      01010101 
+ 567              	.LASF3:
+ 568 0000 5F5F7569 		.string	"__uint8_t"
+ 568      6E74385F 
+ 568      7400
+ 569              	.LASF27:
+ 570 000a 7370635F 		.string	"spc_siu_init"
+ 570      7369755F 
+ 570      696E6974 
+ 570      00
+ 571              	.LASF6:
+ 572 0017 5F5F696E 		.string	"__int32_t"
+ 572      7433325F 
+ 572      7400
+ 573              	.LASF23:
+ 574 0021 64656661 		.string	"default_mode"
+ 574      756C745F 
+ 574      6D6F6465 
+ 574      00
+ 575              	.LASF18:
+ 576 002e 696F6D6F 		.string	"iomode_t"
+ 576      64655F74 
+ 576      00
+ 577              	.LASF1:
+ 578 0037 756E7369 		.string	"unsigned char"
+ 578      676E6564 
+ 578      20636861 
+ 578      7200
+ 579              	.LASF9:
+ 580 0045 6C6F6E67 		.string	"long unsigned int"
+ 580      20756E73 
+ 580      69676E65 
+ 580      6420696E 
+ 580      7400
+ 581              	.LASF24:
+ 582 0057 696E6974 		.string	"inits"
+ 582      7300
+ 583              	.LASF5:
+ 584 005d 73686F72 		.string	"short unsigned int"
+ 584      7420756E 
+ 584      7369676E 
+ 584      65642069 
+ 584      6E7400
+ 585              	.LASF19:
+ 586 0070 7063725F 		.string	"pcr_index"
+ 586      696E6465 
+ 586      7800
+ 587              	.LASF4:
+ 588 007a 5F5F7569 		.string	"__uint16_t"
+ 588      6E743136 
+ 588      5F7400
+ 589              	.LASF25:
+ 590 0085 70616473 		.string	"padsels"
+ 590      656C7300 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 12
+
+
+ 591              	.LASF30:
+ 592 008d 474E5520 		.ascii	"GNU C 4.9.4 20160726 (Sat May 27 11:09:55 CDT 2017         b"
+ 592      4320342E 
+ 592      392E3420 
+ 592      32303136 
+ 592      30373236 
+ 593 00c9 75696C64 		.ascii	"uild.sh rev=gd8b6c"
+ 593      2E736820 
+ 593      7265763D 
+ 593      67643862 
+ 593      3663
+ 594 00db 32302073 		.string	"20 s=F494 ELe200 -V release_gd8b6c20_build_Fed_ELe200_ML0) -mcall-sysv -mcpu=e200z0 -mvle
+ 594      3D463439 
+ 594      3420454C 
+ 594      65323030 
+ 594      202D5620 
+ 595              	.LASF8:
+ 596 01dc 5F5F7569 		.string	"__uint32_t"
+ 596      6E743332 
+ 596      5F7400
+ 597              	.LASF29:
+ 598 01e7 70616C5F 		.string	"pal_default_config"
+ 598      64656661 
+ 598      756C745F 
+ 598      636F6E66 
+ 598      696700
+ 599              	.LASF12:
+ 600 01fa 756E7369 		.string	"unsigned int"
+ 600      676E6564 
+ 600      20696E74 
+ 600      00
+ 601              	.LASF11:
+ 602 0207 6C6F6E67 		.string	"long long unsigned int"
+ 602      206C6F6E 
+ 602      6720756E 
+ 602      7369676E 
+ 602      65642069 
+ 603              	.LASF13:
+ 604 021e 75696E74 		.string	"uint8_t"
+ 604      385F7400 
+ 605              	.LASF33:
+ 606 0226 626F6172 		.string	"boardInit"
+ 606      64496E69 
+ 606      7400
+ 607              	.LASF22:
+ 608 0230 7370635F 		.string	"spc_siu_init_t"
+ 608      7369755F 
+ 608      696E6974 
+ 608      5F7400
+ 609              	.LASF15:
+ 610 023f 696E7433 		.string	"int32_t"
+ 610      325F7400 
+ 611              	.LASF17:
+ 612 0247 73697A65 		.string	"sizetype"
+ 612      74797065 
+ 612      00
+ 613              	.LASF10:
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 13
+
+
+ 614 0250 6C6F6E67 		.string	"long long int"
+ 614      206C6F6E 
+ 614      6720696E 
+ 614      7400
+ 615              	.LASF32:
+ 616 025e 433A5C53 		.string	"C:\\SPC5Studio\\workspace\\SPC560Bxx_RLA FreeRTOS SERIAL Test Application for Discovery"
+ 616      50433553 
+ 616      74756469 
+ 616      6F5C776F 
+ 616      726B7370 
+ 617              	.LASF20:
+ 618 02b3 6770646F 		.string	"gpdo_value"
+ 618      5F76616C 
+ 618      756500
+ 619              	.LASF2:
+ 620 02be 73686F72 		.string	"short int"
+ 620      7420696E 
+ 620      7400
+ 621              	.LASF14:
+ 622 02c8 75696E74 		.string	"uint16_t"
+ 622      31365F74 
+ 622      00
+ 623              	.LASF21:
+ 624 02d1 7063725F 		.string	"pcr_value"
+ 624      76616C75 
+ 624      6500
+ 625              	.LASF7:
+ 626 02db 6C6F6E67 		.string	"long int"
+ 626      20696E74 
+ 626      00
+ 627              	.LASF28:
+ 628 02e4 7370635F 		.string	"spc_padsels_init"
+ 628      70616473 
+ 628      656C735F 
+ 628      696E6974 
+ 628      00
+ 629              	.LASF31:
+ 630 02f5 2E2F636F 		.string	"./components/spc560bxx_board_initialization_component_rla/cfg/board.c"
+ 630      6D706F6E 
+ 630      656E7473 
+ 630      2F737063 
+ 630      35363062 
+ 631              	.LASF0:
+ 632 033b 7369676E 		.string	"signed char"
+ 632      65642063 
+ 632      68617200 
+ 633              	.LASF16:
+ 634 0347 75696E74 		.string	"uint32_t"
+ 634      33325F74 
+ 634      00
+ 635              	.LASF26:
+ 636 0350 50414C43 		.string	"PALConfig"
+ 636      6F6E6669 
+ 636      6700
+ 637              	.LASF34:
+ 638 035a 70616C5F 		.string	"pal_init"
+ 638      696E6974 
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 14
+
+
+ 638      00
+ 639              		.ident	"GCC: (GNU) 4.9.4 20160726 (Sat May 27 11:09:55 CDT 2017         build.sh rev=gd8b6c20 s=F4
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 board.c
+C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s:10     .text.boardInit:00000000 boardInit
+C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s:29     .rodata.spc_siu_init:00000000 spc_siu_init
+C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s:55     .rodata.pal_default_config:00000000 pal_default_config
+C:\Users\marky\AppData\Local\Temp\ccye2Ds4.s:64     .rodata.spc_padsels_init:00000000 spc_padsels_init
+
+UNDEFINED SYMBOLS
+pal_init

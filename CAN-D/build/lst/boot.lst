@@ -1,0 +1,312 @@
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccCJmfTh.s 			page 1
+
+
+   1              	# 1 "./components/spc560bxx_platform_component_rla/lib/src/boot.s"
+   1              	/*
+   0              	
+   0              	
+   2              	    SPC5 RLA - Copyright (C) 2015 STMicroelectronics
+   3              	
+   4              	    Licensed under the Apache License, Version 2.0 (the "License").
+   5              	    You may not use this file except in compliance with the License.
+   6              	    You may obtain a copy of the License at
+   7              	
+   8              	        http://www.apache.org/licenses/LICENSE-2.0
+   9              	
+  10              	    Unless required by applicable law or agreed to in writing, software
+  11              	    distributed under the License is distributed on an "AS IS" BASIS,
+  12              	    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13              	    See the License for the specific language governing permissions and
+  14              	    limitations under the License.
+  15              	*/
+  16              	
+  17              	/**
+  18              	 * @file    boot.s
+  19              	 * @brief   SPC560Bxx boot-related code.
+  20              	 *
+  21              	 * @addtogroup PPC_BOOT
+  22              	 * @{
+  23              	 */
+  24              	
+  25              	#include "boot.h"
+   1              	/*
+  26              	#include "toolchain.h"
+   1              	/*
+  27              	
+  28              	#if !defined(__DOXYGEN__)
+  29              	        /* BAM record.*/
+  30              	        .section    .boot, "axv"
+  31              	
+  32 0000 015A0000 	        .long       0x015A0000
+  33 0004 00000000 	        .long       _reset_address
+  34              	
+  35              	        .align      2
+  36              	        .globl      _reset_address
+  37              	        .type       _reset_address, @function
+  38              	_VLE
+  39              	_reset_address:
+  40              	#if BOOT_PERFORM_CORE_INIT
+  41 0008 E904     	        se_bl       _coreinit
+  42              	#endif
+  43 000a E959     	        se_bl       _ivinit
+  44              	
+  45              	#if BOOT_RELOCATE_IN_RAM
+  46              	        /*
+  47              	         * Image relocation in RAM.
+  48              	         */
+  49              	        e_lis       %r4, HI(__ram_reloc_start__)
+  50              	        e_or2i      %r4, LO(__ram_reloc_start__)
+  51              	        e_lis       %r5, HI(__ram_reloc_dest__)
+  52              	        e_or2i      %r5, LO(__ram_reloc_dest__)
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccCJmfTh.s 			page 2
+
+
+  53              	        e_lis       %r6, HI(__ram_reloc_end__)
+  54              	        e_or2i      %r6, LO(__ram_reloc_end__)
+  55              	.relloop:
+  56              	        cmpl        cr0, %r4, %r6
+  57              	        se_bge      .relend
+  58              	        se_lwz      %r7, 0(%r4)
+  59              	        se_addi     %r4, 4
+  60              	        se_stw      %r7, 0(%r5)
+  61              	        se_addi     %r5, 4
+  62              	        se_b        .relloop
+  63              	.relend:
+  64              	        e_lis       %r3, HI(_boot_address)
+  65              	        e_or2i      %r3, LO(_boot_address)
+  66              	        mtctr       %r3
+  67              	        se_bctrl
+  68              	#else
+  69 000c 78000000 	        e_b         _boot_address
+  70              	#endif
+  71              	
+  72              	#if BOOT_PERFORM_CORE_INIT
+  73              	        .align      2
+  74              	_coreinit:
+  75              	        /*
+  76              	         * RAM clearing, this device requires a write to all RAM location in
+  77              	         * order to initialize the ECC detection hardware, this is going to
+  78              	         * slow down the startup but there is no way around.
+  79              	         */
+  80 0010 7C000278 	        xor         %r0, %r0, %r0
+  81 0014 7C210A78 	        xor         %r1, %r1, %r1
+  82 0018 7C421278 	        xor         %r2, %r2, %r2
+  83 001c 7C631A78 	        xor         %r3, %r3, %r3
+  84 0020 7C842278 	        xor         %r4, %r4, %r4
+  85 0024 7CA52A78 	        xor         %r5, %r5, %r5
+  86 0028 7CC63278 	        xor         %r6, %r6, %r6
+  87 002c 7CE73A78 	        xor         %r7, %r7, %r7
+  88 0030 7D084278 	        xor         %r8, %r8, %r8
+  89 0034 7D294A78 	        xor         %r9, %r9, %r9
+  90 0038 7D4A5278 	        xor         %r10, %r10, %r10
+  91 003c 7D6B5A78 	        xor         %r11, %r11, %r11
+  92 0040 7D8C6278 	        xor         %r12, %r12, %r12
+  93 0044 7DAD6A78 	        xor         %r13, %r13, %r13
+  94 0048 7DCE7278 	        xor         %r14, %r14, %r14
+  95 004c 7DEF7A78 	        xor         %r15, %r15, %r15
+  96 0050 7E108278 	        xor         %r16, %r16, %r16
+  97 0054 7E318A78 	        xor         %r17, %r17, %r17
+  98 0058 7E529278 	        xor         %r18, %r18, %r18
+  99 005c 7E739A78 	        xor         %r19, %r19, %r19
+ 100 0060 7E94A278 	        xor         %r20, %r20, %r20
+ 101 0064 7EB5AA78 	        xor         %r21, %r21, %r21
+ 102 0068 7ED6B278 	        xor         %r22, %r22, %r22
+ 103 006c 7EF7BA78 	        xor         %r23, %r23, %r23
+ 104 0070 7F18C278 	        xor         %r24, %r24, %r24
+ 105 0074 7F39CA78 	        xor         %r25, %r25, %r25
+ 106 0078 7F5AD278 	        xor         %r26, %r26, %r26
+ 107 007c 7F7BDA78 	        xor         %r27, %r27, %r27
+ 108 0080 7F9CE278 	        xor         %r28, %r28, %r28
+ 109 0084 7FBDEA78 	        xor         %r29, %r29, %r29
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccCJmfTh.s 			page 3
+
+
+ 110 0088 7FDEF278 	        xor         %r30, %r30, %r30
+ 111 008c 7FFFFA78 	        xor         %r31, %r31, %r31
+ 112 0090 7080E000 	        e_lis       %r4, HI(__ram_start__)
+ 113 0094 7080C000 	        e_or2i      %r4, LO(__ram_start__)
+ 114 0098 70A0E000 	        e_lis       %r5, HI(__ram_end__)
+ 115 009c 70A0C000 	        e_or2i      %r5, LO(__ram_end__)
+ 116              	.cleareccloop:
+ 117 00a0 7C042840 	        cmpl        cr0, %r4, %r5
+ 118 00a4 E006     	        se_bge      .cleareccend
+ 119 00a6 1A040900 	        e_stmw      %r16, 0(%r4)
+ 120 00aa 18848040 	        e_addi      %r4, %r4, 64
+ 121 00ae E8F9     	        se_b        .cleareccloop
+ 122              	.cleareccend:
+ 123              	
+ 124              	        /*
+ 125              	         * Branch prediction enabled.
+ 126              	         */
+ 127 00b0 70600201 	        e_li        %r3, BUCSR_DEFAULT
+ 128 00b4 7C75FBA6 	        mtspr       1013, %r3       /* BUCSR */
+ 129              	
+ 130 00b8 0004     	        se_blr
+ 131              	#endif /* BOOT_PERFORM_CORE_INIT */
+ 132              	
+ 133              	        /*
+ 134              	         * Exception vectors initialization.
+ 135              	         */
+ 136 00ba 4400     	        .align      2
+ 137              	_ivinit:
+ 138              	        /* MSR initialization.*/
+ 139 00bc 7060E006 	        e_lis       %r3, HI(MSR_DEFAULT)
+ 140 00c0 7062C000 	        e_or2i      %r3, LO(MSR_DEFAULT)
+ 141 00c4 7C600124 	        mtMSR       %r3
+ 142              	
+ 143              	        /* IVPR initialization.*/
+ 144 00c8 7060E000 	        e_lis       %r3, HI(__ivpr_base__)
+ 145 00cc 7060C000 	        e_or2i      %r3, LO(__ivpr_base__)
+ 146 00d0 7C7F0BA6 	        mtIVPR      %r3
+ 147              	
+ 148 00d4 0004     	        se_blr
+ 149              	
+ 150              	        .section    .ivors, "axv"
+ 151              	
+ 152              	        .globl      IVORS
+ 153              	IVORS:
+ 154 0000 78000000 	IVOR0:  e_b           _IVOR0
+ 155 0004 44004400 	        .align      4
+ 155      44004400 
+ 155      44004400 
+ 156 0010 78000000 	IVOR1:  e_b           _IVOR1
+ 157 0014 44004400 	        .align      4
+ 157      44004400 
+ 157      44004400 
+ 158 0020 78000000 	IVOR2:  e_b           _IVOR2
+ 159 0024 44004400 	        .align      4
+ 159      44004400 
+ 159      44004400 
+ 160 0030 78000000 	IVOR3:  e_b           _IVOR3
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccCJmfTh.s 			page 4
+
+
+ 161 0034 44004400 	        .align      4
+ 161      44004400 
+ 161      44004400 
+ 162 0040 78000000 	IVOR4:  e_b           _IVOR4
+ 163 0044 44004400 	        .align      4
+ 163      44004400 
+ 163      44004400 
+ 164 0050 78000000 	IVOR5:  e_b           _IVOR5
+ 165 0054 44004400 	        .align      4
+ 165      44004400 
+ 165      44004400 
+ 166 0060 78000000 	IVOR6:  e_b           _IVOR6
+ 167 0064 44004400 	        .align      4
+ 167      44004400 
+ 167      44004400 
+ 168 0070 78000000 	IVOR7:  e_b           _IVOR7
+ 169 0074 44004400 	        .align      4
+ 169      44004400 
+ 169      44004400 
+ 170 0080 78000000 	IVOR8:  e_b           _IVOR8
+ 171 0084 44004400 	        .align      4
+ 171      44004400 
+ 171      44004400 
+ 172 0090 78000000 	IVOR9:  e_b           _IVOR9
+ 173 0094 44004400 	        .align      4
+ 173      44004400 
+ 173      44004400 
+ 174 00a0 78000000 	IVOR10: e_b           _IVOR10
+ 175 00a4 44004400 	        .align      4
+ 175      44004400 
+ 175      44004400 
+ 176 00b0 78000000 	IVOR11: e_b           _IVOR11
+ 177 00b4 44004400 	        .align      4
+ 177      44004400 
+ 177      44004400 
+ 178 00c0 78000000 	IVOR12: e_b           _IVOR12
+ 179 00c4 44004400 	        .align      4
+ 179      44004400 
+ 179      44004400 
+ 180 00d0 78000000 	IVOR13: e_b           _IVOR13
+ 181 00d4 44004400 	        .align      4
+ 181      44004400 
+ 181      44004400 
+ 182 00e0 78000000 	IVOR14: e_b           _IVOR14
+ 183 00e4 44004400 	        .align      4
+ 183      44004400 
+ 183      44004400 
+ 184 00f0 78000000 	IVOR15: e_b           _IVOR15
+ 185              	
+ 186              	        .section    .handlers, "axv"
+ 187              	
+ 188              	        /*
+ 189              	         * Default IVOR handlers.
+ 190              	         */
+ 191              	        .align      2
+ 192              	        .weak       _IVOR0,  _IVOR1,  _IVOR2,  _IVOR3,  _IVOR4,  _IVOR5
+ 193              	        .weak       _IVOR6,  _IVOR7,  _IVOR8,  _IVOR9,  _IVOR10, _IVOR11
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccCJmfTh.s 			page 5
+
+
+ 194              	        .weak       _IVOR12, _IVOR13, _IVOR14, _IVOR15
+ 195              	        .weak       _unhandled_exception
+ 196              	_IVOR0:
+ 197              	_IVOR1:
+ 198              	_IVOR2:
+ 199              	_IVOR3:
+ 200              	_IVOR4:
+ 201              	_IVOR5:
+ 202              	_IVOR6:
+ 203              	_IVOR7:
+ 204              	_IVOR8:
+ 205              	_IVOR9:
+ 206              	_IVOR10:
+ 207              	_IVOR11:
+ 208              	_IVOR12:
+ 209              	_IVOR13:
+ 210              	_IVOR14:
+ 211              	_IVOR15:
+ 212              	_unhandled_exception:
+ 213 0000 78000000 	        e_b         _unhandled_exception
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccCJmfTh.s 			page 6
+
+
+DEFINED SYMBOLS
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:39     .boot:00000008 _reset_address
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:74     .boot:00000010 _coreinit
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:137    .boot:000000bc _ivinit
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:116    .boot:000000a0 .cleareccloop
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:122    .boot:000000b0 .cleareccend
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:153    .ivors:00000000 IVORS
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:154    .ivors:00000000 IVOR0
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:196    .handlers:00000000 _IVOR0
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:156    .ivors:00000010 IVOR1
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:197    .handlers:00000000 _IVOR1
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:158    .ivors:00000020 IVOR2
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:198    .handlers:00000000 _IVOR2
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:160    .ivors:00000030 IVOR3
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:199    .handlers:00000000 _IVOR3
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:162    .ivors:00000040 IVOR4
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:200    .handlers:00000000 _IVOR4
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:164    .ivors:00000050 IVOR5
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:201    .handlers:00000000 _IVOR5
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:166    .ivors:00000060 IVOR6
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:202    .handlers:00000000 _IVOR6
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:168    .ivors:00000070 IVOR7
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:203    .handlers:00000000 _IVOR7
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:170    .ivors:00000080 IVOR8
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:204    .handlers:00000000 _IVOR8
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:172    .ivors:00000090 IVOR9
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:205    .handlers:00000000 _IVOR9
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:174    .ivors:000000a0 IVOR10
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:206    .handlers:00000000 _IVOR10
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:176    .ivors:000000b0 IVOR11
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:207    .handlers:00000000 _IVOR11
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:178    .ivors:000000c0 IVOR12
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:208    .handlers:00000000 _IVOR12
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:180    .ivors:000000d0 IVOR13
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:209    .handlers:00000000 _IVOR13
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:182    .ivors:000000e0 IVOR14
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:210    .handlers:00000000 _IVOR14
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:184    .ivors:000000f0 IVOR15
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:211    .handlers:00000000 _IVOR15
+./components/spc560bxx_platform_component_rla/lib/src/boot.s:212    .handlers:00000000 _unhandled_exception
+
+UNDEFINED SYMBOLS
+_boot_address
+__ram_start__
+__ram_end__
+__ivpr_base__

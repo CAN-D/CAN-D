@@ -1,0 +1,3029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SPC5-Config core_version="5.8.1" version="1.0.0">
+  <application name="CAN Data Logger Application" version="1.0.0" standalone="true" locked="false">
+    <description>TODO: Write a description.</description>
+    <component id="com.st.spc5.components.platform.spc560bxx_rla" version="1.1.0">
+      <component id="com.st.spc5.components.init.spc560bxx_rla" version="1.1.0" />
+      <component id="com.st.spc5.components.lld.spc560bxx_rla" version="1.1.0" />
+      <component id="com.st.spc5.components.freertos.spc5x_rla" version="1.6.0" />
+    </component>
+    <instances>
+      <instance locked="false" id="com.st.spc5.components.platform.spc560bxx_rla">
+        <platform_settings>
+          <choose_mcu index="1">
+            <value>SPC560B54L5 e200z0h 768k 64kRAM LQFP144</value>
+          </choose_mcu>
+          <specific_model index="1">
+            <value>SPC560B54L5</value>
+          </specific_model>
+          <device_list disabled="true">
+            <value>NONE,LINFlex0,LINFlex1,LINFlex2,LINFlex3,LINFlex4,LINFlex5,LINFlex6,LINFlex7,LINFlex8,LINFlex9</value>
+          </device_list>
+          <can_list disabled="true">
+            <value>NONE,FlexCan0,FlexCan1,FlexCan2,FlexCan3,FlexCan4,FlexCan5</value>
+          </can_list>
+        </platform_settings>
+        <runtime_settings>
+          <process_stack_size>
+            <value>8192</value>
+          </process_stack_size>
+          <irq_stack_size>
+            <value>0</value>
+          </irq_stack_size>
+          <boot_mode index="0">
+            <value>Execute from Flash</value>
+          </boot_mode>
+          <load_address index="0">
+            <value>0x00000000</value>
+          </load_address>
+        </runtime_settings>
+        <build_settings>
+          <application_name>
+            <value>out</value>
+          </application_name>
+          <compiler_variant index="0">
+            <value>FreeGCC with VLE support</value>
+          </compiler_variant>
+          <optimization_level index="3">
+            <value>-O2 speed</value>
+          </optimization_level>
+          <common_options>
+            <value>-gdwarf-2 -fomit-frame-pointer -falign-functions=16 -mno-spe -msoft-float -fno-gcse</value>
+          </common_options>
+          <c_options>
+            <value />
+          </c_options>
+          <cpp_options>
+            <value>-fno-rtti -fno-exceptions</value>
+          </cpp_options>
+          <use_vle disabled="true" index="0">
+            <value>yes</value>
+          </use_vle>
+          <use_verbose_compile index="1">
+            <value>no</value>
+          </use_verbose_compile>
+          <compiler_path disabled="true">
+            <value>C:/SPC5Studio/eclipse/plugins/com.st.tools.spc5.tools.gnu.gcc.ppcvle.win32_4.9.4.201809141314/toolchain/bin/</value>
+          </compiler_path>
+        </build_settings>
+        <linker_settings>
+          <use_linker_gc index="0">
+            <value>yes</value>
+          </use_linker_gc>
+          <linker_options>
+            <value>-lm -lc</value>
+          </linker_options>
+          <entry_point>
+            <value>_reset_address</value>
+          </entry_point>
+          <custom_sections>
+            <value />
+          </custom_sections>
+        </linker_settings>
+        <mcu_group />
+      </instance>
+      <instance locked="false" id="com.st.spc5.components.init.spc560bxx_rla" />
+      <instance locked="false" id="com.st.spc5.components.board.spc560bxx_rla">
+        <identification>
+          <board_identifier>
+            <value>SPC56B_DISCOVERY</value>
+          </board_identifier>
+          <board_name>
+            <value>STMicroelectronics SPC560B Discovery</value>
+          </board_name>
+        </identification>
+        <i_o_settings>
+          <unused_pins_mode index="1">
+            <value>MODE_UNCONNECTED</value>
+          </unused_pins_mode>
+          <pins_list>
+            <pin_settings>
+              <pin_identification>
+                <identifier>
+                  <value>PIN_LIN0TX</value>
+                </identifier>
+                <port index="1">
+                  <value>PORT_B</value>
+                </port>
+                <bit index="2">
+                  <value>2</value>
+                </bit>
+                <metadatas>
+                  <metadata name="active" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                    <value>NONE</value>
+                  </metadata>
+                </metadatas>
+              </pin_identification>
+              <settings>
+                <pin_mode index="9">
+                  <value>MODE_OUTPUT_ALTERNATE(1)</value>
+                  <metadatas>
+                    <metadata name="direction" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>O</value>
+                    </metadata>
+                    <metadata name="functionRef" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>LIN0TX</value>
+                    </metadata>
+                  </metadatas>
+                </pin_mode>
+                <latched_state index="1">
+                  <value>HIGH</value>
+                </latched_state>
+              </settings>
+              <advanced disabled="true">
+                <pa disabled="true" index="1">
+                  <value>Alternate 1</value>
+                </pa>
+                <smc disabled="true">
+                  <value>false</value>
+                </smc>
+                <apc disabled="true">
+                  <value>false</value>
+                </apc>
+                <obe disabled="true">
+                  <value>true</value>
+                </obe>
+                <ibe disabled="true">
+                  <value>true</value>
+                </ibe>
+                <ode disabled="true" index="0">
+                  <value>Push-Pull</value>
+                </ode>
+                <src disabled="true" index="0">
+                  <value>Slow</value>
+                </src>
+                <wpe disabled="true" index="0">
+                  <value>Disabled</value>
+                </wpe>
+                <wps disabled="true" index="0">
+                  <value>Pull-Down</value>
+                </wps>
+              </advanced>
+            </pin_settings>
+            <pin_settings>
+              <pin_identification>
+                <identifier>
+                  <value>PIN_LIN0RX</value>
+                </identifier>
+                <port index="1">
+                  <value>PORT_B</value>
+                </port>
+                <bit index="3">
+                  <value>3</value>
+                </bit>
+                <metadatas>
+                  <metadata name="active" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                    <value>NONE</value>
+                  </metadata>
+                </metadatas>
+              </pin_identification>
+              <settings>
+                <pin_mode index="3">
+                  <value>MODE_INPUT</value>
+                  <metadatas>
+                    <metadata name="direction" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>I</value>
+                    </metadata>
+                    <metadata name="functionRef" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>LIN0RX</value>
+                    </metadata>
+                  </metadatas>
+                </pin_mode>
+                <latched_state index="1">
+                  <value>HIGH</value>
+                </latched_state>
+              </settings>
+              <advanced disabled="true">
+                <pa disabled="true" index="0">
+                  <value>GPIO Mode</value>
+                </pa>
+                <smc disabled="true">
+                  <value>false</value>
+                </smc>
+                <apc disabled="true">
+                  <value>false</value>
+                </apc>
+                <obe disabled="true">
+                  <value>false</value>
+                </obe>
+                <ibe disabled="true">
+                  <value>true</value>
+                </ibe>
+                <ode disabled="true" index="0">
+                  <value>Push-Pull</value>
+                </ode>
+                <src disabled="true" index="0">
+                  <value>Slow</value>
+                </src>
+                <wpe disabled="true" index="0">
+                  <value>Disabled</value>
+                </wpe>
+                <wps disabled="true" index="0">
+                  <value>Pull-Down</value>
+                </wps>
+              </advanced>
+            </pin_settings>
+            <pin_settings>
+              <pin_identification>
+                <identifier>
+                  <value>PC_LED8</value>
+                </identifier>
+                <port index="2">
+                  <value>PORT_C</value>
+                </port>
+                <bit index="2">
+                  <value>2</value>
+                </bit>
+                <metadatas>
+                  <metadata name="active" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                    <value>NONE</value>
+                  </metadata>
+                </metadatas>
+              </pin_identification>
+              <settings>
+                <pin_mode index="7">
+                  <value>MODE_OUTPUT_PUSHPULL</value>
+                  <metadatas>
+                    <metadata name="direction" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>O</value>
+                    </metadata>
+                    <metadata name="functionRef" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>GPIO34</value>
+                    </metadata>
+                  </metadatas>
+                </pin_mode>
+                <latched_state index="0">
+                  <value>LOW</value>
+                </latched_state>
+              </settings>
+              <advanced disabled="true">
+                <pa disabled="true" index="0">
+                  <value>GPIO Mode</value>
+                </pa>
+                <smc disabled="true">
+                  <value>false</value>
+                </smc>
+                <apc disabled="true">
+                  <value>false</value>
+                </apc>
+                <obe disabled="true">
+                  <value>true</value>
+                </obe>
+                <ibe disabled="true">
+                  <value>true</value>
+                </ibe>
+                <ode disabled="true" index="0">
+                  <value>Push-Pull</value>
+                </ode>
+                <src disabled="true" index="0">
+                  <value>Slow</value>
+                </src>
+                <wpe disabled="true" index="0">
+                  <value>Disabled</value>
+                </wpe>
+                <wps disabled="true" index="0">
+                  <value>Pull-Down</value>
+                </wps>
+              </advanced>
+            </pin_settings>
+            <pin_settings>
+              <pin_identification>
+                <identifier>
+                  <value>PC_LED7</value>
+                </identifier>
+                <port index="2">
+                  <value>PORT_C</value>
+                </port>
+                <bit index="3">
+                  <value>3</value>
+                </bit>
+                <metadatas>
+                  <metadata name="active" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                    <value>NONE</value>
+                  </metadata>
+                </metadatas>
+              </pin_identification>
+              <settings>
+                <pin_mode index="7">
+                  <value>MODE_OUTPUT_PUSHPULL</value>
+                  <metadatas>
+                    <metadata name="direction" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>O</value>
+                    </metadata>
+                    <metadata name="functionRef" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+                      <value>GPIO35</value>
+                    </metadata>
+                  </metadatas>
+                </pin_mode>
+                <latched_state index="0">
+                  <value>LOW</value>
+                </latched_state>
+              </settings>
+              <advanced disabled="true">
+                <pa disabled="true" index="0">
+                  <value>GPIO Mode</value>
+                </pa>
+                <smc disabled="true">
+                  <value>false</value>
+                </smc>
+                <apc disabled="true">
+                  <value>false</value>
+                </apc>
+                <obe disabled="true">
+                  <value>true</value>
+                </obe>
+                <ibe disabled="true">
+                  <value>true</value>
+                </ibe>
+                <ode disabled="true" index="0">
+                  <value>Push-Pull</value>
+                </ode>
+                <src disabled="true" index="0">
+                  <value>Slow</value>
+                </src>
+                <wpe disabled="true" index="0">
+                  <value>Disabled</value>
+                </wpe>
+                <wps disabled="true" index="0">
+                  <value>Pull-Down</value>
+                </wps>
+              </advanced>
+            </pin_settings>
+          </pins_list>
+          <alternate_inputs>
+            <ps0 index="0">
+              <value>-</value>
+            </ps0>
+            <ps1 index="0">
+              <value>-</value>
+            </ps1>
+            <ps2 index="0">
+              <value>-</value>
+            </ps2>
+            <ps3 index="0">
+              <value>-</value>
+            </ps3>
+            <ps4 index="0">
+              <value>-</value>
+            </ps4>
+            <ps5 index="0">
+              <value>-</value>
+            </ps5>
+            <ps6 index="0">
+              <value>-</value>
+            </ps6>
+            <ps7 index="0">
+              <value>-</value>
+            </ps7>
+            <ps8 index="0">
+              <value>-</value>
+            </ps8>
+            <ps9 index="0">
+              <value>-</value>
+            </ps9>
+            <ps10 index="0">
+              <value>-</value>
+            </ps10>
+            <ps11 index="0">
+              <value>-</value>
+            </ps11>
+            <ps12 index="0">
+              <value>-</value>
+            </ps12>
+            <ps13 index="0">
+              <value>-</value>
+            </ps13>
+            <ps14 index="0">
+              <value>-</value>
+            </ps14>
+            <ps15 index="0">
+              <value>-</value>
+            </ps15>
+            <ps16 index="0">
+              <value>-</value>
+            </ps16>
+            <ps17 index="0">
+              <value>-</value>
+            </ps17>
+            <ps18 index="0">
+              <value>-</value>
+            </ps18>
+            <ps19 index="0">
+              <value>-</value>
+            </ps19>
+            <ps20 index="0">
+              <value>-</value>
+            </ps20>
+            <ps21 index="0">
+              <value>-</value>
+            </ps21>
+            <ps22 index="0">
+              <value>-</value>
+            </ps22>
+            <ps23 index="0">
+              <value>-</value>
+            </ps23>
+            <ps24 index="0">
+              <value>-</value>
+            </ps24>
+            <ps25 index="0">
+              <value>-</value>
+            </ps25>
+            <ps26 index="0">
+              <value>-</value>
+            </ps26>
+            <ps27 index="0">
+              <value>-</value>
+            </ps27>
+            <ps28 index="0">
+              <value>-</value>
+            </ps28>
+            <ps29 index="0">
+              <value>-</value>
+            </ps29>
+            <ps30 index="0">
+              <value>-</value>
+            </ps30>
+            <ps31 index="0">
+              <value>-</value>
+            </ps31>
+            <ps32 index="0">
+              <value>-</value>
+            </ps32>
+            <ps33 index="0">
+              <value>-</value>
+            </ps33>
+            <ps34 index="0">
+              <value>-</value>
+            </ps34>
+            <ps35 index="0">
+              <value>-</value>
+            </ps35>
+            <ps36 index="0">
+              <value>-</value>
+            </ps36>
+            <ps37 index="0">
+              <value>-</value>
+            </ps37>
+            <ps38 index="0">
+              <value>-</value>
+            </ps38>
+            <ps39 index="0">
+              <value>-</value>
+            </ps39>
+            <ps40 index="0">
+              <value>-</value>
+            </ps40>
+            <ps41 index="0">
+              <value>-</value>
+            </ps41>
+            <ps42 index="0">
+              <value>-</value>
+            </ps42>
+            <ps43 index="0">
+              <value>-</value>
+            </ps43>
+            <ps44 index="0">
+              <value>-</value>
+            </ps44>
+            <ps45 index="0">
+              <value>-</value>
+            </ps45>
+            <ps46 index="0">
+              <value>-</value>
+            </ps46>
+            <ps47 index="0">
+              <value>-</value>
+            </ps47>
+            <ps48 index="0">
+              <value>-</value>
+            </ps48>
+            <ps49 index="0">
+              <value>-</value>
+            </ps49>
+            <ps50 index="0">
+              <value>-</value>
+            </ps50>
+            <ps51 index="0">
+              <value>-</value>
+            </ps51>
+            <ps52 index="0">
+              <value>-</value>
+            </ps52>
+            <ps53 index="0">
+              <value>-</value>
+            </ps53>
+            <ps54 index="0">
+              <value>-</value>
+            </ps54>
+            <ps55 index="0">
+              <value>-</value>
+            </ps55>
+            <ps56 index="0">
+              <value>-</value>
+            </ps56>
+            <ps57 index="0">
+              <value>-</value>
+            </ps57>
+            <ps58 index="0">
+              <value>-</value>
+            </ps58>
+            <ps59 index="0">
+              <value>-</value>
+            </ps59>
+            <ps60 index="0">
+              <value>-</value>
+            </ps60>
+            <ps61 index="0">
+              <value>-</value>
+            </ps61>
+            <ps62 index="1">
+              <value>S0</value>
+            </ps62>
+            <ps63 index="0">
+              <value>-</value>
+            </ps63>
+          </alternate_inputs>
+          <metadatas>
+            <metadata name="refID" class="com.st.tools.spc5.extensions.GenericMetadataHandler" source="com.st.tools.spc5.wizard.pinmap">
+              <value>SPC560B54L5</value>
+            </metadata>
+          </metadatas>
+        </i_o_settings>
+      </instance>
+      <instance locked="false" id="com.st.spc5.components.clock.spc560bxx_rla">
+        <initialization_settings>
+          <do_not_init>
+            <value>false</value>
+          </do_not_init>
+          <allow_overclocking>
+            <value>false</value>
+          </allow_overclocking>
+          <disable_watchdog>
+            <value>true</value>
+          </disable_watchdog>
+          <enable_clockout>
+            <value>false</value>
+          </enable_clockout>
+          <oscillator_settings>
+            <xosc_clock>
+              <value>16000000</value>
+            </xosc_clock>
+            <oscillator_bypass>
+              <value>false</value>
+            </oscillator_bypass>
+          </oscillator_settings>
+          <fmpll_settings>
+            <idf_value>
+              <value>2</value>
+            </idf_value>
+            <ndiv_value>
+              <value>48</value>
+            </ndiv_value>
+            <odf_value index="2">
+              <value>SPC5_FMPLL_ODF_DIV8</value>
+            </odf_value>
+            <progressive_clock_switching>
+              <value>false</value>
+            </progressive_clock_switching>
+            <mask_fail_output>
+              <value>false</value>
+            </mask_fail_output>
+            <fm_enable>
+              <value>false</value>
+            </fm_enable>
+            <spread_type disabled="true" index="0">
+              <value>Center Spread</value>
+            </spread_type>
+            <modulation_period disabled="true">
+              <value>0</value>
+            </modulation_period>
+            <increment_step disabled="true">
+              <value>0</value>
+            </increment_step>
+          </fmpll_settings>
+          <clocks>
+            <xosc_divider index="0">
+              <value>1</value>
+            </xosc_divider>
+            <firc_divider index="0">
+              <value>1</value>
+            </firc_divider>
+            <peripheral_set_1_clock_divider index="2">
+              <value>2</value>
+            </peripheral_set_1_clock_divider>
+            <peripheral_set_2_clock_divider index="2">
+              <value>2</value>
+            </peripheral_set_2_clock_divider>
+            <peripheral_set_3_clock_divider index="2">
+              <value>2</value>
+            </peripheral_set_3_clock_divider>
+            <sxosc_divider index="0">
+              <value>1</value>
+            </sxosc_divider>
+            <sirc_divider index="3">
+              <value>4</value>
+            </sirc_divider>
+            <api_rtc_enable>
+              <value>false</value>
+            </api_rtc_enable>
+            <api_rtc_clock_source disabled="true" index="0">
+              <value>SXOSCDIV</value>
+            </api_rtc_clock_source>
+            <clkout_clock_source index="2">
+              <value>FMPLL</value>
+            </clkout_clock_source>
+            <clkout_clock_divider index="1">
+              <value>2</value>
+            </clkout_clock_divider>
+            <clock_failure_hook>
+              <value>irqSysHalt()</value>
+            </clock_failure_hook>
+          </clocks>
+          <clock_points>
+            <xosc disabled="true">
+              <value>16000000</value>
+            </xosc>
+            <xoscdiv disabled="true">
+              <value>16000000</value>
+            </xoscdiv>
+            <firc disabled="true">
+              <value>16000000</value>
+            </firc>
+            <fircdiv disabled="true">
+              <value>16000000</value>
+            </fircdiv>
+            <sxosc disabled="true">
+              <value>32000</value>
+            </sxosc>
+            <sxoscdiv disabled="true">
+              <value>32000</value>
+            </sxoscdiv>
+            <sirc disabled="true">
+              <value>128000</value>
+            </sirc>
+            <sircdiv disabled="true">
+              <value>32000</value>
+            </sircdiv>
+            <rtc disabled="true">
+              <value>0</value>
+            </rtc>
+            <fmpll_in disabled="true">
+              <value>8000000</value>
+            </fmpll_in>
+            <fmpll_vco disabled="true">
+              <value>384000000</value>
+            </fmpll_vco>
+            <fmpll_out disabled="true">
+              <value>48000000</value>
+            </fmpll_out>
+            <sysclk disabled="true">
+              <value>48000000</value>
+            </sysclk>
+            <peripheral_set1 disabled="true">
+              <value>24000000</value>
+            </peripheral_set1>
+            <peripheral_set2 disabled="true">
+              <value>24000000</value>
+            </peripheral_set2>
+            <peripheral_set3 disabled="true">
+              <value>24000000</value>
+            </peripheral_set3>
+            <clkout disabled="true">
+              <value>0</value>
+            </clkout>
+          </clock_points>
+          <module_entry>
+            <final_run_mode index="1">
+              <value>RUN0</value>
+            </final_run_mode>
+            <run_modes>
+              <reset disabled="true">
+                <value>true</value>
+              </reset>
+              <safe disabled="true">
+                <value>true</value>
+              </safe>
+              <drun disabled="true">
+                <value>true</value>
+              </drun>
+              <run0 disabled="true">
+                <value>true</value>
+              </run0>
+              <run1>
+                <value>true</value>
+              </run1>
+              <run2>
+                <value>true</value>
+              </run2>
+              <run3>
+                <value>true</value>
+              </run3>
+              <halt>
+                <value>true</value>
+              </halt>
+              <stop>
+                <value>true</value>
+              </stop>
+              <standby>
+                <value>true</value>
+              </standby>
+              <safe_state_settings>
+                <pdo>
+                  <value>true</value>
+                </pdo>
+                <mvron disabled="true">
+                  <value>true</value>
+                </mvron>
+                <dflaon disabled="true" index="0">
+                  <value>Normal</value>
+                </dflaon>
+                <cflaon disabled="true" index="0">
+                  <value>Normal</value>
+                </cflaon>
+                <fmpllon disabled="true">
+                  <value>false</value>
+                </fmpllon>
+                <xoscon disabled="true">
+                  <value>false</value>
+                </xoscon>
+                <fircon disabled="true">
+                  <value>true</value>
+                </fircon>
+                <sysclk disabled="true" index="0">
+                  <value>FIRC</value>
+                </sysclk>
+              </safe_state_settings>
+              <drun_state_settings>
+                <pdo disabled="true">
+                  <value>false</value>
+                </pdo>
+                <mvron disabled="true">
+                  <value>true</value>
+                </mvron>
+                <dflaon index="0">
+                  <value>Normal</value>
+                </dflaon>
+                <cflaon index="0">
+                  <value>Normal</value>
+                </cflaon>
+                <fmpllon>
+                  <value>true</value>
+                </fmpllon>
+                <xoscon>
+                  <value>true</value>
+                </xoscon>
+                <fircon disabled="true">
+                  <value>true</value>
+                </fircon>
+                <sysclk index="4">
+                  <value>System PLL</value>
+                </sysclk>
+              </drun_state_settings>
+              <run0_state_settings>
+                <pdo disabled="true">
+                  <value>false</value>
+                </pdo>
+                <mvron disabled="true">
+                  <value>true</value>
+                </mvron>
+                <dflaon index="0">
+                  <value>Normal</value>
+                </dflaon>
+                <cflaon index="0">
+                  <value>Normal</value>
+                </cflaon>
+                <fmpllon>
+                  <value>true</value>
+                </fmpllon>
+                <xoscon>
+                  <value>true</value>
+                </xoscon>
+                <fircon disabled="true">
+                  <value>true</value>
+                </fircon>
+                <sysclk index="4">
+                  <value>System PLL</value>
+                </sysclk>
+              </run0_state_settings>
+              <run1_state_settings>
+                <pdo disabled="true">
+                  <value>false</value>
+                </pdo>
+                <mvron disabled="true">
+                  <value>true</value>
+                </mvron>
+                <dflaon index="0">
+                  <value>Normal</value>
+                </dflaon>
+                <cflaon index="0">
+                  <value>Normal</value>
+                </cflaon>
+                <fmpllon>
+                  <value>false</value>
+                </fmpllon>
+                <xoscon>
+                  <value>false</value>
+                </xoscon>
+                <fircon disabled="true">
+                  <value>true</value>
+                </fircon>
+                <sysclk index="0">
+                  <value>FIRC</value>
+                </sysclk>
+              </run1_state_settings>
+              <run2_state_settings>
+                <pdo disabled="true">
+                  <value>false</value>
+                </pdo>
+                <mvron disabled="true">
+                  <value>true</value>
+                </mvron>
+                <dflaon index="0">
+                  <value>Normal</value>
+                </dflaon>
+                <cflaon index="0">
+                  <value>Normal</value>
+                </cflaon>
+                <fmpllon>
+                  <value>false</value>
+                </fmpllon>
+                <xoscon>
+                  <value>false</value>
+                </xoscon>
+                <fircon disabled="true">
+                  <value>true</value>
+                </fircon>
+                <sysclk index="0">
+                  <value>FIRC</value>
+                </sysclk>
+              </run2_state_settings>
+              <run3_state_settings>
+                <pdo disabled="true">
+                  <value>false</value>
+                </pdo>
+                <mvron disabled="true">
+                  <value>true</value>
+                </mvron>
+                <dflaon index="0">
+                  <value>Normal</value>
+                </dflaon>
+                <cflaon index="0">
+                  <value>Normal</value>
+                </cflaon>
+                <fmpllon>
+                  <value>false</value>
+                </fmpllon>
+                <xoscon>
+                  <value>false</value>
+                </xoscon>
+                <fircon disabled="true">
+                  <value>true</value>
+                </fircon>
+                <sysclk index="0">
+                  <value>FIRC</value>
+                </sysclk>
+              </run3_state_settings>
+              <halt_state_settings>
+                <pdo disabled="true">
+                  <value>false</value>
+                </pdo>
+                <mvron>
+                  <value>true</value>
+                </mvron>
+                <dflaon index="1">
+                  <value>Low Power</value>
+                </dflaon>
+                <cflaon index="1">
+                  <value>Low Power</value>
+                </cflaon>
+                <fmpllon>
+                  <value>false</value>
+                </fmpllon>
+                <xoscon>
+                  <value>false</value>
+                </xoscon>
+                <fircon>
+                  <value>true</value>
+                </fircon>
+                <sysclk index="0">
+                  <value>FIRC</value>
+                </sysclk>
+              </halt_state_settings>
+              <stop_state_settings>
+                <pdo>
+                  <value>false</value>
+                </pdo>
+                <mvron>
+                  <value>true</value>
+                </mvron>
+                <dflaon index="2">
+                  <value>Power Down</value>
+                </dflaon>
+                <cflaon index="2">
+                  <value>Power Down</value>
+                </cflaon>
+                <fmpllon disabled="true">
+                  <value>false</value>
+                </fmpllon>
+                <xoscon>
+                  <value>false</value>
+                </xoscon>
+                <fircon>
+                  <value>true</value>
+                </fircon>
+                <sysclk index="0">
+                  <value>FIRC</value>
+                </sysclk>
+              </stop_state_settings>
+              <standby_state_settings>
+                <pdo disabled="true">
+                  <value>true</value>
+                </pdo>
+                <mvron disabled="true">
+                  <value>false</value>
+                </mvron>
+                <dflaon disabled="true" index="2">
+                  <value>Power Down</value>
+                </dflaon>
+                <cflaon disabled="true" index="2">
+                  <value>Power Down</value>
+                </cflaon>
+                <fmpllon disabled="true">
+                  <value>false</value>
+                </fmpllon>
+                <xoscon disabled="true">
+                  <value>false</value>
+                </xoscon>
+                <fircon>
+                  <value>true</value>
+                </fircon>
+                <sysclk disabled="true" index="5">
+                  <value>Clock Disabled</value>
+                </sysclk>
+              </standby_state_settings>
+            </run_modes>
+            <peripherals_control__run_>
+              <pc3>
+                <safe>
+                  <value>false</value>
+                </safe>
+                <drun>
+                  <value>false</value>
+                </drun>
+                <run0>
+                  <value>false</value>
+                </run0>
+                <run1>
+                  <value>false</value>
+                </run1>
+                <run2>
+                  <value>false</value>
+                </run2>
+                <run3>
+                  <value>false</value>
+                </run3>
+              </pc3>
+              <pc4>
+                <safe>
+                  <value>false</value>
+                </safe>
+                <drun>
+                  <value>false</value>
+                </drun>
+                <run0>
+                  <value>false</value>
+                </run0>
+                <run1>
+                  <value>false</value>
+                </run1>
+                <run2>
+                  <value>false</value>
+                </run2>
+                <run3>
+                  <value>false</value>
+                </run3>
+              </pc4>
+              <pc5>
+                <safe>
+                  <value>false</value>
+                </safe>
+                <drun>
+                  <value>false</value>
+                </drun>
+                <run0>
+                  <value>false</value>
+                </run0>
+                <run1>
+                  <value>false</value>
+                </run1>
+                <run2>
+                  <value>false</value>
+                </run2>
+                <run3>
+                  <value>false</value>
+                </run3>
+              </pc5>
+              <pc6>
+                <safe>
+                  <value>false</value>
+                </safe>
+                <drun>
+                  <value>false</value>
+                </drun>
+                <run0>
+                  <value>false</value>
+                </run0>
+                <run1>
+                  <value>false</value>
+                </run1>
+                <run2>
+                  <value>false</value>
+                </run2>
+                <run3>
+                  <value>false</value>
+                </run3>
+              </pc6>
+              <pc7>
+                <safe>
+                  <value>false</value>
+                </safe>
+                <drun>
+                  <value>false</value>
+                </drun>
+                <run0>
+                  <value>false</value>
+                </run0>
+                <run1>
+                  <value>false</value>
+                </run1>
+                <run2>
+                  <value>false</value>
+                </run2>
+                <run3>
+                  <value>false</value>
+                </run3>
+              </pc7>
+            </peripherals_control__run_>
+            <peripherals_control__low_power_>
+              <pc4>
+                <halt>
+                  <value>false</value>
+                </halt>
+                <stop>
+                  <value>false</value>
+                </stop>
+                <standby>
+                  <value>false</value>
+                </standby>
+              </pc4>
+              <pc5>
+                <halt>
+                  <value>false</value>
+                </halt>
+                <stop>
+                  <value>false</value>
+                </stop>
+                <standby>
+                  <value>false</value>
+                </standby>
+              </pc5>
+              <pc6>
+                <halt>
+                  <value>false</value>
+                </halt>
+                <stop>
+                  <value>false</value>
+                </stop>
+                <standby>
+                  <value>false</value>
+                </standby>
+              </pc6>
+              <pc7>
+                <halt>
+                  <value>false</value>
+                </halt>
+                <stop>
+                  <value>false</value>
+                </stop>
+                <standby>
+                  <value>false</value>
+                </standby>
+              </pc7>
+            </peripherals_control__low_power_>
+          </module_entry>
+        </initialization_settings>
+        <clock_tree>
+          <run_mode disabled="true">
+            <value>DRUN</value>
+          </run_mode>
+        </clock_tree>
+      </instance>
+      <instance locked="false" id="com.st.spc5.components.irq.spc560bxx_rla">
+        <isrs>
+          <enabled_vectors />
+          <headers>
+            <value />
+          </headers>
+        </isrs>
+        <external_irqs>
+          <enabled_eirq />
+          <eirq_0_7_priority index="7">
+            <value>8</value>
+          </eirq_0_7_priority>
+          <eirq_8_15_priority index="7">
+            <value>8</value>
+          </eirq_8_15_priority>
+          <eirq_16_23_priority index="7">
+            <value>8</value>
+          </eirq_16_23_priority>
+          <eirq_24_31_priority index="7">
+            <value>8</value>
+          </eirq_24_31_priority>
+        </external_irqs>
+      </instance>
+      <instance locked="false" id="com.st.spc5.components.osal.spc560bxx_rla">
+        <initialization_settings>
+          <irq_settings>
+            <preemptable_isrs>
+              <value>false</value>
+            </preemptable_isrs>
+          </irq_settings>
+          <system_timer_settings>
+            <system_timer_enable>
+              <value>true</value>
+            </system_timer_enable>
+            <system_timer_frequency disabled="true">
+              <value>48000000</value>
+            </system_timer_frequency>
+            <system_timer_tick_number>
+              <value>1000</value>
+            </system_timer_tick_number>
+            <system_timer_irq_priority index="3">
+              <value>4</value>
+            </system_timer_irq_priority>
+          </system_timer_settings>
+        </initialization_settings>
+        <ivor_settings disabled="true">
+          <check_os_enable disabled="true">
+            <value>true</value>
+          </check_os_enable>
+          <ivor0 disabled="true">
+            <value>false</value>
+          </ivor0>
+          <ivor0_callback disabled="true">
+            <value>ivor0_callback</value>
+          </ivor0_callback>
+          <ivor1 disabled="true">
+            <value>false</value>
+          </ivor1>
+          <ivor1_callback disabled="true">
+            <value>ivor1_callback</value>
+          </ivor1_callback>
+          <ivor2 disabled="true">
+            <value>false</value>
+          </ivor2>
+          <ivor2_callback disabled="true">
+            <value>ivor2_callback</value>
+          </ivor2_callback>
+          <ivor3 disabled="true">
+            <value>false</value>
+          </ivor3>
+          <ivor3_callback disabled="true">
+            <value>ivor3_callback</value>
+          </ivor3_callback>
+          <ivor5 disabled="true">
+            <value>false</value>
+          </ivor5>
+          <ivor5_callback disabled="true">
+            <value>ivor5_callback</value>
+          </ivor5_callback>
+          <ivor6 disabled="true">
+            <value>false</value>
+          </ivor6>
+          <ivor6_callback disabled="true">
+            <value>ivor6_callback</value>
+          </ivor6_callback>
+          <ivor7 disabled="true">
+            <value>false</value>
+          </ivor7>
+          <ivor7_callback disabled="true">
+            <value>ivor7_callback</value>
+          </ivor7_callback>
+          <ivor8 disabled="true">
+            <value>false</value>
+          </ivor8>
+          <ivor8_callback disabled="true">
+            <value>ivor8_callback</value>
+          </ivor8_callback>
+          <ivor9 disabled="true">
+            <value>false</value>
+          </ivor9>
+          <ivor9_callback disabled="true">
+            <value>ivor9_callback</value>
+          </ivor9_callback>
+          <ivor11 disabled="true">
+            <value>false</value>
+          </ivor11>
+          <ivor11_callback disabled="true">
+            <value>ivor11_callback</value>
+          </ivor11_callback>
+          <ivor12 disabled="true">
+            <value>false</value>
+          </ivor12>
+          <ivor12_callback disabled="true">
+            <value>ivor12_callback</value>
+          </ivor12_callback>
+          <ivor13 disabled="true">
+            <value>false</value>
+          </ivor13>
+          <ivor13_callback disabled="true">
+            <value>ivor13_callback</value>
+          </ivor13_callback>
+          <ivor14 disabled="true">
+            <value>false</value>
+          </ivor14>
+          <ivor14_callback disabled="true">
+            <value>ivor14_callback</value>
+          </ivor14_callback>
+          <ivor15 disabled="true">
+            <value>false</value>
+          </ivor15>
+          <ivor15_callback disabled="true">
+            <value>ivor15_callback</value>
+          </ivor15_callback>
+        </ivor_settings>
+      </instance>
+      <instance locked="false" id="com.st.spc5.components.lld.spc560bxx_rla">
+        <enabled_drivers>
+          <dma disabled="true">
+            <value>true</value>
+          </dma>
+          <pal>
+            <value>true</value>
+          </pal>
+          <adc>
+            <value>false</value>
+          </adc>
+          <can>
+            <value>true</value>
+          </can>
+          <icu>
+            <value>false</value>
+          </icu>
+          <pwm>
+            <value>true</value>
+          </pwm>
+          <serial>
+            <value>true</value>
+          </serial>
+          <spi>
+            <value>true</value>
+          </spi>
+          <pit>
+            <value>false</value>
+          </pit>
+          <stm>
+            <value>false</value>
+          </stm>
+          <i2c>
+            <value>false</value>
+          </i2c>
+          <swt>
+            <value>false</value>
+          </swt>
+        </enabled_drivers>
+        <spi_driver_settings>
+          <enable_synchronous_functions>
+            <value>true</value>
+          </enable_synchronous_functions>
+          <enable_mutual_exclusion_functions disabled="true">
+            <value>false</value>
+          </enable_mutual_exclusion_functions>
+        </spi_driver_settings>
+        <irq_priority_settings>
+          <adc0 index="11">
+            <value>12</value>
+          </adc0>
+          <adc1 index="11">
+            <value>12</value>
+          </adc1>
+          <dspi_0 index="9">
+            <value>10</value>
+          </dspi_0>
+          <dspi_1 index="9">
+            <value>10</value>
+          </dspi_1>
+          <dspi_2 index="9">
+            <value>10</value>
+          </dspi_2>
+          <dspi_3 index="9">
+            <value>10</value>
+          </dspi_3>
+          <dspi_4 index="9">
+            <value>10</value>
+          </dspi_4>
+          <dspi_5 index="9">
+            <value>10</value>
+          </dspi_5>
+          <linflex0 index="7">
+            <value>8</value>
+          </linflex0>
+          <linflex1 index="7">
+            <value>8</value>
+          </linflex1>
+          <linflex2 index="7">
+            <value>8</value>
+          </linflex2>
+          <linflex3 index="7">
+            <value>8</value>
+          </linflex3>
+          <linflex4 index="7">
+            <value>8</value>
+          </linflex4>
+          <linflex5 index="7">
+            <value>8</value>
+          </linflex5>
+          <linflex6 index="7">
+            <value>8</value>
+          </linflex6>
+          <linflex7 index="7">
+            <value>8</value>
+          </linflex7>
+          <linflex8 index="7">
+            <value>8</value>
+          </linflex8>
+          <linflex9 index="7">
+            <value>8</value>
+          </linflex9>
+          <emios0_uc0 index="7">
+            <value>8</value>
+          </emios0_uc0>
+          <emios0_uc1 index="7">
+            <value>8</value>
+          </emios0_uc1>
+          <emios0_uc2 index="7">
+            <value>8</value>
+          </emios0_uc2>
+          <emios0_uc3 index="7">
+            <value>8</value>
+          </emios0_uc3>
+          <emios0_uc4 index="7">
+            <value>8</value>
+          </emios0_uc4>
+          <emios0_uc5 index="7">
+            <value>8</value>
+          </emios0_uc5>
+          <emios0_uc6 index="7">
+            <value>8</value>
+          </emios0_uc6>
+          <emios0_uc7 index="7">
+            <value>8</value>
+          </emios0_uc7>
+          <emios0_uc8 index="7">
+            <value>8</value>
+          </emios0_uc8>
+          <emios0_uc9 index="7">
+            <value>8</value>
+          </emios0_uc9>
+          <emios0_uc10 index="7">
+            <value>8</value>
+          </emios0_uc10>
+          <emios0_uc11 index="7">
+            <value>8</value>
+          </emios0_uc11>
+          <emios0_uc12 index="7">
+            <value>8</value>
+          </emios0_uc12>
+          <emios0_uc13 index="7">
+            <value>8</value>
+          </emios0_uc13>
+          <emios0_uc14 index="7">
+            <value>8</value>
+          </emios0_uc14>
+          <emios0_uc15 index="7">
+            <value>8</value>
+          </emios0_uc15>
+          <emios1_uc0 index="7">
+            <value>8</value>
+          </emios1_uc0>
+          <emios1_uc1 index="7">
+            <value>8</value>
+          </emios1_uc1>
+          <emios1_uc2 index="7">
+            <value>8</value>
+          </emios1_uc2>
+          <emios1_uc3 index="7">
+            <value>8</value>
+          </emios1_uc3>
+          <emios1_uc4 index="7">
+            <value>8</value>
+          </emios1_uc4>
+          <emios1_uc5 index="7">
+            <value>8</value>
+          </emios1_uc5>
+          <emios1_uc6 index="7">
+            <value>8</value>
+          </emios1_uc6>
+          <emios1_uc7 index="7">
+            <value>8</value>
+          </emios1_uc7>
+          <emios1_uc8 index="7">
+            <value>8</value>
+          </emios1_uc8>
+          <emios1_uc9 index="7">
+            <value>8</value>
+          </emios1_uc9>
+          <emios1_uc10 index="7">
+            <value>8</value>
+          </emios1_uc10>
+          <emios1_uc11 index="7">
+            <value>8</value>
+          </emios1_uc11>
+          <emios1_uc12 index="7">
+            <value>8</value>
+          </emios1_uc12>
+          <emios1_uc13 index="7">
+            <value>8</value>
+          </emios1_uc13>
+          <emios1_uc14 index="7">
+            <value>8</value>
+          </emios1_uc14>
+          <emios1_uc15 index="7">
+            <value>8</value>
+          </emios1_uc15>
+          <flexcan0 index="10">
+            <value>11</value>
+          </flexcan0>
+          <flexcan1 index="10">
+            <value>11</value>
+          </flexcan1>
+          <flexcan2 index="10">
+            <value>11</value>
+          </flexcan2>
+          <flexcan3 index="10">
+            <value>11</value>
+          </flexcan3>
+          <flexcan4 index="10">
+            <value>11</value>
+          </flexcan4>
+          <flexcan5 index="10">
+            <value>11</value>
+          </flexcan5>
+          <pit_ch0 index="3">
+            <value>4</value>
+          </pit_ch0>
+          <pit_ch1 index="11">
+            <value>12</value>
+          </pit_ch1>
+          <pit_ch2 index="11">
+            <value>12</value>
+          </pit_ch2>
+          <pit_ch3 index="11">
+            <value>12</value>
+          </pit_ch3>
+          <pit_ch4 index="11">
+            <value>12</value>
+          </pit_ch4>
+          <pit_ch5 index="11">
+            <value>12</value>
+          </pit_ch5>
+          <pit_ch6 index="11">
+            <value>12</value>
+          </pit_ch6>
+          <pit_ch7 index="11">
+            <value>12</value>
+          </pit_ch7>
+          <stm0_ch0 index="10">
+            <value>11</value>
+          </stm0_ch0>
+          <stm0_ch1 index="10">
+            <value>11</value>
+          </stm0_ch1>
+          <stm0_ch2 index="10">
+            <value>11</value>
+          </stm0_ch2>
+          <stm0_ch3 index="11">
+            <value>12</value>
+          </stm0_ch3>
+          <swt0 index="0">
+            <value>1</value>
+          </swt0>
+        </irq_priority_settings>
+        <edma_settings>
+          <group_0_channels_priorities>
+            <ch0 index="0">
+              <value>0</value>
+            </ch0>
+            <ch1 index="1">
+              <value>1</value>
+            </ch1>
+            <ch2 index="2">
+              <value>2</value>
+            </ch2>
+            <ch3 index="3">
+              <value>3</value>
+            </ch3>
+            <ch4 index="4">
+              <value>4</value>
+            </ch4>
+            <ch5 index="5">
+              <value>5</value>
+            </ch5>
+            <ch6 index="6">
+              <value>6</value>
+            </ch6>
+            <ch7 index="7">
+              <value>7</value>
+            </ch7>
+            <ch8 index="8">
+              <value>8</value>
+            </ch8>
+            <ch9 index="9">
+              <value>9</value>
+            </ch9>
+            <ch10 index="10">
+              <value>10</value>
+            </ch10>
+            <ch11 index="11">
+              <value>11</value>
+            </ch11>
+            <ch12 index="12">
+              <value>12</value>
+            </ch12>
+            <ch13 index="13">
+              <value>13</value>
+            </ch13>
+            <ch14 index="14">
+              <value>14</value>
+            </ch14>
+            <ch15 index="15">
+              <value>15</value>
+            </ch15>
+          </group_0_channels_priorities>
+        </edma_settings>
+        <edma_mux_settings>
+          <linflex_channels>
+            <linflex0_tx index="0">
+              <value>0</value>
+            </linflex0_tx>
+            <linflex0_rx index="1">
+              <value>1</value>
+            </linflex0_rx>
+            <linflex1_tx index="2">
+              <value>2</value>
+            </linflex1_tx>
+            <linflex1_rx index="3">
+              <value>3</value>
+            </linflex1_rx>
+          </linflex_channels>
+          <dspi_channels>
+            <dspi0_tx1 index="4">
+              <value>4</value>
+            </dspi0_tx1>
+            <dspi0_tx2 index="5">
+              <value>5</value>
+            </dspi0_tx2>
+            <dspi0_rx index="6">
+              <value>6</value>
+            </dspi0_rx>
+            <dspi1_tx1 index="7">
+              <value>7</value>
+            </dspi1_tx1>
+            <dspi1_tx2 index="8">
+              <value>8</value>
+            </dspi1_tx2>
+            <dspi1_rx index="9">
+              <value>9</value>
+            </dspi1_rx>
+            <dspi2_tx1 index="10">
+              <value>10</value>
+            </dspi2_tx1>
+            <dspi2_tx2 index="11">
+              <value>11</value>
+            </dspi2_tx2>
+            <dspi2_rx index="12">
+              <value>12</value>
+            </dspi2_rx>
+            <dspi3_tx1 index="13">
+              <value>13</value>
+            </dspi3_tx1>
+            <dspi3_tx2 index="14">
+              <value>14</value>
+            </dspi3_tx2>
+            <dspi3_rx index="15">
+              <value>15</value>
+            </dspi3_rx>
+            <dspi4_tx1 index="1">
+              <value>1</value>
+            </dspi4_tx1>
+            <dspi4_tx2 index="2">
+              <value>2</value>
+            </dspi4_tx2>
+            <dspi4_rx index="3">
+              <value>3</value>
+            </dspi4_rx>
+            <dspi5_tx1 index="4">
+              <value>4</value>
+            </dspi5_tx1>
+            <dspi5_tx2 index="5">
+              <value>5</value>
+            </dspi5_tx2>
+            <dspi5_rx index="6">
+              <value>6</value>
+            </dspi5_rx>
+          </dspi_channels>
+          <adc_channels>
+            <adc0 index="1">
+              <value>1</value>
+            </adc0>
+            <adc1 index="2">
+              <value>2</value>
+            </adc1>
+          </adc_channels>
+        </edma_mux_settings>
+        <adc_settings disabled="true">
+          <adc0 disabled="true">
+            <value>false</value>
+          </adc0>
+          <adc0_clock_divider disabled="true" index="1">
+            <value>Half peripheral clock frequency</value>
+          </adc0_clock_divider>
+          <adc0_auto_clock_off_mode disabled="true">
+            <value>false</value>
+          </adc0_auto_clock_off_mode>
+          <adc1 disabled="true">
+            <value>false</value>
+          </adc1>
+          <adc1_clock_divider disabled="true" index="1">
+            <value>Half peripheral clock frequency</value>
+          </adc1_clock_divider>
+          <adc1_auto_clock_off_mode disabled="true">
+            <value>false</value>
+          </adc1_auto_clock_off_mode>
+          <dma_mode disabled="true">
+            <value>true</value>
+          </dma_mode>
+          <adc0_conversion_groups disabled="true">
+            <configs disabled="true" />
+          </adc0_conversion_groups>
+          <adc1_conversion_groups disabled="true">
+            <configs disabled="true" />
+          </adc1_conversion_groups>
+        </adc_settings>
+        <dspi_settings>
+          <dspi_0>
+            <dspi_0>
+              <value>true</value>
+            </dspi_0>
+            <slave_mode>
+              <value>false</value>
+            </slave_mode>
+          </dspi_0>
+          <dspi_1>
+            <dspi_1>
+              <value>false</value>
+            </dspi_1>
+            <slave_mode disabled="true">
+              <value>false</value>
+            </slave_mode>
+          </dspi_1>
+          <dspi_2>
+            <dspi_2>
+              <value>false</value>
+            </dspi_2>
+            <slave_mode disabled="true">
+              <value>false</value>
+            </slave_mode>
+          </dspi_2>
+          <dspi_3>
+            <dspi_3>
+              <value>false</value>
+            </dspi_3>
+            <slave_mode disabled="true">
+              <value>false</value>
+            </slave_mode>
+          </dspi_3>
+          <dspi_4>
+            <dspi_4>
+              <value>false</value>
+            </dspi_4>
+            <slave_mode disabled="true">
+              <value>false</value>
+            </slave_mode>
+          </dspi_4>
+          <dspi_5>
+            <dspi_5>
+              <value>false</value>
+            </dspi_5>
+            <slave_mode disabled="true">
+              <value>false</value>
+            </slave_mode>
+          </dspi_5>
+          <dma_mode index="1">
+            <value>RX only</value>
+          </dma_mode>
+          <dma_error_hook>
+            <value>irqSysHalt()</value>
+          </dma_error_hook>
+          <inactive_states>
+            <dspi_0___pcs0 index="1">
+              <value>Inactive High</value>
+            </dspi_0___pcs0>
+            <dspi_0___pcs1 index="1">
+              <value>Inactive High</value>
+            </dspi_0___pcs1>
+            <dspi_0___pcs2 index="1">
+              <value>Inactive High</value>
+            </dspi_0___pcs2>
+            <dspi_0___pcs3 index="1">
+              <value>Inactive High</value>
+            </dspi_0___pcs3>
+            <dspi_0___pcs4 index="1">
+              <value>Inactive High</value>
+            </dspi_0___pcs4>
+            <dspi_0___pcs5 index="1">
+              <value>Inactive High</value>
+            </dspi_0___pcs5>
+            <dspi_1___pcs0 index="1">
+              <value>Inactive High</value>
+            </dspi_1___pcs0>
+            <dspi_1___pcs1 index="1">
+              <value>Inactive High</value>
+            </dspi_1___pcs1>
+            <dspi_1___pcs2 index="1">
+              <value>Inactive High</value>
+            </dspi_1___pcs2>
+            <dspi_1___pcs3 index="1">
+              <value>Inactive High</value>
+            </dspi_1___pcs3>
+            <dspi_1___pcs4 index="1">
+              <value>Inactive High</value>
+            </dspi_1___pcs4>
+            <dspi_2___pcs0 index="1">
+              <value>Inactive High</value>
+            </dspi_2___pcs0>
+            <dspi_2___pcs1 index="1">
+              <value>Inactive High</value>
+            </dspi_2___pcs1>
+            <dspi_2___pcs2 index="1">
+              <value>Inactive High</value>
+            </dspi_2___pcs2>
+            <dspi_2___pcs3 index="1">
+              <value>Inactive High</value>
+            </dspi_2___pcs3>
+            <dspi_3___pcs0 index="1">
+              <value>Inactive High</value>
+            </dspi_3___pcs0>
+            <dspi_3___pcs1 index="1">
+              <value>Inactive High</value>
+            </dspi_3___pcs1>
+            <dspi_4___pcs0 index="1">
+              <value>Inactive High</value>
+            </dspi_4___pcs0>
+            <dspi_4___pcs1 index="1">
+              <value>Inactive High</value>
+            </dspi_4___pcs1>
+            <dspi_5___pcs0 index="1">
+              <value>Inactive High</value>
+            </dspi_5___pcs0>
+            <dspi_5___pcs1 index="1">
+              <value>Inactive High</value>
+            </dspi_5___pcs1>
+          </inactive_states>
+          <spi_configurations>
+            <configs />
+          </spi_configurations>
+        </dspi_settings>
+        <emios0_settings>
+          <emios0_global_prescaler>
+            <value>20</value>
+          </emios0_global_prescaler>
+          <emios0_pwm_counter_bus index="1">
+            <value>Counter_Bus_A</value>
+          </emios0_pwm_counter_bus>
+          <emios0_group0>
+            <emios0_ch0_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios0_gr0</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios0_ch0_counter_bus_settings>
+            <emios0_ch0_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch0_settings>
+            <emios0_ch1_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch1_settings>
+            <emios0_ch2_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch2_settings>
+            <emios0_ch3_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch3_settings>
+            <emios0_ch4_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch4_settings>
+            <emios0_ch5_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch5_settings>
+            <emios0_ch6_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch6_settings>
+            <emios0_ch7_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch7_settings>
+          </emios0_group0>
+          <emios0_group1>
+            <emios0_ch8_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios0_gr1</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios0_ch8_counter_bus_settings>
+            <emios0_ch8_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch8_settings>
+            <emios0_ch9_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch9_settings>
+            <emios0_ch10_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch10_settings>
+            <emios0_ch11_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch11_settings>
+            <emios0_ch12_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch12_settings>
+            <emios0_ch13_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch13_settings>
+            <emios0_ch14_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch14_settings>
+            <emios0_ch15_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch15_settings>
+          </emios0_group1>
+          <emios0_group2>
+            <emios0_ch16_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios0_gr2</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios0_ch16_counter_bus_settings>
+            <emios0_ch16_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch16_settings>
+            <emios0_ch17_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch17_settings>
+            <emios0_ch18_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch18_settings>
+            <emios0_ch19_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch19_settings>
+            <emios0_ch20_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch20_settings>
+            <emios0_ch21_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch21_settings>
+            <emios0_ch22_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch22_settings>
+            <emios0_ch23_counter_bus_settings>
+              <symbolic_name disabled="true">
+                <value>emios0</value>
+              </symbolic_name>
+              <prescaler index="0">
+                <value>1</value>
+              </prescaler>
+              <period>
+                <value>20000</value>
+              </period>
+              <alignment_mode index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback>
+                <value />
+              </period_callback>
+            </emios0_ch23_counter_bus_settings>
+            <emios0_ch23_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios0_ch23_settings>
+          </emios0_group2>
+          <emios0_group3>
+            <emios0_ch24_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios0_gr3</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios0_ch24_counter_bus_settings>
+            <emios0_ch24_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch24_settings>
+            <emios0_ch25_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch25_settings>
+            <emios0_ch26_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch26_settings>
+            <emios0_ch27_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch27_settings>
+            <emios0_ch28_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch28_settings>
+            <emios0_ch29_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch29_settings>
+            <emios0_ch30_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch30_settings>
+            <emios0_ch31_settings>
+              <output_mode index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback>
+                <value />
+              </channel_callback>
+            </emios0_ch31_settings>
+          </emios0_group3>
+          <emios0_ch0>
+            <value>false</value>
+          </emios0_ch0>
+          <emios0_ch1>
+            <value>false</value>
+          </emios0_ch1>
+          <emios0_ch2>
+            <value>false</value>
+          </emios0_ch2>
+          <emios0_ch3>
+            <value>false</value>
+          </emios0_ch3>
+          <emios0_ch4>
+            <value>false</value>
+          </emios0_ch4>
+          <emios0_ch5>
+            <value>false</value>
+          </emios0_ch5>
+          <emios0_ch6>
+            <value>false</value>
+          </emios0_ch6>
+          <emios0_ch7>
+            <value>false</value>
+          </emios0_ch7>
+          <emios0_ch8>
+            <value>false</value>
+          </emios0_ch8>
+          <emios0_ch16>
+            <value>false</value>
+          </emios0_ch16>
+          <emios0_ch24>
+            <value>false</value>
+          </emios0_ch24>
+          <icu_configurations>
+            <configs />
+          </icu_configurations>
+        </emios0_settings>
+        <emios1_settings>
+          <emios1_global_prescaler>
+            <value>20</value>
+          </emios1_global_prescaler>
+          <emios1_pwm_counter_bus index="0">
+            <value>Disabled</value>
+          </emios1_pwm_counter_bus>
+          <emios1_group0 disabled="true">
+            <emios1_ch0_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios1_gr0</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios1_ch0_counter_bus_settings>
+            <emios1_ch0_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch0_settings>
+            <emios1_ch1_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch1_settings>
+            <emios1_ch2_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch2_settings>
+            <emios1_ch3_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch3_settings>
+            <emios1_ch4_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch4_settings>
+            <emios1_ch5_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch5_settings>
+            <emios1_ch6_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch6_settings>
+            <emios1_ch7_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch7_settings>
+          </emios1_group0>
+          <emios1_group1 disabled="true">
+            <emios1_ch8_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios1_gr1</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios1_ch8_counter_bus_settings>
+            <emios1_ch8_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch8_settings>
+            <emios1_ch9_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch9_settings>
+            <emios1_ch10_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch10_settings>
+            <emios1_ch11_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch11_settings>
+            <emios1_ch12_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch12_settings>
+            <emios1_ch13_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch13_settings>
+            <emios1_ch14_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch14_settings>
+            <emios1_ch15_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch15_settings>
+          </emios1_group1>
+          <emios1_group2 disabled="true">
+            <emios1_ch16_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios1_gr2</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios1_ch16_counter_bus_settings>
+            <emios1_ch16_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch16_settings>
+            <emios1_ch17_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch17_settings>
+            <emios1_ch18_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch18_settings>
+            <emios1_ch19_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch19_settings>
+            <emios1_ch20_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch20_settings>
+            <emios1_ch21_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch21_settings>
+            <emios1_ch22_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch22_settings>
+            <emios1_ch23_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios1</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios1_ch23_counter_bus_settings>
+            <emios1_ch23_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch23_settings>
+          </emios1_group2>
+          <emios1_group3 disabled="true">
+            <emios1_ch24_counter_bus_settings disabled="true">
+              <symbolic_name disabled="true">
+                <value>emios1_gr3</value>
+              </symbolic_name>
+              <prescaler disabled="true" index="0">
+                <value>1</value>
+              </prescaler>
+              <period disabled="true">
+                <value>20000</value>
+              </period>
+              <alignment_mode disabled="true" index="0">
+                <value>ALIGN_EDGE</value>
+              </alignment_mode>
+              <period_callback disabled="true">
+                <value />
+              </period_callback>
+            </emios1_ch24_counter_bus_settings>
+            <emios1_ch24_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch24_settings>
+            <emios1_ch25_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch25_settings>
+            <emios1_ch26_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch26_settings>
+            <emios1_ch27_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch27_settings>
+            <emios1_ch28_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch28_settings>
+            <emios1_ch29_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch29_settings>
+            <emios1_ch30_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch30_settings>
+            <emios1_ch31_settings disabled="true">
+              <output_mode disabled="true" index="0">
+                <value>DISABLED</value>
+              </output_mode>
+              <channel_callback disabled="true">
+                <value />
+              </channel_callback>
+            </emios1_ch31_settings>
+          </emios1_group3>
+          <emios1_ch0>
+            <value>false</value>
+          </emios1_ch0>
+          <emios1_ch8>
+            <value>false</value>
+          </emios1_ch8>
+          <emios1_ch16>
+            <value>false</value>
+          </emios1_ch16>
+          <emios1_ch24>
+            <value>false</value>
+          </emios1_ch24>
+          <icu_configurations>
+            <configs />
+          </icu_configurations>
+        </emios1_settings>
+        <flexcan_settings>
+          <flexcan0>
+            <value>true</value>
+          </flexcan0>
+          <flexcan0_use_external_clock>
+            <value>false</value>
+          </flexcan0_use_external_clock>
+          <flexcan1>
+            <value>false</value>
+          </flexcan1>
+          <flexcan1_use_external_clock>
+            <value>false</value>
+          </flexcan1_use_external_clock>
+          <flexcan2>
+            <value>false</value>
+          </flexcan2>
+          <flexcan2_use_external_clock>
+            <value>false</value>
+          </flexcan2_use_external_clock>
+          <flexcan3>
+            <value>false</value>
+          </flexcan3>
+          <flexcan3_use_external_clock>
+            <value>false</value>
+          </flexcan3_use_external_clock>
+          <flexcan4>
+            <value>false</value>
+          </flexcan4>
+          <flexcan4_use_external_clock>
+            <value>false</value>
+          </flexcan4_use_external_clock>
+          <flexcan5>
+            <value>false</value>
+          </flexcan5>
+          <flexcan5_use_external_clock>
+            <value>false</value>
+          </flexcan5_use_external_clock>
+          <flexcan_enable_filters>
+            <value>false</value>
+          </flexcan_enable_filters>
+          <can_configurations>
+            <configs />
+            <mailboxes_configuration>
+              <number_of_tx_mailboxes>
+                <value>24</value>
+              </number_of_tx_mailboxes>
+              <number_of_rx_mailboxes>
+                <value>8</value>
+              </number_of_rx_mailboxes>
+            </mailboxes_configuration>
+          </can_configurations>
+        </flexcan_settings>
+        <linflex_settings>
+          <linflex0 index="1">
+            <value>Serial</value>
+          </linflex0>
+          <linflex1 index="0">
+            <value>None</value>
+          </linflex1>
+          <linflex2 index="0">
+            <value>None</value>
+          </linflex2>
+          <linflex3 index="0">
+            <value>None</value>
+          </linflex3>
+          <linflex4 index="0">
+            <value>None</value>
+          </linflex4>
+          <linflex5 index="0">
+            <value>None</value>
+          </linflex5>
+          <linflex6 index="0">
+            <value>None</value>
+          </linflex6>
+          <linflex7 index="0">
+            <value>None</value>
+          </linflex7>
+          <linflex8 index="0">
+            <value>None</value>
+          </linflex8>
+          <linflex9 index="0">
+            <value>None</value>
+          </linflex9>
+          <serial_configurations>
+            <configs />
+          </serial_configurations>
+        </linflex_settings>
+        <pit_settings disabled="true">
+          <channel_0 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value />
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_0>
+          <channel_1 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value>0</value>
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_1>
+          <channel_2 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value>0</value>
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_2>
+          <channel_3 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value>0</value>
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_3>
+          <channel_4 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value>0</value>
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_4>
+          <channel_5 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value>0</value>
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_5>
+          <channel_6 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value>0</value>
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_6>
+          <channel_7 disabled="true">
+            <enabled disabled="true">
+              <value>false</value>
+            </enabled>
+            <frequency disabled="true">
+              <value>0</value>
+            </frequency>
+            <callback disabled="true">
+              <value />
+            </callback>
+          </channel_7>
+          <noofchannels disabled="true" index="0">
+            <value>8</value>
+          </noofchannels>
+        </pit_settings>
+        <stm_settings disabled="true">
+          <stm0 disabled="true">
+            <stm0 disabled="true">
+              <value>false</value>
+            </stm0>
+            <system_clock_prescaler disabled="true">
+              <value>1</value>
+            </system_clock_prescaler>
+            <channel_0 disabled="true">
+              <enabled disabled="true">
+                <value>false</value>
+              </enabled>
+              <counter disabled="true">
+                <value>0</value>
+              </counter>
+              <callback disabled="true">
+                <value />
+              </callback>
+            </channel_0>
+            <channel_1 disabled="true">
+              <enabled disabled="true">
+                <value>false</value>
+              </enabled>
+              <counter disabled="true">
+                <value>0</value>
+              </counter>
+              <callback disabled="true">
+                <value />
+              </callback>
+            </channel_1>
+            <channel_2 disabled="true">
+              <enabled disabled="true">
+                <value>false</value>
+              </enabled>
+              <counter disabled="true">
+                <value>0</value>
+              </counter>
+              <callback disabled="true">
+                <value />
+              </callback>
+            </channel_2>
+            <channel_3 disabled="true">
+              <enabled disabled="true">
+                <value>false</value>
+              </enabled>
+              <counter disabled="true">
+                <value>0</value>
+              </counter>
+              <callback disabled="true">
+                <value />
+              </callback>
+            </channel_3>
+          </stm0>
+        </stm_settings>
+        <i2c_settings disabled="true">
+          <i2c_0 disabled="true">
+            <module disabled="true" index="0">
+              <value>Enable</value>
+            </module>
+            <mode disabled="true" index="0">
+              <value>Master</value>
+            </mode>
+            <driven disabled="true" index="0">
+              <value>Polling</value>
+            </driven>
+            <divider disabled="true">
+              <value>191</value>
+            </divider>
+          </i2c_0>
+        </i2c_settings>
+        <swt_settings disabled="true">
+          <swt0 disabled="true">
+            <value>false</value>
+          </swt0>
+          <swt0_settings disabled="true">
+            <frequency disabled="true">
+              <value>128000</value>
+            </frequency>
+            <timeout_period disabled="true">
+              <value>0</value>
+            </timeout_period>
+            <interrupt_mode disabled="true">
+              <value>true</value>
+            </interrupt_mode>
+            <interrupt_callback disabled="true">
+              <value />
+            </interrupt_callback>
+            <pseudo_random_keys disabled="true">
+              <value>false</value>
+            </pseudo_random_keys>
+            <window_mode disabled="true">
+              <value>false</value>
+            </window_mode>
+            <window_period disabled="true">
+              <value>0</value>
+            </window_period>
+            <freeze_in_debug_mode disabled="true">
+              <value>true</value>
+            </freeze_in_debug_mode>
+            <stops_in_stop_mode disabled="true">
+              <value>false</value>
+            </stops_in_stop_mode>
+          </swt0_settings>
+        </swt_settings>
+      </instance>
+      <instance locked="false" id="com.st.spc5.components.freertos.spc5x_rla">
+        <configuration_settings>
+          <preemption>
+            <value>true</value>
+          </preemption>
+          <time_slicing>
+            <value>true</value>
+          </time_slicing>
+          <idle_should_yield>
+            <value>true</value>
+          </idle_should_yield>
+          <clock disabled="true">
+            <value>48000000</value>
+          </clock>
+          <tick_rate>
+            <value>1000</value>
+          </tick_rate>
+          <use_16bit_ticks>
+            <value>false</value>
+          </use_16bit_ticks>
+          <task_stack_size>
+            <value>256</value>
+          </task_stack_size>
+          <task_priorities>
+            <value>4</value>
+          </task_priorities>
+          <task_name_len>
+            <value>16</value>
+          </task_name_len>
+        </configuration_settings>
+        <semaphores_and_mutexes>
+          <use_mutex>
+            <value>true</value>
+          </use_mutex>
+          <recursive_mutex>
+            <value>false</value>
+          </recursive_mutex>
+          <counting_semaphores>
+            <value>false</value>
+          </counting_semaphores>
+        </semaphores_and_mutexes>
+        <co_routines>
+          <co_routines>
+            <value>false</value>
+          </co_routines>
+          <max_co_routine_priority disabled="true">
+            <value>4</value>
+          </max_co_routine_priority>
+        </co_routines>
+        <memory_settings>
+          <heap_implementation index="3">
+            <value>heap_4 - coalescences adjacent free blocks to avoid fragmentation. Includes absolute address placement option</value>
+          </heap_implementation>
+          <total_heap_size>
+            <value>8192</value>
+          </total_heap_size>
+          <support_static_allocation>
+            <value>false</value>
+          </support_static_allocation>
+          <support_dynamic_allocation>
+            <value>true</value>
+          </support_dynamic_allocation>
+          <application_allocated_heap>
+            <value>false</value>
+          </application_allocated_heap>
+          <num_tls_pointers>
+            <value>3</value>
+          </num_tls_pointers>
+        </memory_settings>
+        <hook_functions>
+          <idle_task_hook>
+            <value>false</value>
+          </idle_task_hook>
+          <tick_task_hook>
+            <value>false</value>
+          </tick_task_hook>
+          <stack_overflow_check>
+            <value>false</value>
+          </stack_overflow_check>
+          <malloc_failed_hook>
+            <value>false</value>
+          </malloc_failed_hook>
+        </hook_functions>
+        <tracing_and_statistics>
+          <runtime_statistics>
+            <value>false</value>
+          </runtime_statistics>
+          <tracing_facilities>
+            <value>false</value>
+          </tracing_facilities>
+          <use_stats_formatting_functions>
+            <value>false</value>
+          </use_stats_formatting_functions>
+        </tracing_and_statistics>
+        <software_timers>
+          <use_software_timers>
+            <value>false</value>
+          </use_software_timers>
+          <timer_task_priority disabled="true">
+            <value>3</value>
+          </timer_task_priority>
+          <timer_queue_length disabled="true">
+            <value>10</value>
+          </timer_queue_length>
+          <timer_task_stack_depth disabled="true">
+            <value>256</value>
+          </timer_task_stack_depth>
+        </software_timers>
+        <queue>
+          <queue_registry_size>
+            <value>4</value>
+          </queue_registry_size>
+          <queue_sets>
+            <value>false</value>
+          </queue_sets>
+        </queue>
+        <api_configuration>
+          <vtaskpriorityset>
+            <value>true</value>
+          </vtaskpriorityset>
+          <uxtaskpriorityget>
+            <value>true</value>
+          </uxtaskpriorityget>
+          <vtaskdelete>
+            <value>false</value>
+          </vtaskdelete>
+          <vtasksuspend>
+            <value>true</value>
+          </vtasksuspend>
+          <vresumefromisr>
+            <value>true</value>
+          </vresumefromisr>
+          <vtaskdelayuntil>
+            <value>true</value>
+          </vtaskdelayuntil>
+          <vtaskdelay>
+            <value>true</value>
+          </vtaskdelay>
+          <xtaskgetschedulerstate>
+            <value>false</value>
+          </xtaskgetschedulerstate>
+          <xtaskgetcurrenttaskhandle>
+            <value>false</value>
+          </xtaskgetcurrenttaskhandle>
+          <uxtaskgetstackhighwatermark>
+            <value>false</value>
+          </uxtaskgetstackhighwatermark>
+          <xtaskgetidletaskhandle>
+            <value>false</value>
+          </xtaskgetidletaskhandle>
+          <etaskgetstate>
+            <value>false</value>
+          </etaskgetstate>
+          <etaskgethandle>
+            <value>false</value>
+          </etaskgethandle>
+        </api_configuration>
+        <use_freertos_cli>
+          <value>false</value>
+        </use_freertos_cli>
+        <freertos_cli_settings disabled="true">
+          <command_int_max_output_size disabled="true">
+            <value>400</value>
+          </command_int_max_output_size>
+          <use_tcp_commands_demo disabled="true">
+            <value>false</value>
+          </use_tcp_commands_demo>
+          <use_udp_commands_demo disabled="true">
+            <value>false</value>
+          </use_udp_commands_demo>
+          <use_file_commands_demo disabled="true">
+            <value>false</value>
+          </use_file_commands_demo>
+          <use_sample_commands_demo disabled="true">
+            <value>false</value>
+          </use_sample_commands_demo>
+        </freertos_cli_settings>
+      </instance>
+    </instances>
+    <exportedFeatures />
+  </application>
+</SPC5-Config>

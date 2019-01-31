@@ -1,0 +1,184 @@
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccgEdhFg.s 			page 1
+
+
+   1              	# 1 "./components/spc560bxx_platform_component_rla/lib/src/crt0.s"
+   1              	/*
+   0              	
+   0              	
+   2              	    SPC5 RLA - Copyright (C) 2015 STMicroelectronics
+   3              	
+   4              	    Licensed under the Apache License, Version 2.0 (the "License").
+   5              	    You may not use this file except in compliance with the License.
+   6              	    You may obtain a copy of the License at
+   7              	
+   8              	        http://www.apache.org/licenses/LICENSE-2.0
+   9              	
+  10              	    Unless required by applicable law or agreed to in writing, software
+  11              	    distributed under the License is distributed on an "AS IS" BASIS,
+  12              	    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13              	    See the License for the specific language governing permissions and
+  14              	    limitations under the License.
+  15              	*/
+  16              	
+  17              	/**
+  18              	 * @file    crt0.s
+  19              	 * @brief   Generic PowerPC startup file for GCC.
+  20              	 *
+  21              	 * @addtogroup PPC_STARTUP
+  22              	 * @{
+  23              	 */
+  24              	
+  25              	#include "boot.h"
+   1              	/*
+  26              	#include "toolchain.h"
+   1              	/*
+  27              	
+  28              	#ifndef __CACHE_INIT
+  29              	/* Caches not enabled or not present
+  30              	 * Nop instruction.
+  31              	 */
+  32              	#define __CACHE_INIT	e_ori 0, 0, 0
+  33              	#endif
+  34              	
+  35              	#if !defined(__DOXYGEN__)
+  36              	
+  37              	        .section    .crt0, "axv"
+  38              	        .align		2
+  39              	        .globl      _boot_address
+  40              	        .type       _boot_address, @function
+  41              	_VLE
+  42              	_boot_address:
+  43              	        /*
+  44              	         * Stack setup.
+  45              	         */
+  46 0000 7020E000 			e_lis       %r1, HI(__process_stack_end__)
+  47 0004 7020C000 	        e_or2i      %r1, LO(__process_stack_end__)
+  48 0008 4800     	        se_li       %r0, 0
+  49 000a 180106F8 	        e_stwu      %r0, -8(%r1)
+  50              	        /*
+  51              	         * Small sections registers initialization.
+  52              	         */
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccgEdhFg.s 			page 2
+
+
+  53 000e 7040E000 	        e_lis       %r2,  HI(__sdata2_start__)
+  54 0012 7040C000 	        e_or2i      %r2,  LO(__sdata2_start__)
+  55 0016 71A0E000 	        e_lis       %r13, HI(__sdata_start__)
+  56 001a 71A0C000 	        e_or2i      %r13, LO(__sdata_start__)
+  57              			/* 
+  58              			 * Cache initialization.
+  59              			 */
+  60 001e 1800D000 			__CACHE_INIT
+  61              	        /*
+  62              	         * Early initialization.
+  63              	         */
+  64 0022 78000001 	        e_bl        __early_init
+  65              	        /*
+  66              	         * BSS clearing.
+  67              	         */
+  68 0026 7080E000 	        e_lis       %r4, HI(__bss_start__)
+  69 002a 7080C000 	        e_or2i      %r4, LO(__bss_start__)
+  70 002e 70A0E000 	        e_lis       %r5, HI(__bss_end__)
+  71 0032 70A0C000 	        e_or2i      %r5, LO(__bss_end__)
+  72 0036 4807     	        se_li       %r7, 0
+  73              	.bssloop:
+  74 0038 7C042840 	        cmpl        cr0, %r4, %r5
+  75 003c E004     	        se_bge      .bssend
+  76 003e D074     	        se_stw      %r7, 0(%r4)
+  77 0040 2034     	        se_addi     %r4, 4
+  78 0042 E8FB     	        se_b        .bssloop
+  79              	.bssend:
+  80              	
+  81              	#if !BOOT_LOAD_IN_RAM
+  82              	        /*
+  83              	         * DATA initialization.
+  84              	         */
+  85 0044 7080E000 	        e_lis       %r4, HI(__romdata_start__)
+  86 0048 7080C000 	        e_or2i      %r4, LO(__romdata_start__)
+  87 004c 70A0E000 	        e_lis       %r5, HI(__data_start__)
+  88 0050 70A0C000 	        e_or2i      %r5, LO(__data_start__)
+  89 0054 70C0E000 	        e_lis       %r6, HI(__data_end__)
+  90 0058 70C0C000 	        e_or2i      %r6, LO(__data_end__)
+  91              	.dataloop:
+  92 005c 7C053040 	        cmpl        cr0, %r5, %r6
+  93 0060 E006     	        se_bge      .dataend
+  94 0062 C074     	        se_lwz      %r7, 0(%r4)
+  95 0064 2034     	        se_addi     %r4, 4
+  96 0066 D075     	        se_stw      %r7, 0(%r5)
+  97 0068 2035     	        se_addi     %r5, 4
+  98 006a E8F9     	        se_b        .dataloop
+  99              	.dataend:
+ 100              	#endif
+ 101              	
+ 102              	        /*
+ 103              	         * Late initialization.
+ 104              	         */
+ 105 006c 78000001 	        e_bl        __late_init
+ 106              	        /*
+ 107              	         * Main program invocation.
+ 108              	         */
+ 109 0070 78000001 	        e_bl        main
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccgEdhFg.s 			page 3
+
+
+ 110 0074 78000000 	        e_b         _main_exit_handler
+ 111              	
+ 112              	        /*
+ 113              	         * Default main exit code, infinite loop.
+ 114              	         */
+ 115              	        .weak       _main_exit_handler
+ 116              	        .globl      _main_exit_handler
+ 117              	        .type       _main_exit_handler, @function
+ 118              	_main_exit_handler:
+ 119 0078 78000000 	        e_b         _main_exit_handler
+ 120              	
+ 121              	        /*
+ 122              	         * Default early initialization code, none.
+ 123              	         */
+ 124              	        .weak       __early_init
+ 125              	        .globl      __early_init
+ 126              	        .type       __early_init, @function
+ 127              	__early_init:
+ 128 007c 0004     	        se_blr
+ 129              	
+ 130              	        /*
+ 131              	         * Default late initialization code, none.
+ 132              	         */
+ 133              	        .weak       __late_init
+ 134              	        .globl      __late_init
+ 135              	        .type       __late_init, @function
+ 136              	__late_init:
+ 137 007e 0004     	        se_blr
+ 138              	
+ 139              	        /*
+ 140              	         * __eabi code, fix for freegcc 4.9.4.
+ 141              	         */
+ 142              	        .weak       __eabi
+ 143              	        .globl      __eabi
+ 144              	        .type       __eabi, @function
+ 145              	__eabi:
+ 146 0080 0004     	        se_blr
+GAS LISTING C:\Users\marky\AppData\Local\Temp\ccgEdhFg.s 			page 4
+
+
+DEFINED SYMBOLS
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:42     .crt0:00000000 _boot_address
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:127    .crt0:0000007c __early_init
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:73     .crt0:00000038 .bssloop
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:79     .crt0:00000044 .bssend
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:91     .crt0:0000005c .dataloop
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:99     .crt0:0000006c .dataend
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:136    .crt0:0000007e __late_init
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:118    .crt0:00000078 _main_exit_handler
+./components/spc560bxx_platform_component_rla/lib/src/crt0.s:145    .crt0:00000080 __eabi
+
+UNDEFINED SYMBOLS
+__process_stack_end__
+__sdata2_start__
+__sdata_start__
+__bss_start__
+__bss_end__
+__romdata_start__
+__data_start__
+__data_end__
+main
