@@ -1,1 +1,8 @@
 CAN-D.wiki/
+*.DS_Store
+CAN-D/*.ld
+CAN-D/build/
+CAN-D/pclint
+CAN-D/components
+CAN-D/.dep/
+CAN-D/Makefile
