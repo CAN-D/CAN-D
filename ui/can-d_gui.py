@@ -1,8 +1,9 @@
 import sys
 import random
-from PySide2 import QtCore, QtWidgets, QtGui
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
+from PyQt5.QtCore import Qt
 
-class CAND(QtWidgets.QWidget):
+class CAND(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -12,11 +13,11 @@ class CAND(QtWidgets.QWidget):
 
     def initializeUI(self):
         self.setWindowTitle(self.title)
-        self.button = QtWidgets.QPushButton("Click me!")
-        self.text = QtWidgets.QLabel("Hello World")
-        self.text.setAlignment(QtCore.Qt.AlignCenter)
+        self.button = QPushButton("Click me!")
+        self.text = QLabel("Hello World")
+        self.text.setAlignment(Qt.AlignCenter)
 
-        self.layout = QtWidgets.QVBoxLayout()
+        self.layout = QVBoxLayout()
         self.layout.addWidget(self.text)
         self.layout.addWidget(self.button)
         self.setLayout(self.layout)
@@ -32,7 +33,7 @@ class CAND(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
 
     cand = CAND()
 
