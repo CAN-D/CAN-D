@@ -4,12 +4,13 @@ import sys
 
 _here = os.path.abspath(os.path.dirname(__file__))
 _pkg_name = "candy-wrapper"
+_read_me = "README.md"
 
 if sys.version_info[0] < 3:
-    with open(os.path.join(_here, "README.mk")) as readme:
+    with open(os.path.join(_here, _read_me)) as readme:
         long_description = readme.read()
 else:
-    with open(os.path.join(_here, "README.mk"), encoding="utf-8") as readme:
+    with open(os.path.join(_here, _read_me), encoding="utf-8") as readme:
         long_description = readme.read()
 
 version = {}
