@@ -58,6 +58,7 @@
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
+#include "stm32f3xx_hal_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -128,9 +129,10 @@ int main(void)
   MX_CAN_Init();
   MX_SPI1_Init();
   MX_SPI2_Init();
-  MX_TIM2_Init();
+//  MX_TIM2_Init();
   MX_RTC_Init();
   MX_USART2_UART_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -142,16 +144,7 @@ int main(void)
   osKernelStart();
   
   /* We should never get here as control is now taken by the scheduler */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
+  for(;;);
 }
 
 /**
