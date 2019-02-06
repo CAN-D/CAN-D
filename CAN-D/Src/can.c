@@ -107,22 +107,18 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
   */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
 {
-  uint8_t rxData;
-  osStatus status;
-  HAL_StatusTypeDef err_code = HAL_OK;
+  uint8_t rxData[8];
   CAN_RxHeaderTypeDef pHeader = {0};
 
   // Get CAN RX data from the CAN module
-  err_code = HAL_CAN_GetRxMessage(canHandle, CAN_RX_FIFO_0, &pHeader, &rxData);
-  if (err_code != HAL_OK)
+  if (HAL_CAN_GetRxMessage(canHandle, CAN_RX_FIFO_0, &pHeader, rxData) != HAL_OK)
   {
     Error_Handler();
   }
 
   // Pass the CAN RX data to the CAN RX data queue
   // @see canBridgeTask()
-  status = osMessagePut(canDataQueueHandle, (uint32_t)rxData, CAN_RXQ_TIMEOUT_MS);
-  if (status != osOK)
+  if (osMessagePut(canDataQueueHandle, (uint32_t)rxData, CAN_RXQ_TIMEOUT_MS) != osOK)
   {
     Error_Handler();
   }

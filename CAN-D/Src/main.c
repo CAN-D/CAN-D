@@ -16,7 +16,7 @@
 #include "gpio.h"
 #include "stm32f3xx_hal_pwr.h"
 
-extern void MX_USB_DEVICE_Init(void);
+void MX_USB_DEVICE_Init(void);
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 

@@ -11,8 +11,6 @@
 #include "cmsis_os.h"
 #include "can.h"
 
-CAN_HandleTypeDef hcan; /* Shared extern from can.h */
-
 osThreadId canTaskHandle;
 osMessageQId canDataQueueHandle;
 
@@ -34,7 +32,6 @@ void MX_FREERTOS_Init(void)
   /* start timers, add new ones, ... */
 
   /* Create the thread(s) */
-  /* definition and creation of defaultTask */
   osThreadDef(canTask, canBridgeTask, osPriorityNormal, 0, 128);
   canTaskHandle = osThreadCreate(osThread(canTask), NULL);
 
@@ -62,13 +59,13 @@ void canBridgeTask(void const * argument)
 //      if (hcan.State == HAL_CAN_STATE_LISTENING)
 //      {
 //        HAL_CAN_Stop(&hcan);
-//        HAL_CAN_DeactivateNotification(&hcan, CAN_START_ITS);
+//        HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
 //      }
 //      else if (hcan.State == HAL_CAN_STATE_READY)
 //      {
 //        // Changes the hcan.State to HAL_CAN_STATE_LISTENING
 //        HAL_CAN_Start(&hcan);
-//        HAL_CAN_ActivateNotification(&hcan, CAN_START_ITS);
+//        HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
 //      }
 //    }
 
