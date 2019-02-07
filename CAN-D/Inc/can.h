@@ -14,7 +14,6 @@
 #endif
 
 #include "main.h"
-#include "cmsis_os.h"
 
 #define CAN_RX_FIFO_0      ((uint32_t) 0)
 #define CAN_RX_FIFO_1      ((uint32_t) 1)
@@ -22,9 +21,9 @@
 #define CAN_IT_START       CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO1_FULL | CAN_IT_ERROR  /* Interrupts to be enabled on CAN start */
 
 extern CAN_HandleTypeDef hcan;
-extern osMessageQId canDataQueueHandle;
 
 void MX_CAN_Init(void);
+void APP_CAN_StartStop(void);
 
 #ifdef __cplusplus
 }

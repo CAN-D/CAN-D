@@ -7,8 +7,10 @@
   */
 
 #include "can.h"
+#include "bridge.h"
 
 CAN_HandleTypeDef hcan;
+APP_ConfigType mAppConfiguration;
 
 
 /* CAN init function */
@@ -116,25 +118,42 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
     Error_Handler();
   }
 
-  // Pass the CAN RX data to the CAN RX data queue
-  // @see canBridgeTask()
-  if (osMessagePut(canDataQueueHandle, (uint32_t)rxData, CAN_RXQ_TIMEOUT_MS) != osOK)
+  // Pass along CAN RX data depending on the current configuration
+  if (mAppConfiguration.SDStorage == APP_ENABLE)
   {
-    Error_Handler();
+    // Send CAN data to the SD Card via SPI
+  }
+  if (mAppConfiguration.USBTransfer == APP_ENABLE)
+  {
+    // Send CAN data to the PC via USB
   }
 }
 
 /**
   * @brief  Rx FIFO 1 full callback.
-  * @param  CanHandle: pointer to a CAN_HandleTypeDef structure that contains
+  * @param  canHandle: pointer to a CAN_HandleTypeDef structure that contains
   *         the configuration information for the specified CAN.
   * @retval None
   */
 void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef* canHandle)
 {
-  // TODO: Figure out how these fifos work. We currently enabled both FIFO
-  //       interrupts (0 and 1) but I'm not sure how to properly handle data
-  //       coming from both FIFOs at onee. Maybe just do the same as in
-  //       HAL_CAN_RxFifo0MsgPendingCallback() ?
 }
 
+/**
+  * @brief  Toggles the CAN module.
+  * @retval None
+  */
+void APP_CAN_StartStop(void)
+{
+  if (hcan.State == HAL_CAN_STATE_LISTENING)
+  {
+    HAL_CAN_Stop(&hcan);
+    HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
+  }
+  else if (hcan.State == HAL_CAN_STATE_READY)
+  {
+    // Changes the hcan.State to HAL_CAN_STATE_LISTENING
+    HAL_CAN_Start(&hcan);
+    HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
+  }
+}
