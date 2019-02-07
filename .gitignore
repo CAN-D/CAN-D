@@ -1,8 +1,8 @@
-# -------- Firmware --------
-
+# --------- Misc. ----------
 CAN-D.wiki/
 *.DS_Store
-CAN-D/*.ld
+
+# -------- Firmware --------
 CAN-D/Debug
 
 # -------- Python --------
