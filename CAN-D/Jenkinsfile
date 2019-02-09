@@ -1,0 +1,13 @@
+pipeline {
+    agent {
+        docker { image 'stronglytyped/arm-none-eabi-gcc' }
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'make --file=CAN-D/Makefile' 
+            }
+        }
+    }
+}
