@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'make' 
+                archiveArtifacts images: '**/build/*.hex', fingerprint: true 
+                archiveArtifacts sharedLibs: '**/build/*.so', fingerprint: true 
+            }
+        }
+    }
+}
