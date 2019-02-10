@@ -8,7 +8,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "can.h"
-#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "usb_device.h"
@@ -33,12 +32,13 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
+  // Link SD Driver to SPI peripheral
+  // This will initialize our SPI peripheral as well
+  MX_FATFS_Init();
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_CAN_Init();
-  MX_FATFS_Init();
-  MX_SPI1_Init();
-  MX_SPI2_Init();
   MX_TIM2_Init();
   MX_USART2_UART_Init();
   MX_USB_DEVICE_Init();
