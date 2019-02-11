@@ -29,7 +29,8 @@ OPT = -Og
 # paths
 #######################################
 # Build path
-BUILD_DIR = build
+PROJ_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+BUILD_DIR = $(PROJ_DIR)/build
 
 ######################################
 # source
@@ -150,18 +151,18 @@ AS_INCLUDES =  \
 
 # C includes
 C_INCLUDES =  \
--IInc \
--IDrivers/STM32F3xx_HAL_Driver/Inc \
--IDrivers/STM32F3xx_HAL_Driver/Inc/Legacy \
--IMiddlewares/Third_Party/FatFs/src \
--IMiddlewares/Third_Party/FreeRTOS/Source/include \
--IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS \
--IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
--IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \
--IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
--IDrivers/CMSIS/Device/ST/STM32F3xx/Include \
--IDrivers/CMSIS/Include \
--IDrivers/BSP/Inc
+-I$(PROJ_DIR)/Inc \
+-I$(PROJ_DIR)/Drivers/STM32F3xx_HAL_Driver/Inc \
+-I$(PROJ_DIR)/Drivers/STM32F3xx_HAL_Driver/Inc/Legacy \
+-I$(PROJ_DIR)/Middlewares/Third_Party/FatFs/src \
+-I$(PROJ_DIR)/Middlewares/Third_Party/FreeRTOS/Source/include \
+-I$(PROJ_DIR)/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS \
+-I$(PROJ_DIR)/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
+-I$(PROJ_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
+-I$(PROJ_DIR)/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
+-I$(PROJ_DIR)/Drivers/CMSIS/Device/ST/STM32F3xx/Include \
+-I$(PROJ_DIR)/Drivers/CMSIS/Include \
+-I$(PROJ_DIR)/Drivers/BSP/Inc
 
 
 # compile gcc flags
@@ -182,7 +183,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = STM32F302CCTx_FLASH.ld
+LDSCRIPT = $(PROJ_DIR)/STM32F302CCTx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys 
@@ -198,10 +199,13 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 #######################################
 # list of objects
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
-vpath %.c $(sort $(dir $(C_SOURCES)))
+vpath %.c $(addprefix $(PROJ_DIR)/,$(sort $(dir $(C_SOURCES))))
+
 # list of ASM program objects
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
-vpath %.s $(sort $(dir $(ASM_SOURCES)))
+vpath %.s $(addprefix $(PROJ_DIR)/,$(sort $(dir $(ASM_SOURCES))))
+
+vpath Makefile $(PROJ_DIR)
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
 	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
