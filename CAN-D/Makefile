@@ -42,7 +42,7 @@ Src/fatfs.c \
 Src/freertos.c \
 Src/gpio.c \
 Src/main.c \
-Src/spi.c \
+Src/sd_diskio.c \
 Src/stm32f3xx_hal_msp.c \
 Src/stm32f3xx_hal_timebase_tim.c \
 Src/stm32f3xx_it.c \
@@ -53,7 +53,6 @@ Src/usb_device.c \
 Src/usbd_cdc_if.c \
 Src/usbd_conf.c \
 Src/usbd_desc.c \
-Src/user_diskio.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_can.c \
@@ -75,6 +74,8 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c_ex.c \
+Drivers/BSP/Src/stm32302c_custom.c \
+Drivers/BSP/Src/stm32302c_custom_sd.c \
 Middlewares/Third_Party/FatFs/src/diskio.c \
 Middlewares/Third_Party/FatFs/src/ff.c \
 Middlewares/Third_Party/FatFs/src/ff_gen_drv.c \
@@ -160,8 +161,7 @@ C_INCLUDES =  \
 -IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -IDrivers/CMSIS/Device/ST/STM32F3xx/Include \
 -IDrivers/CMSIS/Include \
--IDrivers/CMSIS/Include \
--IMiddlewares/Third_Party/FatFs/src/drivers
+-IDrivers/BSP/Inc
 
 
 # compile gcc flags
