@@ -15,12 +15,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 
-/* Application configuration */
-typedef struct
-{
-  uint8_t SDStorage;
-  uint8_t USBTransfer;
-} APP_ConfigType;
 
 typedef enum
 {
@@ -28,9 +22,25 @@ typedef enum
   APP_ENABLE = 1
 } APP_ConfigurationState;
 
-extern APP_ConfigType mAppConfiguration;
+/* Application configuration */
+typedef struct
+{
+  APP_ConfigurationState SDStorage;    /* Store CAN Data on SD Card */
+  APP_ConfigurationState USBStream;    /* Transfer all SD Card data to PC via USB */
+  APP_ConfigurationState USBTransfer;  /* Transfer CAN Data directly to USB Device */
+} APP_ConfigType;
 
-void APP_BRIDGE_ConfigTask(void const * argument);
+APP_ConfigType mAppConfiguration;
+
+/* Threads */
+osThreadId bridgeConfigTaskHandle;
+osThreadId USBStreamTaskHandle;
+
+/* Queues */
+osMessageQId USBStreamQueueHandle;
+
+void APP_BRIDGE_CANConfigTask(void const * argument);
+void APP_BRIDGE_USBStreamTask(void const * argument);
 void APP_CAN_SetConfiguration(APP_ConfigType newConfig);
 
 #ifdef __cplusplus
