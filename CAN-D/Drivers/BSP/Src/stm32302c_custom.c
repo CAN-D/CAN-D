@@ -19,22 +19,26 @@
  */
 GPIO_TypeDef* LED_PORT[LEDn] = {LED1_GPIO_PORT,
                                 LED2_GPIO_PORT,
-                                LED3_GPIO_PORT,
-                                LED4_GPIO_PORT};
+                                LED3_GPIO_PORT};
 
 const uint16_t LED_PIN[LEDn] = {LED1_PIN,
                                 LED2_PIN,
-                                LED3_PIN,
-                                LED4_PIN};
+                                LED3_PIN};
 
 /**
  * @brief BUTTON variables
  */
-GPIO_TypeDef* BUTTON_PORT[BUTTONn] = {KEY_BUTTON_GPIO_PORT}; 
+GPIO_TypeDef* BUTTON_PORT[BUTTONn] = {LOG_BUTTON_GPIO_PORT,
+                                      MARK_BUTTON_GPIO_PORT,
+                                      RST_BUTTON_GPIO_PORT};
 
-const uint16_t BUTTON_PIN[BUTTONn] = {KEY_BUTTON_PIN};
+const uint16_t BUTTON_PIN[BUTTONn] = {LOG_BUTTON_PIN,
+                                      MARK_BUTTON_PIN,
+                                      RST_BUTTON_PIN};
 
-const uint16_t BUTTON_IRQn[BUTTONn] = {KEY_BUTTON_EXTI_IRQn};
+const uint16_t BUTTON_IRQn[BUTTONn] = {LOG_BUTTON_EXTI_IRQn,
+                                       MARK_BUTTON_EXTI_IRQn,
+                                       RST_BUTTON_EXTI_IRQn};
 
 /**
  * @brief COM variables
@@ -184,16 +188,12 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
 
   if (Button_Mode == BUTTON_MODE_EXTI)
   {
-    if(Button == BUTTON_KEY)
+    if(Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST)
     {
-      /* Configure Key Push Button pin as input with External interrupt, falling edge */
+      /* Configure Push Button pins as input with External interrupt, falling edge */
       GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
     }
-    else
-    {
-      /* Configure Joystick Push Button pin as input with External interrupt, rising edge */
-      GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-    }
+
     HAL_GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStruct);
 
     /* Enable and set Button EXTI Interrupt to the lowest priority */

@@ -31,7 +31,7 @@ void APP_BRIDGE_CANConfigTask(void const * argument)
   for(;;)
   {
     // Start/Stop the CAN module on button press
-   if (BSP_PB_GetState(KEY_BUTTON_PIN) == GPIO_PIN_SET)
+   if (BSP_PB_GetState(LOG_BUTTON_PIN) == GPIO_PIN_SET)
    {
      APP_CAN_StartStop();
    }
