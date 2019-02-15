@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="9.3.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting keepoldvectorfont="yes"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<description>&lt;GPS Standalone Module, 20-pin&lt;/b&gt;&lt;p&gt;</description>
+<packages>
+<package name="FGPMMOPA6H">
+<description>&lt;b&gt;FGPMMOPA6H&lt;/b&gt;&lt;br&gt;
+</description>
+<smd name="1" x="-16.07" y="-1.172" dx="2" dy="1" layer="1"/>
+<smd name="2" x="-16.07" y="-2.672" dx="2" dy="1" layer="1"/>
+<smd name="3" x="-16.07" y="-4.172" dx="2" dy="1" layer="1"/>
+<smd name="4" x="-16.07" y="-5.672" dx="2" dy="1" layer="1"/>
+<smd name="5" x="-16.07" y="-7.172" dx="2" dy="1" layer="1"/>
+<smd name="6" x="-16.07" y="-8.672" dx="2" dy="1" layer="1"/>
+<smd name="7" x="-16.07" y="-10.172" dx="2" dy="1" layer="1"/>
+<smd name="8" x="-16.07" y="-11.672" dx="2" dy="1" layer="1"/>
+<smd name="9" x="-16.07" y="-13.172" dx="2" dy="1" layer="1"/>
+<smd name="10" x="-16.07" y="-14.672" dx="2" dy="1" layer="1"/>
+<smd name="11" x="-0.07" y="-14.672" dx="2" dy="1" layer="1"/>
+<smd name="12" x="-0.07" y="-13.172" dx="2" dy="1" layer="1"/>
+<smd name="13" x="-0.07" y="-11.672" dx="2" dy="1" layer="1"/>
+<smd name="14" x="-0.07" y="-10.172" dx="2" dy="1" layer="1"/>
+<smd name="15" x="-0.07" y="-8.672" dx="2" dy="1" layer="1"/>
+<smd name="16" x="-0.07" y="-7.172" dx="2" dy="1" layer="1"/>
+<smd name="17" x="-0.07" y="-5.672" dx="2" dy="1" layer="1"/>
+<smd name="18" x="-0.07" y="-4.172" dx="2" dy="1" layer="1"/>
+<smd name="19" x="-0.07" y="-2.672" dx="2" dy="1" layer="1"/>
+<smd name="20" x="-0.07" y="-1.172" dx="2" dy="1" layer="1"/>
+<hole x="-7.8" y="-7.2" drill="1.2"/>
+<text x="-8.682" y="-8.186" size="1.27" layer="27" align="center">&gt;VALUE</text>
+<text x="-8.682" y="-8.186" size="1.27" layer="25" align="center">&gt;NAME</text>
+<wire x1="-16.052" y1="0" x2="0" y2="0" width="0.254" layer="51"/>
+<wire x1="0" y1="0" x2="0" y2="-15.807" width="0.254" layer="51"/>
+<wire x1="0" y1="-15.807" x2="-16.052" y2="-15.807" width="0.254" layer="51"/>
+<wire x1="-16.052" y1="-15.807" x2="-16.052" y2="0" width="0.254" layer="51"/>
+<wire x1="-16.052" y1="0" x2="0" y2="0" width="0.254" layer="21"/>
+<wire x1="-16.052" y1="-15.807" x2="0" y2="-15.807" width="0.254" layer="21"/>
+<circle x="-17.822" y="0.056" radius="0.109" width="0.254" layer="25"/>
+</package>
+</packages>
+<symbols>
+<symbol name="FGPMMOPA6H">
+<wire x1="5.08" y1="2.54" x2="30.48" y2="2.54" width="0.254" layer="94"/>
+<wire x1="30.48" y1="-25.4" x2="30.48" y2="2.54" width="0.254" layer="94"/>
+<wire x1="30.48" y1="-25.4" x2="5.08" y2="-25.4" width="0.254" layer="94"/>
+<wire x1="5.08" y1="2.54" x2="5.08" y2="-25.4" width="0.254" layer="94"/>
+<text x="31.75" y="7.62" size="1.778" layer="95" align="center-left">&gt;NAME</text>
+<text x="31.75" y="5.08" size="1.778" layer="96" align="center-left">&gt;VALUE</text>
+<pin name="VCC" x="0" y="0" length="middle"/>
+<pin name="NRESET" x="0" y="-2.54" length="middle"/>
+<pin name="GND_1" x="0" y="-5.08" length="middle"/>
+<pin name="VBACKUP" x="0" y="-7.62" length="middle"/>
+<pin name="3D-FIX" x="0" y="-10.16" length="middle"/>
+<pin name="NC_1" x="0" y="-12.7" length="middle"/>
+<pin name="NC_2" x="0" y="-15.24" length="middle"/>
+<pin name="GND_2" x="0" y="-17.78" length="middle"/>
+<pin name="TX" x="0" y="-20.32" length="middle"/>
+<pin name="RX" x="0" y="-22.86" length="middle"/>
+<pin name="EX_ANT" x="35.56" y="0" length="middle" rot="R180"/>
+<pin name="GND_3" x="35.56" y="-2.54" length="middle" rot="R180"/>
+<pin name="1PPS" x="35.56" y="-5.08" length="middle" rot="R180"/>
+<pin name="RTCM" x="35.56" y="-7.62" length="middle" rot="R180"/>
+<pin name="NC_3" x="35.56" y="-10.16" length="middle" rot="R180"/>
+<pin name="NC_4" x="35.56" y="-12.7" length="middle" rot="R180"/>
+<pin name="NC_5" x="35.56" y="-15.24" length="middle" rot="R180"/>
+<pin name="NC_6" x="35.56" y="-17.78" length="middle" rot="R180"/>
+<pin name="GND_4" x="35.56" y="-20.32" length="middle" rot="R180"/>
+<pin name="NC_7" x="35.56" y="-22.86" length="middle" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="FGPMMOPA6H" prefix="IC">
+<description>&lt;b&gt;GPS Standalone Module, 20-pin&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="https://cdn-shop.adafruit.com/datasheets/GlobalTop-FGPMMOPA6H-Datasheet-V0A.pdf"&gt; Datasheet &lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="FGPMMOPA6H" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="FGPMMOPA6H">
+<connects>
+<connect gate="G$1" pin="1PPS" pad="13"/>
+<connect gate="G$1" pin="3D-FIX" pad="5"/>
+<connect gate="G$1" pin="EX_ANT" pad="11"/>
+<connect gate="G$1" pin="GND_1" pad="3"/>
+<connect gate="G$1" pin="GND_2" pad="8"/>
+<connect gate="G$1" pin="GND_3" pad="12"/>
+<connect gate="G$1" pin="GND_4" pad="19"/>
+<connect gate="G$1" pin="NC_1" pad="6"/>
+<connect gate="G$1" pin="NC_2" pad="7"/>
+<connect gate="G$1" pin="NC_3" pad="15"/>
+<connect gate="G$1" pin="NC_4" pad="16"/>
+<connect gate="G$1" pin="NC_5" pad="17"/>
+<connect gate="G$1" pin="NC_6" pad="18"/>
+<connect gate="G$1" pin="NC_7" pad="20"/>
+<connect gate="G$1" pin="NRESET" pad="2"/>
+<connect gate="G$1" pin="RTCM" pad="14"/>
+<connect gate="G$1" pin="RX" pad="10"/>
+<connect gate="G$1" pin="TX" pad="9"/>
+<connect gate="G$1" pin="VBACKUP" pad="4"/>
+<connect gate="G$1" pin="VCC" pad="1"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DESCRIPTION" value="GPS Standalone Module, 20-pin" constant="no"/>
+<attribute name="HEIGHT" value="mm" constant="no"/>
+<attribute name="MANUFACTURER_NAME" value="GlobalTop Technology Inc." constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="FGPMMOPA6H" constant="no"/>
+<attribute name="MOUSER_PART_NUMBER" value="" constant="no"/>
+<attribute name="MOUSER_PRICE-STOCK" value="" constant="no"/>
+<attribute name="RS_PART_NUMBER" value="" constant="no"/>
+<attribute name="RS_PRICE-STOCK" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>
