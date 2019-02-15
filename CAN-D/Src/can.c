@@ -8,9 +8,11 @@
 
 #include "can.h"
 #include "bridge.h"
+#include "usbd_cdc_if.h"
 
 CAN_HandleTypeDef hcan;
-APP_ConfigType mAppConfiguration;
+extern APP_ConfigType mAppConfiguration;
+extern USBD_HandleTypeDef hUsbDeviceFS;
 
 
 /* CAN init function */
@@ -109,7 +111,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
   */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
 {
-  uint8_t rxData[8];
+  uint8_t rxData[8]; // 8 Bytes of CAN RX Data
   CAN_RxHeaderTypeDef pHeader = {0};
 
   // Get CAN RX data from the CAN module
@@ -118,14 +120,20 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
     Error_Handler();
   }
 
-  // Pass along CAN RX data depending on the current configuration
+  // Check if SD Logging is enabled
   if (mAppConfiguration.SDStorage == APP_ENABLE)
   {
     // Send CAN data to the SD Card via SPI
   }
-  if (mAppConfiguration.USBTransfer == APP_ENABLE)
+
+  // Check if USB Streaming is enabled in the application and if a USB device 
+  // is connected to this application
+  if (mAppConfiguration.USBStream == APP_ENABLE && hUsbDeviceFS.dev_state == USBD_STATE_CONFIGURED)
   {
-    // Send CAN data to the PC via USB
+    // Put CAN Data into Queue for the USBStream RTOS Task
+    // @see APP_BRIDGE_USBStreamTask()
+    osMessagePut(USBStreamQueueHandle, (uint32_t)rxData[0], 0);
+    osMessagePut(USBStreamQueueHandle, (uint32_t)rxData[4], 0);
   }
 }
 
