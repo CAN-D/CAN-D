@@ -9,6 +9,8 @@
   */
 
 #include "stm32303c_custom.h"
+#include "stm32f302xc.h"
+#include <string.h>
 
 /* LINK SD Card */
 #define SD_DUMMY_BYTE            0xFF
@@ -44,28 +46,27 @@ const uint16_t BUTTON_IRQn[BUTTONn] = {LOG_BUTTON_EXTI_IRQn,
  * @brief COM variables
  */
 #if defined(HAL_UART_MODULE_ENABLED)
-USART_TypeDef* COM_USART[COMn]   = {GPS_COM1}; 
 
-GPIO_TypeDef*  COM_TX_PORT[COMn] = {GPS_COM1_TX_GPIO_PORT};
- 
-GPIO_TypeDef*  COM_RX_PORT[COMn] = {GPS_COM1_RX_GPIO_PORT};
+static UART_HandleTypeDef huart;
 
-const uint16_t COM_TX_PIN[COMn]  = {GPS_COM1_TX_PIN};
+/* UART com functions */
+static void UARTx_Init(void);
+static void UARTx_MspInit(UART_HandleTypeDef *huart);
+static void UARTx_WriteChar(char Character);
+static void UARTx_Error(void);
 
-const uint16_t COM_RX_PIN[COMn]  = {GPS_COM1_RX_PIN};
- 
-const uint16_t COM_TX_AF[COMn]   = {GPS_COM1_TX_AF};
+/* Link functions for GPS peripheral over UART */
+void GPS_IO_Init(void);
+void GPS_IO_WriteString(char Msg[]);
 
-const uint16_t COM_RX_AF[COMn]   = {GPS_COM1_RX_AF};
 #endif /* HAL_UART_MODULE_ENABLED) */
 
 #if defined(HAL_SPI_MODULE_ENABLED)
-uint32_t SpixTimeout = CUSTOM_SPIx_TIMEOUT_MAX;        /*<! Value of Timeout when SPI communication fails */
-static SPI_HandleTypeDef hspi;
-#endif /* HAL_SPI_MODULE_ENABLED */
 
-#if defined(HAL_SPI_MODULE_ENABLED)
-/* SPIx bus function */
+uint32_t SpixTimeout = CUSTOM_SPIx_TIMEOUT_MAX; /*<! Value of Timeout when SPI communication fails */
+static SPI_HandleTypeDef hspi;
+
+/* SPIx bus functions */
 static void               SPIx_Init(void);
 static void               SPIx_Write(uint8_t Value);
 static uint32_t           SPIx_Read(void);
@@ -79,6 +80,7 @@ HAL_StatusTypeDef         SD_IO_WaitResponse(uint8_t Response);
 void                      SD_IO_WriteDummy(void);
 void                      SD_IO_WriteByte(uint8_t Data);
 uint8_t                   SD_IO_ReadByte(void);
+
 #endif /* HAL_SPI_MODULE_ENABLED */
 
 
@@ -215,43 +217,118 @@ uint32_t BSP_PB_GetState(Button_TypeDef Button)
 }
 
 #if defined(HAL_UART_MODULE_ENABLED)
+/******************************* UART Routines **********************************/
 /**
-  * @brief  Configures COM port.
-  * @param  COM Specifies the COM port to be configured.
-  *   This parameter can be one of following parameters:    
-  *     @arg COM1  
-  * @param  huart pointer to a UART_HandleTypeDef structure that
-  *   contains the configuration information for the specified UART peripheral.
+  * @brief Initializes UART MSP.
+  * @param huart UART handle
   * @retval None
   */
-void BSP_COM_Init(COM_TypeDef COM, UART_HandleTypeDef* huart)
+static void UARTx_MspInit(UART_HandleTypeDef *huart)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
+  GPIO_InitTypeDef  GPIO_InitStruct;
 
+  /* Enable UART clock */
+  GPS_UARTx_CLK_ENABLE();
   /* Enable GPIO clock */
-  COMx_TX_GPIO_CLK_ENABLE(COM);
-  COMx_RX_GPIO_CLK_ENABLE(COM);
+  GPS_UARTx_TX_GPIO_CLK_ENABLE();
 
-  /* Enable USART clock */
-  COMx_CLK_ENABLE(COM);
-
-  /* Configure USART Tx as alternate function push-pull */
-  GPIO_InitStruct.Pin = COM_TX_PIN[COM];
+  /*** Configure the GPIOs ***/
+  /* configure UART TX and RX */
+  GPIO_InitStruct.Pin = (GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull  = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Alternate = COM_TX_AF[COM];
-  HAL_GPIO_Init(COM_TX_PORT[COM], &GPIO_InitStruct);
-    
-  /* Configure USART Rx as alternate function push-pull */
-  GPIO_InitStruct.Pin = COM_RX_PIN[COM];
-  GPIO_InitStruct.Alternate = COM_RX_AF[COM];
-  HAL_GPIO_Init(COM_RX_PORT[COM], &GPIO_InitStruct);
+  GPIO_InitStruct.Alternate = GPS_UARTx_RX_AF;
+  HAL_GPIO_Init(GPS_UARTx_TX_GPIO_PORT, &GPIO_InitStruct);
 
-  /* USART configuration */
-  huart->Instance = COM_USART[COM];
-  HAL_UART_Init(huart);
+  /* USART2 interrupt Init */
+  HAL_NVIC_SetPriority(GPS_UARTx_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(GPS_UARTx_IRQn);
 }
+
+/**
+  * @brief  Initializes UART HAL.
+  * @retval None
+  */
+static void UARTx_Init(void)
+{
+  if(HAL_UART_GetState(&huart) == HAL_UART_STATE_RESET)
+  {
+    /* UART Config */
+    huart.Instance = GPS_UARTx;
+    huart.Init.BaudRate = 38400;
+    huart.Init.WordLength = UART_WORDLENGTH_8B;
+    huart.Init.StopBits = UART_STOPBITS_1;
+    huart.Init.Parity = UART_PARITY_NONE;
+    huart.Init.Mode = UART_MODE_TX_RX;
+    huart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+    huart.Init.OverSampling = UART_OVERSAMPLING_16;
+    huart.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+    huart.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+
+    UARTx_MspInit(&huart);
+    HAL_UART_Init(&huart);
+  }
+}
+
+/**
+  * @brief UART Write a character
+  *        to the device.
+  * @param Character char to be written
+  * @retval None
+  */
+static void UARTx_WriteChar(char Character)
+{
+  while ((huart.Instance->ISR & USART_ISR_TXE) == 0)
+  {
+		// Wait for TX data buffer to be empty
+	}
+
+  // Prime the UART TX Data Register with the
+  // character to send
+  huart.Instance->TDR = Character;
+}
+
+/**
+  * @brief UART error treatment function
+  * @retval None
+  */
+static void UARTx_Error(void)
+{
+  /* De-initialize the UART communication */
+  HAL_UART_DeInit(&huart);
+
+  /* Re- Initiaize the UART communication */
+  UARTx_Init();
+}
+
+/******************************** LINK GPS Module ********************************/
+/**
+  * @brief  Initializes the UART periph for the GPS
+  * @retval None
+  */
+void GPS_IO_Init(void)
+{
+  UARTx_Init();
+}
+
+/**
+  * @brief  Write a string to the GPS.
+  * @param  Msg string to be written.
+  * @retval None
+  */
+void GPS_IO_WriteString(char Msg[])
+{
+	int len = strlen(Msg);
+	int cnt = 0;
+
+	while (cnt < len)
+  {
+		UARTx_WriteChar(Msg[cnt]);
+		cnt++;
+	}
+}
+
 #endif /* HAL_UART_MODULE_ENABLED) */
 
 
