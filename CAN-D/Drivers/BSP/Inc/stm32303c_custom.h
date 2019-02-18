@@ -25,12 +25,10 @@ typedef enum
   LED1 = 0,
   LED2 = 1,
   LED3 = 2,
-  LED4 = 3,
   /* Color led aliases */
   LED_GREEN  = LED1,    
-  LED_ORANGE = LED2,
-  LED_RED    = LED3,
-  LED_BLUE   = LED4
+  LED_BLUE   = LED2,
+  LED_RED    = LED3
 }Led_TypeDef;
 
 /**
@@ -38,12 +36,9 @@ typedef enum
  */
 typedef enum 
 {
-  BUTTON_KEY   = 0,
-  BUTTON_SEL   = 1,
-  BUTTON_LEFT  = 2,
-  BUTTON_RIGHT = 3,
-  BUTTON_DOWN  = 4,
-  BUTTON_UP    = 5
+  BUTTON_LOG  = 0,
+  BUTTON_MARK = 1,
+  BUTTON_RST  = 2
 }Button_TypeDef;
 
 typedef enum 
@@ -60,8 +55,10 @@ typedef enum
   COM1 = 0
 }COM_TypeDef;
 
-
-#define LEDn                             4
+/**
+ * @brief LEDs Config
+ */
+#define LEDn                             3
 
 #define LED1_PIN                         GPIO_PIN_8 // PA.08
 #define LED1_GPIO_PORT                   GPIOA
@@ -73,40 +70,52 @@ typedef enum
 #define LED2_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE()
 #define LED2_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOA_CLK_DISABLE()
   
-#define LED3_PIN                         GPIO_PIN_10 // PA.10
-#define LED3_GPIO_PORT                   GPIOA
+#define LED3_PIN                         GPIO_PIN_15 // PB.15
+#define LED3_GPIO_PORT                   GPIOB
 #define LED3_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE()
 #define LED3_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOA_CLK_DISABLE()
-  
-#define LED4_PIN                         GPIO_PIN_15 // PB.15
-#define LED4_GPIO_PORT                   GPIOB
-#define LED4_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE()
-#define LED4_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOA_CLK_DISABLE()
 
 #define LEDx_GPIO_CLK_ENABLE(__LED__)    do { if ((__LED__) == LED1) LED1_GPIO_CLK_ENABLE(); else\
                                               if ((__LED__) == LED2) LED2_GPIO_CLK_ENABLE(); else\
-                                              if ((__LED__) == LED3) LED3_GPIO_CLK_ENABLE(); else\
-                                              if ((__LED__) == LED4) LED4_GPIO_CLK_ENABLE();} while(0)
+                                              if ((__LED__) == LED3) LED3_GPIO_CLK_ENABLE();} while(0)
 
 #define LEDx_GPIO_CLK_DISABLE(__LED__)   (((__LED__) == LED1) ? LED1_GPIO_CLK_DISABLE() :\
                                           ((__LED__) == LED2) ? LED2_GPIO_CLK_DISABLE() :\
-                                          ((__LED__) == LED3) ? LED3_GPIO_CLK_DISABLE() :\
-                                          ((__LED__) == LED4) ? LED4_GPIO_CLK_DISABLE() : 0 )
-
-#define BUTTONn                          1
+                                          ((__LED__) == LED3) ? LED3_GPIO_CLK_DISABLE() : 0 )
 
 /**
- * @brief Key push-button
+ * @brief Push Buttons Config
+ * Note: the push buttons all share the same interrupt line.
+ *       This external line interrupt is also used for the
+ *       SD Detect pin
  */
-#define KEY_BUTTON_PIN                   GPIO_PIN_0 // PB.00
-#define KEY_BUTTON_GPIO_PORT             GPIOB
-#define KEY_BUTTON_GPIO_CLK_ENABLE()     __HAL_RCC_GPIOB_CLK_ENABLE()
-#define KEY_BUTTON_GPIO_CLK_DISABLE()    __HAL_RCC_GPIOB_CLK_DISABLE()
-#define KEY_BUTTON_EXTI_IRQn             EXTI9_5_IRQn
+#define BUTTONn                          3
 
-#define BUTTONx_GPIO_CLK_ENABLE(__BUTTON__)     do { if ((__BUTTON__) == BUTTON_KEY) KEY_BUTTON_GPIO_CLK_ENABLE();} while(0)
+#define LOG_BUTTON_PIN                   GPIO_PIN_14 // PB.14
+#define LOG_BUTTON_GPIO_PORT             GPIOB
+#define LOG_BUTTON_GPIO_CLK_ENABLE()     __HAL_RCC_GPIOB_CLK_ENABLE()
+#define LOG_BUTTON_GPIO_CLK_DISABLE()    __HAL_RCC_GPIOB_CLK_DISABLE()
+#define LOG_BUTTON_EXTI_IRQn             EXTI9_5_IRQn
 
-#define BUTTONx_GPIO_CLK_DISABLE(__BUTTON__)    (((__BUTTON__) == BUTTON_KEY) ? KEY_BUTTON_GPIO_CLK_DISABLE() : 0 )
+#define MARK_BUTTON_PIN                   GPIO_PIN_13 // PB.13
+#define MARK_BUTTON_GPIO_PORT             GPIOB
+#define MARK_BUTTON_GPIO_CLK_ENABLE()     __HAL_RCC_GPIOB_CLK_ENABLE()
+#define MARK_BUTTON_GPIO_CLK_DISABLE()    __HAL_RCC_GPIOB_CLK_DISABLE()
+#define MARK_BUTTON_EXTI_IRQn             EXTI9_5_IRQn
+
+#define RST_BUTTON_PIN                   GPIO_PIN_12 // PB.12
+#define RST_BUTTON_GPIO_PORT             GPIOB
+#define RST_BUTTON_GPIO_CLK_ENABLE()     __HAL_RCC_GPIOB_CLK_ENABLE()
+#define RST_BUTTON_GPIO_CLK_DISABLE()    __HAL_RCC_GPIOB_CLK_DISABLE()
+#define RST_BUTTON_EXTI_IRQn             EXTI9_5_IRQn
+
+#define BUTTONx_GPIO_CLK_ENABLE(__BUTTON__)     do { if ((__BUTTON__) == BUTTON_LOG) LOG_BUTTON_GPIO_CLK_ENABLE(); else\
+                                                     if ((__BUTTON__) == BUTTON_MARK) MARK_BUTTON_GPIO_CLK_ENABLE(); else\
+                                                     if ((__BUTTON__) == BUTTON_RST) RST_BUTTON_GPIO_CLK_ENABLE();} while(0)
+
+#define BUTTONx_GPIO_CLK_DISABLE(__BUTTON__)    (((__BUTTON__) == BUTTON_LOG) ? LOG_BUTTON_GPIO_CLK_DISABLE() :\
+                                                 ((__BUTTON__) == BUTTON_MARK) ? MARK_BUTTON_GPIO_CLK_DISABLE() :\
+                                                 ((__BUTTON__) == BUTTON_RST) ? RST_BUTTON_GPIO_CLK_DISABLE() : 0 )
 
 #if defined(HAL_UART_MODULE_ENABLED)
 
@@ -184,7 +193,7 @@ typedef enum
 /**
   * @brief SD card Control pins
   */
-#define SD_CS_PIN                         GPIO_PIN_7 // PB.07
+#define SD_CS_PIN                         GPIO_PIN_0 // PB.00
 #define SD_CS_GPIO_PORT                   GPIOB
 #define SD_CS_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOB_CLK_ENABLE()
 #define SD_CS_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOB_CLK_DISABLE()
@@ -192,7 +201,7 @@ typedef enum
 /**
   * @brief  SD Detect Interface pins
   */
-#define SD_DETECT_PIN                     GPIO_PIN_6 // PB.06
+#define SD_DETECT_PIN                     GPIO_PIN_1 // PB.01
 #define SD_DETECT_GPIO_PORT               GPIOB
 #define SD_DETECT_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOB_CLK_ENABLE()
 #define SD_DETECT_GPIO_CLK_DISABLE()      __HAL_RCC_GPIOB_CLK_DISABLE()
