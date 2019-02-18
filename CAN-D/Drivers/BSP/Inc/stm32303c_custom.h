@@ -124,32 +124,32 @@ typedef enum
 /**
  * @brief Definition for COM port1, connected to USART2
  */ 
-#define CUSTOM_COM1                               USART2
-#define CUSTOM_COM1_CLK_ENABLE()                  __HAL_RCC_USART2_CLK_ENABLE()
-#define CUSTOM_COM1_CLK_DISABLE()                 __HAL_RCC_USART2_CLK_DISABLE()
+#define GPS_COM1                               USART2
+#define GPS_COM1_CLK_ENABLE()                  __HAL_RCC_USART2_CLK_ENABLE()
+#define GPS_COM1_CLK_DISABLE()                 __HAL_RCC_USART2_CLK_DISABLE()
 
-#define CUSTOM_COM1_TX_PIN                        GPIO_PIN_2 // PA.02
-#define CUSTOM_COM1_TX_GPIO_PORT                  GPIOA
-#define CUSTOM_COM1_TX_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOA_CLK_ENABLE()
-#define CUSTOM_COM1_TX_GPIO_CLK_DISABLE()         __HAL_RCC_GPIOA_CLK_DISABLE()
-#define CUSTOM_COM1_TX_AF                         GPIO_AF7_USART2
+#define GPS_COM1_TX_PIN                        GPIO_PIN_2 // PA.02
+#define GPS_COM1_TX_GPIO_PORT                  GPIOA
+#define GPS_COM1_TX_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOA_CLK_ENABLE()
+#define GPS_COM1_TX_GPIO_CLK_DISABLE()         __HAL_RCC_GPIOA_CLK_DISABLE()
+#define GPS_COM1_TX_AF                         GPIO_AF7_USART2
 
-#define CUSTOM_COM1_RX_PIN                        GPIO_PIN_3 // PA.03
-#define CUSTOM_COM1_RX_GPIO_PORT                  GPIOA
-#define CUSTOM_COM1_RX_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOA_CLK_ENABLE()
-#define CUSTOM_COM1_RX_GPIO_CLK_DISABLE()         __HAL_RCC_GPIOA_CLK_DISABLE()
-#define CUSTOM_COM1_RX_AF                         GPIO_AF7_USART2
+#define GPS_COM1_RX_PIN                        GPIO_PIN_3 // PA.03
+#define GPS_COM1_RX_GPIO_PORT                  GPIOA
+#define GPS_COM1_RX_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOA_CLK_ENABLE()
+#define GPS_COM1_RX_GPIO_CLK_DISABLE()         __HAL_RCC_GPIOA_CLK_DISABLE()
+#define GPS_COM1_RX_AF                         GPIO_AF7_USART2
    
-#define CUSTOM_COM1_IRQn                          USART2_IRQn
+#define GPS_COM1_IRQn                          USART2_IRQn
 
-#define COMx_CLK_ENABLE(__INDEX__)                do { if ((__INDEX__) == COM1) CUSTOM_COM1_CLK_ENABLE();} while(0)
-#define COMx_CLK_DISABLE(__INDEX__)               (((__INDEX__) == COM1) ? CUSTOM_COM1_CLK_DISABLE() : 0)
+#define COMx_CLK_ENABLE(__INDEX__)                do { if ((__INDEX__) == COM1) GPS_COM1_CLK_ENABLE();} while(0)
+#define COMx_CLK_DISABLE(__INDEX__)               (((__INDEX__) == COM1) ? GPS_COM1_CLK_DISABLE() : 0)
 
-#define COMx_TX_GPIO_CLK_ENABLE(__INDEX__)        do { if ((__INDEX__) == COM1) CUSTOM_COM1_TX_GPIO_CLK_ENABLE();} while(0)
-#define COMx_TX_GPIO_CLK_DISABLE(__INDEX__)       (((__INDEX__) == COM1) ? CUSTOM_COM1_TX_GPIO_CLK_DISABLE() : 0)
+#define COMx_TX_GPIO_CLK_ENABLE(__INDEX__)        do { if ((__INDEX__) == COM1) GPS_COM1_TX_GPIO_CLK_ENABLE();} while(0)
+#define COMx_TX_GPIO_CLK_DISABLE(__INDEX__)       (((__INDEX__) == COM1) ? GPS_COM1_TX_GPIO_CLK_DISABLE() : 0)
 
-#define COMx_RX_GPIO_CLK_ENABLE(__INDEX__)        do { if ((__INDEX__) == COM1) CUSTOM_COM1_RX_GPIO_CLK_ENABLE();} while(0)
-#define COMx_RX_GPIO_CLK_DISABLE(__INDEX__)       (((__INDEX__) == COM1) ? CUSTOM_COM1_RX_GPIO_CLK_DISABLE() : 0)
+#define COMx_RX_GPIO_CLK_ENABLE(__INDEX__)        do { if ((__INDEX__) == COM1) GPS_COM1_RX_GPIO_CLK_ENABLE();} while(0)
+#define COMx_RX_GPIO_CLK_DISABLE(__INDEX__)       (((__INDEX__) == COM1) ? GPS_COM1_RX_GPIO_CLK_DISABLE() : 0)
 
 #endif /* HAL_UART_MODULE_ENABLED */
 

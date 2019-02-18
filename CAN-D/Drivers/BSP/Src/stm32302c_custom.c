@@ -44,19 +44,19 @@ const uint16_t BUTTON_IRQn[BUTTONn] = {LOG_BUTTON_EXTI_IRQn,
  * @brief COM variables
  */
 #if defined(HAL_UART_MODULE_ENABLED)
-USART_TypeDef* COM_USART[COMn]   = {CUSTOM_COM1}; 
+USART_TypeDef* COM_USART[COMn]   = {GPS_COM1}; 
 
-GPIO_TypeDef*  COM_TX_PORT[COMn] = {CUSTOM_COM1_TX_GPIO_PORT};
+GPIO_TypeDef*  COM_TX_PORT[COMn] = {GPS_COM1_TX_GPIO_PORT};
  
-GPIO_TypeDef*  COM_RX_PORT[COMn] = {CUSTOM_COM1_RX_GPIO_PORT};
+GPIO_TypeDef*  COM_RX_PORT[COMn] = {GPS_COM1_RX_GPIO_PORT};
 
-const uint16_t COM_TX_PIN[COMn]  = {CUSTOM_COM1_TX_PIN};
+const uint16_t COM_TX_PIN[COMn]  = {GPS_COM1_TX_PIN};
 
-const uint16_t COM_RX_PIN[COMn]  = {CUSTOM_COM1_RX_PIN};
+const uint16_t COM_RX_PIN[COMn]  = {GPS_COM1_RX_PIN};
  
-const uint16_t COM_TX_AF[COMn]   = {CUSTOM_COM1_TX_AF};
+const uint16_t COM_TX_AF[COMn]   = {GPS_COM1_TX_AF};
 
-const uint16_t COM_RX_AF[COMn]   = {CUSTOM_COM1_RX_AF};
+const uint16_t COM_RX_AF[COMn]   = {GPS_COM1_RX_AF};
 #endif /* HAL_UART_MODULE_ENABLED) */
 
 #if defined(HAL_SPI_MODULE_ENABLED)
