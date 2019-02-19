@@ -6,8 +6,8 @@
   *          Card memory mounted on the CAN-D custom board.
   *          It implements a high level communication layer for read and write 
   *          from/to this memory. The needed STM32F30x hardware resources (SPI and 
-  *          GPIO) are defined in stm32303c_custom.h file, and the initialization is 
-  *          performed in SD_LowLevel_Init() function declared in stm32303c_custom.c 
+  *          GPIO) are defined in stm32302c_custom.h file, and the initialization is 
+  *          performed in SD_LowLevel_Init() function declared in stm32302c_custom.c 
   *          file.
   *          You can easily tailor this driver to any other development board, 
   *          by just adapting the defines for hardware resources and 
@@ -33,7 +33,7 @@
                                    User NOTES
 1. How To use this driver:
 --------------------------
-   - This driver is used to drive the micro SD external card mounted on custom STM32303C 
+   - This driver is used to drive the micro SD external card mounted on custom STM32302C 
      CAN-D board.
    - This driver does not need a specific component driver for the micro SD device
      to be included with.
@@ -56,7 +56,7 @@
      o The SD runtime status is returned when calling the function SD_GetStatus(). 
 ------------------------------------------------------------------------------*/ 
 
-#include "stm32303c_custom_sd.h"
+#include "stm32302c_custom_sd.h"
 
 #define SD_DUMMY_BYTE   0xFF
 #define SD_NO_RESPONSE_EXPECTED 0x80

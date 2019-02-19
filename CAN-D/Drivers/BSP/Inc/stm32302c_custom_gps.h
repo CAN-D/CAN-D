@@ -3,20 +3,20 @@
   * @file    stm32302c_custom_gps.h
   * @author  Mark Griffith
   * @brief   This file contains the common defines and functions prototypes for
-  *          the stm32303c_custom_gps.c driver.
+  *          the stm32302c_custom_gps.c driver.
   ******************************************************************************
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32303C_CUSTOM_GPS_H
-#define __STM32303C_CUSTOM_GPS_H
+#ifndef __STM32302C_CUSTOM_GPS_H
+#define __STM32302C_CUSTOM_GPS_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 
-#include "stm32303c_custom.h"
+#include "stm32302c_custom.h"
 
 /* Commands to set the update rate from once a second (1 Hz) to 10 times a second (10Hz) */
 // Note that these only control the rate at which the position is echoed, to actually speed up the

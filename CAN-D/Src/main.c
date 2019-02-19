@@ -13,7 +13,7 @@
 #include "gpio.h"
 #include "stm32f3xx_hal_pwr.h"
 #include "fatfs.h"
-#include "stm32303c_custom.h"
+#include "stm32302c_custom.h"
 
 void MX_USB_DEVICE_Init(void);
 void SystemClock_Config(void);

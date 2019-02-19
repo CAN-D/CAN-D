@@ -8,7 +8,7 @@
 #include "main.h"
 #include "stm32f3xx_it.h"
 #include "cmsis_os.h"
-#include "stm32303c_custom.h" /* for UART handle (huart) */
+#include "stm32302c_custom.h" /* for UART handle (huart) */
 
 extern PCD_HandleTypeDef hpcd_USB_FS;
 extern CAN_HandleTypeDef hcan;

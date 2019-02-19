@@ -7,8 +7,8 @@
   *          It implements a high level communication layer for initializing
   *          communicaiton with the GPS peripheral over UART.
   *          The needed STM32F30x hardware resources (UART and 
-  *          GPIO) are defined in stm32303c_custom.h file, and the initialization is 
-  *          performed in UARTx_Init() function declared in stm32303c_custom.c 
+  *          GPIO) are defined in stm32302c_custom.h file, and the initialization is 
+  *          performed in UARTx_Init() function declared in stm32302c_custom.c 
   *          file.
   ******************************************************************************
   */

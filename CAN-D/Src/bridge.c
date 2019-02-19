@@ -9,7 +9,7 @@
 #include "bridge.h"
 #include "can.h"
 #include "usbd_cdc_if.h"
-#include "stm32303c_custom.h"
+#include "stm32302c_custom.h"
 #include "stm32f3xx_hal_gpio.h"
 
 APP_ConfigType mAppConfiguration = {0};

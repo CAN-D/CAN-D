@@ -2,14 +2,14 @@
   ******************************************************************************
   * @file    stm32302c_custom.h
   * @author  Mark Griffith
-  * @brief   This file contains definitions for STM32303C_CUSTOM's Leds, push-buttons
+  * @brief   This file contains definitions for STM32302c_CUSTOM's Leds, push-buttons
   *          and COM port hardware resources.
   ******************************************************************************
   */
   
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32303C_CUSTOM_H
-#define __STM32303C_CUSTOM_H
+#ifndef __STM32302C_CUSTOM_H
+#define __STM32302C_CUSTOM_H
 
 #ifdef __cplusplus
  extern "C" {

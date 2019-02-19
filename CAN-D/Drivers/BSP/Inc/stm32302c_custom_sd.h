@@ -3,20 +3,20 @@
   * @file    stm32302c_custom_sd.h
   * @author  Mark Griffith
   * @brief   This file contains the common defines and functions prototypes for
-  *          the stm32303c_custom_sd.c driver.
+  *          the stm32302c_custom_sd.c driver.
   ******************************************************************************
   */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32303C_CUSTOM_SD_H
-#define __STM32303C_CUSTOM_SD_H
+#ifndef __STM32302C_CUSTOM_SD_H
+#define __STM32302C_CUSTOM_SD_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif 
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32303c_custom.h" 
+#include "stm32302c_custom.h" 
 
 /** 
   * @brief  SD status structure definition  

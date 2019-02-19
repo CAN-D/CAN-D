@@ -8,7 +8,7 @@
   ******************************************************************************
   */
 
-#include "stm32303c_custom.h"
+#include "stm32302c_custom.h"
 #include "stm32f302xc.h"
 #include <string.h>
 
