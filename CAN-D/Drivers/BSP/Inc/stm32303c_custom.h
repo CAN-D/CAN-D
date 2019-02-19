@@ -17,6 +17,8 @@
   
 #include "stm32f3xx_hal.h"
 
+extern UART_HandleTypeDef huart;
+
 /**
  * @brief LED Types Definition
  */

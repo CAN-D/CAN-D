@@ -13,13 +13,13 @@
   ******************************************************************************
   */
 
-#include "stm32303c_custom_gps.h"
+#include "stm32302c_custom_gps.h"
 
 /**
   * @brief  Initializes the GPS communication.
   * @retval None
   */
-void BSP_SD_Init(void)
+void BSP_GPS_Init(void)
 { 
   // Configure IO functionalities for UART TX & RX pins
   GPS_IO_Init();
@@ -31,5 +31,5 @@ void BSP_SD_Init(void)
   GPS_IO_WriteString(PMTK_SET_NMEA_UPDATE_1HZ);
 
   // Configure GPS to only output GPRMC and GGA data messages
-  USART1_Send(PMTK_SET_NMEA_OUTPUT_RMCGGA);				
+  GPS_IO_WriteString(PMTK_SET_NMEA_OUTPUT_RMCGGA);
 }

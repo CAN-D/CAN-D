@@ -9,11 +9,11 @@
 #include "cmsis_os.h"
 #include "can.h"
 #include "tim.h"
-#include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
 #include "stm32f3xx_hal_pwr.h"
 #include "fatfs.h"
+#include "stm32303c_custom.h"
 
 void MX_USB_DEVICE_Init(void);
 void SystemClock_Config(void);
@@ -40,7 +40,6 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN_Init();
   MX_TIM2_Init();
-  MX_USART2_UART_Init();
   MX_USB_DEVICE_Init();
 
   /* Call init function for freertos objects (in freertos.c) */

@@ -47,7 +47,8 @@ const uint16_t BUTTON_IRQn[BUTTONn] = {LOG_BUTTON_EXTI_IRQn,
  */
 #if defined(HAL_UART_MODULE_ENABLED)
 
-static UART_HandleTypeDef huart;
+/* UART handle. */
+UART_HandleTypeDef huart;
 
 /* UART com functions */
 static void UARTx_Init(void);
@@ -58,6 +59,9 @@ static void UARTx_Error(void);
 /* Link functions for GPS peripheral over UART */
 void GPS_IO_Init(void);
 void GPS_IO_WriteString(char Msg[]);
+
+/* De-init function called in HAL_UART_DeInit() */
+void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle);
 
 #endif /* HAL_UART_MODULE_ENABLED) */
 
@@ -269,6 +273,24 @@ static void UARTx_Init(void)
     UARTx_MspInit(&huart);
     HAL_UART_Init(&huart);
   }
+}
+
+/**
+  * @brief  Unitialize UART HAL.
+  * @note   This is called in HAL_UART_DeInit().
+  *         User shouldn't call this explicitly.
+  * @retval None
+  */
+void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
+{
+  /* Peripheral clock disable */
+  __HAL_RCC_USART2_CLK_DISABLE();
+
+  /* UART GPIO Deinit */
+  HAL_GPIO_DeInit(GPIOA, GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
+
+  /* UART interrupt Deinit */
+  HAL_NVIC_DisableIRQ(GPS_UARTx_IRQn);
 }
 
 /**
