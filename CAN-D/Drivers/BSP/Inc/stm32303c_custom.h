@@ -137,6 +137,8 @@ typedef enum
 #define GPS_UARTx_RX_GPIO_CLK_ENABLE()  __HAL_RCC_GPIOA_CLK_ENABLE()
 #define GPS_UARTx_RX_GPIO_CLK_DISABLE() __HAL_RCC_GPIOA_CLK_DISABLE()
 #define GPS_UARTx_RX_AF                 GPIO_AF7_USART2
+
+#define GPS_UARTx_BAUD                  9600
    
 #define GPS_UARTx_IRQn                  USART2_IRQn
 

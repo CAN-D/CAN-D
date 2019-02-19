@@ -256,7 +256,7 @@ static void UARTx_Init(void)
   {
     /* UART Config */
     huart.Instance = GPS_UARTx;
-    huart.Init.BaudRate = 38400;
+    huart.Init.BaudRate = GPS_UARTx_BAUD;
     huart.Init.WordLength = UART_WORDLENGTH_8B;
     huart.Init.StopBits = UART_STOPBITS_1;
     huart.Init.Parity = UART_PARITY_NONE;
