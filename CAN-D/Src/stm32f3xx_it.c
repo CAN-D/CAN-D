@@ -141,11 +141,6 @@ void USART2_IRQHandler(void)
     // The GPS RX data will be held between '$' and '\n' characters
     if (rxData[rx_idx] == '$')
     {
-      while (rxData[rx_idx] != '\n')
-      {
-        rx_idx++;
-      }
-
       // Put the received data in the respective queue
       if (strncmp("$GPGGA", rxData, sizeof("$GPGGA") - 1) == 0)
       {
@@ -156,7 +151,6 @@ void USART2_IRQHandler(void)
         osMessagePut(UARTGprmcQueueHandle, (uint32_t)rxData[0], 0);
       }
 
-      rx_idx = 0;
       memset(rxData, 0, sizeof(rxData));
     }
   }
