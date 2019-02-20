@@ -49,14 +49,6 @@ typedef enum
   BUTTON_MODE_EXTI = 1
 }ButtonMode_TypeDef;
 
-// /**
-//  * @brief COM Types Definition
-//  */
-// typedef enum 
-// {
-//   COM1 = 0
-// }COM_TypeDef;
-
 /**
  * @brief LEDs Config
  */

@@ -229,7 +229,7 @@ uint32_t BSP_PB_GetState(Button_TypeDef Button)
   */
 static void UARTx_MspInit(UART_HandleTypeDef *huart)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitTypeDef GPIO_InitStruct;
 
   /* Enable UART clock */
   GPS_UARTx_CLK_ENABLE();
@@ -303,8 +303,8 @@ static void UARTx_WriteChar(char Character)
 {
   while ((huart.Instance->ISR & USART_ISR_TXE) == 0)
   {
-		// Wait for TX data buffer to be empty
-	}
+    // Wait for TX data buffer to be empty
+  }
 
   // Prime the UART TX Data Register with the
   // character to send
@@ -344,11 +344,11 @@ void GPS_IO_WriteString(char Msg[])
 	int len = strlen(Msg);
 	int cnt = 0;
 
-	while (cnt < len)
+  while (cnt < len)
   {
-		UARTx_WriteChar(Msg[cnt]);
-		cnt++;
-	}
+    UARTx_WriteChar(Msg[cnt]);
+    cnt++;
+  }
 }
 
 #endif /* HAL_UART_MODULE_ENABLED) */
