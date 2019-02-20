@@ -54,7 +54,6 @@ UART_HandleTypeDef huart;
 static void UARTx_Init(void);
 static void UARTx_MspInit(UART_HandleTypeDef *huart);
 static void UARTx_WriteChar(char Character);
-static void UARTx_Error(void);
 
 /* Link functions for GPS peripheral over UART */
 void GPS_IO_Init(void);
@@ -309,19 +308,6 @@ static void UARTx_WriteChar(char Character)
   // Prime the UART TX Data Register with the
   // character to send
   huart.Instance->TDR = Character;
-}
-
-/**
-  * @brief UART error treatment function
-  * @retval None
-  */
-static void UARTx_Error(void)
-{
-  /* De-initialize the UART communication */
-  HAL_UART_DeInit(&huart);
-
-  /* Re- Initiaize the UART communication */
-  UARTx_Init();
 }
 
 /******************************** LINK GPS Module ********************************/
