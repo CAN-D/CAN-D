@@ -67,6 +67,38 @@ void APP_BRIDGE_USBStreamTask(void const * argument)
 }
 
 /**
+  * @brief  Function implementing the APP_BRIDGE_GPSMonitorTask thread.
+  *         Monitors incoming GPS data.
+  * @param  argument: Not used
+  * @retval None
+  */
+void APP_BRIDGE_GPSMonitorTask(void const * argument)
+{
+  osEvent event;
+
+  for(;;)
+  {
+    if (mAppConfiguration.SDStorage == APP_ENABLE)
+    {
+      // Pend on GPS data sent via UART
+      event = osMessageGet(UARTGprmcQueueHandle, 0);
+      if (event.status == osEventMessage)
+      {
+        // Write data to SD card
+      }
+
+      event = osMessageGet(UARTGgaQueueHandle, 0);
+      if (event.status == osEventMessage)
+      {
+        // Write data to SD card
+      }
+    }
+
+    osDelay(1);
+  }
+}
+
+/**
   * @brief  Sets the APP Configuration
   * @param  newConfig: the configuration to set
   * @retval None

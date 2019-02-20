@@ -35,12 +35,18 @@ APP_ConfigType mAppConfiguration;
 /* Threads */
 osThreadId bridgeConfigTaskHandle;
 osThreadId USBStreamTaskHandle;
+osThreadId GPSMonitorTaskHandle;
 
 /* Queues */
 osMessageQId USBStreamQueueHandle;
+osMessageQId UARTGprmcQueueHandle; /* Handles GPS GPRMC data */
+osMessageQId UARTGgaQueueHandle;   /* Handles GPS GGA data */
 
+/* RTOS Tasks */
 void APP_BRIDGE_CANConfigTask(void const * argument);
 void APP_BRIDGE_USBStreamTask(void const * argument);
+void APP_BRIDGE_GPSMonitorTask(void const * argument);
+
 void APP_CAN_SetConfiguration(APP_ConfigType newConfig);
 
 #ifdef __cplusplus

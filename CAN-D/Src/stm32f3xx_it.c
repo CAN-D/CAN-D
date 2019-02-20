@@ -8,6 +8,8 @@
 #include "main.h"
 #include "stm32f3xx_it.h"
 #include "cmsis_os.h"
+#include "string.h"
+#include "bridge.h"           /* for UART message Queues */
 #include "stm32302c_custom.h" /* for UART handle (huart) */
 
 extern PCD_HandleTypeDef hpcd_USB_FS;
@@ -15,6 +17,11 @@ extern CAN_HandleTypeDef hcan;
 extern TIM_HandleTypeDef htim2;
 extern UART_HandleTypeDef huart;
 extern TIM_HandleTypeDef htim1;
+
+/* UART message Queues */
+extern osMessageQId UARTGprmcQueueHandle;
+extern osMessageQId UARTGgaQueueHandle;
+
 
 /******************************************************************************/
 /*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
@@ -114,11 +121,45 @@ void TIM2_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles USART2 global interrupt / USART2 wake-up interrupt through EXTI line 26.
+  * @brief This function handles USART2 global interrupt,
+  *        USART2 RX interrupts, and USART2 wake-up interrupt 
+  *        through EXTI line 26.
   */
 void USART2_IRQHandler(void)
 {
+  char rxData[128] = "0";
+  uint8_t rx_idx = 0;
+
   HAL_UART_IRQHandler(&huart);
+
+  // Check if the UART2 Read Data Register has data
+  if (huart.Instance->ISR & USART_ISR_RXNE)
+  {
+    // Read the data from the register
+    rxData[rx_idx] = huart.Instance->RDR;
+
+    // The GPS RX data will be held between '$' and '\n' characters
+    if (rxData[rx_idx] == '$')
+    {
+      while (rxData[rx_idx] != '\n')
+      {
+        rx_idx++;
+      }
+
+      // Put the received data in the respective queue
+      if (strncmp("$GPGGA", rxData, sizeof("$GPGGA") - 1) == 0)
+      {
+        osMessagePut(UARTGgaQueueHandle, (uint32_t)rxData[0], 0);
+      }
+      if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
+      {
+        osMessagePut(UARTGprmcQueueHandle, (uint32_t)rxData[0], 0);
+      }
+
+      rx_idx = 0;
+      memset(rxData, 0, sizeof(rxData));
+    }
+  }
 }
 
 /**

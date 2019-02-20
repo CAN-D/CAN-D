@@ -13,7 +13,11 @@
 
 extern osThreadId bridgeConfigTaskHandle;
 extern osThreadId USBStreamTaskHandle;
+extern osThreadId GPSMonitorTaskHandle;
+
 extern osMessageQId USBStreamQueueHandle;
+extern osMessageQId UARTGprmcQueueHandle;
+extern osMessageQId UARTGgaQueueHandle;
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -38,9 +42,18 @@ void MX_FREERTOS_Init(void)
   osThreadDef(USBStreamTask, APP_BRIDGE_USBStreamTask, osPriorityNormal, 0, 128);
   USBStreamTaskHandle = osThreadCreate(osThread(USBStreamTask), NULL);
 
+  osThreadDef(GPSMonitorTask, APP_BRIDGE_GPSMonitorTask, osPriorityNormal, 0, 128);
+  GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL);
+
   /* add threads, ... */
 
   /* add queues, ... */
   osMessageQDef(USBStreamQueue, 8, uint8_t);
   USBStreamQueueHandle = osMessageCreate(osMessageQ(USBStreamQueue), NULL);
+
+  osMessageQDef(UARTGprmcQueue, 128, char);
+  UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);
+
+  osMessageQDef(UARTGgaQueue, 128, char);
+  UARTGgaQueueHandle = osMessageCreate(osMessageQ(UARTGgaQueue), NULL);
 }
