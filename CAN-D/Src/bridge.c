@@ -9,7 +9,7 @@
 #include "bridge.h"
 #include "can.h"
 #include "usbd_cdc_if.h"
-#include "stm32303c_custom.h"
+#include "stm32302c_custom.h"
 #include "stm32f3xx_hal_gpio.h"
 
 APP_ConfigType mAppConfiguration = {0};
@@ -59,6 +59,38 @@ void APP_BRIDGE_USBStreamTask(void const * argument)
       while (CDC_Transmit_FS((uint8_t*)event.value.p, (uint16_t)8) == 1)
       {
         // USB TX State is BUSY. Wait for it to be free.
+      }
+    }
+
+    osDelay(1);
+  }
+}
+
+/**
+  * @brief  Function implementing the APP_BRIDGE_GPSMonitorTask thread.
+  *         Monitors incoming GPS data.
+  * @param  argument: Not used
+  * @retval None
+  */
+void APP_BRIDGE_GPSMonitorTask(void const * argument)
+{
+  osEvent event;
+
+  for(;;)
+  {
+    if (mAppConfiguration.SDStorage == APP_ENABLE)
+    {
+      // Pend on GPS data sent via UART
+      event = osMessageGet(UARTGprmcQueueHandle, 0);
+      if (event.status == osEventMessage)
+      {
+        // Write data to SD card
+      }
+
+      event = osMessageGet(UARTGgaQueueHandle, 0);
+      if (event.status == osEventMessage)
+      {
+        // Write data to SD card
       }
     }
 

@@ -49,7 +49,6 @@ Src/stm32f3xx_hal_timebase_tim.c \
 Src/stm32f3xx_it.c \
 Src/system_stm32f3xx.c \
 Src/tim.c \
-Src/usart.c \
 Src/usb_device.c \
 Src/usbd_cdc_if.c \
 Src/usbd_conf.c \
@@ -77,6 +76,7 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c_ex.c \
 Drivers/BSP/Src/stm32302c_custom.c \
 Drivers/BSP/Src/stm32302c_custom_sd.c \
+Drivers/BSP/Src/stm32302c_custom_gps.c \
 Middlewares/Third_Party/FatFs/src/diskio.c \
 Middlewares/Third_Party/FatFs/src/ff.c \
 Middlewares/Third_Party/FatFs/src/ff_gen_drv.c \

@@ -133,7 +133,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
     // Put CAN Data into Queue for the USBStream RTOS Task
     // @see APP_BRIDGE_USBStreamTask()
     osMessagePut(USBStreamQueueHandle, (uint32_t)rxData[0], 0);
-    osMessagePut(USBStreamQueueHandle, (uint32_t)rxData[4], 0);
   }
 }
 
