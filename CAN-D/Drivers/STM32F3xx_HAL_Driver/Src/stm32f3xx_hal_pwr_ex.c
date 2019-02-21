@@ -57,14 +57,14 @@
 /** @defgroup PWREx_Private_Constants PWR Extended Private Constants
   * @{
   */
-#define PVD_MODE_IT               (0x00010000U)
-#define PVD_MODE_EVT              (0x00020000U)
-#define PVD_RISING_EDGE           (0x00000001U)
-#define PVD_FALLING_EDGE          (0x00000002U)
+#define PVD_MODE_IT (0x00010000U)
+#define PVD_MODE_EVT (0x00020000U)
+#define PVD_RISING_EDGE (0x00000001U)
+#define PVD_FALLING_EDGE (0x00000002U)
 /**
   * @}
   */
- 
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -127,11 +127,7 @@
   * @{
   */
 
-#if defined(STM32F302xE) || defined(STM32F303xE) || \
-    defined(STM32F302xC) || defined(STM32F303xC) || \
-    defined(STM32F303x8) || defined(STM32F334x8) || \
-    defined(STM32F301x8) || defined(STM32F302x8) || \
-    defined(STM32F373xC)
+#if defined(STM32F302xE) || defined(STM32F303xE) || defined(STM32F302xC) || defined(STM32F303xC) || defined(STM32F303x8) || defined(STM32F334x8) || defined(STM32F301x8) || defined(STM32F302x8) || defined(STM32F373xC)
 
 /**
   * @brief Configures the voltage threshold detected by the Power Voltage Detector(PVD).
@@ -142,42 +138,39 @@
   *         detection level.
   * @retval None
   */
-void HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD)
+void HAL_PWR_ConfigPVD(PWR_PVDTypeDef* sConfigPVD)
 {
-  /* Check the parameters */
-  assert_param(IS_PWR_PVD_LEVEL(sConfigPVD->PVDLevel));
-  assert_param(IS_PWR_PVD_MODE(sConfigPVD->Mode));
+    /* Check the parameters */
+    assert_param(IS_PWR_PVD_LEVEL(sConfigPVD->PVDLevel));
+    assert_param(IS_PWR_PVD_MODE(sConfigPVD->Mode));
 
-  /* Set PLS[7:5] bits according to PVDLevel value */
-  MODIFY_REG(PWR->CR, PWR_CR_PLS, sConfigPVD->PVDLevel);
-  
-  /* Clear any previous config. Keep it clear if no event or IT mode is selected */
-  __HAL_PWR_PVD_EXTI_DISABLE_EVENT();
-  __HAL_PWR_PVD_EXTI_DISABLE_IT();
-  __HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();__HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();
+    /* Set PLS[7:5] bits according to PVDLevel value */
+    MODIFY_REG(PWR->CR, PWR_CR_PLS, sConfigPVD->PVDLevel);
 
-  /* Configure interrupt mode */
-  if((sConfigPVD->Mode & PVD_MODE_IT) == PVD_MODE_IT)
-  {
-    __HAL_PWR_PVD_EXTI_ENABLE_IT();
-  }
-  
-  /* Configure event mode */
-  if((sConfigPVD->Mode & PVD_MODE_EVT) == PVD_MODE_EVT)
-  {
-    __HAL_PWR_PVD_EXTI_ENABLE_EVENT();
-  }
-  
-  /* Configure the edge */
-  if((sConfigPVD->Mode & PVD_RISING_EDGE) == PVD_RISING_EDGE)
-  {
-    __HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();
-  }
-  
-  if((sConfigPVD->Mode & PVD_FALLING_EDGE) == PVD_FALLING_EDGE)
-  {
-    __HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();
-  }
+    /* Clear any previous config. Keep it clear if no event or IT mode is selected */
+    __HAL_PWR_PVD_EXTI_DISABLE_EVENT();
+    __HAL_PWR_PVD_EXTI_DISABLE_IT();
+    __HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();
+    __HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();
+
+    /* Configure interrupt mode */
+    if ((sConfigPVD->Mode & PVD_MODE_IT) == PVD_MODE_IT) {
+        __HAL_PWR_PVD_EXTI_ENABLE_IT();
+    }
+
+    /* Configure event mode */
+    if ((sConfigPVD->Mode & PVD_MODE_EVT) == PVD_MODE_EVT) {
+        __HAL_PWR_PVD_EXTI_ENABLE_EVENT();
+    }
+
+    /* Configure the edge */
+    if ((sConfigPVD->Mode & PVD_RISING_EDGE) == PVD_RISING_EDGE) {
+        __HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();
+    }
+
+    if ((sConfigPVD->Mode & PVD_FALLING_EDGE) == PVD_FALLING_EDGE) {
+        __HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();
+    }
 }
 
 /**
@@ -186,7 +179,7 @@ void HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD)
   */
 void HAL_PWR_EnablePVD(void)
 {
-  SET_BIT(PWR->CR, PWR_CR_PVDE);  
+    SET_BIT(PWR->CR, PWR_CR_PVDE);
 }
 
 /**
@@ -195,7 +188,7 @@ void HAL_PWR_EnablePVD(void)
   */
 void HAL_PWR_DisablePVD(void)
 {
-  CLEAR_BIT(PWR->CR, PWR_CR_PVDE);  
+    CLEAR_BIT(PWR->CR, PWR_CR_PVDE);
 }
 
 /**
@@ -205,15 +198,14 @@ void HAL_PWR_DisablePVD(void)
   */
 void HAL_PWR_PVD_IRQHandler(void)
 {
-  /* Check PWR exti flag */
-  if(__HAL_PWR_PVD_EXTI_GET_FLAG() != RESET)
-  {
-    /* PWR PVD interrupt user callback */
-    HAL_PWR_PVDCallback();
+    /* Check PWR exti flag */
+    if (__HAL_PWR_PVD_EXTI_GET_FLAG() != RESET) {
+        /* PWR PVD interrupt user callback */
+        HAL_PWR_PVDCallback();
 
-    /* Clear PWR Exti pending bit */
-    __HAL_PWR_PVD_EXTI_CLEAR_FLAG();
-  }
+        /* Clear PWR Exti pending bit */
+        __HAL_PWR_PVD_EXTI_CLEAR_FLAG();
+    }
 }
 
 /**
@@ -222,16 +214,16 @@ void HAL_PWR_PVD_IRQHandler(void)
   */
 __weak void HAL_PWR_PVDCallback(void)
 {
-  /* NOTE : This function Should not be modified, when the callback is needed,
+    /* NOTE : This function Should not be modified, when the callback is needed,
             the HAL_PWR_PVDCallback could be implemented in the user file
    */
 }
 
 #endif /* STM32F302xE || STM32F303xE || */
-       /* STM32F302xC || STM32F303xC || */
-       /* STM32F303x8 || STM32F334x8 || */
-       /* STM32F301x8 || STM32F302x8 || */
-       /* STM32F373xC                   */
+/* STM32F302xC || STM32F303xC || */
+/* STM32F303x8 || STM32F334x8 || */
+/* STM32F301x8 || STM32F302x8 || */
+/* STM32F373xC                   */
 
 #if defined(STM32F373xC) || defined(STM32F378xx)
 
@@ -243,13 +235,13 @@ __weak void HAL_PWR_PVDCallback(void)
   */
 void HAL_PWREx_EnableSDADC(uint32_t Analogx)
 {
-  /* Check the parameters */
-  assert_param(IS_PWR_SDADC_ANALOG(Analogx));
+    /* Check the parameters */
+    assert_param(IS_PWR_SDADC_ANALOG(Analogx));
 
-  /* Enable PWR clock interface for SDADC use */
-  __HAL_RCC_PWR_CLK_ENABLE();
-    
-  PWR->CR |= Analogx;
+    /* Enable PWR clock interface for SDADC use */
+    __HAL_RCC_PWR_CLK_ENABLE();
+
+    PWR->CR |= Analogx;
 }
 
 /**
@@ -260,10 +252,10 @@ void HAL_PWREx_EnableSDADC(uint32_t Analogx)
   */
 void HAL_PWREx_DisableSDADC(uint32_t Analogx)
 {
-  /* Check the parameters */
-  assert_param(IS_PWR_SDADC_ANALOG(Analogx));
-  
-  PWR->CR &= ~Analogx;
+    /* Check the parameters */
+    assert_param(IS_PWR_SDADC_ANALOG(Analogx));
+
+    PWR->CR &= ~Analogx;
 }
 
 #endif /* STM32F373xC || STM32F378xx */
