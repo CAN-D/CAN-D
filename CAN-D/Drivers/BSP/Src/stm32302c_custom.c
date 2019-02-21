@@ -13,13 +13,13 @@
 #include <string.h>
 
 /* LINK SD Card */
-#define SD_DUMMY_BYTE            0xFF
-#define SD_NO_RESPONSE_EXPECTED  0x80
+#define SD_DUMMY_BYTE 0xFF
+#define SD_NO_RESPONSE_EXPECTED 0x80
 
 /**
  * @brief LED variables
  */
-GPIO_TypeDef* LED_PORT[LEDn] = {LED1_GPIO_PORT,
+GPIO_TypeDef *LED_PORT[LEDn] = {LED1_GPIO_PORT,
                                 LED2_GPIO_PORT,
                                 LED3_GPIO_PORT};
 
@@ -30,7 +30,7 @@ const uint16_t LED_PIN[LEDn] = {LED1_PIN,
 /**
  * @brief BUTTON variables
  */
-GPIO_TypeDef* BUTTON_PORT[BUTTONn] = {LOG_BUTTON_GPIO_PORT,
+GPIO_TypeDef *BUTTON_PORT[BUTTONn] = {LOG_BUTTON_GPIO_PORT,
                                       MARK_BUTTON_GPIO_PORT,
                                       RST_BUTTON_GPIO_PORT};
 
@@ -60,7 +60,7 @@ void GPS_IO_Init(void);
 void GPS_IO_WriteString(char Msg[]);
 
 /* De-init function called in HAL_UART_DeInit() */
-void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle);
+void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle);
 
 #endif /* HAL_UART_MODULE_ENABLED) */
 
@@ -70,22 +70,21 @@ uint32_t SpixTimeout = CUSTOM_SPIx_TIMEOUT_MAX; /*<! Value of Timeout when SPI c
 static SPI_HandleTypeDef hspi;
 
 /* SPIx bus functions */
-static void               SPIx_Init(void);
-static void               SPIx_Write(uint8_t Value);
-static uint32_t           SPIx_Read(void);
-static void               SPIx_Error (void);
-static void               SPIx_MspInit(SPI_HandleTypeDef *hspi);
+static void SPIx_Init(void);
+static void SPIx_Write(uint8_t Value);
+static uint32_t SPIx_Read(void);
+static void SPIx_Error(void);
+static void SPIx_MspInit(SPI_HandleTypeDef *hspi);
 
 /* Link functions for SD Card peripheral over SPI */
-void                      SD_IO_Init(void);
-HAL_StatusTypeDef         SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
-HAL_StatusTypeDef         SD_IO_WaitResponse(uint8_t Response);
-void                      SD_IO_WriteDummy(void);
-void                      SD_IO_WriteByte(uint8_t Data);
-uint8_t                   SD_IO_ReadByte(void);
+void SD_IO_Init(void);
+HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
+HAL_StatusTypeDef SD_IO_WaitResponse(uint8_t Response);
+void SD_IO_WriteDummy(void);
+void SD_IO_WriteByte(uint8_t Data);
+uint8_t SD_IO_ReadByte(void);
 
 #endif /* HAL_SPI_MODULE_ENABLED */
-
 
 /**
   * @brief  Configures LED GPIO.
@@ -99,8 +98,8 @@ uint8_t                   SD_IO_ReadByte(void);
   */
 void BSP_LED_Init(Led_TypeDef Led)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
-  
+  GPIO_InitTypeDef GPIO_InitStruct;
+
   /* Enable the GPIO_LED clock */
   LEDx_GPIO_CLK_ENABLE(Led);
 
@@ -109,10 +108,10 @@ void BSP_LED_Init(Led_TypeDef Led)
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  
+
   HAL_GPIO_Init(LED_PORT[Led], &GPIO_InitStruct);
-  
-  HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET); 
+
+  HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
 }
 
 /**
@@ -193,7 +192,7 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
 
   if (Button_Mode == BUTTON_MODE_EXTI)
   {
-    if(Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST)
+    if (Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST)
     {
       /* Configure Push Button pins as input with External interrupt, falling edge */
       GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -239,7 +238,7 @@ static void UARTx_MspInit(UART_HandleTypeDef *huart)
   /* configure UART TX and RX */
   GPIO_InitStruct.Pin = (GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.Alternate = GPS_UARTx_RX_AF;
   HAL_GPIO_Init(GPS_UARTx_TX_GPIO_PORT, &GPIO_InitStruct);
@@ -255,7 +254,7 @@ static void UARTx_MspInit(UART_HandleTypeDef *huart)
   */
 static void UARTx_Init(void)
 {
-  if(HAL_UART_GetState(&huart) == HAL_UART_STATE_RESET)
+  if (HAL_UART_GetState(&huart) == HAL_UART_STATE_RESET)
   {
     /* UART Config */
     huart.Instance = GPS_UARTx;
@@ -280,7 +279,7 @@ static void UARTx_Init(void)
   *         User shouldn't call this explicitly.
   * @retval None
   */
-void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
+void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle)
 {
   /* Peripheral clock disable */
   __HAL_RCC_USART2_CLK_DISABLE();
@@ -327,8 +326,8 @@ void GPS_IO_Init(void)
   */
 void GPS_IO_WriteString(char Msg[])
 {
-	int len = strlen(Msg);
-	int cnt = 0;
+  int len = strlen(Msg);
+  int cnt = 0;
 
   while (cnt < len)
   {
@@ -338,7 +337,6 @@ void GPS_IO_WriteString(char Msg[])
 }
 
 #endif /* HAL_UART_MODULE_ENABLED) */
-
 
 /*******************************************************************************
                             BUS OPERATIONS
@@ -352,17 +350,17 @@ void GPS_IO_WriteString(char Msg[])
   */
 static void SPIx_MspInit(SPI_HandleTypeDef *hspi)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;  
-  
-  /*** Configure the GPIOs ***/  
+  GPIO_InitTypeDef GPIO_InitStruct;
+
+  /*** Configure the GPIOs ***/
   /* Enable GPIO clock */
   CUSTOM_SPIx_SCK_GPIO_CLK_ENABLE();
   CUSTOM_SPIx_MISO_MOSI_GPIO_CLK_ENABLE();
-  
+
   /* configure SPI SCK */
   GPIO_InitStruct.Pin = CUSTOM_SPIx_SCK_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull  = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.Alternate = CUSTOM_SPIx_SCK_AF;
   HAL_GPIO_Init(CUSTOM_SPIx_SCK_GPIO_PORT, &GPIO_InitStruct);
@@ -370,12 +368,12 @@ static void SPIx_MspInit(SPI_HandleTypeDef *hspi)
   /* configure SPI MISO and MOSI */
   GPIO_InitStruct.Pin = (CUSTOM_SPIx_MISO_PIN | CUSTOM_SPIx_MOSI_PIN);
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.Alternate = CUSTOM_SPIx_MISO_MOSI_AF;
   HAL_GPIO_Init(CUSTOM_SPIx_MISO_MOSI_GPIO_PORT, &GPIO_InitStruct);
 
-  /*** Configure the SPI peripheral ***/ 
+  /*** Configure the SPI peripheral ***/
   /* Enable SPI clock */
   CUSTOM_SPIx_CLK_ENABLE();
 }
@@ -386,7 +384,7 @@ static void SPIx_MspInit(SPI_HandleTypeDef *hspi)
   */
 static void SPIx_Init(void)
 {
-  if(HAL_SPI_GetState(&hspi) == HAL_SPI_STATE_RESET)
+  if (HAL_SPI_GetState(&hspi) == HAL_SPI_STATE_RESET)
   {
     /* SPI Config */
     hspi.Instance = CUSTOM_SPIx;
@@ -418,11 +416,11 @@ static uint32_t SPIx_Read(void)
   HAL_StatusTypeDef status = HAL_OK;
   uint32_t readvalue = 0;
   uint32_t writevalue = 0xFFFFFFFF;
-  
-  status = HAL_SPI_TransmitReceive(&hspi, (uint8_t*) &writevalue, (uint8_t*) &readvalue, 1, SpixTimeout);
+
+  status = HAL_SPI_TransmitReceive(&hspi, (uint8_t *)&writevalue, (uint8_t *)&readvalue, 1, SpixTimeout);
 
   /* Check the communication status */
-  if(status != HAL_OK)
+  if (status != HAL_OK)
   {
     /* Execute user timeout callback */
     SPIx_Error();
@@ -440,10 +438,10 @@ static void SPIx_Write(uint8_t Value)
 {
   HAL_StatusTypeDef status = HAL_OK;
 
-  status = HAL_SPI_Transmit(&hspi, (uint8_t*) &Value, 1, SpixTimeout);
+  status = HAL_SPI_Transmit(&hspi, (uint8_t *)&Value, 1, SpixTimeout);
 
   /* Check the communication status */
-  if(status != HAL_OK)
+  if (status != HAL_OK)
   {
     /* Execute user timeout callback */
     SPIx_Error();
@@ -458,11 +456,10 @@ static void SPIx_Error(void)
 {
   /* De-initialize the SPI communication BUS */
   HAL_SPI_DeInit(&hspi);
-  
+
   /* Re- Initiaize the SPI communication BUS */
   SPIx_Init();
 }
-
 
 /******************************** LINK SD Card ********************************/
 /**
@@ -472,7 +469,7 @@ static void SPIx_Error(void)
   */
 void SD_IO_Init(void)
 {
-  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitTypeDef GPIO_InitStruct;
   uint8_t counter;
 
   /* SD_CS_GPIO and SD_DETECT_GPIO Periph clock enable */
@@ -502,7 +499,7 @@ void SD_IO_Init(void)
 
   /* SD chip select high */
   SD_CS_HIGH();
-  
+
   /* Send dummy byte 0xFF, 10 times with CS high */
   /* Rise CS and MOSI for 80 clocks cycles */
   for (counter = 0; counter <= 9; counter++)
@@ -530,7 +527,7 @@ void SD_IO_WriteByte(uint8_t Data)
 uint8_t SD_IO_ReadByte(void)
 {
   uint8_t data = 0;
-  
+
   /* Get the received data */
   data = SPIx_Read();
 
@@ -552,23 +549,23 @@ HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t
   uint8_t frame[6];
 
   /* Prepare Frame to send */
-  frame[0] = (Cmd | 0x40); /* Construct byte 1 */
+  frame[0] = (Cmd | 0x40);         /* Construct byte 1 */
   frame[1] = (uint8_t)(Arg >> 24); /* Construct byte 2 */
   frame[2] = (uint8_t)(Arg >> 16); /* Construct byte 3 */
-  frame[3] = (uint8_t)(Arg >> 8); /* Construct byte 4 */
-  frame[4] = (uint8_t)(Arg); /* Construct byte 5 */
-  frame[5] = (Crc); /* Construct CRC: byte 6 */
-  
+  frame[3] = (uint8_t)(Arg >> 8);  /* Construct byte 4 */
+  frame[4] = (uint8_t)(Arg);       /* Construct byte 5 */
+  frame[5] = (Crc);                /* Construct CRC: byte 6 */
+
   /* SD chip select low */
   SD_CS_LOW();
-    
+
   /* Send Frame */
   for (counter = 0; counter < 6; counter++)
   {
     SD_IO_WriteByte(frame[counter]); /* Send the Cmd bytes */
   }
 
-  if(Response != SD_NO_RESPONSE_EXPECTED)
+  if (Response != SD_NO_RESPONSE_EXPECTED)
   {
     return SD_IO_WaitResponse(Response);
   }
@@ -611,7 +608,7 @@ void SD_IO_WriteDummy(void)
 {
   /* SD chip select high */
   SD_CS_HIGH();
-    
+
   /* Send Dummy byte 0xFF */
   SD_IO_WriteByte(SD_DUMMY_BYTE);
 }
