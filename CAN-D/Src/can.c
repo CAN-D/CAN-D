@@ -9,6 +9,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "can.h"
 #include "bridge.h"
+#include "fatfs.h"
 #include "usbd_cdc_if.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -128,18 +129,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
         Error_Handler();
     }
 
-    // Check if SD Logging is enabled
-    if (mAppConfiguration.SDStorage == APP_ENABLE) {
-        // Send CAN data to the SD Card via SPI
-    }
-
-    // Check if USB Streaming is enabled in the application and if a USB device
-    // is connected to this application
-    if (mAppConfiguration.USBStream == APP_ENABLE && hUsbDeviceFS.dev_state == USBD_STATE_CONFIGURED) {
-        // Put CAN Data into Queue for the USBStream RTOS Task
-        // @see APP_BRIDGE_USBStreamTask()
-        osMessagePut(USBStreamQueueHandle, (uint32_t)rxData[0], 0);
-    }
+    // Pass CAN RX data to the monitor thread
+    // @see APP_BRIDGE_CANMonitorTask()
+    osMessagePut(CANRxQueueHandle, (uint32_t)rxData[0], 0);
 }
 
 /**
