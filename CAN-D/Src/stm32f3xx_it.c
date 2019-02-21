@@ -6,12 +6,12 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 #include "stm32f3xx_it.h"
+#include "bridge.h" /* for UART message Queues */
 #include "cmsis_os.h"
-#include "string.h"
-#include "bridge.h"           /* for UART message Queues */
+#include "main.h"
 #include "stm32302c_custom.h" /* for UART handle (huart) */
+#include "string.h"
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -49,9 +49,8 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-  while (1)
-  {
-  }
+    while (1) {
+    }
 }
 
 /**
@@ -59,9 +58,8 @@ void HardFault_Handler(void)
   */
 void MemManage_Handler(void)
 {
-  while (1)
-  {
-  }
+    while (1) {
+    }
 }
 
 /**
@@ -69,9 +67,8 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-  while (1)
-  {
-  }
+    while (1) {
+    }
 }
 
 /**
@@ -79,9 +76,8 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-  while (1)
-  {
-  }
+    while (1) {
+    }
 }
 
 /**
@@ -103,7 +99,7 @@ void DebugMon_Handler(void)
   */
 void USB_HP_CAN_TX_IRQHandler(void)
 {
-  HAL_CAN_IRQHandler(&hcan);
+    HAL_CAN_IRQHandler(&hcan);
 }
 
 /**
@@ -111,7 +107,7 @@ void USB_HP_CAN_TX_IRQHandler(void)
   */
 void USB_LP_CAN_RX0_IRQHandler(void)
 {
-  HAL_CAN_IRQHandler(&hcan);
+    HAL_CAN_IRQHandler(&hcan);
 }
 
 /**
@@ -119,7 +115,7 @@ void USB_LP_CAN_RX0_IRQHandler(void)
   */
 void CAN_RX1_IRQHandler(void)
 {
-  HAL_CAN_IRQHandler(&hcan);
+    HAL_CAN_IRQHandler(&hcan);
 }
 
 /**
@@ -127,7 +123,7 @@ void CAN_RX1_IRQHandler(void)
   */
 void TIM1_UP_TIM16_IRQHandler(void)
 {
-  HAL_TIM_IRQHandler(&htim1);
+    HAL_TIM_IRQHandler(&htim1);
 }
 
 /**
@@ -135,7 +131,7 @@ void TIM1_UP_TIM16_IRQHandler(void)
   */
 void TIM2_IRQHandler(void)
 {
-  HAL_TIM_IRQHandler(&htim2);
+    HAL_TIM_IRQHandler(&htim2);
 }
 
 /**
@@ -145,28 +141,25 @@ void TIM2_IRQHandler(void)
   */
 void USART2_IRQHandler(void)
 {
-  char rxData[128] = "0";
-  uint8_t rx_idx = 0;
+    char rxData[128] = "0";
+    uint8_t rx_idx = 0;
 
-  HAL_UART_IRQHandler(&huart);
+    HAL_UART_IRQHandler(&huart);
 
-  // Check if the UART2 Read Data Register has data
-  if (huart.Instance->ISR & USART_ISR_RXNE)
-  {
-    // Read the data from the register
-    rxData[rx_idx] = huart.Instance->RDR;
+    // Check if the UART2 Read Data Register has data
+    if (huart.Instance->ISR & USART_ISR_RXNE) {
+        // Read the data from the register
+        rxData[rx_idx] = huart.Instance->RDR;
 
-    // The GPS RX data will be held between '$' and '\n' characters
-    if (rxData[rx_idx] == '$')
-    {
-      if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
-      {
-        osMessagePut(UARTGprmcQueueHandle, (uint32_t)rxData[0], 0);
-      }
+        // The GPS RX data will be held between '$' and '\n' characters
+        if (rxData[rx_idx] == '$') {
+            if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0) {
+                osMessagePut(UARTGprmcQueueHandle, (uint32_t)rxData[0], 0);
+            }
 
-      memset(rxData, 0, sizeof(rxData));
+            memset(rxData, 0, sizeof(rxData));
+        }
     }
-  }
 }
 
 /**
@@ -174,7 +167,7 @@ void USART2_IRQHandler(void)
   */
 void USB_LP_IRQHandler(void)
 {
-  HAL_PCD_IRQHandler(&hpcd_USB_FS);
+    HAL_PCD_IRQHandler(&hpcd_USB_FS);
 }
 
 /* Private functions ---------------------------------------------------------*/

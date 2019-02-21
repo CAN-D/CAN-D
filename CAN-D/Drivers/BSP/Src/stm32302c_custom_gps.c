@@ -21,15 +21,15 @@
   */
 void BSP_GPS_Init(void)
 {
-  // Configure IO functionalities for UART TX & RX pins
-  GPS_IO_Init();
+    // Configure IO functionalities for UART TX & RX pins
+    GPS_IO_Init();
 
-  // Configure GPS to use 1s position echo time
-  GPS_IO_WriteString(PMTK_API_SET_FIX_CTL_1HZ);
+    // Configure GPS to use 1s position echo time
+    GPS_IO_WriteString(PMTK_API_SET_FIX_CTL_1HZ);
 
-  // Configure GPS to use 1s update time
-  GPS_IO_WriteString(PMTK_SET_NMEA_UPDATE_1HZ);
+    // Configure GPS to use 1s update time
+    GPS_IO_WriteString(PMTK_SET_NMEA_UPDATE_1HZ);
 
-  // Configure GPS to only output GPRMC data messages
-  GPS_IO_WriteString(PMTK_SET_NMEA_OUTPUT_RMCONLY);
+    // Configure GPS to only output GPRMC data messages
+    GPS_IO_WriteString(PMTK_SET_NMEA_OUTPUT_RMCONLY);
 }
