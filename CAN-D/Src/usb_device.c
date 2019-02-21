@@ -5,15 +5,28 @@
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
 #include "usb_device.h"
 #include "usbd_core.h"
 #include "usbd_desc.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
 
-/* USB Device Core handle declaration. */
+/* Private typedef -----------------------------------------------------------*/
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private variables ---------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+
+/* Exported variables --------------------------------------------------------*/
 USBD_HandleTypeDef hUsbDeviceFS;
 
+/* Private function prototypes -----------------------------------------------*/
+
+/* Exported functions --------------------------------------------------------*/
+/* USB Device Core handle declaration. */
 /**
   * Init USB device Library, add supported class and start the library
   * @retval None
@@ -29,3 +42,5 @@ void MX_USB_DEVICE_Init(void)
 
   USBD_Start(&hUsbDeviceFS);
 }
+
+/* Private functions ---------------------------------------------------------*/

@@ -6,15 +6,27 @@
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
 #include "can.h"
 #include "bridge.h"
 #include "usbd_cdc_if.h"
 
+/* Private typedef -----------------------------------------------------------*/
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private variables ---------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+
+/* Exported variables --------------------------------------------------------*/
 CAN_HandleTypeDef hcan;
 extern APP_ConfigType mAppConfiguration;
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
+/* Private function prototypes -----------------------------------------------*/
 
+/* Exported functions --------------------------------------------------------*/
 /* CAN init function */
 void MX_CAN_Init(void)
 {
@@ -38,20 +50,20 @@ void MX_CAN_Init(void)
   // TODO: configure CAN reception filters using HAL_CAN_ConfigFilter()
 }
 
-void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
+void HAL_CAN_MspInit(CAN_HandleTypeDef *canHandle)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(canHandle->Instance==CAN)
+  if (canHandle->Instance == CAN)
   {
     /* CAN clock enable */
     __HAL_RCC_CAN1_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**CAN GPIO Configuration    
     PB8     ------> CAN_RX
     PB9     ------> CAN_TX 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+    GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
@@ -60,44 +72,44 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 
     /* CAN interrupt Init */
     // Disabling unused interrupts for now
-//    HAL_NVIC_SetPriority(USB_HP_CAN_TX_IRQn, 5, 0);
-//    HAL_NVIC_EnableIRQ(USB_HP_CAN_TX_IRQn);
-//    HAL_NVIC_SetPriority(USB_LP_CAN_RX0_IRQn, 5, 0);
-//    HAL_NVIC_EnableIRQ(USB_LP_CAN_RX0_IRQn);
+    //    HAL_NVIC_SetPriority(USB_HP_CAN_TX_IRQn, 5, 0);
+    //    HAL_NVIC_EnableIRQ(USB_HP_CAN_TX_IRQn);
+    //    HAL_NVIC_SetPriority(USB_LP_CAN_RX0_IRQn, 5, 0);
+    //    HAL_NVIC_EnableIRQ(USB_LP_CAN_RX0_IRQn);
     HAL_NVIC_SetPriority(CAN_RX1_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(CAN_RX1_IRQn);
   }
 }
 
-void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
+void HAL_CAN_MspDeInit(CAN_HandleTypeDef *canHandle)
 {
-  if(canHandle->Instance==CAN)
+  if (canHandle->Instance == CAN)
   {
     /* Peripheral clock disable */
     __HAL_RCC_CAN1_CLK_DISABLE();
-  
+
     /**CAN GPIO Configuration    
     PB8     ------> CAN_RX
     PB9     ------> CAN_TX 
     */
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_8|GPIO_PIN_9);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_8 | GPIO_PIN_9);
 
     /* CAN interrupt Deinit */
-  /* BEGIN CAN:USB_HP_CAN_TX_IRQn disable */
+    /* BEGIN CAN:USB_HP_CAN_TX_IRQn disable */
     /**
     * Uncomment the line below to disable the "USB_HP_CAN_TX_IRQn" interrupt
     * Be aware, disabling shared interrupt may affect other IPs
     */
     /* HAL_NVIC_DisableIRQ(USB_HP_CAN_TX_IRQn); */
-  /* END CAN:USB_HP_CAN_TX_IRQn disable */
+    /* END CAN:USB_HP_CAN_TX_IRQn disable */
 
-  /* BEGIN CAN:USB_LP_CAN_RX0_IRQn disable */
+    /* BEGIN CAN:USB_LP_CAN_RX0_IRQn disable */
     /**
     * Uncomment the line below to disable the "USB_LP_CAN_RX0_IRQn" interrupt
     * Be aware, disabling shared interrupt may affect other IPs
     */
     /* HAL_NVIC_DisableIRQ(USB_LP_CAN_RX0_IRQn); */
-  /* END CAN:USB_LP_CAN_RX0_IRQn disable */
+    /* END CAN:USB_LP_CAN_RX0_IRQn disable */
 
     HAL_NVIC_DisableIRQ(CAN_RX1_IRQn);
   }
@@ -109,7 +121,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
   *         the configuration information for the specified CAN.
   * @retval None
   */
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *canHandle)
 {
   uint8_t rxData[8]; // 8 Bytes of CAN RX Data
   CAN_RxHeaderTypeDef pHeader = {0};
@@ -126,7 +138,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
     // Send CAN data to the SD Card via SPI
   }
 
-  // Check if USB Streaming is enabled in the application and if a USB device 
+  // Check if USB Streaming is enabled in the application and if a USB device
   // is connected to this application
   if (mAppConfiguration.USBStream == APP_ENABLE && hUsbDeviceFS.dev_state == USBD_STATE_CONFIGURED)
   {
@@ -142,7 +154,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
   *         the configuration information for the specified CAN.
   * @retval None
   */
-void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef* canHandle)
+void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *canHandle)
 {
 }
 
@@ -164,3 +176,5 @@ void APP_CAN_StartStop(void)
     HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
   }
 }
+
+/* Private functions ---------------------------------------------------------*/

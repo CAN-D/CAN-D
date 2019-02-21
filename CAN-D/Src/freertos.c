@@ -5,12 +5,22 @@
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
 #include "bridge.h"
 
+/* Private typedef -----------------------------------------------------------*/
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private variables ---------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+
+/* Exported variables --------------------------------------------------------*/
 extern osThreadId bridgeConfigTaskHandle;
 extern osThreadId USBStreamTaskHandle;
 extern osThreadId GPSMonitorTaskHandle;
@@ -19,9 +29,10 @@ extern osMessageQId USBStreamQueueHandle;
 extern osMessageQId UARTGprmcQueueHandle;
 extern osMessageQId UARTGgaQueueHandle;
 
+/* Private function prototypes -----------------------------------------------*/
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
-
+/* Exported functions --------------------------------------------------------*/
 /**
   * @brief  FreeRTOS initialization
   * @param  None
@@ -57,3 +68,5 @@ void MX_FREERTOS_Init(void)
   osMessageQDef(UARTGgaQueue, 128, char);
   UARTGgaQueueHandle = osMessageCreate(osMessageQ(UARTGgaQueue), NULL);
 }
+
+/* Private functions ---------------------------------------------------------*/

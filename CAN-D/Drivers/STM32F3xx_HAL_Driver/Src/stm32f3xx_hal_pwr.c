@@ -58,6 +58,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup PWR_Exported_Functions PWR Exported Functions
@@ -103,7 +104,7 @@ void HAL_PWR_DeInit(void)
   */
 void HAL_PWR_EnableBkUpAccess(void)
 {
-  SET_BIT(PWR->CR, PWR_CR_DBP);  
+  SET_BIT(PWR->CR, PWR_CR_DBP);
 }
 
 /**
@@ -115,7 +116,7 @@ void HAL_PWR_EnableBkUpAccess(void)
   */
 void HAL_PWR_DisableBkUpAccess(void)
 {
-  CLEAR_BIT(PWR->CR, PWR_CR_DBP);  
+  CLEAR_BIT(PWR->CR, PWR_CR_DBP);
 }
 
 /**
@@ -302,10 +303,10 @@ void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
   assert_param(IS_PWR_SLEEP_ENTRY(SLEEPEntry));
 
   /* Clear SLEEPDEEP bit of Cortex System Control Register */
-  SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);
+  SCB->SCR &= (uint32_t) ~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);
 
   /* Select SLEEP mode entry -------------------------------------------------*/
-  if(SLEEPEntry == PWR_SLEEPENTRY_WFI)
+  if (SLEEPEntry == PWR_SLEEPENTRY_WFI)
   {
     /* Request Wait For Interrupt */
     __WFI();
@@ -348,9 +349,9 @@ void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry)
 
   /* Select the regulator state in STOP mode ---------------------------------*/
   tmpreg = PWR->CR;
-  
+
   /* Clear PDDS and LPDS bits */
-  tmpreg &= (uint32_t)~(PWR_CR_PDDS | PWR_CR_LPDS);
+  tmpreg &= (uint32_t) ~(PWR_CR_PDDS | PWR_CR_LPDS);
 
   /* Set LPDS bit according to Regulator value */
   tmpreg |= Regulator;
@@ -362,7 +363,7 @@ void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry)
   SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 
   /* Select STOP mode entry --------------------------------------------------*/
-  if(STOPEntry == PWR_STOPENTRY_WFI)
+  if (STOPEntry == PWR_STOPENTRY_WFI)
   {
     /* Request Wait For Interrupt */
     __WFI();
@@ -376,7 +377,7 @@ void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry)
   }
 
   /* Reset SLEEPDEEP bit of Cortex System Control Register */
-  SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);
+  SCB->SCR &= (uint32_t) ~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);
 }
 
 /**
@@ -397,7 +398,7 @@ void HAL_PWR_EnterSTANDBYMode(void)
   SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 
   /* This option is used to ensure that store operations are completed */
-#if defined ( __CC_ARM)
+#if defined(__CC_ARM)
   __force_stores();
 #endif
   /* Request Wait For Interrupt */
@@ -418,7 +419,6 @@ void HAL_PWR_EnableSleepOnExit(void)
   SET_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPONEXIT_Msk));
 }
 
-
 /**
   * @brief Disables Sleep-On-Exit feature when returning from Handler mode to Thread mode. 
   * @note Clears SLEEPONEXIT bit of SCR register. When this bit is set, the processor 
@@ -431,8 +431,6 @@ void HAL_PWR_DisableSleepOnExit(void)
   CLEAR_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPONEXIT_Msk));
 }
 
-
-
 /**
   * @brief Enables CORTEX M4 SEVONPEND bit. 
   * @note Sets SEVONPEND bit of SCR register. When this bit is set, this causes 
@@ -444,7 +442,6 @@ void HAL_PWR_EnableSEVOnPend(void)
   /* Set SEVONPEND bit of Cortex System Control Register */
   SET_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SEVONPEND_Msk));
 }
-
 
 /**
   * @brief Disables CORTEX M4 SEVONPEND bit. 

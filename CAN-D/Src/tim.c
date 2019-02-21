@@ -6,10 +6,23 @@
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
 #include "tim.h"
 
+/* Private typedef -----------------------------------------------------------*/
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private variables ---------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+
+/* Exported variables --------------------------------------------------------*/
 TIM_HandleTypeDef htim2;
 
+/* Private function prototypes -----------------------------------------------*/
+
+/* Exported functions --------------------------------------------------------*/
 /* TIM2 init function */
 void MX_TIM2_Init(void)
 {
@@ -37,13 +50,12 @@ void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-
 }
 
-void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *tim_baseHandle)
 {
 
-  if(tim_baseHandle->Instance==TIM2)
+  if (tim_baseHandle->Instance == TIM2)
   {
     /* TIM2 clock enable */
     __HAL_RCC_TIM2_CLK_ENABLE();
@@ -54,10 +66,10 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
   }
 }
 
-void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
+void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef *tim_baseHandle)
 {
 
-  if(tim_baseHandle->Instance==TIM2)
+  if (tim_baseHandle->Instance == TIM2)
   {
     /* Peripheral clock disable */
     __HAL_RCC_TIM2_CLK_DISABLE();
@@ -65,4 +77,6 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
     /* TIM2 interrupt Deinit */
     HAL_NVIC_DisableIRQ(TIM2_IRQn);
   }
-} 
+}
+
+/* Private functions ---------------------------------------------------------*/
