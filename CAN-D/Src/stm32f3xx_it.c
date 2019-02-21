@@ -5,6 +5,7 @@
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f3xx_it.h"
 #include "cmsis_os.h"
@@ -12,6 +13,15 @@
 #include "bridge.h"           /* for UART message Queues */
 #include "stm32302c_custom.h" /* for UART handle (huart) */
 
+/* Private typedef -----------------------------------------------------------*/
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private variables ---------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+
+/* Exported variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_FS;
 extern CAN_HandleTypeDef hcan;
 extern TIM_HandleTypeDef htim2;
@@ -22,16 +32,17 @@ extern TIM_HandleTypeDef htim1;
 extern osMessageQId UARTGprmcQueueHandle;
 extern osMessageQId UARTGgaQueueHandle;
 
+/* Private function prototypes -----------------------------------------------*/
 
+/* Exported functions --------------------------------------------------------*/
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
   * @brief This function handles Non maskable interrupt.
   */
 void NMI_Handler(void)
 {
-
 }
 
 /**
@@ -39,7 +50,9 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-  while (1) {}
+  while (1)
+  {
+  }
 }
 
 /**
@@ -47,7 +60,9 @@ void HardFault_Handler(void)
   */
 void MemManage_Handler(void)
 {
-  while (1) {}
+  while (1)
+  {
+  }
 }
 
 /**
@@ -55,7 +70,9 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-  while (1) {}
+  while (1)
+  {
+  }
 }
 
 /**
@@ -63,7 +80,9 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-  while (1) {}
+  while (1)
+  {
+  }
 }
 
 /**
@@ -163,3 +182,5 @@ void USB_LP_IRQHandler(void)
 {
   HAL_PCD_IRQHandler(&hpcd_USB_FS);
 }
+
+/* Private functions ---------------------------------------------------------*/
