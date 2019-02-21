@@ -27,7 +27,6 @@ extern osThreadId GPSMonitorTaskHandle;
 
 extern osMessageQId USBStreamQueueHandle;
 extern osMessageQId UARTGprmcQueueHandle;
-extern osMessageQId UARTGgaQueueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -64,9 +63,6 @@ void MX_FREERTOS_Init(void)
 
   osMessageQDef(UARTGprmcQueue, 128, char);
   UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);
-
-  osMessageQDef(UARTGgaQueue, 128, char);
-  UARTGgaQueueHandle = osMessageCreate(osMessageQ(UARTGgaQueue), NULL);
 }
 
 /* Private functions ---------------------------------------------------------*/

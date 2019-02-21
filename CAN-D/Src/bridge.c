@@ -99,12 +99,6 @@ void APP_BRIDGE_GPSMonitorTask(void const *argument)
       {
         // Write data to SD card
       }
-
-      event = osMessageGet(UARTGgaQueueHandle, 0);
-      if (event.status == osEventMessage)
-      {
-        // Write data to SD card
-      }
     }
 
     osDelay(1);

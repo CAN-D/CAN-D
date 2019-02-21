@@ -30,6 +30,6 @@ void BSP_GPS_Init(void)
   // Configure GPS to use 1s update time
   GPS_IO_WriteString(PMTK_SET_NMEA_UPDATE_1HZ);
 
-  // Configure GPS to only output GPRMC and GGA data messages
-  GPS_IO_WriteString(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+  // Configure GPS to only output GPRMC data messages
+  GPS_IO_WriteString(PMTK_SET_NMEA_OUTPUT_RMCONLY);
 }

@@ -38,7 +38,6 @@ osThreadId GPSMonitorTaskHandle;
 /* Queues */
 osMessageQId USBStreamQueueHandle;
 osMessageQId UARTGprmcQueueHandle; /* Handles GPS GPRMC data */
-osMessageQId UARTGgaQueueHandle; /* Handles GPS GGA data */
 
 /* RTOS Tasks */
 void APP_BRIDGE_CANConfigTask(void const* argument);

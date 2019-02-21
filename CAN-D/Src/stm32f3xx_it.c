@@ -30,7 +30,6 @@ extern TIM_HandleTypeDef htim1;
 
 /* UART message Queues */
 extern osMessageQId UARTGprmcQueueHandle;
-extern osMessageQId UARTGgaQueueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 
@@ -160,11 +159,6 @@ void USART2_IRQHandler(void)
     // The GPS RX data will be held between '$' and '\n' characters
     if (rxData[rx_idx] == '$')
     {
-      // Put the received data in the respective queue
-      if (strncmp("$GPGGA", rxData, sizeof("$GPGGA") - 1) == 0)
-      {
-        osMessagePut(UARTGgaQueueHandle, (uint32_t)rxData[0], 0);
-      }
       if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
       {
         osMessagePut(UARTGprmcQueueHandle, (uint32_t)rxData[0], 0);
