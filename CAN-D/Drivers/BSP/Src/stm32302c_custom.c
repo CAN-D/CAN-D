@@ -19,28 +19,28 @@
 /**
  * @brief LED variables
  */
-GPIO_TypeDef *LED_PORT[LEDn] = {LED1_GPIO_PORT,
-                                LED2_GPIO_PORT,
-                                LED3_GPIO_PORT};
+GPIO_TypeDef* LED_PORT[LEDn] = { LED1_GPIO_PORT,
+    LED2_GPIO_PORT,
+    LED3_GPIO_PORT };
 
-const uint16_t LED_PIN[LEDn] = {LED1_PIN,
-                                LED2_PIN,
-                                LED3_PIN};
+const uint16_t LED_PIN[LEDn] = { LED1_PIN,
+    LED2_PIN,
+    LED3_PIN };
 
 /**
  * @brief BUTTON variables
  */
-GPIO_TypeDef *BUTTON_PORT[BUTTONn] = {LOG_BUTTON_GPIO_PORT,
-                                      MARK_BUTTON_GPIO_PORT,
-                                      RST_BUTTON_GPIO_PORT};
+GPIO_TypeDef* BUTTON_PORT[BUTTONn] = { LOG_BUTTON_GPIO_PORT,
+    MARK_BUTTON_GPIO_PORT,
+    RST_BUTTON_GPIO_PORT };
 
-const uint16_t BUTTON_PIN[BUTTONn] = {LOG_BUTTON_PIN,
-                                      MARK_BUTTON_PIN,
-                                      RST_BUTTON_PIN};
+const uint16_t BUTTON_PIN[BUTTONn] = { LOG_BUTTON_PIN,
+    MARK_BUTTON_PIN,
+    RST_BUTTON_PIN };
 
-const uint16_t BUTTON_IRQn[BUTTONn] = {LOG_BUTTON_EXTI_IRQn,
-                                       MARK_BUTTON_EXTI_IRQn,
-                                       RST_BUTTON_EXTI_IRQn};
+const uint16_t BUTTON_IRQn[BUTTONn] = { LOG_BUTTON_EXTI_IRQn,
+    MARK_BUTTON_EXTI_IRQn,
+    RST_BUTTON_EXTI_IRQn };
 
 /**
  * @brief COM variables
@@ -52,7 +52,7 @@ UART_HandleTypeDef huart;
 
 /* UART com functions */
 static void UARTx_Init(void);
-static void UARTx_MspInit(UART_HandleTypeDef *huart);
+static void UARTx_MspInit(UART_HandleTypeDef* huart);
 static void UARTx_WriteChar(char Character);
 
 /* Link functions for GPS peripheral over UART */
@@ -60,7 +60,7 @@ void GPS_IO_Init(void);
 void GPS_IO_WriteString(char Msg[]);
 
 /* De-init function called in HAL_UART_DeInit() */
-void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle);
+void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle);
 
 #endif /* HAL_UART_MODULE_ENABLED) */
 
@@ -74,7 +74,7 @@ static void SPIx_Init(void);
 static void SPIx_Write(uint8_t Value);
 static uint32_t SPIx_Read(void);
 static void SPIx_Error(void);
-static void SPIx_MspInit(SPI_HandleTypeDef *hspi);
+static void SPIx_MspInit(SPI_HandleTypeDef* hspi);
 
 /* Link functions for SD Card peripheral over SPI */
 void SD_IO_Init(void);
@@ -98,20 +98,20 @@ uint8_t SD_IO_ReadByte(void);
   */
 void BSP_LED_Init(Led_TypeDef Led)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitTypeDef GPIO_InitStruct;
 
-  /* Enable the GPIO_LED clock */
-  LEDx_GPIO_CLK_ENABLE(Led);
+    /* Enable the GPIO_LED clock */
+    LEDx_GPIO_CLK_ENABLE(Led);
 
-  /* Configure the GPIO_LED pin */
-  GPIO_InitStruct.Pin = LED_PIN[Led];
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    /* Configure the GPIO_LED pin */
+    GPIO_InitStruct.Pin = LED_PIN[Led];
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 
-  HAL_GPIO_Init(LED_PORT[Led], &GPIO_InitStruct);
+    HAL_GPIO_Init(LED_PORT[Led], &GPIO_InitStruct);
 
-  HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
 }
 
 /**
@@ -126,7 +126,7 @@ void BSP_LED_Init(Led_TypeDef Led)
   */
 void BSP_LED_On(Led_TypeDef Led)
 {
-  HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
 }
 
 /**
@@ -141,7 +141,7 @@ void BSP_LED_On(Led_TypeDef Led)
   */
 void BSP_LED_Off(Led_TypeDef Led)
 {
-  HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
 }
 
 /**
@@ -156,7 +156,7 @@ void BSP_LED_Off(Led_TypeDef Led)
   */
 void BSP_LED_Toggle(Led_TypeDef Led)
 {
-  HAL_GPIO_TogglePin(LED_PORT[Led], LED_PIN[Led]);
+    HAL_GPIO_TogglePin(LED_PORT[Led], LED_PIN[Led]);
 }
 
 /**
@@ -173,37 +173,34 @@ void BSP_LED_Toggle(Led_TypeDef Led)
   */
 void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitTypeDef GPIO_InitStruct;
 
-  /* Enable the corresponding Push Button clock */
-  BUTTONx_GPIO_CLK_ENABLE(Button);
+    /* Enable the corresponding Push Button clock */
+    BUTTONx_GPIO_CLK_ENABLE(Button);
 
-  /* Configure Push Button pin as input */
-  GPIO_InitStruct.Pin = BUTTON_PIN[Button];
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    /* Configure Push Button pin as input */
+    GPIO_InitStruct.Pin = BUTTON_PIN[Button];
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 
-  if (Button_Mode == BUTTON_MODE_GPIO)
-  {
-    /* Configure Button pin as input */
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    HAL_GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStruct);
-  }
-
-  if (Button_Mode == BUTTON_MODE_EXTI)
-  {
-    if (Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST)
-    {
-      /* Configure Push Button pins as input with External interrupt, falling edge */
-      GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    if (Button_Mode == BUTTON_MODE_GPIO) {
+        /* Configure Button pin as input */
+        GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+        HAL_GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStruct);
     }
 
-    HAL_GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStruct);
+    if (Button_Mode == BUTTON_MODE_EXTI) {
+        if (Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST) {
+            /* Configure Push Button pins as input with External interrupt, falling edge */
+            GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+        }
 
-    /* Enable and set Button EXTI Interrupt to the lowest priority */
-    HAL_NVIC_SetPriority((IRQn_Type)(BUTTON_IRQn[Button]), 0x0F, 0x00);
-    HAL_NVIC_EnableIRQ((IRQn_Type)(BUTTON_IRQn[Button]));
-  }
+        HAL_GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStruct);
+
+        /* Enable and set Button EXTI Interrupt to the lowest priority */
+        HAL_NVIC_SetPriority((IRQn_Type)(BUTTON_IRQn[Button]), 0x0F, 0x00);
+        HAL_NVIC_EnableIRQ((IRQn_Type)(BUTTON_IRQn[Button]));
+    }
 }
 
 /**
@@ -215,7 +212,7 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
   */
 uint32_t BSP_PB_GetState(Button_TypeDef Button)
 {
-  return HAL_GPIO_ReadPin(BUTTON_PORT[Button], BUTTON_PIN[Button]);
+    return HAL_GPIO_ReadPin(BUTTON_PORT[Button], BUTTON_PIN[Button]);
 }
 
 #if defined(HAL_UART_MODULE_ENABLED)
@@ -225,27 +222,27 @@ uint32_t BSP_PB_GetState(Button_TypeDef Button)
   * @param huart UART handle
   * @retval None
   */
-static void UARTx_MspInit(UART_HandleTypeDef *huart)
+static void UARTx_MspInit(UART_HandleTypeDef* huart)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitTypeDef GPIO_InitStruct;
 
-  /* Enable UART clock */
-  GPS_UARTx_CLK_ENABLE();
-  /* Enable GPIO clock */
-  GPS_UARTx_TX_GPIO_CLK_ENABLE();
+    /* Enable UART clock */
+    GPS_UARTx_CLK_ENABLE();
+    /* Enable GPIO clock */
+    GPS_UARTx_TX_GPIO_CLK_ENABLE();
 
-  /*** Configure the GPIOs ***/
-  /* configure UART TX and RX */
-  GPIO_InitStruct.Pin = (GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.Alternate = GPS_UARTx_RX_AF;
-  HAL_GPIO_Init(GPS_UARTx_TX_GPIO_PORT, &GPIO_InitStruct);
+    /*** Configure the GPIOs ***/
+    /* configure UART TX and RX */
+    GPIO_InitStruct.Pin = (GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = GPS_UARTx_RX_AF;
+    HAL_GPIO_Init(GPS_UARTx_TX_GPIO_PORT, &GPIO_InitStruct);
 
-  /* USART2 interrupt Init */
-  HAL_NVIC_SetPriority(GPS_UARTx_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(GPS_UARTx_IRQn);
+    /* USART2 interrupt Init */
+    HAL_NVIC_SetPriority(GPS_UARTx_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(GPS_UARTx_IRQn);
 }
 
 /**
@@ -254,23 +251,22 @@ static void UARTx_MspInit(UART_HandleTypeDef *huart)
   */
 static void UARTx_Init(void)
 {
-  if (HAL_UART_GetState(&huart) == HAL_UART_STATE_RESET)
-  {
-    /* UART Config */
-    huart.Instance = GPS_UARTx;
-    huart.Init.BaudRate = GPS_UARTx_BAUD;
-    huart.Init.WordLength = UART_WORDLENGTH_8B;
-    huart.Init.StopBits = UART_STOPBITS_1;
-    huart.Init.Parity = UART_PARITY_NONE;
-    huart.Init.Mode = UART_MODE_TX_RX;
-    huart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    huart.Init.OverSampling = UART_OVERSAMPLING_16;
-    huart.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-    huart.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+    if (HAL_UART_GetState(&huart) == HAL_UART_STATE_RESET) {
+        /* UART Config */
+        huart.Instance = GPS_UARTx;
+        huart.Init.BaudRate = GPS_UARTx_BAUD;
+        huart.Init.WordLength = UART_WORDLENGTH_8B;
+        huart.Init.StopBits = UART_STOPBITS_1;
+        huart.Init.Parity = UART_PARITY_NONE;
+        huart.Init.Mode = UART_MODE_TX_RX;
+        huart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+        huart.Init.OverSampling = UART_OVERSAMPLING_16;
+        huart.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+        huart.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
 
-    UARTx_MspInit(&huart);
-    HAL_UART_Init(&huart);
-  }
+        UARTx_MspInit(&huart);
+        HAL_UART_Init(&huart);
+    }
 }
 
 /**
@@ -279,16 +275,16 @@ static void UARTx_Init(void)
   *         User shouldn't call this explicitly.
   * @retval None
   */
-void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle)
+void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
-  /* Peripheral clock disable */
-  __HAL_RCC_USART2_CLK_DISABLE();
+    /* Peripheral clock disable */
+    __HAL_RCC_USART2_CLK_DISABLE();
 
-  /* UART GPIO Deinit */
-  HAL_GPIO_DeInit(GPIOA, GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
+    /* UART GPIO Deinit */
+    HAL_GPIO_DeInit(GPIOA, GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
 
-  /* UART interrupt Deinit */
-  HAL_NVIC_DisableIRQ(GPS_UARTx_IRQn);
+    /* UART interrupt Deinit */
+    HAL_NVIC_DisableIRQ(GPS_UARTx_IRQn);
 }
 
 /**
@@ -299,14 +295,13 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle)
   */
 static void UARTx_WriteChar(char Character)
 {
-  while ((huart.Instance->ISR & USART_ISR_TXE) == 0)
-  {
-    // Wait for TX data buffer to be empty
-  }
+    while ((huart.Instance->ISR & USART_ISR_TXE) == 0) {
+        // Wait for TX data buffer to be empty
+    }
 
-  // Prime the UART TX Data Register with the
-  // character to send
-  huart.Instance->TDR = Character;
+    // Prime the UART TX Data Register with the
+    // character to send
+    huart.Instance->TDR = Character;
 }
 
 /******************************** LINK GPS Module ********************************/
@@ -316,7 +311,7 @@ static void UARTx_WriteChar(char Character)
   */
 void GPS_IO_Init(void)
 {
-  UARTx_Init();
+    UARTx_Init();
 }
 
 /**
@@ -326,14 +321,13 @@ void GPS_IO_Init(void)
   */
 void GPS_IO_WriteString(char Msg[])
 {
-  int len = strlen(Msg);
-  int cnt = 0;
+    int len = strlen(Msg);
+    int cnt = 0;
 
-  while (cnt < len)
-  {
-    UARTx_WriteChar(Msg[cnt]);
-    cnt++;
-  }
+    while (cnt < len) {
+        UARTx_WriteChar(Msg[cnt]);
+        cnt++;
+    }
 }
 
 #endif /* HAL_UART_MODULE_ENABLED) */
@@ -348,34 +342,34 @@ void GPS_IO_WriteString(char Msg[])
   * @param hspi SPI handle
   * @retval None
   */
-static void SPIx_MspInit(SPI_HandleTypeDef *hspi)
+static void SPIx_MspInit(SPI_HandleTypeDef* hspi)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitTypeDef GPIO_InitStruct;
 
-  /*** Configure the GPIOs ***/
-  /* Enable GPIO clock */
-  CUSTOM_SPIx_SCK_GPIO_CLK_ENABLE();
-  CUSTOM_SPIx_MISO_MOSI_GPIO_CLK_ENABLE();
+    /*** Configure the GPIOs ***/
+    /* Enable GPIO clock */
+    CUSTOM_SPIx_SCK_GPIO_CLK_ENABLE();
+    CUSTOM_SPIx_MISO_MOSI_GPIO_CLK_ENABLE();
 
-  /* configure SPI SCK */
-  GPIO_InitStruct.Pin = CUSTOM_SPIx_SCK_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.Alternate = CUSTOM_SPIx_SCK_AF;
-  HAL_GPIO_Init(CUSTOM_SPIx_SCK_GPIO_PORT, &GPIO_InitStruct);
+    /* configure SPI SCK */
+    GPIO_InitStruct.Pin = CUSTOM_SPIx_SCK_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = CUSTOM_SPIx_SCK_AF;
+    HAL_GPIO_Init(CUSTOM_SPIx_SCK_GPIO_PORT, &GPIO_InitStruct);
 
-  /* configure SPI MISO and MOSI */
-  GPIO_InitStruct.Pin = (CUSTOM_SPIx_MISO_PIN | CUSTOM_SPIx_MOSI_PIN);
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.Alternate = CUSTOM_SPIx_MISO_MOSI_AF;
-  HAL_GPIO_Init(CUSTOM_SPIx_MISO_MOSI_GPIO_PORT, &GPIO_InitStruct);
+    /* configure SPI MISO and MOSI */
+    GPIO_InitStruct.Pin = (CUSTOM_SPIx_MISO_PIN | CUSTOM_SPIx_MOSI_PIN);
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = CUSTOM_SPIx_MISO_MOSI_AF;
+    HAL_GPIO_Init(CUSTOM_SPIx_MISO_MOSI_GPIO_PORT, &GPIO_InitStruct);
 
-  /*** Configure the SPI peripheral ***/
-  /* Enable SPI clock */
-  CUSTOM_SPIx_CLK_ENABLE();
+    /*** Configure the SPI peripheral ***/
+    /* Enable SPI clock */
+    CUSTOM_SPIx_CLK_ENABLE();
 }
 
 /**
@@ -384,27 +378,26 @@ static void SPIx_MspInit(SPI_HandleTypeDef *hspi)
   */
 static void SPIx_Init(void)
 {
-  if (HAL_SPI_GetState(&hspi) == HAL_SPI_STATE_RESET)
-  {
-    /* SPI Config */
-    hspi.Instance = CUSTOM_SPIx;
-    /* SPI baudrate is set to 12 MHz (PCLK2/SPI_BaudRatePrescaler = 24/2 = 12 MHz) */
-    hspi.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-    hspi.Init.Direction = SPI_DIRECTION_2LINES;
-    hspi.Init.CLKPhase = SPI_PHASE_1EDGE;
-    hspi.Init.CLKPolarity = SPI_POLARITY_LOW;
-    hspi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-    hspi.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-    hspi.Init.CRCPolynomial = 7;
-    hspi.Init.DataSize = SPI_DATASIZE_8BIT;
-    hspi.Init.FirstBit = SPI_FIRSTBIT_MSB;
-    hspi.Init.NSS = SPI_NSS_SOFT;
-    hspi.Init.TIMode = SPI_TIMODE_DISABLE;
-    hspi.Init.Mode = SPI_MODE_MASTER;
+    if (HAL_SPI_GetState(&hspi) == HAL_SPI_STATE_RESET) {
+        /* SPI Config */
+        hspi.Instance = CUSTOM_SPIx;
+        /* SPI baudrate is set to 12 MHz (PCLK2/SPI_BaudRatePrescaler = 24/2 = 12 MHz) */
+        hspi.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+        hspi.Init.Direction = SPI_DIRECTION_2LINES;
+        hspi.Init.CLKPhase = SPI_PHASE_1EDGE;
+        hspi.Init.CLKPolarity = SPI_POLARITY_LOW;
+        hspi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+        hspi.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+        hspi.Init.CRCPolynomial = 7;
+        hspi.Init.DataSize = SPI_DATASIZE_8BIT;
+        hspi.Init.FirstBit = SPI_FIRSTBIT_MSB;
+        hspi.Init.NSS = SPI_NSS_SOFT;
+        hspi.Init.TIMode = SPI_TIMODE_DISABLE;
+        hspi.Init.Mode = SPI_MODE_MASTER;
 
-    SPIx_MspInit(&hspi);
-    HAL_SPI_Init(&hspi);
-  }
+        SPIx_MspInit(&hspi);
+        HAL_SPI_Init(&hspi);
+    }
 }
 
 /**
@@ -413,20 +406,19 @@ static void SPIx_Init(void)
 */
 static uint32_t SPIx_Read(void)
 {
-  HAL_StatusTypeDef status = HAL_OK;
-  uint32_t readvalue = 0;
-  uint32_t writevalue = 0xFFFFFFFF;
+    HAL_StatusTypeDef status = HAL_OK;
+    uint32_t readvalue = 0;
+    uint32_t writevalue = 0xFFFFFFFF;
 
-  status = HAL_SPI_TransmitReceive(&hspi, (uint8_t *)&writevalue, (uint8_t *)&readvalue, 1, SpixTimeout);
+    status = HAL_SPI_TransmitReceive(&hspi, (uint8_t*)&writevalue, (uint8_t*)&readvalue, 1, SpixTimeout);
 
-  /* Check the communication status */
-  if (status != HAL_OK)
-  {
-    /* Execute user timeout callback */
-    SPIx_Error();
-  }
+    /* Check the communication status */
+    if (status != HAL_OK) {
+        /* Execute user timeout callback */
+        SPIx_Error();
+    }
 
-  return readvalue;
+    return readvalue;
 }
 
 /**
@@ -436,16 +428,15 @@ static uint32_t SPIx_Read(void)
   */
 static void SPIx_Write(uint8_t Value)
 {
-  HAL_StatusTypeDef status = HAL_OK;
+    HAL_StatusTypeDef status = HAL_OK;
 
-  status = HAL_SPI_Transmit(&hspi, (uint8_t *)&Value, 1, SpixTimeout);
+    status = HAL_SPI_Transmit(&hspi, (uint8_t*)&Value, 1, SpixTimeout);
 
-  /* Check the communication status */
-  if (status != HAL_OK)
-  {
-    /* Execute user timeout callback */
-    SPIx_Error();
-  }
+    /* Check the communication status */
+    if (status != HAL_OK) {
+        /* Execute user timeout callback */
+        SPIx_Error();
+    }
 }
 
 /**
@@ -454,11 +445,11 @@ static void SPIx_Write(uint8_t Value)
   */
 static void SPIx_Error(void)
 {
-  /* De-initialize the SPI communication BUS */
-  HAL_SPI_DeInit(&hspi);
+    /* De-initialize the SPI communication BUS */
+    HAL_SPI_DeInit(&hspi);
 
-  /* Re- Initiaize the SPI communication BUS */
-  SPIx_Init();
+    /* Re- Initiaize the SPI communication BUS */
+    SPIx_Init();
 }
 
 /******************************** LINK SD Card ********************************/
@@ -469,44 +460,43 @@ static void SPIx_Error(void)
   */
 void SD_IO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
-  uint8_t counter;
+    GPIO_InitTypeDef GPIO_InitStruct;
+    uint8_t counter;
 
-  /* SD_CS_GPIO and SD_DETECT_GPIO Periph clock enable */
-  SD_CS_GPIO_CLK_ENABLE();
-  SD_DETECT_GPIO_CLK_ENABLE();
+    /* SD_CS_GPIO and SD_DETECT_GPIO Periph clock enable */
+    SD_CS_GPIO_CLK_ENABLE();
+    SD_DETECT_GPIO_CLK_ENABLE();
 
-  /* Configure SD_CS_PIN pin: SD Card CS pin */
-  GPIO_InitStruct.Pin = SD_CS_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(SD_CS_GPIO_PORT, &GPIO_InitStruct);
+    /* Configure SD_CS_PIN pin: SD Card CS pin */
+    GPIO_InitStruct.Pin = SD_CS_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(SD_CS_GPIO_PORT, &GPIO_InitStruct);
 
-  /* Configure SD_DETECT_PIN pin: SD Card detect pin */
-  GPIO_InitStruct.Pin = SD_DETECT_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(SD_DETECT_GPIO_PORT, &GPIO_InitStruct);
+    /* Configure SD_DETECT_PIN pin: SD Card detect pin */
+    GPIO_InitStruct.Pin = SD_DETECT_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(SD_DETECT_GPIO_PORT, &GPIO_InitStruct);
 
-  /* Enable and set SD EXTI Interrupt to the lowest priority */
-  HAL_NVIC_SetPriority(SD_DETECT_EXTI_IRQn, 15, 0);
-  HAL_NVIC_EnableIRQ(SD_DETECT_EXTI_IRQn);
+    /* Enable and set SD EXTI Interrupt to the lowest priority */
+    HAL_NVIC_SetPriority(SD_DETECT_EXTI_IRQn, 15, 0);
+    HAL_NVIC_EnableIRQ(SD_DETECT_EXTI_IRQn);
 
-  /*------------Put SD in SPI mode--------------*/
-  /* SD SPI Config */
-  SPIx_Init();
+    /*------------Put SD in SPI mode--------------*/
+    /* SD SPI Config */
+    SPIx_Init();
 
-  /* SD chip select high */
-  SD_CS_HIGH();
+    /* SD chip select high */
+    SD_CS_HIGH();
 
-  /* Send dummy byte 0xFF, 10 times with CS high */
-  /* Rise CS and MOSI for 80 clocks cycles */
-  for (counter = 0; counter <= 9; counter++)
-  {
-    /* Send dummy byte 0xFF */
-    SD_IO_WriteByte(SD_DUMMY_BYTE);
-  }
+    /* Send dummy byte 0xFF, 10 times with CS high */
+    /* Rise CS and MOSI for 80 clocks cycles */
+    for (counter = 0; counter <= 9; counter++) {
+        /* Send dummy byte 0xFF */
+        SD_IO_WriteByte(SD_DUMMY_BYTE);
+    }
 }
 
 /**
@@ -516,8 +506,8 @@ void SD_IO_Init(void)
   */
 void SD_IO_WriteByte(uint8_t Data)
 {
-  /* Send the byte */
-  SPIx_Write(Data);
+    /* Send the byte */
+    SPIx_Write(Data);
 }
 
 /**
@@ -526,13 +516,13 @@ void SD_IO_WriteByte(uint8_t Data)
   */
 uint8_t SD_IO_ReadByte(void)
 {
-  uint8_t data = 0;
+    uint8_t data = 0;
 
-  /* Get the received data */
-  data = SPIx_Read();
+    /* Get the received data */
+    data = SPIx_Read();
 
-  /* Return the shifted data */
-  return data;
+    /* Return the shifted data */
+    return data;
 }
 
 /**
@@ -545,32 +535,30 @@ uint8_t SD_IO_ReadByte(void)
   */
 HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
 {
-  uint32_t counter = 0x00;
-  uint8_t frame[6];
+    uint32_t counter = 0x00;
+    uint8_t frame[6];
 
-  /* Prepare Frame to send */
-  frame[0] = (Cmd | 0x40);         /* Construct byte 1 */
-  frame[1] = (uint8_t)(Arg >> 24); /* Construct byte 2 */
-  frame[2] = (uint8_t)(Arg >> 16); /* Construct byte 3 */
-  frame[3] = (uint8_t)(Arg >> 8);  /* Construct byte 4 */
-  frame[4] = (uint8_t)(Arg);       /* Construct byte 5 */
-  frame[5] = (Crc);                /* Construct CRC: byte 6 */
+    /* Prepare Frame to send */
+    frame[0] = (Cmd | 0x40); /* Construct byte 1 */
+    frame[1] = (uint8_t)(Arg >> 24); /* Construct byte 2 */
+    frame[2] = (uint8_t)(Arg >> 16); /* Construct byte 3 */
+    frame[3] = (uint8_t)(Arg >> 8); /* Construct byte 4 */
+    frame[4] = (uint8_t)(Arg); /* Construct byte 5 */
+    frame[5] = (Crc); /* Construct CRC: byte 6 */
 
-  /* SD chip select low */
-  SD_CS_LOW();
+    /* SD chip select low */
+    SD_CS_LOW();
 
-  /* Send Frame */
-  for (counter = 0; counter < 6; counter++)
-  {
-    SD_IO_WriteByte(frame[counter]); /* Send the Cmd bytes */
-  }
+    /* Send Frame */
+    for (counter = 0; counter < 6; counter++) {
+        SD_IO_WriteByte(frame[counter]); /* Send the Cmd bytes */
+    }
 
-  if (Response != SD_NO_RESPONSE_EXPECTED)
-  {
-    return SD_IO_WaitResponse(Response);
-  }
+    if (Response != SD_NO_RESPONSE_EXPECTED) {
+        return SD_IO_WaitResponse(Response);
+    }
 
-  return HAL_OK;
+    return HAL_OK;
 }
 
 /**
@@ -580,24 +568,20 @@ HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t
   */
 HAL_StatusTypeDef SD_IO_WaitResponse(uint8_t Response)
 {
-  uint32_t timeout = 0xFFF;
+    uint32_t timeout = 0xFFF;
 
-  /* Check if response is got or a timeout is happen */
-  while ((SD_IO_ReadByte() != Response) && timeout)
-  {
-    timeout--;
-  }
+    /* Check if response is got or a timeout is happen */
+    while ((SD_IO_ReadByte() != Response) && timeout) {
+        timeout--;
+    }
 
-  if (timeout == 0)
-  {
-    /* After time out */
-    return HAL_TIMEOUT;
-  }
-  else
-  {
-    /* Right response got */
-    return HAL_OK;
-  }
+    if (timeout == 0) {
+        /* After time out */
+        return HAL_TIMEOUT;
+    } else {
+        /* Right response got */
+        return HAL_OK;
+    }
 }
 
 /**
@@ -606,10 +590,10 @@ HAL_StatusTypeDef SD_IO_WaitResponse(uint8_t Response)
   */
 void SD_IO_WriteDummy(void)
 {
-  /* SD chip select high */
-  SD_CS_HIGH();
+    /* SD chip select high */
+    SD_CS_HIGH();
 
-  /* Send Dummy byte 0xFF */
-  SD_IO_WriteByte(SD_DUMMY_BYTE);
+    /* Send Dummy byte 0xFF */
+    SD_IO_WriteByte(SD_DUMMY_BYTE);
 }
 #endif /* HAL_SPI_MODULE_ENABLED */
