@@ -22,10 +22,10 @@
 
 /* Exported variables --------------------------------------------------------*/
 extern osThreadId bridgeConfigTaskHandle;
-extern osThreadId USBStreamTaskHandle;
+extern osThreadId CANMonitorTaskHandle;
 extern osThreadId GPSMonitorTaskHandle;
 
-extern osMessageQId USBStreamQueueHandle;
+extern osMessageQId CANRxQueueHandle;
 extern osMessageQId UARTGprmcQueueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -49,8 +49,8 @@ void MX_FREERTOS_Init(void)
     osThreadDef(bridgeConfigTask, APP_BRIDGE_CANConfigTask, osPriorityNormal, 0, 128);
     bridgeConfigTaskHandle = osThreadCreate(osThread(bridgeConfigTask), NULL);
 
-    osThreadDef(USBStreamTask, APP_BRIDGE_USBStreamTask, osPriorityNormal, 0, 128);
-    USBStreamTaskHandle = osThreadCreate(osThread(USBStreamTask), NULL);
+    osThreadDef(CANMonitorTask, APP_BRIDGE_CANMonitorTask, osPriorityNormal, 0, 128);
+    CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
     osThreadDef(GPSMonitorTask, APP_BRIDGE_GPSMonitorTask, osPriorityNormal, 0, 128);
     GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL);
@@ -58,8 +58,8 @@ void MX_FREERTOS_Init(void)
     /* add threads, ... */
 
     /* add queues, ... */
-    osMessageQDef(USBStreamQueue, 8, uint8_t);
-    USBStreamQueueHandle = osMessageCreate(osMessageQ(USBStreamQueue), NULL);
+    osMessageQDef(CANRxQueue, 8, uint8_t);
+    CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
 
     osMessageQDef(UARTGprmcQueue, 128, char);
     UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);

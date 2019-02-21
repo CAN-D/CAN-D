@@ -48,7 +48,7 @@ int main(void)
 
     // Link SD Driver to SPI peripheral
     // This will initialize our SPI peripheral as well
-    MX_FATFS_Init();
+    APP_FATFS_Init();
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();

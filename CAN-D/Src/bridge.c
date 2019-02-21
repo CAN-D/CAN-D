@@ -9,6 +9,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "bridge.h"
 #include "can.h"
+#include "fatfs.h"
 #include "stm32302c_custom.h"
 #include "stm32f3xx_hal_gpio.h"
 #include "usbd_cdc_if.h"
@@ -52,21 +53,27 @@ void APP_BRIDGE_CANConfigTask(void const* argument)
 }
 
 /**
-  * @brief  Function implementing the APP_BRIDGE_USBStreamTask thread.
-  * @param  argument: Not used
+  * @brief  Function implementing the APP_BRIDGE_CANMonitorTask thread.
+  *         Monitors incoming CAN data.
   * @retval None
   */
-void APP_BRIDGE_USBStreamTask(void const* argument)
+void APP_BRIDGE_CANMonitorTask(void const* argument)
 {
     osEvent event;
 
     for (;;) {
-        // Pend on any CAN data we want to stream to the PC
-        event = osMessageGet(USBStreamQueueHandle, 0);
+        // Pend on any CAN Rx data
+        event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
-            // Fill the USB TX buffer with the CAN data
-            while (CDC_Transmit_FS((uint8_t*)event.value.p, (uint16_t)8) == 1) {
-                // USB TX State is BUSY. Wait for it to be free.
+            if (mAppConfiguration.SDStorage == APP_ENABLE) {
+                // Write data to SD card
+                APP_FATFS_WriteSD((const uint8_t*)event.value.p, 8, "CAN_data.log");
+            }
+            if (mAppConfiguration.USBStream == APP_ENABLE) {
+                // Fill the USB TX buffer with the CAN data
+                while (CDC_Transmit_FS((uint8_t*)event.value.p, (uint16_t)8) == 1) {
+                    // USB TX State is BUSY. Wait for it to be free.
+                }
             }
         }
 
@@ -85,11 +92,18 @@ void APP_BRIDGE_GPSMonitorTask(void const* argument)
     osEvent event;
 
     for (;;) {
-        if (mAppConfiguration.SDStorage == APP_ENABLE) {
-            // Pend on GPS data sent via UART
-            event = osMessageGet(UARTGprmcQueueHandle, 0);
-            if (event.status == osEventMessage) {
+        // Pend on GPS data sent via UART
+        event = osMessageGet(UARTGprmcQueueHandle, 0);
+        if (event.status == osEventMessage) {
+            if (mAppConfiguration.SDStorage == APP_ENABLE) {
                 // Write data to SD card
+                APP_FATFS_WriteSD((const uint8_t*)event.value.p, 128, "GPS_data.log");
+            }
+            if (mAppConfiguration.USBStream == APP_ENABLE) {
+                // Fill the USB TX buffer with the GPS data
+                while (CDC_Transmit_FS((uint8_t*)event.value.p, (uint16_t)128) == 1) {
+                    // USB TX State is BUSY. Wait for it to be free.
+                }
             }
         }
 
