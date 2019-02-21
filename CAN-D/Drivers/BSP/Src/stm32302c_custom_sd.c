@@ -27,7 +27,7 @@
   *          | SD_SPI_MISO_PIN / MISO  |   DataOut     |    7        |
   *          +-------------------------+---------------+-------------+
   ******************************************************************************
-  */ 
+  */
 
 /* File Info : -----------------------------------------------------------------
                                    User NOTES
@@ -54,21 +54,21 @@
      o The SD erase block(s) is performed using the function SD_Erase() with specifying
        the number of blocks to erase.
      o The SD runtime status is returned when calling the function SD_GetStatus(). 
-------------------------------------------------------------------------------*/ 
+------------------------------------------------------------------------------*/
 
 #include "stm32302c_custom_sd.h"
 
-#define SD_DUMMY_BYTE   0xFF
+#define SD_DUMMY_BYTE 0xFF
 #define SD_NO_RESPONSE_EXPECTED 0x80
 
 __IO uint8_t SdStatus = SD_PRESENT;
 
-static uint8_t SD_GetCIDRegister(SD_CID* Cid);
-static uint8_t SD_GetCSDRegister(SD_CSD* Csd);
+static uint8_t SD_GetCIDRegister(SD_CID *Cid);
+static uint8_t SD_GetCSDRegister(SD_CSD *Csd);
 static SD_Info SD_GetDataResponse(void);
 static uint8_t SD_GoIdleState(void);
 static uint8_t SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
-    
+
 /**
   * @brief  Initializes the SD/SD communication.
   * @retval The SD Response: 
@@ -76,12 +76,12 @@ static uint8_t SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Respon
   *         - MSD_OK    : Sequence succeed
   */
 uint8_t BSP_SD_Init(void)
-{ 
+{
   /* Configure IO functionalities for SD pin */
   SD_IO_Init();
 
   /* Check SD card detect pin */
-  if(BSP_SD_IsDetected()==SD_NOT_PRESENT) 
+  if (BSP_SD_IsDetected() == SD_NOT_PRESENT)
   {
     SdStatus = SD_NOT_PRESENT;
     return MSD_ERROR;
@@ -90,7 +90,7 @@ uint8_t BSP_SD_Init(void)
   {
     SdStatus = SD_PRESENT;
   }
-  
+
   /* SD initialized and set to SPI mode properly */
   return (SD_GoIdleState());
 }
@@ -104,11 +104,11 @@ uint8_t BSP_SD_IsDetected(void)
   __IO uint8_t status = SD_PRESENT;
 
   /* Check SD card detect pin */
-  if(HAL_GPIO_ReadPin(SD_DETECT_GPIO_PORT, SD_DETECT_PIN) != GPIO_PIN_RESET)
+  if (HAL_GPIO_ReadPin(SD_DETECT_GPIO_PORT, SD_DETECT_PIN) != GPIO_PIN_RESET)
   {
     status = SD_NOT_PRESENT;
   }
-  
+
   return status;
 }
 
@@ -126,7 +126,7 @@ uint8_t BSP_SD_GetCardInfo(SD_CardInfo *pCardInfo)
 
   SD_GetCSDRegister(&(pCardInfo->Csd));
   status = SD_GetCIDRegister(&(pCardInfo->Cid));
-  pCardInfo->CardCapacity = (pCardInfo->Csd.DeviceSize + 1) ;
+  pCardInfo->CardCapacity = (pCardInfo->Csd.DeviceSize + 1);
   pCardInfo->CardCapacity *= (1 << (pCardInfo->Csd.DeviceSizeMul + 2));
   pCardInfo->CardBlockSize = 1 << (pCardInfo->Csd.RdBlockLen);
   pCardInfo->CardCapacity *= pCardInfo->CardBlockSize;
@@ -143,12 +143,12 @@ uint8_t BSP_SD_GetCardInfo(SD_CardInfo *pCardInfo)
   * @param  NumberOfBlocks Number of SD blocks to read 
   * @retval SD status
   */
-uint8_t BSP_SD_ReadBlocks(uint32_t* p32Data, uint64_t ReadAddr, uint16_t BlockSize, uint32_t NumberOfBlocks)
+uint8_t BSP_SD_ReadBlocks(uint32_t *p32Data, uint64_t ReadAddr, uint16_t BlockSize, uint32_t NumberOfBlocks)
 {
   uint32_t counter = 0, offset = 0;
   uint8_t rvalue = MSD_ERROR;
   uint8_t *pData = (uint8_t *)p32Data;
-  
+
   /* Send CMD16 (SD_CMD_SET_BLOCKLEN) to set the size of the block and 
      Check if the SD acknowledged the set block length command: R1 response (0x00: no errors) */
   if (SD_IO_WriteCmd(SD_CMD_SET_BLOCKLEN, BlockSize, 0xFF, SD_RESPONSE_NO_ERROR) != HAL_OK)
@@ -194,7 +194,7 @@ uint8_t BSP_SD_ReadBlocks(uint32_t* p32Data, uint64_t ReadAddr, uint16_t BlockSi
       rvalue = MSD_ERROR;
     }
   }
-  
+
   /* Send dummy byte: 8 Clock pulses of delay */
   SD_IO_WriteDummy();
   /* Returns the reponse */
@@ -209,12 +209,12 @@ uint8_t BSP_SD_ReadBlocks(uint32_t* p32Data, uint64_t ReadAddr, uint16_t BlockSi
   * @param  NumberOfBlocks Number of SD blocks to write
   * @retval SD status
   */
-uint8_t BSP_SD_WriteBlocks(uint32_t* p32Data, uint64_t WriteAddr, uint16_t BlockSize, uint32_t NumberOfBlocks)
+uint8_t BSP_SD_WriteBlocks(uint32_t *p32Data, uint64_t WriteAddr, uint16_t BlockSize, uint32_t NumberOfBlocks)
 {
   uint32_t counter = 0, offset = 0;
   uint8_t rvalue = MSD_ERROR;
   uint8_t *pData = (uint8_t *)p32Data;
-  
+
   /* Data transfer */
   while (NumberOfBlocks--)
   {
@@ -236,7 +236,7 @@ uint8_t BSP_SD_WriteBlocks(uint32_t* p32Data, uint64_t WriteAddr, uint16_t Block
     {
       /* Send the pointed byte */
       SD_IO_WriteByte(*pData);
-      
+
       /* Point to the next location where the byte read will be saved */
       pData++;
     }
@@ -275,7 +275,7 @@ uint8_t BSP_SD_WriteBlocks(uint32_t* p32Data, uint64_t WriteAddr, uint16_t Block
   * @param  Csd pointer on an SCD register structure
   * @retval SD status
   */
-uint8_t SD_GetCSDRegister(SD_CSD* Csd)
+uint8_t SD_GetCSDRegister(SD_CSD *Csd)
 {
   uint32_t counter = 0;
   uint8_t rvalue = MSD_ERROR;
@@ -303,7 +303,7 @@ uint8_t SD_GetCSDRegister(SD_CSD* Csd)
   /* Send dummy byte: 8 Clock pulses of delay */
   SD_IO_WriteDummy();
 
-  if(rvalue == SD_RESPONSE_NO_ERROR)
+  if (rvalue == SD_RESPONSE_NO_ERROR)
   {
     /* Byte 0 */
     Csd->CSDStruct = (CSD_Tab[0] & 0xC0) >> 6;
@@ -350,7 +350,7 @@ uint8_t SD_GetCSDRegister(SD_CSD* Csd)
     Csd->DeviceSizeMul = (CSD_Tab[9] & 0x03) << 1;
     /* Byte 10 */
     Csd->DeviceSizeMul |= (CSD_Tab[10] & 0x80) >> 7;
-      
+
     Csd->EraseGrSize = (CSD_Tab[10] & 0x40) >> 6;
     Csd->EraseGrMul = (CSD_Tab[10] & 0x3F) << 1;
 
@@ -393,12 +393,12 @@ uint8_t SD_GetCSDRegister(SD_CSD* Csd)
   * @param  Cid pointer on an CID register structure
   * @retval SD status
   */
-static uint8_t SD_GetCIDRegister(SD_CID* Cid)
+static uint8_t SD_GetCIDRegister(SD_CID *Cid)
 {
   uint32_t counter = 0;
   uint8_t rvalue = MSD_ERROR;
   uint8_t CID_Tab[16];
-  
+
   /* Send CMD10 (CID register) and Wait for response in the R1 format (0x00 is no errors) */
   if (SD_IO_WriteCmd(SD_CMD_SEND_CID, 0, 0xFF, SD_RESPONSE_NO_ERROR) == HAL_OK)
   {
@@ -422,7 +422,7 @@ static uint8_t SD_GetCIDRegister(SD_CID* Cid)
   /* Send dummy byte: 8 Clock pulses of delay */
   SD_IO_WriteDummy();
 
-  if(rvalue == MSD_OK)
+  if (rvalue == MSD_OK)
   {
     /* Byte 0 */
     Cid->ManufacturerID = CID_Tab[0];
@@ -489,12 +489,12 @@ static uint8_t SD_GetCIDRegister(SD_CID* Cid)
 static uint8_t SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
 {
   uint8_t status = MSD_ERROR;
-  
-  if(SD_IO_WriteCmd(Cmd, Arg, Crc, Response) == HAL_OK)
+
+  if (SD_IO_WriteCmd(Cmd, Arg, Crc, Response) == HAL_OK)
   {
     status = MSD_OK;
   }
-  
+
   /* Send Dummy Byte */
   SD_IO_WriteDummy();
 
@@ -522,20 +522,20 @@ static SD_Info SD_GetDataResponse(void)
     response &= 0x1F;
     switch (response)
     {
-      case SD_DATA_OK:
-      {
-        rvalue = SD_DATA_OK;
-        break;
-      }
-      case SD_DATA_CRC_ERROR:
-        return SD_DATA_CRC_ERROR;
-      case SD_DATA_WRITE_ERROR:
-        return SD_DATA_WRITE_ERROR;
-      default:
-      {
-        rvalue = SD_DATA_OTHER_ERROR;
-        break;
-      }
+    case SD_DATA_OK:
+    {
+      rvalue = SD_DATA_OK;
+      break;
+    }
+    case SD_DATA_CRC_ERROR:
+      return SD_DATA_CRC_ERROR;
+    case SD_DATA_WRITE_ERROR:
+      return SD_DATA_WRITE_ERROR;
+    default:
+    {
+      rvalue = SD_DATA_OTHER_ERROR;
+      break;
+    }
     }
     /* Exit loop in case of data ok */
     if (rvalue == SD_DATA_OK)
@@ -545,7 +545,8 @@ static SD_Info SD_GetDataResponse(void)
   }
 
   /* Wait null data */
-  while (SD_IO_ReadByte() == 0);
+  while (SD_IO_ReadByte() == 0)
+    ;
 
   /* Return response */
   return response;
@@ -577,8 +578,9 @@ static uint8_t SD_GoIdleState(void)
   /*----------Activates the card initialization process-----------*/
   /* Send CMD1 (Activates the card process) until response equal to 0x0 and
      Wait for no error Response (R1 Format) equal to 0x00 */
-  while (SD_SendCmd(SD_CMD_SEND_OP_COND, 0, 0xFF, SD_RESPONSE_NO_ERROR) != MSD_OK);
-  
+  while (SD_SendCmd(SD_CMD_SEND_OP_COND, 0, 0xFF, SD_RESPONSE_NO_ERROR) != MSD_OK)
+    ;
+
   return MSD_OK;
 }
 /**
@@ -606,7 +608,7 @@ uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr)
       }
     }
   }
-  
+
   /* Return the reponse */
   return rvalue;
 }

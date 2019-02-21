@@ -23,94 +23,90 @@
   * limitations under the License.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __USBD_IOREQ_H
 #define __USBD_IOREQ_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include  "usbd_def.h"
-#include  "usbd_core.h"
+#include "usbd_core.h"
+#include "usbd_def.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
-  
+
 /** @defgroup USBD_IOREQ
   * @brief header file for the usbd_ioreq.c file
   * @{
-  */ 
+  */
 
 /** @defgroup USBD_IOREQ_Exported_Defines
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
-
+  */
 
 /** @defgroup USBD_IOREQ_Exported_Types
   * @{
   */
 
-
 /**
   * @}
-  */ 
-
-
+  */
 
 /** @defgroup USBD_IOREQ_Exported_Macros
   * @{
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBD_IOREQ_Exported_Variables
   * @{
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBD_IOREQ_Exported_FunctionsPrototype
   * @{
-  */ 
+  */
 
-USBD_StatusTypeDef  USBD_CtlSendData (USBD_HandleTypeDef  *pdev, 
-                               uint8_t *buf,
-                               uint16_t len);
+USBD_StatusTypeDef USBD_CtlSendData(USBD_HandleTypeDef* pdev,
+    uint8_t* buf,
+    uint16_t len);
 
-USBD_StatusTypeDef  USBD_CtlContinueSendData (USBD_HandleTypeDef  *pdev, 
-                               uint8_t *pbuf,
-                               uint16_t len);
+USBD_StatusTypeDef USBD_CtlContinueSendData(USBD_HandleTypeDef* pdev,
+    uint8_t* pbuf,
+    uint16_t len);
 
-USBD_StatusTypeDef USBD_CtlPrepareRx (USBD_HandleTypeDef  *pdev, 
-                               uint8_t *pbuf,                                 
-                               uint16_t len);
+USBD_StatusTypeDef USBD_CtlPrepareRx(USBD_HandleTypeDef* pdev,
+    uint8_t* pbuf,
+    uint16_t len);
 
-USBD_StatusTypeDef  USBD_CtlContinueRx (USBD_HandleTypeDef  *pdev, 
-                              uint8_t *pbuf,                                          
-                              uint16_t len);
+USBD_StatusTypeDef USBD_CtlContinueRx(USBD_HandleTypeDef* pdev,
+    uint8_t* pbuf,
+    uint16_t len);
 
-USBD_StatusTypeDef  USBD_CtlSendStatus (USBD_HandleTypeDef  *pdev);
+USBD_StatusTypeDef USBD_CtlSendStatus(USBD_HandleTypeDef* pdev);
 
-USBD_StatusTypeDef  USBD_CtlReceiveStatus (USBD_HandleTypeDef  *pdev);
+USBD_StatusTypeDef USBD_CtlReceiveStatus(USBD_HandleTypeDef* pdev);
 
-uint16_t  USBD_GetRxCount (USBD_HandleTypeDef  *pdev , 
-                           uint8_t epnum);
+uint16_t USBD_GetRxCount(USBD_HandleTypeDef* pdev,
+    uint8_t epnum);
 
 /**
   * @}
-  */ 
+  */
 
 #ifdef __cplusplus
 }
@@ -120,9 +116,9 @@ uint16_t  USBD_GetRxCount (USBD_HandleTypeDef  *pdev ,
 
 /**
   * @}
-  */ 
+  */
 
 /**
 * @}
-*/ 
+*/
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

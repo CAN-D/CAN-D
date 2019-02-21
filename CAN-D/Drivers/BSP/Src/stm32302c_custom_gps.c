@@ -20,7 +20,7 @@
   * @retval None
   */
 void BSP_GPS_Init(void)
-{ 
+{
   // Configure IO functionalities for UART TX & RX pins
   GPS_IO_Init();
 

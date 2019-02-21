@@ -10,9 +10,8 @@
 #define __USB_DEVICE__H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
-
 
 #include "stm32f3xx.h"
 #include "stm32f3xx_hal.h"
