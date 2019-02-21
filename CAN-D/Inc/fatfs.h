@@ -16,10 +16,10 @@ extern "C" {
 #include "ff_gen_drv.h"
 #include "sd_diskio.h" /* defines SD_Driver as external */
 
-extern uint8_t retUSER; /* Return value for USER */
-extern char USERPath[4]; /* USER logical drive path */
-extern FATFS USERFatFS; /* File system object for USER logical drive */
-extern FIL USERFile; /* File object for USER */
+extern uint8_t retSD; /* Return value for SD */
+extern char SDPath[4]; /* USER logical drive path */
+extern FATFS SDFatFS; /* File system object for SD logical drive */
+extern FIL SDFile; /* File object for SD card */
 
 void MX_FATFS_Init(void);
 
