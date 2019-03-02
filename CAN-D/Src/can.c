@@ -160,4 +160,18 @@ void APP_CAN_StartStop(void)
     }
 }
 
+/**
+ * @brief Queue CAN data for transmission.
+ * @retval None
+ */
+void APP_CAN_TransmitData(uint8_t* txData, uint32_t dataLength)
+{
+    // CANTxMessage* ms
+    // msg = osPoolAlloc(mTxPool);
+    // msg->handle = &hcan;
+    // msg->data = txData;
+    // msg->dataLength = dataLength;
+    // osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
+}
+
 /* Private functions ---------------------------------------------------------*/

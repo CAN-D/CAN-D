@@ -8,6 +8,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
 #include "bridge.h"
+#include "can.h"
 #include "cmsis_os.h"
 #include "main.h"
 #include "task.h"
@@ -26,6 +27,7 @@ extern osThreadId CANMonitorTaskHandle;
 extern osThreadId GPSMonitorTaskHandle;
 
 extern osMessageQId CANRxQueueHandle;
+extern osMessageQId CANTxQueueHandle;
 extern osMessageQId UARTGprmcQueueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -52,6 +54,9 @@ void MX_FREERTOS_Init(void)
     osThreadDef(CANMonitorTask, APP_BRIDGE_CANMonitorTask, osPriorityNormal, 0, 128);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
+    osThreadDef(CANTransmitTask, APP_BRIDGE_CANTransmitTask, osPriorityNormal, 0, 128);
+    CANMonitorTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
+
     osThreadDef(GPSMonitorTask, APP_BRIDGE_GPSMonitorTask, osPriorityNormal, 0, 128);
     GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL);
 
@@ -60,6 +65,9 @@ void MX_FREERTOS_Init(void)
     /* add queues, ... */
     osMessageQDef(CANRxQueue, 8, uint8_t);
     CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
+
+    osMessageQDef(CANTxQueue, 16, CANTxMessage);
+    CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL);
 
     osMessageQDef(UARTGprmcQueue, 128, char);
     UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);
