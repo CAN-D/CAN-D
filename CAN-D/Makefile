@@ -97,7 +97,7 @@ Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
 
 # ASM sources
 ASM_SOURCES =  \
-startup_stm32f302xc.s
+startup/startup_stm32f302xc.s
 
 
 #######################################
