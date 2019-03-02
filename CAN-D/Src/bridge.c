@@ -33,6 +33,7 @@ void APP_CAN_Init(void)
     mAppConfiguration.SDStorage = APP_DISABLE;
     mAppConfiguration.USBStream = APP_DISABLE;
     mAppConfiguration.USBTransfer = APP_DISABLE;
+    mAppConfiguration.CANTransmit = APP_DISABLE;
 }
 
 /**
@@ -74,6 +75,29 @@ void APP_BRIDGE_CANMonitorTask(void const* argument)
                 while (CDC_Transmit_FS((uint8_t*)event.value.p, (uint16_t)8) == 1) {
                     // USB TX State is BUSY. Wait for it to be free.
                 }
+            }
+        }
+
+        osDelay(1);
+    }
+}
+
+/**
+  * @brief  Function implementing the APP_BRIDGE_CANTransmitTask thread.
+  *         Send outgoing CAN data.
+  * @retval None
+  */
+void APP_BRIDGE_CANTransmitTask(void const* argument)
+{
+    osEvent event;
+
+    for (;;) {
+        // Pend on any CAN Tx data
+        event = osMessageGet(CANTxQueueHandle, 0);
+        if (event.status == osEventMessage) {
+            if (mAppConfiguration.CANTransmit == APP_ENABLE) {
+                // Send Data over can
+                // TODO
             }
         }
 
