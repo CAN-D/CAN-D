@@ -41,6 +41,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void)
 {
+    APP_CAN_InitTasks();
     /* add mutexes, ... */
 
     /* add semaphores, ... */
@@ -48,29 +49,16 @@ void MX_FREERTOS_Init(void)
     /* start timers, add new ones, ... */
 
     /* Create the thread(s) */
-    osThreadDef(bridgeConfigTask, APP_BRIDGE_CANConfigTask, osPriorityNormal, 0, 128);
-    bridgeConfigTaskHandle = osThreadCreate(osThread(bridgeConfigTask), NULL);
-
-    osThreadDef(CANMonitorTask, APP_BRIDGE_CANMonitorTask, osPriorityNormal, 0, 128);
-    CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
-
-    osThreadDef(CANTransmitTask, APP_BRIDGE_CANTransmitTask, osPriorityNormal, 0, 128);
-    CANMonitorTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
 
     osThreadDef(GPSMonitorTask, APP_BRIDGE_GPSMonitorTask, osPriorityNormal, 0, 128);
     GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL);
 
+    osMessageQDef(UARTGprmcQueue, 128, char);
+    UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);
+
     /* add threads, ... */
 
     /* add queues, ... */
-    osMessageQDef(CANRxQueue, 8, uint8_t);
-    CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
-
-    osMessageQDef(CANTxQueue, 16, CANTxMessage);
-    CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL);
-
-    osMessageQDef(UARTGprmcQueue, 128, char);
-    UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);
 }
 
 /* Private functions ---------------------------------------------------------*/

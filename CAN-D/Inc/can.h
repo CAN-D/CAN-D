@@ -32,10 +32,20 @@ typedef struct {
     uint8_t* data;
 } CANRxMessage;
 
+typedef struct
+{
+    APP_ConfigurationState SDStorage; /* Store CAN Data on SD Card */
+    APP_ConfigurationState USBStream; /* Transfer all SD Card data to PC via USB */
+    APP_ConfigurationState USBTransfer; /* Transfer CAN Data directly to USB Device */
+    APP_ConfigurationState CANTransmit; /* Transmit data over the CAN bus */
+} APP_ConfigType;
+
 extern CAN_HandleTypeDef hcan;
 
 void MX_CAN_Init(void);
+void APP_CAN_InitTasks(void);
 void APP_CAN_StartStop(void);
+void APP_CAN_SetConfiguration(APP_ConfigType newConfig);
 
 #ifdef __cplusplus
 }
