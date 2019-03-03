@@ -22,15 +22,14 @@ extern "C" {
 
 typedef struct {
     CAN_HandleTypeDef* handle;
+    CAN_TxHeaderTypeDef* header;
     uint8_t* data;
-    uint32_t dataLength;
 } CANTxMessage;
 
 typedef struct {
     CAN_HandleTypeDef* handle;
-    CAN_TxHeaderTypeDef header;
+    CAN_RxHeaderTypeDef* header;
     uint8_t* data;
-    uint32_t dataLength;
 } CANRxMessage;
 
 extern CAN_HandleTypeDef hcan;

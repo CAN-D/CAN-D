@@ -41,6 +41,9 @@ osMessageQId CANRxQueueHandle; /* Handles CAN Rx data */
 osMessageQId CANTxQueueHandle; /* Handles CAN Tx data */
 osMessageQId UARTGprmcQueueHandle; /* Handles GPS GPRMC data */
 
+/* Pools */
+osPoolId CANTxPool;
+
 /* RTOS Tasks */
 void APP_BRIDGE_CANConfigTask(void const* argument);
 void APP_BRIDGE_CANMonitorTask(void const* argument);
