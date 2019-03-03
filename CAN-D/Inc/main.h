@@ -16,6 +16,11 @@ extern "C" {
 
 #include "stm32f3xx_hal.h"
 
+typedef enum {
+    APP_DISABLE = 0,
+    APP_ENABLE = 1
+} APP_ConfigurationState;
+
 void Error_Handler(void);
 
 #ifdef __cplusplus
