@@ -7,7 +7,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
-#include "bridge.h"
+#include "gps.h"
 #include "can.h"
 #include "cmsis_os.h"
 #include "main.h"

@@ -1,13 +1,12 @@
 /**
   ******************************************************************************
-  * File Name          : bridge.h
-  * Description        : This file provides code for bridging peripheral
-  *                      instances
+  * File Name          : gps.h
+  * Description        : This file provides code for dealing with GPS data.
   ******************************************************************************
   */
 
-#ifndef BRIDGE_H_
-#define BRIDGE_H_
+#ifndef GPS_H_
+#define GPS_H_
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,4 +30,4 @@ void APP_BRIDGE_GPSMonitorTask(void const* argument);
 #ifdef __cplusplus
 }
 #endif
-#endif /* BRIDGE_H_ */
+#endif /* GPS_H_ */

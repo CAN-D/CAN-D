@@ -1,13 +1,12 @@
 /**
   ******************************************************************************
-  * File Name          : bridge.c
-  * Description        : This file provides code for bridging peripheral
-  *                      instances
+  * File Name          : gps.c
+  * Description        : This file provides code for dealing with gps data.
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "bridge.h"
+#include "gps.h"
 #include "fatfs.h"
 #include "stm32302c_custom.h"
 #include "stm32f3xx_hal_gpio.h"

@@ -37,7 +37,7 @@ BUILD_DIR = $(PROJ_DIR)/build
 ######################################
 # C sources
 C_SOURCES =  \
-Src/bridge.c \
+Src/gps.c \
 Src/can.c \
 Src/fatfs.c \
 Src/freertos.c \

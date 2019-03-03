@@ -7,7 +7,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f3xx_it.h"
-#include "bridge.h" /* for UART message Queues */
+#include "gps.h" /* for UART message Queues */
 #include "cmsis_os.h"
 #include "main.h"
 #include "stm32302c_custom.h" /* for UART handle (huart) */

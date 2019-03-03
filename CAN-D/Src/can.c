@@ -313,7 +313,6 @@ void APP_CAN_TransmitTask(void const* argument)
             }
             osPoolFree(CANTxPool, msg);
         }
-
         osDelay(1);
     }
 }
