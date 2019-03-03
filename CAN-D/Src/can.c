@@ -15,23 +15,29 @@
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
+#define TX_BUFFER_SIZE 8
+#define RX_BUFFER_SIZE 8
 
 /* Private variables ---------------------------------------------------------*/
+APP_ConfigType mAppConfiguration = { 0 };
+/* Threads */
 osThreadId bridgeConfigTaskHandle;
 osThreadId CANMonitorTaskHandle;
 osThreadId CANTransmitTaskHandle;
+/* Queues */
 osMessageQId CANRxQueueHandle;
 osMessageQId CANTxQueueHandle;
-APP_ConfigType mAppConfiguration = { 0 };
-osPoolDef(CANTxPool, 8, CANTxMessage);
+/* Data Pools */
+osPoolDef(CANTxPool, TX_BUFFER_SIZE, CANTxMessage);
+osPoolDef(CANRxPool, RX_BUFFER_SIZE, CANRxMessage);
 osPoolId CANTxPool;
+osPoolId CANRxPool;
 
 /* Private macro -------------------------------------------------------------*/
 
 /* Exported variables --------------------------------------------------------*/
 CAN_HandleTypeDef hcan;
 extern USBD_HandleTypeDef hUsbDeviceFS;
-extern osPoolId CANTxPool;
 
 /* Private function prototypes -----------------------------------------------*/
 void APP_CAN_LogButtonTask(void const* argument);
@@ -54,14 +60,15 @@ void MX_CAN_Init(void)
     hcan.Init.AutoRetransmission = DISABLE;
     hcan.Init.ReceiveFifoLocked = DISABLE;
     hcan.Init.TransmitFifoPriority = DISABLE;
-    if (HAL_CAN_Init(&hcan) != HAL_OK) {
-        Error_Handler();
-    }
 
-    CANTxPool = osPoolCreate(osPool(CANTxPool));
-    if (CANTxPool == NULL) {
+    if (HAL_CAN_Init(&hcan) != HAL_OK)
         Error_Handler();
-    }
+
+    if ((CANTxPool = osPoolCreate(osPool(CANTxPool))) == NULL)
+        Error_Handler();
+
+    if ((CANRxPool = osPoolCreate(osPool(CANRxPool))) == NULL)
+        Error_Handler();
 
     // TODO: configure CAN reception filters using HAL_CAN_ConfigFilter()
     mAppConfiguration.SDStorage = APP_DISABLE;
@@ -81,10 +88,10 @@ void APP_CAN_InitTasks(void)
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 128);
     CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
 
-    osMessageQDef(CANRxQueue, 8, uint8_t);
+    osMessageQDef(CANRxQueue, RX_BUFFER_SIZE, CANRxMessage);
     CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
 
-    osMessageQDef(CANTxQueue, 16, CANTxMessage);
+    osMessageQDef(CANTxQueue, TX_BUFFER_SIZE, CANTxMessage);
     CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL);
 }
 
@@ -97,9 +104,9 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 
         __HAL_RCC_GPIOB_CLK_ENABLE();
         /**CAN GPIO Configuration    
-    PB8     ------> CAN_RX
-    PB9     ------> CAN_TX 
-    */
+            PB8     ------> CAN_RX
+            PB9     ------> CAN_TX 
+        */
         GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_9;
         GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -125,9 +132,9 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
         __HAL_RCC_CAN1_CLK_DISABLE();
 
         /**CAN GPIO Configuration    
-    PB8     ------> CAN_RX
-    PB9     ------> CAN_TX 
-    */
+            PB8     ------> CAN_RX
+            PB9     ------> CAN_TX 
+        */
         HAL_GPIO_DeInit(GPIOB, GPIO_PIN_8 | GPIO_PIN_9);
 
         /* CAN interrupt Deinit */
@@ -159,17 +166,17 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
   */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
 {
-    uint8_t rxData[8]; // 8 Bytes of CAN RX Data
-    CAN_RxHeaderTypeDef pHeader = { 0 };
+    CANRxMessage* msg;
+    msg = osPoolAlloc(CANRxPool);
+    msg->handle = &hcan;
 
     // Get CAN RX data from the CAN module
-    if (HAL_CAN_GetRxMessage(canHandle, CAN_RX_FIFO_0, &pHeader, rxData) != HAL_OK) {
+    if (HAL_CAN_GetRxMessage(canHandle, CAN_RX_FIFO_0, msg->header, msg->data) != HAL_OK) {
         Error_Handler();
     }
 
     // Pass CAN RX data to the monitor thread
-    // @see APP_CAN_MonitorTask()
-    osMessagePut(CANRxQueueHandle, (uint32_t)rxData[0], 0);
+    osMessagePut(CANRxQueueHandle, (uint32_t)msg, 0);
 }
 
 /**
@@ -207,8 +214,8 @@ void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef* header)
     CANTxMessage* msg;
     msg = osPoolAlloc(CANTxPool);
     msg->handle = &hcan;
-    msg->data = txData;
     msg->header = header;
+    memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
     osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
 }
 
@@ -248,21 +255,24 @@ void APP_CAN_LogButtonTask(void const* argument)
 void APP_CAN_MonitorTask(void const* argument)
 {
     osEvent event;
+    CANRxMessage* msg;
 
     for (;;) {
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
+            msg = event.value.p;
             if (mAppConfiguration.SDStorage == APP_ENABLE) {
                 // Write data to SD card
-                APP_FATFS_WriteSD((const uint8_t*)event.value.p, 8, "CAN_data.log");
+                APP_FATFS_WriteSD((const uint8_t*)msg->data, 8, "CAN_data.log");
             }
             if (mAppConfiguration.USBStream == APP_ENABLE) {
                 // Fill the USB TX buffer with the CAN data
-                while (CDC_Transmit_FS((uint8_t*)event.value.p, (uint16_t)8) == 1) {
+                while (CDC_Transmit_FS((uint8_t*)msg->data, (uint16_t)8) == 1) {
                     // USB TX State is BUSY. Wait for it to be free.
                 }
             }
+            osPoolFree(CANRxPool, msg);
         }
         osDelay(1);
     }
