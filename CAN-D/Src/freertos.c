@@ -7,9 +7,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
-#include "gps.h"
 #include "can.h"
 #include "cmsis_os.h"
+#include "gps.h"
 #include "main.h"
 #include "task.h"
 
@@ -42,23 +42,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void MX_FREERTOS_Init(void)
 {
     APP_CAN_InitTasks();
-    /* add mutexes, ... */
-
-    /* add semaphores, ... */
-
-    /* start timers, add new ones, ... */
-
-    /* Create the thread(s) */
-
-    osThreadDef(GPSMonitorTask, APP_BRIDGE_GPSMonitorTask, osPriorityNormal, 0, 128);
-    GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL);
-
-    osMessageQDef(UARTGprmcQueue, 128, char);
-    UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);
-
-    /* add threads, ... */
-
-    /* add queues, ... */
+    APP_GPS_InitTasks();
 }
 
 /* Private functions ---------------------------------------------------------*/
