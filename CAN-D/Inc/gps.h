@@ -11,21 +11,12 @@
 extern "C" {
 #endif
 
-#include "cmsis_os.h"
 #include "main.h"
 
-/* Application configuration */
+#define GPS_DATA_LENGTH 128
 
-/* Threads */
-osThreadId GPSMonitorTaskHandle;
-
-/* Queues */
-osMessageQId UARTGprmcQueueHandle; /* Handles GPS GPRMC data */
-
-/* Pools */
-
-/* RTOS Tasks */
-void APP_BRIDGE_GPSMonitorTask(void const* argument);
+void APP_GPS_InitTasks(void);
+void APP_GPS_BufferGPSString(char* dataString, size_t dataLength);
 
 #ifdef __cplusplus
 }

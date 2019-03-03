@@ -7,8 +7,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f3xx_it.h"
-#include "gps.h" /* for UART message Queues */
 #include "cmsis_os.h"
+#include "gps.h" /* for UART message Queues */
 #include "main.h"
 #include "stm32302c_custom.h" /* for UART handle (huart) */
 #include "string.h"
@@ -143,9 +143,6 @@ void USART2_IRQHandler(void)
 {
     char rxData[128] = "0";
     uint8_t rx_idx = 0;
-
-    HAL_UART_IRQHandler(&huart);
-
     // Check if the UART2 Read Data Register has data
     if (huart.Instance->ISR & USART_ISR_RXNE) {
         // Read the data from the register
@@ -153,13 +150,14 @@ void USART2_IRQHandler(void)
 
         // The GPS RX data will be held between '$' and '\n' characters
         if (rxData[rx_idx] == '$') {
-            if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0) {
-                osMessagePut(UARTGprmcQueueHandle, (uint32_t)rxData[0], 0);
-            }
+            if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
+                APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
 
             memset(rxData, 0, sizeof(rxData));
         }
     }
+
+    HAL_UART_IRQHandler(&huart);
 }
 
 /**
