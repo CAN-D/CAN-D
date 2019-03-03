@@ -12,6 +12,8 @@
 #include "fatfs.h"
 #include "usbd_cdc_if.h"
 
+osPoolDef(CANTxPool, 8, CANTxMessage);
+
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
@@ -24,6 +26,7 @@
 CAN_HandleTypeDef hcan;
 extern APP_ConfigType mAppConfiguration;
 extern USBD_HandleTypeDef hUsbDeviceFS;
+extern osPoolId CANTxPool;
 
 /* Private function prototypes -----------------------------------------------*/
 
@@ -47,6 +50,10 @@ void MX_CAN_Init(void)
         Error_Handler();
     }
 
+    CANTxPool = osPoolCreate(osPool(CANTxPool));
+    if (CANTxPool == NULL) {
+        Error_Handler();
+    }
     // TODO: configure CAN reception filters using HAL_CAN_ConfigFilter()
 }
 
@@ -164,14 +171,14 @@ void APP_CAN_StartStop(void)
  * @brief Queue CAN data for transmission.
  * @retval None
  */
-void APP_CAN_TransmitData(uint8_t* txData, uint32_t dataLength)
+void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef* header)
 {
-    // CANTxMessage* ms
-    // msg = osPoolAlloc(mTxPool);
-    // msg->handle = &hcan;
-    // msg->data = txData;
-    // msg->dataLength = dataLength;
-    // osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
+    CANTxMessage* msg;
+    msg = osPoolAlloc(CANTxPool);
+    msg->handle = &hcan;
+    msg->data = txData;
+    msg->header = header;
+    osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
 }
 
 /* Private functions ---------------------------------------------------------*/

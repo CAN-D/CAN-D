@@ -24,6 +24,7 @@
 
 /* Exported variables --------------------------------------------------------*/
 APP_ConfigType mAppConfiguration = { 0 };
+extern osPoolId CANTxPool;
 
 /* Private function prototypes -----------------------------------------------*/
 
@@ -90,15 +91,32 @@ void APP_BRIDGE_CANMonitorTask(void const* argument)
 void APP_BRIDGE_CANTransmitTask(void const* argument)
 {
     osEvent event;
+    CANTxMessage* msg;
+    uint32_t mailbox;
 
     for (;;) {
         // Pend on any CAN Tx data
         event = osMessageGet(CANTxQueueHandle, 0);
         if (event.status == osEventMessage) {
+            msg = event.value.p;
             if (mAppConfiguration.CANTransmit == APP_ENABLE) {
-                // Send Data over can
-                // TODO
+                if (HAL_CAN_GetTxMailboxesFreeLevel(msg->handle) > 0) {
+                    /* Default to sending on MAILBOX0 */
+                    mailbox = CAN_TX_MAILBOX0;
+                    /* Check Tx Mailbox 1 status */
+                    if ((msg->handle->Instance->TSR & CAN_TSR_TME1) != 0U) {
+                        mailbox = CAN_TX_MAILBOX1;
+                    }
+                    /* Check Tx Mailbox 2 status */
+                    else if ((msg->handle->Instance->TSR & CAN_TSR_TME2) != 0U) {
+                        mailbox = CAN_TX_MAILBOX2;
+                    }
+                    HAL_CAN_AddTxMessage(msg->handle, msg->header, msg->data, (uint32_t*)mailbox);
+                } else {
+                    // Dropped a message!
+                }
             }
+            osPoolFree(CANTxPool, msg);
         }
 
         osDelay(1);
