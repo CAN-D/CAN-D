@@ -23,7 +23,7 @@ extern "C" {
 
 typedef struct {
     CAN_HandleTypeDef* handle;
-    CAN_TxHeaderTypeDef* header;
+    CAN_TxHeaderTypeDef header;
     uint8_t data[CAN_MESSAGE_LENGTH];
 } CANTxMessage;
 
@@ -47,6 +47,7 @@ void MX_CAN_Init(void);
 void APP_CAN_InitTasks(void);
 void APP_CAN_StartStop(void);
 void APP_CAN_SetConfiguration(APP_ConfigType newConfig);
+void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef header);
 
 #ifdef __cplusplus
 }

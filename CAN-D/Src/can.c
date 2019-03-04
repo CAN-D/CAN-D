@@ -23,6 +23,8 @@ static APP_ConfigType mAppConfiguration = { 0 };
 /* Threads */
 static osThreadId CANMonitorTaskHandle;
 static osThreadId CANTransmitTaskHandle;
+// TODO: BO: this is demo code
+static osThreadId CANIoDemoTaskHandle;
 /* Queues */
 static osMessageQId CANRxQueueHandle;
 static osMessageQId CANTxQueueHandle;
@@ -40,6 +42,7 @@ CAN_HandleTypeDef hcan;
 /* Private function prototypes -----------------------------------------------*/
 void APP_CAN_MonitorTask(void const* argument);
 void APP_CAN_TransmitTask(void const* argument);
+void APP_CAN_IoDemoTask(void const* argument);
 
 /* Exported functions --------------------------------------------------------*/
 /* CAN init function */
@@ -81,6 +84,9 @@ void APP_CAN_InitTasks(void)
 
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 128);
     CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
+
+    osThreadDef(CANIoDemoTask, APP_CAN_IoDemoTask, osPriorityNormal, 0, 128);
+    CANIoDemoTaskHandle = osThreadCreate(osThread(CANIoDemoTask), NULL);
 
     osMessageQDef(CANRxQueue, RX_BUFFER_SIZE, CANRxMessage);
     CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
@@ -203,14 +209,15 @@ void APP_CAN_StartStop(void)
  * @brief Queue CAN data for transmission.
  * @retval None
  */
-void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef* header)
+void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef header)
 {
     CANTxMessage* msg;
     msg = osPoolAlloc(CANTxPool);
     msg->handle = &hcan;
     msg->header = header;
     memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
-    osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
+    if (osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0) != osOK)
+        Error_Handler();
 }
 
 /**
@@ -282,7 +289,7 @@ void APP_CAN_TransmitTask(void const* argument)
                     else if ((msg->handle->Instance->TSR & CAN_TSR_TME2) != 0U) {
                         mailbox = CAN_TX_MAILBOX2;
                     }
-                    HAL_CAN_AddTxMessage(msg->handle, msg->header, msg->data, (uint32_t*)mailbox);
+                    HAL_CAN_AddTxMessage(msg->handle, &msg->header, msg->data, (uint32_t*)mailbox);
                 } else {
                     // Dropped a message!
                 }
@@ -290,5 +297,22 @@ void APP_CAN_TransmitTask(void const* argument)
             osPoolFree(CANTxPool, msg);
         }
         osDelay(1);
+    }
+}
+
+void APP_CAN_IoDemoTask(void const* argument)
+{
+    uint8_t txData[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+    CAN_TxHeaderTypeDef header = {
+        .StdId = 1,
+        .ExtId = 1,
+        .IDE = CAN_ID_STD,
+        .RTR = CAN_RTR_DATA,
+        .DLC = 8,
+        .TransmitGlobalTime = DISABLE
+    };
+    for (;;) {
+        APP_CAN_TransmitData(txData, header);
+        osDelay(10);
     }
 }
