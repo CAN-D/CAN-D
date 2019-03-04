@@ -19,25 +19,24 @@
 #define RX_BUFFER_SIZE 8
 
 /* Private variables ---------------------------------------------------------*/
-APP_ConfigType mAppConfiguration = { 0 };
+static APP_ConfigType mAppConfiguration = { 0 };
 /* Threads */
-osThreadId bridgeConfigTaskHandle;
-osThreadId CANMonitorTaskHandle;
-osThreadId CANTransmitTaskHandle;
+static osThreadId bridgeConfigTaskHandle;
+static osThreadId CANMonitorTaskHandle;
+static osThreadId CANTransmitTaskHandle;
 /* Queues */
-osMessageQId CANRxQueueHandle;
-osMessageQId CANTxQueueHandle;
+static osMessageQId CANRxQueueHandle;
+static osMessageQId CANTxQueueHandle;
 /* Data Pools */
 osPoolDef(CANTxPool, TX_BUFFER_SIZE, CANTxMessage);
 osPoolDef(CANRxPool, RX_BUFFER_SIZE, CANRxMessage);
-osPoolId CANTxPool;
-osPoolId CANRxPool;
+static osPoolId CANTxPool;
+static osPoolId CANRxPool;
 
 /* Private macro -------------------------------------------------------------*/
 
 /* Exported variables --------------------------------------------------------*/
 CAN_HandleTypeDef hcan;
-extern USBD_HandleTypeDef hUsbDeviceFS;
 
 /* Private function prototypes -----------------------------------------------*/
 void APP_CAN_LogButtonTask(void const* argument);
