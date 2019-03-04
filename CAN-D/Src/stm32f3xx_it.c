@@ -7,6 +7,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f3xx_it.h"
+#include "can.h"
 #include "cmsis_os.h"
 #include "gps.h" /* for UART message Queues */
 #include "main.h"
@@ -170,6 +171,14 @@ void USART2_IRQHandler(void)
 void USB_LP_IRQHandler(void)
 {
     HAL_PCD_IRQHandler(&hpcd_USB_FS);
+}
+
+void EXTI15_10_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
+    if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_RESET) {
+        APP_CAN_StartStop();
+    }
 }
 
 /* Private functions ---------------------------------------------------------*/

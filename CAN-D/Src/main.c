@@ -52,6 +52,7 @@ int main(void)
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    BSP_PB_Init(BUTTON_LOG, BUTTON_MODE_EXTI);
     MX_CAN_Init();
     MX_TIM2_Init();
     MX_USB_DEVICE_Init();
