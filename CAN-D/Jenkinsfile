@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'make --file=CAN-D/Makefile' 
+                sh 'make clean --file ./CAN-D/Makefile && make --file=CAN-D/Makefile' 
             }
         }
     }
