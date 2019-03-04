@@ -221,8 +221,10 @@ void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef header)
     msg->handle = &hcan;
     msg->header = header;
     memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
-    if (osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0) != osOK)
+    if (osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0) != osOK) {
+        osPoolFree(CANTxPool, msg);
         Error_Handler();
+    }
 }
 
 /**
@@ -318,6 +320,6 @@ void APP_CAN_IoDemoTask(void const* argument)
     };
     for (;;) {
         APP_CAN_TransmitData(txData, header);
-        osDelay(10);
+        osDelay(5000);
     }
 }
