@@ -1,0 +1,11 @@
+#!/usr/bin/expect
+
+set ELF [lindex $argv 0];
+
+spawn arm-none-eabi-gdb $ELF
+
+expect "(gdb)"
+send -- "target extended-remote localhost:4422\r"
+expect "Remote debugging using localhost:4422"
+send -- "load\r"
+interact
