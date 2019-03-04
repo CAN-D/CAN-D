@@ -149,9 +149,13 @@ void USART2_IRQHandler(void)
         rxData[rx_idx] = huart.Instance->RDR;
 
         // The GPS RX data will be held between '$' and '\n' characters
-        if (rxData[rx_idx] == '$') {
-            if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
-                APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
+        // TODO: BO: This is demo specific code
+        // if (rxData[rx_idx] == '$') {
+        if (1) {
+            // TODO: BO: This is demo specific code
+            // if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
+            //     APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
+            APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
 
             memset(rxData, 0, sizeof(rxData));
         }
