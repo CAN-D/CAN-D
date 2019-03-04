@@ -24,6 +24,6 @@ setup()
 }
 
 setup
-/usr/bin/expect ${HOME}/.scripts/arm-gdb_scripts/arm-gdb_load ${ELF}
+/usr/bin/expect ../ST-Link/arm-gdb_load ${ELF}
 exit 0
 
