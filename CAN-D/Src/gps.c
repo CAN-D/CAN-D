@@ -40,10 +40,12 @@ void APP_GPS_MonitorTask(void const* argument);
 void APP_GPS_InitTasks(void)
 {
     osThreadDef(GPSMonitorTask, APP_GPS_MonitorTask, osPriorityNormal, 0, 128);
-    GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL);
+    if ((GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL)) == NULL)
+        Error_Handler();
 
     osMessageQDef(UARTGprmcQueue, GPS_BUFFER_LENGTH, GPSData);
-    UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL);
+    if ((UARTGprmcQueueHandle = osMessageCreate(osMessageQ(UARTGprmcQueue), NULL)) == NULL)
+        Error_Handler();
 }
 
 void APP_GPS_BufferGPSString(char* dataString, size_t dataLength)

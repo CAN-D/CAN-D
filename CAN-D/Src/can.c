@@ -80,19 +80,24 @@ void MX_CAN_Init(void)
 void APP_CAN_InitTasks(void)
 {
     osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 128);
-    CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
+    if ((CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL)) == NULL)
+        Error_Handler();
 
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 128);
-    CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
+    if ((CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL)) == NULL)
+        Error_Handler();
 
     osThreadDef(CANIoDemoTask, APP_CAN_IoDemoTask, osPriorityNormal, 0, 128);
-    CANIoDemoTaskHandle = osThreadCreate(osThread(CANIoDemoTask), NULL);
+    if ((CANIoDemoTaskHandle = osThreadCreate(osThread(CANIoDemoTask), NULL)) == NULL)
+        Error_Handler();
 
     osMessageQDef(CANRxQueue, RX_BUFFER_SIZE, CANRxMessage);
-    CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
+    if ((CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL)) == NULL)
+        Error_Handler();
 
     osMessageQDef(CANTxQueue, TX_BUFFER_SIZE, CANTxMessage);
-    CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL);
+    if ((CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL)) == NULL)
+        Error_Handler();
 }
 
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
