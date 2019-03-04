@@ -21,7 +21,6 @@
 /* Private variables ---------------------------------------------------------*/
 static APP_ConfigType mAppConfiguration = { 0 };
 /* Threads */
-static osThreadId bridgeConfigTaskHandle;
 static osThreadId CANMonitorTaskHandle;
 static osThreadId CANTransmitTaskHandle;
 /* Queues */
@@ -39,7 +38,6 @@ static osPoolId CANRxPool;
 CAN_HandleTypeDef hcan;
 
 /* Private function prototypes -----------------------------------------------*/
-void APP_CAN_LogButtonTask(void const* argument);
 void APP_CAN_MonitorTask(void const* argument);
 void APP_CAN_TransmitTask(void const* argument);
 
@@ -78,9 +76,6 @@ void MX_CAN_Init(void)
 
 void APP_CAN_InitTasks(void)
 {
-    osThreadDef(bridgeConfigTask, APP_CAN_LogButtonTask, osPriorityNormal, 0, 128);
-    bridgeConfigTaskHandle = osThreadCreate(osThread(bridgeConfigTask), NULL);
-
     osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 128);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
@@ -226,24 +221,6 @@ void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef* header)
 void APP_CAN_SetConfiguration(APP_ConfigType newConfig)
 {
     mAppConfiguration = newConfig;
-}
-
-/* Private functions ---------------------------------------------------------*/
-/**
-  * @brief  Function implementing the APP_CAN_LogButtonTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-void APP_CAN_LogButtonTask(void const* argument)
-{
-    for (;;) {
-        // Start/Stop the CAN module on button press
-        if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_SET) {
-            APP_CAN_StartStop();
-        }
-
-        osDelay(1);
-    }
 }
 
 /**

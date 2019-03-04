@@ -18,7 +18,7 @@ typedef struct {
 } GPSData;
 
 /* Private define ------------------------------------------------------------*/
-#define GPS_BUFFER_LENGTH 8
+#define GPS_BUFFER_LENGTH 2
 
 /* Private variables ---------------------------------------------------------*/
 /* Threads */
