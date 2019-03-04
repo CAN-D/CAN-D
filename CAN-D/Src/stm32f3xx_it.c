@@ -176,7 +176,7 @@ void USB_LP_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
     HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
-    if (BSP_PB_GetState(LOG_BUTTON_PIN) == GPIO_PIN_RESET) {
+    if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_RESET) {
         APP_CAN_StartStop();
     }
 }
