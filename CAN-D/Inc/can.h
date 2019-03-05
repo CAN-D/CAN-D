@@ -41,7 +41,7 @@ typedef struct
     APP_ConfigurationState CANTransmit; /* Transmit data over the CAN bus */
 } APP_ConfigType;
 
-extern CAN_HandleTypeDef hcan;
+CAN_HandleTypeDef hcan;
 
 void MX_CAN_Init(void);
 void APP_CAN_InitTasks(void);

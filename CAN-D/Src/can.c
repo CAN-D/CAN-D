@@ -329,16 +329,10 @@ void APP_CAN_IoDemoTask(void const* argument)
     HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
     for (;;) {
         if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0) {
-            HAL_CAN_AddTxMessage(&hcan, &header, txData, (uint32_t*)mailbox);
-            if (mailbox == 0) {
-            }
-            if (header.StdId == 1) {
-            }
-            if (txData == NULL) {
-            }
+            HAL_CAN_AddTxMessage(&hcan, &header, txData, &mailbox);
         } else {
             // Dropped a message!
         }
-        osDelay(500);
+        osDelay(1);
     }
 }
