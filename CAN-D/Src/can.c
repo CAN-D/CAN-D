@@ -219,7 +219,13 @@ void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef header)
     CANTxMessage* msg;
     msg = osPoolAlloc(CANTxPool);
     msg->handle = &hcan;
-    msg->header = header;
+    // msg->header = header;
+    msg->header.StdId = 1;
+    msg->header.ExtId = 1;
+    msg->header.IDE = CAN_ID_STD;
+    msg->header.RTR = CAN_RTR_DATA;
+    msg->header.DLC = 8;
+    msg->header.TransmitGlobalTime = DISABLE;
     memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
     if (osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0) != osOK) {
         osPoolFree(CANTxPool, msg);
@@ -309,6 +315,7 @@ void APP_CAN_TransmitTask(void const* argument)
 
 void APP_CAN_IoDemoTask(void const* argument)
 {
+    uint32_t mailbox = 0;
     uint8_t txData[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
     CAN_TxHeaderTypeDef header = {
         .StdId = 1,
@@ -318,8 +325,14 @@ void APP_CAN_IoDemoTask(void const* argument)
         .DLC = 8,
         .TransmitGlobalTime = DISABLE
     };
+    HAL_CAN_Start(&hcan);
+    HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
     for (;;) {
-        APP_CAN_TransmitData(txData, header);
-        osDelay(5000);
+        if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0) {
+            HAL_CAN_AddTxMessage(&hcan, &header, txData, (uint32_t*)mailbox);
+        } else {
+            // Dropped a message!
+        }
+        osDelay(500);
     }
 }
