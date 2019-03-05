@@ -28,7 +28,6 @@ setup(
     install_requires=[
         'PyQt5',
     ],
-    scripts=['bin/a-script'],
     include_package_data=True,
     classifiers=[
         "Development Status :: 5 - Production/Stable",

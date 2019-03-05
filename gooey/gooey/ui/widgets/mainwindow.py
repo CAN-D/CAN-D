@@ -6,13 +6,13 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-import resources
+import ui.widgets.resources
 from PyQt5 import QtCore, QtGui, QtWidgets
-from rxtx import RxTxTab
+from ui.widgets.rxtx import RxTxTab
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+class CAND_MainWindow(object):
+    def __init__(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1280, 778)
         MainWindow.setAutoFillBackground(False)
@@ -34,7 +34,7 @@ class Ui_MainWindow(object):
         # Receive/Transmit Tab
         self.rxtxTab = QtWidgets.QWidget()
         # Put rxtx component into tab
-        rxtxtab = RxTxTab(self.rxtxTab)
+        RxTxTab(self.rxtxTab)
         self.rxtxTab.setObjectName("rxtxTab")
         self.tabWidget.addTab(self.rxtxTab, "")
 
@@ -233,7 +233,6 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    ui = CAND_MainWindow(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
