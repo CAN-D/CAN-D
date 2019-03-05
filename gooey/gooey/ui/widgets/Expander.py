@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QScrollArea, QFrame, QToolButton, QGridLayout, QSizePolicy
 from PyQt5.QtCore import QParallelAnimationGroup, Qt, QAbstractAnimation, QPropertyAnimation
 
+
 class Expander(QWidget):
     def __init__(self, parent=None, title='', animationDuration=300):
         """
@@ -30,16 +31,20 @@ class Expander(QWidget):
         headerLine.setFrameShadow(QFrame.Sunken)
         headerLine.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
 
-        self.contentArea.setStyleSheet("QScrollArea { background-color: white; border: none; }")
-        self.contentArea.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.contentArea.setStyleSheet("QScrollArea { border: none; }")
+        self.contentArea.setSizePolicy(
+            QSizePolicy.Expanding, QSizePolicy.Fixed)
         # start out collapsed
         self.contentArea.setMaximumHeight(0)
         self.contentArea.setMinimumHeight(0)
         # let the entire widget grow and shrink with its content
         toggleAnimation = self.toggleAnimation
-        toggleAnimation.addAnimation(QPropertyAnimation(self, b"minimumHeight"))
-        toggleAnimation.addAnimation(QPropertyAnimation(self, b"maximumHeight"))
-        toggleAnimation.addAnimation(QPropertyAnimation(self.contentArea, b"maximumHeight"))
+        toggleAnimation.addAnimation(
+            QPropertyAnimation(self, b"minimumHeight"))
+        toggleAnimation.addAnimation(
+            QPropertyAnimation(self, b"maximumHeight"))
+        toggleAnimation.addAnimation(QPropertyAnimation(
+            self.contentArea, b"maximumHeight"))
         # don't waste space
         mainLayout = self.mainLayout
         mainLayout.setVerticalSpacing(0)
@@ -71,7 +76,8 @@ class Expander(QWidget):
             spoilerAnimation.setDuration(self.animationDuration)
             spoilerAnimation.setStartValue(collapsedHeight)
             spoilerAnimation.setEndValue(collapsedHeight + contentHeight)
-        contentAnimation = self.toggleAnimation.animationAt(self.toggleAnimation.animationCount() - 1)
+        contentAnimation = self.toggleAnimation.animationAt(
+            self.toggleAnimation.animationCount() - 1)
         contentAnimation.setDuration(self.animationDuration)
         contentAnimation.setStartValue(0)
         contentAnimation.setEndValue(contentHeight)
