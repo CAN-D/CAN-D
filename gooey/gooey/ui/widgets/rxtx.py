@@ -66,7 +66,7 @@ class RxTxTab(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    RxTxTab = QtWidgets.QWidget()
-    ui = RxTxTab(RxTxTab)
-    RxTxTab.show()
+    rxtx = QtWidgets.QWidget()
+    ui = RxTxTab(rxtx)
+    rxtx.show()
     sys.exit(app.exec_())
