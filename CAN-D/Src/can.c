@@ -330,6 +330,12 @@ void APP_CAN_IoDemoTask(void const* argument)
     for (;;) {
         if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0) {
             HAL_CAN_AddTxMessage(&hcan, &header, txData, (uint32_t*)mailbox);
+            if (mailbox == 0) {
+            }
+            if (header.StdId == 1) {
+            }
+            if (txData == NULL) {
+            }
         } else {
             // Dropped a message!
         }
