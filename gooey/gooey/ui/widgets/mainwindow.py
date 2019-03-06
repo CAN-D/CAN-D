@@ -9,6 +9,7 @@
 import ui.widgets.resources
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui.widgets.rxtx import RxTxTab
+from ui.widgets.trace import TraceTab
 
 
 class CAND_MainWindow(object):
@@ -26,9 +27,8 @@ class CAND_MainWindow(object):
 
         # Trace Tab
         self.traceTab = QtWidgets.QWidget()
+        TraceTab(self.traceTab)
         self.traceTab.setObjectName("traceTab")
-        self.traceHorizontalLayout = QtWidgets.QHBoxLayout(self.traceTab)
-        self.traceHorizontalLayout.setObjectName("traceHorizontalLayout")
         self.tabWidget.addTab(self.traceTab, "")
 
         # Receive/Transmit Tab
