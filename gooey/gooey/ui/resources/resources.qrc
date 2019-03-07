@@ -1,11 +1,14 @@
 <RCC>
   <qresource prefix="icons">
+    <file>power.svg</file>
     <file>pause.svg</file>
     <file>play.svg</file>
     <file>stop.svg</file>
     <file>record.svg</file>
     <file>disconnect.svg</file>
+    <file>check_circle.svg</file>
     <file>connect.svg</file>
+    <file>replay.svg</file>
     <file>save.svg</file>
     <file>open.svg</file>
   </qresource>

@@ -10,6 +10,7 @@ import ui.widgets.resources
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
+from ui.widgets.connection import ConnectionsTab
 
 
 class CAND_MainWindow(object):
@@ -40,6 +41,7 @@ class CAND_MainWindow(object):
 
         # Connections Tab
         self.connectionTab = QtWidgets.QWidget()
+        ConnectionsTab(self.connectionTab)
         self.tabWidget.addTab(self.connectionTab, "Connections")
 
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
