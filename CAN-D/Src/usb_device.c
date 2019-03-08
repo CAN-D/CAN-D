@@ -41,6 +41,8 @@ void MX_USB_DEVICE_Init(void)
     USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS);
 
     USBD_Start(&hUsbDeviceFS);
+
+    USBD_SetClassConfig(&hUsbDeviceFS, 1);
 }
 
 /* Private functions ---------------------------------------------------------*/

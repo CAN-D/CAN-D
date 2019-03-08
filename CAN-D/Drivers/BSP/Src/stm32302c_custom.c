@@ -237,14 +237,14 @@ static void UARTx_MspInit(UART_HandleTypeDef* huart)
     /*** Configure the GPIOs ***/
     /* configure UART TX and RX */
     GPIO_InitStruct.Pin = (GPS_UARTx_TX_PIN | GPS_UARTx_RX_PIN);
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = GPS_UARTx_RX_AF;
     HAL_GPIO_Init(GPS_UARTx_TX_GPIO_PORT, &GPIO_InitStruct);
 
     /* USART2 interrupt Init */
-    HAL_NVIC_SetPriority(GPS_UARTx_IRQn, 5, 0);
+    HAL_NVIC_SetPriority(GPS_UARTx_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(GPS_UARTx_IRQn);
 }
 
