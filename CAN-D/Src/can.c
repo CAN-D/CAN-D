@@ -23,6 +23,8 @@ static APP_ConfigType mAppConfiguration = { 0 };
 /* Threads */
 static osThreadId CANMonitorTaskHandle;
 static osThreadId CANTransmitTaskHandle;
+// TODO: BO: this is demo code
+static osThreadId CANIoDemoTaskHandle;
 /* Queues */
 static osMessageQId CANRxQueueHandle;
 static osMessageQId CANTxQueueHandle;
@@ -40,6 +42,7 @@ CAN_HandleTypeDef hcan;
 /* Private function prototypes -----------------------------------------------*/
 void APP_CAN_MonitorTask(void const* argument);
 void APP_CAN_TransmitTask(void const* argument);
+void APP_CAN_IoDemoTask(void const* argument);
 
 /* Exported functions --------------------------------------------------------*/
 /* CAN init function */
@@ -47,12 +50,12 @@ void MX_CAN_Init(void)
 {
     hcan.Instance = CAN;
     hcan.Init.Prescaler = 16;
-    hcan.Init.Mode = CAN_MODE_NORMAL;
+    hcan.Init.Mode = CAN_MODE_LOOPBACK;
     hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
     hcan.Init.TimeSeg1 = CAN_BS1_1TQ;
     hcan.Init.TimeSeg2 = CAN_BS2_1TQ;
     hcan.Init.TimeTriggeredMode = DISABLE;
-    hcan.Init.AutoBusOff = DISABLE;
+    hcan.Init.AutoBusOff = ENABLE;
     hcan.Init.AutoWakeUp = DISABLE;
     hcan.Init.AutoRetransmission = DISABLE;
     hcan.Init.ReceiveFifoLocked = DISABLE;
@@ -77,16 +80,24 @@ void MX_CAN_Init(void)
 void APP_CAN_InitTasks(void)
 {
     osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 128);
-    CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
+    if ((CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL)) == NULL)
+        Error_Handler();
 
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 128);
-    CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
+    if ((CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL)) == NULL)
+        Error_Handler();
+
+    osThreadDef(CANIoDemoTask, APP_CAN_IoDemoTask, osPriorityNormal, 0, 128);
+    if ((CANIoDemoTaskHandle = osThreadCreate(osThread(CANIoDemoTask), NULL)) == NULL)
+        Error_Handler();
 
     osMessageQDef(CANRxQueue, RX_BUFFER_SIZE, CANRxMessage);
-    CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
+    if ((CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL)) == NULL)
+        Error_Handler();
 
     osMessageQDef(CANTxQueue, TX_BUFFER_SIZE, CANTxMessage);
-    CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL);
+    if ((CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL)) == NULL)
+        Error_Handler();
 }
 
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
@@ -203,14 +214,23 @@ void APP_CAN_StartStop(void)
  * @brief Queue CAN data for transmission.
  * @retval None
  */
-void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef* header)
+void APP_CAN_TransmitData(uint8_t* txData, CAN_TxHeaderTypeDef header)
 {
     CANTxMessage* msg;
     msg = osPoolAlloc(CANTxPool);
     msg->handle = &hcan;
-    msg->header = header;
+    // msg->header = header;
+    msg->header.StdId = 1;
+    msg->header.ExtId = 1;
+    msg->header.IDE = CAN_ID_STD;
+    msg->header.RTR = CAN_RTR_DATA;
+    msg->header.DLC = 8;
+    msg->header.TransmitGlobalTime = DISABLE;
     memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
-    osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
+    if (osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0) != osOK) {
+        osPoolFree(CANTxPool, msg);
+        Error_Handler();
+    }
 }
 
 /**
@@ -288,12 +308,41 @@ void APP_CAN_TransmitTask(void const* argument)
                     else if ((msg->handle->Instance->TSR & CAN_TSR_TME2) != 0U) {
                         mailbox = CAN_TX_MAILBOX2;
                     }
-                    HAL_CAN_AddTxMessage(msg->handle, msg->header, msg->data, (uint32_t*)mailbox);
+                    HAL_CAN_AddTxMessage(msg->handle, &msg->header, msg->data, (uint32_t*)mailbox);
                 } else {
                     // Dropped a message!
                 }
             }
             osPoolFree(CANTxPool, msg);
+        }
+        osDelay(1);
+    }
+}
+
+void APP_CAN_IoDemoTask(void const* argument)
+{
+    static uint32_t count_sent = 0;
+    static uint32_t count_dropped = 0;
+    uint32_t mailbox = 0;
+    uint8_t txData[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+    CAN_TxHeaderTypeDef header = {
+        .StdId = 1,
+        .ExtId = 1,
+        .IDE = CAN_ID_STD,
+        .RTR = CAN_RTR_DATA,
+        .DLC = 8,
+        .TransmitGlobalTime = DISABLE
+    };
+    HAL_CAN_Start(&hcan);
+    HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
+    for (;;) {
+        if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0) {
+            HAL_CAN_AddTxMessage(&hcan, &header, txData, &mailbox);
+            count_sent += 1;
+        } else {
+            // Dropped a message!
+            mailbox = -1;
+            count_dropped += 1;
         }
         osDelay(1);
     }
