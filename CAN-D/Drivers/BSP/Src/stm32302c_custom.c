@@ -9,6 +9,7 @@
   */
 
 #include "stm32302c_custom.h"
+#include "stm32302c_custom_sd.h"
 #include "stm32f302xc.h"
 #include <string.h>
 
@@ -78,8 +79,10 @@ static void SPIx_MspInit(SPI_HandleTypeDef* hspi);
 
 /* Link functions for SD Card peripheral over SPI */
 void SD_IO_Init(void);
-HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
+HAL_StatusTypeDef SD_IO_WriteCmdLegacy(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
+SD_CmdTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
 HAL_StatusTypeDef SD_IO_WaitResponse(uint8_t Response);
+uint8_t SD_IO_ReadData();
 void SD_IO_WriteDummy(void);
 void SD_IO_WriteByte(uint8_t Data);
 uint8_t SD_IO_ReadByte(void);
@@ -533,7 +536,7 @@ uint8_t SD_IO_ReadByte(void)
   * @param  Response Expected response from the SD card
   * @retval  HAL_StatusTypeDef HAL Status
   */
-HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
+HAL_StatusTypeDef SD_IO_WriteCmdLegacy(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
 {
     uint32_t counter = 0x00;
     uint8_t frame[6];
@@ -559,6 +562,92 @@ HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t
     }
 
     return HAL_OK;
+}
+
+/**
+  * @brief  Send 5 bytes command to the SD card and get response
+  * @param  Cmd The user expected command to send to SD card.
+  * @param  Arg The command argument.
+  * @param  Crc The CRC.
+  * @param  Response
+  * @retval SD_CmdTypeDef
+  */
+SD_CmdTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
+{
+    uint32_t counter = 0x00;
+    uint8_t frame[6];
+    SD_CmdTypeDef ret = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+
+    /* Prepare Frame to send */
+    frame[0] = (Cmd | 0x40); /* Construct byte 1 */
+    frame[1] = (uint8_t)(Arg >> 24); /* Construct byte 2 */
+    frame[2] = (uint8_t)(Arg >> 16); /* Construct byte 3 */
+    frame[3] = (uint8_t)(Arg >> 8); /* Construct byte 4 */
+    frame[4] = (uint8_t)(Arg); /* Construct byte 5 */
+    frame[5] = (Crc); /* Construct CRC: byte 6 */
+
+    /* SD chip select low */
+    SD_CS_LOW();
+
+    /* Send Frame */
+    for (counter = 0; counter < 6; counter++) {
+        SD_IO_WriteByte(frame[counter]); /* Send the Cmd bytes */
+    }
+
+    switch (Response) {
+    case SD_RESPONSE_R1_EXPECTED:
+        ret.r1 = SD_IO_ReadData();
+        break;
+    case SD_RESPONSE_R1B_EXPECTED:
+        ret.r1 = SD_IO_ReadData();
+        ret.r2 = SD_IO_ReadByte();
+        HAL_Delay(1);
+        SD_CS_LOW();
+        /* Wait IO line return 0xFF */
+        while (SD_IO_ReadData() != SD_DUMMY_BYTE)
+            ;
+        break;
+    case SD_RESPONSE_R2_EXPECTED:
+        ret.r1 = SD_IO_ReadData();
+        ret.r2 = SD_IO_ReadByte();
+        break;
+    case SD_RESPONSE_R3_EXPECTED:
+    case SD_RESPONSE_R7_EXPECTED:
+        ret.r1 = SD_IO_ReadData();
+        ret.r2 = SD_IO_ReadByte();
+        ret.r3 = SD_IO_ReadByte();
+        ret.r4 = SD_IO_ReadByte();
+        ret.r5 = SD_IO_ReadByte();
+        break;
+    case SD_NO_RESPONSE_EXPECTED:
+        break;
+    }
+
+    // if (Response != SD_NO_RESPONSE_EXPECTED) {
+    //     return SD_IO_WaitResponse(Response);
+    // }
+
+    return ret;
+}
+
+uint8_t SD_IO_ReadData()
+{
+    uint32_t timeout = 0xFFF;
+    uint8_t data = SD_DUMMY_BYTE;
+
+    /* Check if response is got or a timeout is happen */
+    while ((data == SD_DUMMY_BYTE) && timeout) {
+        timeout--;
+        data = SD_IO_ReadByte();
+    }
+
+    if (timeout == 0) {
+        /* After time out */
+        return HAL_TIMEOUT;
+    } else {
+        /* Right response got */
+        return data;
+    }
 }
 
 /**

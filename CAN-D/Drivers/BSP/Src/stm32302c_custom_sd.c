@@ -63,11 +63,18 @@
 
 __IO uint8_t SdStatus = SD_PRESENT;
 
+/* flag_SDHC :
+      0 :  Standard capacity
+      1 : High capacity
+*/
+uint16_t flag_SDHC = 0;
+
 static uint8_t SD_GetCIDRegister(SD_CID* Cid);
 static uint8_t SD_GetCSDRegister(SD_CSD* Csd);
 static SD_Info SD_GetDataResponse(void);
 static uint8_t SD_GoIdleState(void);
-static uint8_t SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
+static SD_CmdTypeDef SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
+static uint8_t SD_SendCmdLegacy(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
 
 /**
   * @brief  Initializes the SD/SD communication.
@@ -147,7 +154,7 @@ uint8_t BSP_SD_ReadBlocks(uint32_t* p32Data, uint64_t ReadAddr, uint16_t BlockSi
 
     /* Send CMD16 (SD_CMD_SET_BLOCKLEN) to set the size of the block and 
      Check if the SD acknowledged the set block length command: R1 response (0x00: no errors) */
-    if (SD_IO_WriteCmd(SD_CMD_SET_BLOCKLEN, BlockSize, 0xFF, SD_RESPONSE_NO_ERROR) != HAL_OK) {
+    if (SD_IO_WriteCmdLegacy(SD_CMD_SET_BLOCKLEN, BlockSize, 0xFF, SD_RESPONSE_NO_ERROR) != HAL_OK) {
         return MSD_ERROR;
     }
 
@@ -158,7 +165,7 @@ uint8_t BSP_SD_ReadBlocks(uint32_t* p32Data, uint64_t ReadAddr, uint16_t BlockSi
 
         /* Send CMD17 (SD_CMD_READ_SINGLE_BLOCK) to read one block */
         /* Check if the SD acknowledged the read block command: R1 response (0x00: no errors) */
-        if (SD_IO_WriteCmd(SD_CMD_READ_SINGLE_BLOCK, ReadAddr + offset, 0xFF, SD_RESPONSE_NO_ERROR) != HAL_OK) {
+        if (SD_IO_WriteCmdLegacy(SD_CMD_READ_SINGLE_BLOCK, ReadAddr + offset, 0xFF, SD_RESPONSE_NO_ERROR) != HAL_OK) {
             return MSD_ERROR;
         }
 
@@ -208,7 +215,7 @@ uint8_t BSP_SD_WriteBlocks(uint32_t* p32Data, uint64_t WriteAddr, uint16_t Block
     while (NumberOfBlocks--) {
         /* Send CMD24 (SD_CMD_WRITE_SINGLE_BLOCK) to write blocks  and
        Check if the SD acknowledged the write block command: R1 response (0x00: no errors) */
-        if (SD_IO_WriteCmd(SD_CMD_WRITE_SINGLE_BLOCK, WriteAddr + offset, 0xFF, SD_RESPONSE_NO_ERROR) != HAL_OK) {
+        if (SD_IO_WriteCmdLegacy(SD_CMD_WRITE_SINGLE_BLOCK, WriteAddr + offset, 0xFF, SD_RESPONSE_NO_ERROR) != HAL_OK) {
             return MSD_ERROR;
         }
 
@@ -265,7 +272,7 @@ uint8_t SD_GetCSDRegister(SD_CSD* Csd)
     uint8_t CSD_Tab[16];
 
     /* Send CMD9 (CSD register) or CMD10(CSD register) and Wait for response in the R1 format (0x00 is no errors) */
-    if (SD_IO_WriteCmd(SD_CMD_SEND_CSD, 0, 0xFF, SD_RESPONSE_NO_ERROR) == HAL_OK) {
+    if (SD_IO_WriteCmdLegacy(SD_CMD_SEND_CSD, 0, 0xFF, SD_RESPONSE_NO_ERROR) == HAL_OK) {
         if (SD_IO_WaitResponse(SD_START_DATA_SINGLE_BLOCK_READ) == HAL_OK) {
             for (counter = 0; counter < 16; counter++) {
                 /* Store CSD register value on CSD_Tab */
@@ -379,7 +386,7 @@ static uint8_t SD_GetCIDRegister(SD_CID* Cid)
     uint8_t CID_Tab[16];
 
     /* Send CMD10 (CID register) and Wait for response in the R1 format (0x00 is no errors) */
-    if (SD_IO_WriteCmd(SD_CMD_SEND_CID, 0, 0xFF, SD_RESPONSE_NO_ERROR) == HAL_OK) {
+    if (SD_IO_WriteCmdLegacy(SD_CMD_SEND_CID, 0, 0xFF, SD_RESPONSE_NO_ERROR) == HAL_OK) {
         if (SD_IO_WaitResponse(SD_START_DATA_SINGLE_BLOCK_READ) == HAL_OK) {
             /* Store CID register value on CID_Tab */
             for (counter = 0; counter < 16; counter++) {
@@ -461,11 +468,11 @@ static uint8_t SD_GetCIDRegister(SD_CID* Cid)
   * @param  Response Expected response from the SD card
   * @retval SD status
   */
-static uint8_t SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
+static uint8_t SD_SendCmdLegacy(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
 {
     uint8_t status = MSD_ERROR;
 
-    if (SD_IO_WriteCmd(Cmd, Arg, Crc, Response) == HAL_OK) {
+    if (SD_IO_WriteCmdLegacy(Cmd, Arg, Crc, Response) == HAL_OK) {
         status = MSD_OK;
     }
 
@@ -473,6 +480,11 @@ static uint8_t SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Respon
     SD_IO_WriteDummy();
 
     return status;
+}
+
+static SD_CmdTypeDef SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response)
+{
+    return SD_IO_WriteCmd(Cmd, Arg, Crc, Response);
 }
 
 /**
@@ -537,21 +549,93 @@ uint8_t BSP_SD_GetStatus(void)
   */
 static uint8_t SD_GoIdleState(void)
 {
+    // CMD0/CMD8/CMD55/ACMD41/CMD55/ACMD41 (or CMD0/CMD8/CMD1/CMD1
+
+    // /* Send CMD0 (SD_CMD_GO_IDLE_STATE) to put SD in SPI mode and
+    //  Wait for In Idle State Response (R1 Format) equal to 0x01 */
+    // if (SD_SendCmd(SD_CMD_GO_IDLE_STATE, 0, 0x95, SD_IN_IDLE_STATE) != MSD_OK) {
+    //     /* No Idle State Response: return response failue */
+    //     return MSD_ERROR;
+    // }
+
+    // /*----------Activates the card initialization process-----------*/
+    // /* Send CMD1 (Activates the card process) until response equal to 0x0 and
+    //  Wait for no error Response (R1 Format) equal to 0x00 */
+    // while (SD_SendCmd(SD_CMD_SEND_OP_COND, 0, 0xFF, SD_RESPONSE_NO_ERROR) != MSD_OK)
+    //     ;
+
+    SD_CmdTypeDef response = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+    __IO uint8_t counter = 0;
+
     /* Send CMD0 (SD_CMD_GO_IDLE_STATE) to put SD in SPI mode and 
      Wait for In Idle State Response (R1 Format) equal to 0x01 */
-    if (SD_SendCmd(SD_CMD_GO_IDLE_STATE, 0, 0x95, SD_IN_IDLE_STATE) != MSD_OK) {
-        /* No Idle State Response: return response failue */
+    while (response.r1 != SD_R1_IN_IDLE_STATE) {
+        counter++;
+        response = SD_SendCmd(SD_CMD_GO_IDLE_STATE, 0, 0x95, SD_RESPONSE_R1_EXPECTED);
+        SD_IO_WriteDummy();
+        if (counter >= SD_MAX_TRY) {
+            return MSD_ERROR;
+        }
+    }
+
+    /* Send CMD8 (SD_CMD_SEND_IF_COND) to check the power supply status 
+     and wait until response (R7 Format) equal to 0xAA and */
+    response = SD_SendCmd(SD_CMD_SEND_IF_COND, 0x1AA, 0x87, SD_RESPONSE_R7_EXPECTED);
+    SD_IO_WriteDummy();
+    if ((response.r1 & SD_R1_ILLEGAL_COMMAND) == SD_R1_ILLEGAL_COMMAND) {
+        /* initialise card V1 */
+        do {
+            /* initialise card V1 */
+            /* Send CMD55 (SD_CMD_APP_CMD) before any ACMD command: R1 response (0x00: no errors) */
+            response = SD_SendCmd(SD_CMD_APP_CMD, 0x00000000, 0xFF, SD_RESPONSE_R1_EXPECTED);
+            SD_IO_WriteDummy();
+
+            /* Send ACMD41 (SD_CMD_SD_APP_OP_COND) to initialize SDHC or SDXC cards: R1 response (0x00: no errors) */
+            response = SD_SendCmd(SD_CMD_SD_APP_OP_COND, 0x00000000, 0xFF, SD_RESPONSE_R1_EXPECTED);
+            SD_IO_WriteDummy();
+        } while (response.r1 == SD_R1_IN_IDLE_STATE);
+        flag_SDHC = 0;
+
+    } else if (response.r1 == SD_R1_IN_IDLE_STATE) {
+        /* initialise card V2 */
+        do {
+            /* Send CMD55 (SD_CMD_APP_CMD) before any ACMD command: R1 response (0x00: no errors) */
+            response = SD_SendCmd(SD_CMD_APP_CMD, 0, 0xFF, SD_RESPONSE_R1_EXPECTED);
+            SD_IO_WriteDummy();
+
+            /* Send ACMD41 (SD_CMD_SD_APP_OP_COND) to initialize SDHC or SDXC cards: R1 response (0x00: no errors) */
+            response = SD_SendCmd(SD_CMD_SD_APP_OP_COND, 0x40000000, 0xFF, SD_RESPONSE_R1_EXPECTED);
+            SD_IO_WriteDummy();
+        } while (response.r1 == SD_R1_IN_IDLE_STATE);
+
+        if ((response.r1 & SD_R1_ILLEGAL_COMMAND) == SD_R1_ILLEGAL_COMMAND) {
+            do {
+                /* Send CMD55 (SD_CMD_APP_CMD) before any ACMD command: R1 response (0x00: no errors) */
+                response = SD_SendCmd(SD_CMD_APP_CMD, 0, 0xFF, SD_RESPONSE_R1_EXPECTED);
+                SD_IO_WriteDummy();
+                if (response.r1 != SD_R1_IN_IDLE_STATE) {
+                    return MSD_ERROR;
+                }
+                /* Send ACMD41 (SD_CMD_SD_APP_OP_COND) to initialize SDHC or SDXC cards: R1 response (0x00: no errors) */
+                response = SD_SendCmd(SD_CMD_SD_APP_OP_COND, 0x00000000, 0xFF, SD_RESPONSE_R1_EXPECTED);
+                SD_IO_WriteDummy();
+            } while (response.r1 == SD_R1_IN_IDLE_STATE);
+        }
+
+        /* Send CMD58 (SD_CMD_READ_OCR) to initialize SDHC or SDXC cards: R3 response (0x00: no errors) */
+        response = SD_SendCmd(SD_CMD_READ_OCR, 0x00000000, 0xFF, SD_RESPONSE_R3_EXPECTED);
+        SD_IO_WriteDummy();
+        if (response.r1 != SD_R1_NO_ERROR) {
+            return MSD_ERROR;
+        }
+        flag_SDHC = (response.r2 & 0x40) >> 6;
+    } else {
         return MSD_ERROR;
     }
 
-    /*----------Activates the card initialization process-----------*/
-    /* Send CMD1 (Activates the card process) until response equal to 0x0 and
-     Wait for no error Response (R1 Format) equal to 0x00 */
-    while (SD_SendCmd(SD_CMD_SEND_OP_COND, 0, 0xFF, SD_RESPONSE_NO_ERROR) != MSD_OK)
-        ;
-
     return MSD_OK;
 }
+
 /**
   * @brief  Erases the specified memory area of the given SD card. 
   * @param  StartAddr Start byte address
@@ -563,11 +647,11 @@ uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr)
     uint8_t rvalue = MSD_ERROR;
 
     /* Send CMD32 (Erase group start) and check if the SD acknowledged the erase command: R1 response (0x00: no errors) */
-    if (SD_SendCmd(SD_CMD_SD_ERASE_GRP_START, StartAddr, 0xFF, SD_RESPONSE_NO_ERROR) == MSD_OK) {
+    if (SD_SendCmdLegacy(SD_CMD_SD_ERASE_GRP_START, StartAddr, 0xFF, SD_RESPONSE_NO_ERROR) == MSD_OK) {
         /* Send CMD33 (Erase group end) and Check if the SD acknowledged the erase command: R1 response (0x00: no errors) */
-        if (SD_SendCmd(SD_CMD_SD_ERASE_GRP_END, EndAddr, 0xFF, SD_RESPONSE_NO_ERROR) == MSD_OK) {
+        if (SD_SendCmdLegacy(SD_CMD_SD_ERASE_GRP_END, EndAddr, 0xFF, SD_RESPONSE_NO_ERROR) == MSD_OK) {
             /* Send CMD38 (Erase) and Check if the SD acknowledged the erase command: R1 response (0x00: no errors) */
-            if (SD_SendCmd(SD_CMD_ERASE, 0, 0xFF, SD_RESPONSE_NO_ERROR) == MSD_OK) {
+            if (SD_SendCmdLegacy(SD_CMD_ERASE, 0, 0xFF, SD_RESPONSE_NO_ERROR) == MSD_OK) {
                 /* Verify that SD card is ready to use after the specific command ERASE */
                 if (SD_IO_WaitResponse(SD_RESPONSE_NO_ERROR) == HAL_OK)
                     rvalue = MSD_OK;

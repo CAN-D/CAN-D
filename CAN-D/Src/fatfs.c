@@ -7,6 +7,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "fatfs.h"
+#include "cmsis_os.h"
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -43,8 +44,9 @@ uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* 
     uint32_t writtenBytes = 0;
 
     // If already mounted, this should return FR_OK
-    if (f_mount(&SDFatFS, (TCHAR const*)SDPath, FATFS_NO_FORCED_MOUNTING) == FR_OK) {
+    if (f_mount(&SDFatFS, (TCHAR const*)SDPath, FATFS_FORCED_MOUNTING) == FR_OK) {
         // Open the file for writing. Create new file if it doesn't exist
+        // osThreadResumeAll();
         if ((f_open(&SDFile, fileName, FA_WRITE | FA_OPEN_ALWAYS)) == FR_OK) {
             // Move the write pointer to the end of the file (append)
             if (f_lseek(&SDFile, f_size(&SDFile)) == FR_OK) {
