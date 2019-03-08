@@ -18,6 +18,8 @@ extern "C" {
 void APP_GPS_InitTasks(void);
 void APP_GPS_BufferGPSString(char* dataString, size_t dataLength);
 
+#define COUNTOF(__BUFFER__) (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
+
 #ifdef __cplusplus
 }
 #endif
