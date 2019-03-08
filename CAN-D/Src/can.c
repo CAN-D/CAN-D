@@ -50,12 +50,12 @@ void MX_CAN_Init(void)
 {
     hcan.Instance = CAN;
     hcan.Init.Prescaler = 16;
-    hcan.Init.Mode = CAN_MODE_NORMAL;
+    hcan.Init.Mode = CAN_MODE_LOOPBACK;
     hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
     hcan.Init.TimeSeg1 = CAN_BS1_1TQ;
     hcan.Init.TimeSeg2 = CAN_BS2_1TQ;
     hcan.Init.TimeTriggeredMode = DISABLE;
-    hcan.Init.AutoBusOff = DISABLE;
+    hcan.Init.AutoBusOff = ENABLE;
     hcan.Init.AutoWakeUp = DISABLE;
     hcan.Init.AutoRetransmission = DISABLE;
     hcan.Init.ReceiveFifoLocked = DISABLE;
@@ -315,6 +315,8 @@ void APP_CAN_TransmitTask(void const* argument)
 
 void APP_CAN_IoDemoTask(void const* argument)
 {
+    static uint32_t count_sent = 0;
+    static uint32_t count_dropped = 0;
     uint32_t mailbox = 0;
     uint8_t txData[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
     CAN_TxHeaderTypeDef header = {
@@ -330,8 +332,11 @@ void APP_CAN_IoDemoTask(void const* argument)
     for (;;) {
         if (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) > 0) {
             HAL_CAN_AddTxMessage(&hcan, &header, txData, &mailbox);
+            count_sent += 1;
         } else {
             // Dropped a message!
+            mailbox = -1;
+            count_dropped += 1;
         }
         osDelay(1);
     }
