@@ -1,6 +1,8 @@
 pipeline {
-    agent {
-        docker { image 'stronglytyped/arm-none-eabi-gcc' }
+    agent { 
+        docker{
+            image 'bofrim/arm-none-eabi-gcc_proto-c'
+        }
     }
 
     stages {
