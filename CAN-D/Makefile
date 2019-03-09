@@ -178,6 +178,9 @@ endif
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
+# Include Protobuf Headers
+CFLAGS += `pkg-config --cflags 'libprotobuf-c >= 1.0.0'`
+
 
 #######################################
 # LDFLAGS
@@ -189,6 +192,9 @@ LDSCRIPT = $(PROJ_DIR)/STM32F302CCTx_FLASH.ld
 LIBS = -lc -lm -lnosys 
 LIBDIR = 
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
+
+# Protobuf Libraries
+`pkg-config --libs 'libprotobuf-c >= 1.0.0'`
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
