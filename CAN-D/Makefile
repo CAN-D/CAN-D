@@ -53,6 +53,7 @@ Src/usb_device.c \
 Src/usbd_cdc_if.c \
 Src/usbd_conf.c \
 Src/usbd_desc.c \
+Src/proto_handler.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_can.c \
@@ -93,7 +94,8 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
-Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c  
+Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c  \
+Proto/can-d.pb-c.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -162,7 +164,8 @@ C_INCLUDES =  \
 -I$(PROJ_DIR)/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -I$(PROJ_DIR)/Drivers/CMSIS/Device/ST/STM32F3xx/Include \
 -I$(PROJ_DIR)/Drivers/CMSIS/Include \
--I$(PROJ_DIR)/Drivers/BSP/Inc
+-I$(PROJ_DIR)/Drivers/BSP/Inc \
+-I$(PROJ_DIR)/Proto
 
 
 # compile gcc flags
@@ -194,7 +197,7 @@ LIBDIR =
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # Protobuf Libraries
-`pkg-config --libs 'libprotobuf-c >= 1.0.0'`
+LDFLAGS += `pkg-config --libs 'libprotobuf-c >= 1.0.0'`
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
@@ -244,3 +247,4 @@ clean:
 -include $(wildcard $(BUILD_DIR)/*.d)
 
 # *** EOF ***
+
