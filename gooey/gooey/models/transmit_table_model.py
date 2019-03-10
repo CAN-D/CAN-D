@@ -1,10 +1,10 @@
 from PyQt5.QtCore import (QModelIndex, QAbstractTableModel, Qt)
-from receive_message import ReceiveMessage
+from transmit_message import TransmitMessage
 
 
-class ReceiveTableModel(QAbstractTableModel):
+class TransmitTableModel(QAbstractTableModel):
     def __init__(self, parent=None, messages=None):
-        super(ReceiveTableModel, self).__init__(parent)
+        super(TransmitTableModel, self).__init__(parent)
 
         if messages is None:
             self.messages = []
@@ -39,6 +39,7 @@ class ReceiveTableModel(QAbstractTableModel):
             data = self.messages[index.row()].data
             cycle_time = self.messages[index.row()].cycle_time
             count = self.messages[index.row()].count
+            trigger = self.messages[index.row()].trigger
 
             if index.column() == 0:
                 return message
@@ -50,6 +51,8 @@ class ReceiveTableModel(QAbstractTableModel):
                 return cycle_time
             elif index.column() == 4:
                 return count
+            elif index.column() == 5:
+                return trigger
 
         return None
 
@@ -70,6 +73,8 @@ class ReceiveTableModel(QAbstractTableModel):
                 return "Cycle Time"
             elif section == 4:
                 return "Count"
+            elif section == 5:
+                return "Trigger"
 
         return None
 
@@ -79,7 +84,7 @@ class ReceiveTableModel(QAbstractTableModel):
         self.beginInsertRows(QModelIndex(), position, position + rows - 1)
 
         for row in range(rows):
-            newMessage = ReceiveMessage()
+            newMessage = TransmitMessage()
             self.messages.insert(position + row, newMessage)
 
         self.endInsertRows()
@@ -114,6 +119,8 @@ class ReceiveTableModel(QAbstractTableModel):
                 message.cycle_time = value
             elif index.column() == 4:
                 message.count = value
+            elif index.column() == 5:
+                message.trigger = value
             else:
                 False
 
