@@ -11,6 +11,7 @@
 #include "cmsis_os.h"
 #include "fatfs.h"
 #include "gpio.h"
+#include "rtc.h"
 #include "stm32302c_custom.h"
 #include "stm32302c_custom_gps.h"
 #include "stm32f3xx_hal_pwr.h"
@@ -56,8 +57,8 @@ int main(void)
     MX_CAN_Init();
     MX_TIM2_Init();
     MX_USB_DEVICE_Init();
-
     BSP_GPS_Init();
+    APP_RTC_Init();
 
     /* Call init function for freertos objects (in freertos.c) */
     MX_FREERTOS_Init();
@@ -103,8 +104,11 @@ void SystemClock_Config(void)
         Error_Handler();
     }
 
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_USART2
+        | RCC_PERIPHCLK_RTC;
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_USART2;
     PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+    PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
     PeriphClkInit.USBClockSelection = RCC_USBCLKSOURCE_PLL;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
         Error_Handler();

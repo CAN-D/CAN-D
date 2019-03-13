@@ -43,6 +43,7 @@ Src/fatfs.c \
 Src/freertos.c \
 Src/gpio.c \
 Src/main.c \
+Src/rtc.c \
 Src/sd_diskio.c \
 Src/stm32f3xx_hal_msp.c \
 Src/stm32f3xx_hal_timebase_tim.c \
@@ -66,6 +67,8 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.c \
+Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rtc.c \
+Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rtc_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_gpio.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dma.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c \

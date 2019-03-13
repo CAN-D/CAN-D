@@ -17,7 +17,7 @@ extern "C" {
 
 extern RTC_HandleTypeDef hrtc;
 
-void MX_RTC_Init(void);
+void APP_RTC_Init(void);
 
 #ifdef __cplusplus
 }
