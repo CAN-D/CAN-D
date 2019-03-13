@@ -98,6 +98,10 @@
                                     <listOptionValue builtIn="false" value="/Users/marky/GitHub/CAN-D/CAN-D/Middlewares/Third_Party/FatFs/src"/>
                                     									
                                     <listOptionValue builtIn="false" value="/Users/marky/GitHub/CAN-D/CAN-D/Drivers/BSP/Inc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../Proto"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/usr/local/Cellar/protobuf-c/1.3.1_2/include/"/>
                                     								
                                 </option>
                                 								
@@ -531,5 +535,7 @@
         </configuration>
         	
     </storageModule>
+    	
+    <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
     
 </cproject>
