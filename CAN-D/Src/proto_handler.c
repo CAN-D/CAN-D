@@ -63,10 +63,10 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
 {
     switch (controlCommandMsg->commandtype) {
     case CONTROL_COMMAND_TYPE__STOP_LOG:
-        /* code */
+        APP_CAN_Start();
         break;
     case CONTROL_COMMAND_TYPE__START_LOG:
-        /* code */
+        APP_CAN_Stop();
         break;
     case CONTROL_COMMAND_TYPE__MARK_LOG:
         /* code */

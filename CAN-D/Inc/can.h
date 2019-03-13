@@ -46,6 +46,8 @@ extern CAN_HandleTypeDef hcan;
 void MX_CAN_Init(void);
 void APP_CAN_InitTasks(void);
 void APP_CAN_StartStop(void);
+void APP_CAN_Start(void);
+void APP_CAN_Stop(void);
 void APP_CAN_SetConfiguration(APP_ConfigType newConfig);
 
 #ifdef __cplusplus

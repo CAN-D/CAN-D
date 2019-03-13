@@ -200,6 +200,30 @@ void APP_CAN_StartStop(void)
 }
 
 /**
+  * @brief  Starts the CAN module.
+  * @retval None
+  */
+void APP_CAN_Start(void)
+{
+    if (hcan.State == HAL_CAN_STATE_READY) {
+        HAL_CAN_Start(&hcan);
+        HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
+    }
+}
+
+/**
+  * @brief  Stops the CAN module.
+  * @retval None
+  */
+void APP_CAN_Stop(void)
+{
+    if (hcan.State == HAL_CAN_STATE_LISTENING) {
+        HAL_CAN_Stop(&hcan);
+        HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
+    }
+}
+
+/**
  * @brief Queue CAN data for transmission.
  * @retval None
  */
