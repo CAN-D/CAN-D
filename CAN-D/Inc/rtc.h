@@ -18,6 +18,9 @@ extern "C" {
 extern RTC_HandleTypeDef hrtc;
 
 void APP_RTC_Init(void);
+uint8_t* APP_RTC_GetUTCTime(void);
+
+#define UTC_TIME_STR_LEN 3 /* hms */
 
 #ifdef __cplusplus
 }
