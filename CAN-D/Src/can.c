@@ -232,8 +232,14 @@ void APP_CAN_MonitorTask(void const* argument)
 {
     osEvent event;
     CANRxMessage* msg;
+    uint8_t yesno = 0;
 
     for (;;) {
+        if (yesno == 0) {
+            const uint8_t data[] = "Y";
+            APP_FATFS_WriteSD(data, 1, "CAN_data.log");
+            yesno = 1;
+        }
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {

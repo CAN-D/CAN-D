@@ -18,6 +18,8 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32302c_custom.h"
 
+#define SD_MAX_TRY 100
+
 /** 
   * @brief  SD status structure definition  
   */
@@ -38,6 +40,27 @@ typedef enum {
     SD_PARAMETER_ERROR = (0x40),
     SD_RESPONSE_FAILURE = (0xFF),
 
+    /* R1 answer value */
+    SD_R1_NO_ERROR = (0x00),
+    SD_R1_IN_IDLE_STATE = (0x01),
+    SD_R1_ERASE_RESET = (0x02),
+    SD_R1_ILLEGAL_COMMAND = (0x04),
+    SD_R1_COM_CRC_ERROR = (0x08),
+    SD_R1_ERASE_SEQUENCE_ERROR = (0x10),
+    SD_R1_ADDRESS_ERROR = (0x20),
+    SD_R1_PARAMETER_ERROR = (0x40),
+
+    /* R2 answer value */
+    SD_R2_NO_ERROR = 0x00,
+    SD_R2_CARD_LOCKED = 0x01,
+    SD_R2_LOCKUNLOCK_ERROR = 0x02,
+    SD_R2_ERROR = 0x04,
+    SD_R2_CC_ERROR = 0x08,
+    SD_R2_CARD_ECC_FAILED = 0x10,
+    SD_R2_WP_VIOLATION = 0x20,
+    SD_R2_ERASE_PARAM = 0x40,
+    SD_R2_OUTOFRANGE = 0x80,
+
     /**
   * @brief  Data response error
   */
@@ -46,6 +69,26 @@ typedef enum {
     SD_DATA_WRITE_ERROR = (0x0D),
     SD_DATA_OTHER_ERROR = (0xFF)
 } SD_Info;
+
+/**
+  * @brief  SD ansewer format
+  */
+typedef enum {
+    SD_RESPONSE_R1_EXPECTED,
+    SD_RESPONSE_R1B_EXPECTED,
+    SD_RESPONSE_R2_EXPECTED,
+    SD_RESPONSE_R3_EXPECTED,
+    SD_RESPONSE_R4R5_EXPECTED,
+    SD_RESPONSE_R7_EXPECTED,
+} SD_RESPONSE_type;
+
+typedef struct {
+    uint8_t r1;
+    uint8_t r2;
+    uint8_t r3;
+    uint8_t r4;
+    uint8_t r5;
+} SD_CmdTypeDef;
 
 /** 
   * @brief  Card Specific Data: CSD Register
@@ -141,6 +184,7 @@ typedef struct
   */
 #define SD_CMD_GO_IDLE_STATE 0 /* CMD0 = 0x40 */
 #define SD_CMD_SEND_OP_COND 1 /* CMD1 = 0x41 */
+#define SD_CMD_SEND_IF_COND 8 /* CMD8 = 0x48  */
 #define SD_CMD_SEND_CSD 9 /* CMD9 = 0x49 */
 #define SD_CMD_SEND_CID 10 /* CMD10 = 0x4A */
 #define SD_CMD_STOP_TRANSMISSION 12 /* CMD12 = 0x4C */
@@ -162,6 +206,9 @@ typedef struct
 #define SD_CMD_ERASE_GRP_END 36 /* CMD36 = 0x64 */
 #define SD_CMD_UNTAG_ERASE_GROUP 37 /* CMD37 = 0x65 */
 #define SD_CMD_ERASE 38 /* CMD38 = 0x66 */
+#define SD_CMD_SD_APP_OP_COND 41 /* CMD41 = 0x69 */
+#define SD_CMD_APP_CMD 55 /* CMD55 = 0x77 */
+#define SD_CMD_READ_OCR 58 /* CMD55 = 0x79 */
 
 uint8_t BSP_SD_Init(void);
 uint8_t BSP_SD_IsDetected(void);
@@ -175,7 +222,8 @@ uint8_t BSP_SD_GetCardInfo(SD_CardInfo* pCardInfo);
 void SD_IO_Init(void);
 void SD_IO_WriteByte(uint8_t Data);
 uint8_t SD_IO_ReadByte(void);
-HAL_StatusTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
+HAL_StatusTypeDef SD_IO_WriteCmdLegacy(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
+SD_CmdTypeDef SD_IO_WriteCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t Response);
 HAL_StatusTypeDef SD_IO_WaitResponse(uint8_t Response);
 void SD_IO_WriteDummy(void);
 
