@@ -1,4 +1,4 @@
-from message import Message
+from models.message import Message
 
 
 class ReceiveMessage(Message):

@@ -1,5 +1,5 @@
 from PyQt5.QtCore import (QModelIndex, QAbstractTableModel, Qt)
-from transmit_message import TransmitMessage
+from models.transmit_message import TransmitMessage
 
 
 class TransmitTableModel(QAbstractTableModel):
@@ -20,7 +20,7 @@ class TransmitTableModel(QAbstractTableModel):
 
     def columnCount(self, index=QModelIndex()):
         # Documentation seem to always return a hard coded value. Probably in case self.messages is empty.
-        return 5
+        return 6
 
     """ Depending on the index and role given, return data.
         If not returning data, return None

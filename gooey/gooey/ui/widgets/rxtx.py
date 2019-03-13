@@ -1,4 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from models.transmit_table_model import TransmitTableModel
+from models.receive_table_model import ReceiveTableModel
 
 
 class RxTxTab(object):
@@ -36,15 +38,11 @@ class RxTxTab(object):
         self.verticalLayout.addWidget(self.transmitGroup)
 
         # Set models for testing
-        receiveModel = QtGui.QStandardItemModel()
-        receiveModel.setHorizontalHeaderLabels(
-            ['Message', 'DLC', 'Data', 'Cycle Time', 'Count'])
-        self.receiveTable.setModel(receiveModel)
+        self.receiveTableModel = ReceiveTableModel()
+        self.receiveTable.setModel(self.receiveTableModel)
 
-        transmitModel = QtGui.QStandardItemModel()
-        transmitModel.setHorizontalHeaderLabels(
-            ['Message', 'DLC', 'Data', 'Cycle Time', 'Count', 'Trigger'])
-        self.transmitTable.setModel(transmitModel)
+        self.transmitTableModel = TransmitTableModel()
+        self.transmitTable.setModel(self.transmitTableModel)
 
         self.retranslateUi(RxTxTab)
         QtCore.QMetaObject.connectSlotsByName(RxTxTab)

@@ -1,5 +1,5 @@
 from PyQt5.QtCore import (QModelIndex, QAbstractTableModel, Qt)
-from receive_message import ReceiveMessage
+from models.receive_message import ReceiveMessage
 
 
 class ReceiveTableModel(QAbstractTableModel):
