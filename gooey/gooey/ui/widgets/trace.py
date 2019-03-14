@@ -1,13 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QWidget
 
 
-class TraceTab(object):
-    def __init__(self, TraceTab):
-        TraceTab.setObjectName("TraceTab")
-        TraceTab.resize(1280, 778)
-        self.verticalLayout = QtWidgets.QVBoxLayout(TraceTab)
+class TraceTab(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setObjectName("TraceTab")
+        self.resize(1280, 778)
+        self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.TraceGroup = QtWidgets.QGroupBox(TraceTab)
+        self.TraceGroup = QtWidgets.QGroupBox(self)
         self.TraceGroup.setStyleSheet("font: 13pt \".SF NS Text\";")
         self.TraceGroup.setTitle("")
         self.TraceGroup.setObjectName("TraceGroup")
@@ -24,10 +26,10 @@ class TraceTab(object):
             ['Time', 'CAN-ID', 'Rx/Tx', 'Type', 'Length', 'Data'])
         self.TraceTable.setModel(traceModel)
 
-        self.retranslateUi(TraceTab)
-        QtCore.QMetaObject.connectSlotsByName(TraceTab)
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
 
-    def retranslateUi(self, TraceTab):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
 
 
@@ -35,6 +37,6 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     tab = QtWidgets.QWidget()
-    ui = TraceTab(tab)
-    tab.show()
+    ui = TraceTab()
+    ui.show()
     sys.exit(app.exec_())
