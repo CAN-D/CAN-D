@@ -190,12 +190,9 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef* canHandle)
 void APP_CAN_StartStop(void)
 {
     if (hcan.State == HAL_CAN_STATE_LISTENING) {
-        HAL_CAN_Stop(&hcan);
-        HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
+        APP_CAN_Stop();
     } else if (hcan.State == HAL_CAN_STATE_READY) {
-        // Changes the hcan.State to HAL_CAN_STATE_LISTENING
-        HAL_CAN_Start(&hcan);
-        HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
+        APP_CAN_Start();
     }
 }
 
@@ -205,8 +202,8 @@ void APP_CAN_StartStop(void)
   */
 void APP_CAN_Start(void)
 {
-    if (hcan.State == HAL_CAN_STATE_READY) {
-        HAL_CAN_Start(&hcan);
+    // Changes the hcan.State to HAL_CAN_STATE_LISTENING
+    if (HAL_CAN_Start(&hcan) == HAL_OK) {
         HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
     }
 }
@@ -217,8 +214,7 @@ void APP_CAN_Start(void)
   */
 void APP_CAN_Stop(void)
 {
-    if (hcan.State == HAL_CAN_STATE_LISTENING) {
-        HAL_CAN_Stop(&hcan);
+    if (HAL_CAN_Stop(&hcan) == HAL_OK) {
         HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
     }
 }
