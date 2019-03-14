@@ -35,20 +35,16 @@ class CAND_MainWindow(QMainWindow):
         self.tabWidget.setObjectName("tabWidget")
 
         # Trace Tab
-        self.traceTab = QtWidgets.QWidget()
-        TraceTab(self.traceTab)
-        self.traceTab.setObjectName("traceTab")
+        self.traceTab = TraceTab()
         self.tabWidget.addTab(self.traceTab, "")
 
         # Receive/Transmit Tab
         self.rxtxTab = RxTxTab()
-        self.rxtxTab.setObjectName("rxtxTab")
         self.tabWidget.addTab(self.rxtxTab, "")
 
         # Connections Tab
-        self.connectionTab = QtWidgets.QWidget()
-        ConnectionsTab(self.connectionTab)
-        self.tabWidget.addTab(self.connectionTab, "Connections")
+        self.connectionTab = ConnectionsTab()
+        self.tabWidget.addTab(self.connectionTab, "")
 
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(0, 20, 82, 731))
@@ -271,6 +267,8 @@ class CAND_MainWindow(QMainWindow):
             self.traceTab), _translate("MainWindow", "Trace"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(
             self.rxtxTab), _translate("MainWindow", "Receive/Transmit"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(
+            self.connectionTab), _translate("MainWindow", "Connections"))
         self.saveButton.setText(_translate("MainWindow", "..."))
         self.connectButton.setText(_translate("MainWindow", "..."))
         self.disconnectButton.setText(_translate("MainWindow", "..."))

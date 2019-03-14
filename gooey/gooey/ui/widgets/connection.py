@@ -1,26 +1,28 @@
 import ui.widgets.resources
 from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
+from PyQt5.QtWidgets import QWidget
 
 
-class ConnectionsTab(object):
-    def __init__(self, ConnectionsTab):
+class ConnectionsTab(QWidget):
+    def __init__(self):
+        super().__init__()
 
         # TODO: set models instead of standard model,
 
-        ConnectionsTab.setObjectName("ConnectionsTab")
-        self.verticalLayout = QtWidgets.QVBoxLayout(ConnectionsTab)
+        self.setObjectName("ConnectionsTab")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
 
-        self.ConnectionsGroupBox = QtWidgets.QGroupBox(ConnectionsTab)
+        self.ConnectionsGroupBox = QtWidgets.QGroupBox(self)
         self.ConnectionsGroupBox.setTitle("")
         self.ConnectionsGroupBox.setObjectName("ConnectionsGroupBox")
 
         self.gridLayout = QtWidgets.QGridLayout(self.ConnectionsGroupBox)
         self.gridLayout.setObjectName("gridLayout")
 
-        self.ConnectionsLabel = QtWidgets.QLabel(ConnectionsTab)
+        self.ConnectionsLabel = QtWidgets.QLabel(self)
         self.ConnectionsLabel.setMaximumSize(QtCore.QSize(200, 20))
         font = QtGui.QFont()
         font.setPointSize(18)
@@ -55,7 +57,7 @@ class ConnectionsTab(object):
 
         self.ConnectionsLayout = QtWidgets.QVBoxLayout()
         self.ConnectionsLayout.setObjectName("ConnectionsLayout")
-        self.groupBox = QtWidgets.QGroupBox(ConnectionsTab)
+        self.groupBox = QtWidgets.QGroupBox(self)
         self.groupBox.setMinimumSize(QtCore.QSize(500, 0))
         self.groupBox.setMaximumSize(QtCore.QSize(16777215, 120))
         font = QtGui.QFont()
@@ -172,22 +174,22 @@ class ConnectionsTab(object):
         self.ConnectionsLayout.addItem(spacerItem)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.connectButton = QtWidgets.QPushButton(ConnectionsTab)
+        self.connectButton = QtWidgets.QPushButton(self)
         self.connectButton.setObjectName("connectButton")
         self.horizontalLayout_3.addWidget(self.connectButton)
-        self.disconnectButton = QtWidgets.QPushButton(ConnectionsTab)
+        self.disconnectButton = QtWidgets.QPushButton(self)
         self.disconnectButton.setObjectName("disconnectButton")
         self.horizontalLayout_3.addWidget(self.disconnectButton)
         self.ConnectionsLayout.addLayout(self.horizontalLayout_3)
         self.horizontalLayout.addLayout(self.ConnectionsLayout, 2)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.retranslateUi(ConnectionsTab)
-        QtCore.QMetaObject.connectSlotsByName(ConnectionsTab)
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
 
-    def retranslateUi(self, ConnectionsTab):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        ConnectionsTab.setWindowTitle(_translate("ConnectionsTab", "Form"))
+        self.setWindowTitle(_translate("ConnectionsTab", "Form"))
         self.ConnectionsLabel.setText(_translate(
             "ConnectionsTab", "Available Connections"))
         __sortingEnabled = self.treeWidget.isSortingEnabled()
@@ -218,7 +220,6 @@ class ConnectionsTab(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    widget = QtWidgets.QWidget()
-    ui = ConnectionsTab(widget)
-    widget.show()
+    ui = ConnectionsTab()
+    ui.show()
     sys.exit(app.exec_())
