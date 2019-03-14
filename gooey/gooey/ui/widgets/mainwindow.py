@@ -8,17 +8,25 @@
 
 import ui.widgets.resources
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMainWindow
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
 from ui.widgets.connection import ConnectionsTab
 
+# TODO: remove below
+from models.transmit_message import TransmitMessage
+from models.receive_message import ReceiveMessage
 
-class CAND_MainWindow(object):
-    def __init__(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1280, 778)
-        MainWindow.setAutoFillBackground(False)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+
+class CAND_MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.title = 'CAN-D Automotive Datalogger'
+
+        self.setObjectName("MainWindow")
+        self.resize(1280, 778)
+        self.setAutoFillBackground(False)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(90, 10, 1181, 741))
@@ -33,9 +41,7 @@ class CAND_MainWindow(object):
         self.tabWidget.addTab(self.traceTab, "")
 
         # Receive/Transmit Tab
-        self.rxtxTab = QtWidgets.QWidget()
-        # Put rxtx component into tab
-        RxTxTab(self.rxtxTab)
+        self.rxtxTab = RxTxTab()
         self.rxtxTab.setObjectName("rxtxTab")
         self.tabWidget.addTab(self.rxtxTab, "")
 
@@ -54,11 +60,15 @@ class CAND_MainWindow(object):
             self.layoutWidget.sizePolicy().hasHeightForWidth())
         self.layoutWidget.setSizePolicy(sizePolicy)
         self.layoutWidget.setObjectName("layoutWidget")
+
         self.sideBarLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.sideBarLayout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
         self.sideBarLayout.setContentsMargins(0, 0, 0, 0)
         self.sideBarLayout.setObjectName("sideBarLayout")
-        self.openButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Open Button
+        self.openButton = QtWidgets.QToolButton(self)
+
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -66,14 +76,19 @@ class CAND_MainWindow(object):
         sizePolicy.setHeightForWidth(
             self.openButton.sizePolicy().hasHeightForWidth())
         self.openButton.setSizePolicy(sizePolicy)
+
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/open.svg"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.openButton.setIcon(icon)
         self.openButton.setIconSize(QtCore.QSize(70, 70))
         self.openButton.setObjectName("openButton")
+
         self.sideBarLayout.addWidget(self.openButton)
-        self.saveButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Save Button
+        self.saveButton = QtWidgets.QToolButton(self)
+
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -81,14 +96,18 @@ class CAND_MainWindow(object):
         sizePolicy.setHeightForWidth(
             self.saveButton.sizePolicy().hasHeightForWidth())
         self.saveButton.setSizePolicy(sizePolicy)
+
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/save.svg"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveButton.setIcon(icon1)
         self.saveButton.setIconSize(QtCore.QSize(70, 70))
         self.saveButton.setObjectName("saveButton")
+
         self.sideBarLayout.addWidget(self.saveButton)
-        self.connectButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Connect Button
+        self.connectButton = QtWidgets.QToolButton(self)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -103,7 +122,9 @@ class CAND_MainWindow(object):
         self.connectButton.setIconSize(QtCore.QSize(70, 70))
         self.connectButton.setObjectName("connectButton")
         self.sideBarLayout.addWidget(self.connectButton)
-        self.disconnectButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Disconnect Button
+        self.disconnectButton = QtWidgets.QToolButton(self)
         self.disconnectButton.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -119,7 +140,9 @@ class CAND_MainWindow(object):
         self.disconnectButton.setIconSize(QtCore.QSize(70, 70))
         self.disconnectButton.setObjectName("disconnectButton")
         self.sideBarLayout.addWidget(self.disconnectButton)
-        self.recordButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Record Button
+        self.recordButton = QtWidgets.QToolButton(self)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -134,7 +157,9 @@ class CAND_MainWindow(object):
         self.recordButton.setIconSize(QtCore.QSize(70, 70))
         self.recordButton.setObjectName("recordButton")
         self.sideBarLayout.addWidget(self.recordButton)
-        self.stopButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Stop Button
+        self.stopButton = QtWidgets.QToolButton(self)
         self.stopButton.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -150,7 +175,9 @@ class CAND_MainWindow(object):
         self.stopButton.setIconSize(QtCore.QSize(70, 70))
         self.stopButton.setObjectName("stopButton")
         self.sideBarLayout.addWidget(self.stopButton)
-        self.playButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Play Button
+        self.playButton = QtWidgets.QToolButton(self)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -165,7 +192,9 @@ class CAND_MainWindow(object):
         self.playButton.setIconSize(QtCore.QSize(70, 70))
         self.playButton.setObjectName("playButton")
         self.sideBarLayout.addWidget(self.playButton)
-        self.pauseButton = QtWidgets.QToolButton(self.layoutWidget)
+
+        # Pause Button
+        self.pauseButton = QtWidgets.QToolButton(self)
         self.pauseButton.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -181,23 +210,30 @@ class CAND_MainWindow(object):
         self.pauseButton.setIconSize(QtCore.QSize(70, 70))
         self.pauseButton.setObjectName("pauseButton")
         self.sideBarLayout.addWidget(self.pauseButton)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+
+        self.setCentralWidget(self.centralwidget)
+
+        # Set MenuBar Widget
+        self.menubar = QtWidgets.QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
         self.menubar.setObjectName("menubar")
         self.menuCAN_D = QtWidgets.QMenu(self.menubar)
         self.menuCAN_D.setObjectName("menuCAN_D")
         self.menuFile = QtWidgets.QMenu(self.menuCAN_D)
         self.menuFile.setObjectName("menuFile")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.setMenuBar(self.menubar)
+
+        # Status Bar
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-        self.actionFile_2 = QtWidgets.QAction(MainWindow)
+        self.setStatusBar(self.statusbar)
+
+        # Actions
+        self.actionFile_2 = QtWidgets.QAction(self)
         self.actionFile_2.setObjectName("actionFile_2")
-        self.actionSave = QtWidgets.QAction(MainWindow)
+        self.actionSave = QtWidgets.QAction(self)
         self.actionSave.setObjectName("actionSave")
-        self.actionSave_As = QtWidgets.QAction(MainWindow)
+        self.actionSave_As = QtWidgets.QAction(self)
         self.actionSave_As.setObjectName("actionSave_As")
         self.menuFile.addAction(self.actionFile_2)
         self.menuFile.addAction(self.actionSave)
@@ -205,13 +241,31 @@ class CAND_MainWindow(object):
         self.menuCAN_D.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuCAN_D.menuAction())
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(self)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        # TODO REMOVE THESE, ONLY FOR TEST
+        self.openButton.clicked.connect(self.insertReceive)
+        self.saveButton.clicked.connect(self.insertTransmit)
+
+        QtCore.QMetaObject.connectSlotsByName(self)
+
+    # TODO: REMOVE THESE, ONLY FOR TEST
+    def insertTransmit(self):
+        print("testTransmit")
+        newmsg = TransmitMessage(
+            "TestTransmit", "DLC", "Data", "cycle_time", "Count", "Trigger")
+        self.rxtxTab.appendTransmitTable(newmsg)
+
+    def insertReceive(self):
+        print("testReceive")
+        newmsg = ReceiveMessage(
+            "TestReceive", "DLC", "Data", "cycle_time", "Count")
+        self.rxtxTab.appendReceiveTable(newmsg)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate(
+        self.setWindowTitle(_translate(
             "MainWindow", "CAN-D Data Logger"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(
             self.traceTab), _translate("MainWindow", "Trace"))
@@ -236,5 +290,5 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = CAND_MainWindow(MainWindow)
-    MainWindow.show()
+    ui.show()
     sys.exit(app.exec_())

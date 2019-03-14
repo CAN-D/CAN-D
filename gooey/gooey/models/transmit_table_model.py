@@ -1,0 +1,135 @@
+from PyQt5.QtCore import (QModelIndex, QAbstractTableModel, Qt)
+from models.transmit_message import TransmitMessage
+
+
+class TransmitTableModel(QAbstractTableModel):
+    def __init__(self, parent=None, messages=None):
+        super(TransmitTableModel, self).__init__(parent)
+
+        if messages is None:
+            self.messages = []
+        else:
+            self.messages = messages
+
+    """ Returns the number of rows this model holds. """
+
+    def rowCount(self, index=QModelIndex()):
+        return len(self.messages)
+
+    """ Returns the number of columns this model holds. """
+
+    def columnCount(self, index=QModelIndex()):
+        # Documentation seem to always return a hard coded value. Probably in case self.messages is empty.
+        return 6
+
+    """ Depending on the index and role given, return data.
+        If not returning data, return None
+    """
+
+    def data(self, index, role=Qt.DisplayRole):
+        if not index.isValid():
+            return None
+
+        if not 0 <= index.row() < len(self.messages):
+            return None
+
+        if role == Qt.DisplayRole:
+            message = self.messages[index.row()].message
+            dlc = self.messages[index.row()].dlc
+            data = self.messages[index.row()].data
+            cycle_time = self.messages[index.row()].cycle_time
+            count = self.messages[index.row()].count
+            trigger = self.messages[index.row()].trigger
+
+            if index.column() == 0:
+                return message
+            elif index.column() == 1:
+                return dlc
+            elif index.column() == 2:
+                return data
+            elif index.column() == 3:
+                return cycle_time
+            elif index.column() == 4:
+                return count
+            elif index.column() == 5:
+                return trigger
+
+        return None
+
+    """ Set the headers to be displayed """
+
+    def headerData(self, section, orientation, role=Qt.DisplayRole):
+        if role != Qt.DisplayRole:
+            return None
+
+        if orientation == Qt.Horizontal:
+            if section == 0:
+                return "Message"
+            elif section == 1:
+                return "DLC"
+            elif section == 2:
+                return "Data"
+            elif section == 3:
+                return "Cycle Time"
+            elif section == 4:
+                return "Count"
+            elif section == 5:
+                return "Trigger"
+
+        return None
+
+    """ Insert a row into the model. """
+
+    def insertRow(self, message, position, index=QModelIndex()):
+        self.beginInsertRows(QModelIndex(), position, position)
+        self.messages.insert(position, message)
+        self.endInsertRows()
+        return True
+
+    """ Remove a row from the model. """
+
+    def removeRow(self, position, rows=1, index=QModelIndex()):
+        self.beginRemoveRows(QModelIndex(), position, position + rows - 1)
+        del self.messages[position:position+rows]
+        self.endRemoveRows()
+
+        return True
+
+    """ Adjust the data (set it to <value>) depending on the given index
+        and role 
+    """
+
+    def setData(self, index, value, role=Qt.EditRole):
+        if role != Qt.EditRole:
+            return False
+
+        if index.isValid() and 0 <= index.row() < len(self.messages):
+            message = self.messages[index.row()]
+            if index.column() == 0:
+                message.message = value
+            elif index.column() == 1:
+                message.dlc = value
+            elif index.column() == 2:
+                message.data = value
+            elif index.column() == 3:
+                message.cycle_time = value
+            elif index.column() == 4:
+                message.count = value
+            elif index.column() == 5:
+                message.trigger = value
+            else:
+                False
+
+            self.dataChanged.emit(index, index)
+            return True
+
+        return False
+
+    """ Set the item flags at the given index. """
+
+    def flags(self, index):
+
+        if not index.isValid():
+            return Qt.ItemIsEnabled
+
+        return Qt.ItemFlags(QAbstractTableModel.flags(self, index) | Qt.ItemIsEditable)
