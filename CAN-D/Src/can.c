@@ -76,7 +76,7 @@ void MX_CAN_Init(void)
 
 void APP_CAN_InitTasks(void)
 {
-    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 128);
+    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 128);
@@ -232,14 +232,14 @@ void APP_CAN_MonitorTask(void const* argument)
 {
     osEvent event;
     CANRxMessage* msg;
-    uint8_t yesno = 0;
 
     for (;;) {
-        if (yesno == 0) {
-            const uint8_t data[] = "Y";
-            APP_FATFS_WriteSD(data, 1, "CAN_data.log");
-            yesno = 1;
-        }
+
+        /* This is just used to test the SD card functionality */
+        //  const uint8_t data[] = "YELLOW";
+        //  volatile uint8_t temp = sizeof(data);
+        //  APP_FATFS_WriteSD(data, 6, "CAN_data.log");
+
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
