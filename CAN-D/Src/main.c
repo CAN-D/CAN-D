@@ -11,8 +11,9 @@
 #include "cmsis_os.h"
 #include "fatfs.h"
 #include "gpio.h"
+#include "gps.h"
+#include "rtc.h"
 #include "stm32302c_custom.h"
-#include "stm32302c_custom_gps.h"
 #include "stm32f3xx_hal_pwr.h"
 #include "tim.h"
 #include "usb_device.h"
@@ -52,12 +53,12 @@ int main(void)
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    APP_RTC_Init();
     BSP_PB_Init(BUTTON_LOG, BUTTON_MODE_EXTI);
     MX_CAN_Init();
     MX_TIM2_Init();
     MX_USB_DEVICE_Init();
-
-    BSP_GPS_Init();
+    APP_GPS_Init();
 
     /* Call init function for freertos objects (in freertos.c) */
     MX_FREERTOS_Init();
@@ -82,10 +83,11 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks 
   */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSE;
     RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
     RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+    RCC_OscInitStruct.LSIState = RCC_LSI_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
@@ -103,8 +105,9 @@ void SystemClock_Config(void)
         Error_Handler();
     }
 
-    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_USART2;
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_RTC;
     PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+    PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
     PeriphClkInit.USBClockSelection = RCC_USBCLKSOURCE_PLL;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
         Error_Handler();
@@ -132,6 +135,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
   */
 void Error_Handler(void)
 {
+    while (1)
+        ;
 }
 
 #ifdef USE_FULL_ASSERT

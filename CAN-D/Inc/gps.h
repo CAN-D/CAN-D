@@ -14,7 +14,9 @@ extern "C" {
 #include "main.h"
 
 #define GPS_DATA_LENGTH 128
+#define GPS_LOG_FILENAME "GPS_Data"
 
+void APP_GPS_Init(void);
 void APP_GPS_InitTasks(void);
 void APP_GPS_BufferGPSString(char* dataString, size_t dataLength);
 

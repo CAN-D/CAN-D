@@ -9,6 +9,7 @@
 #include "gps.h"
 #include "fatfs.h"
 #include "stm32302c_custom.h"
+#include "stm32302c_custom_gps.h"
 #include "stm32f3xx_hal_gpio.h"
 #include "usbd_cdc_if.h"
 
@@ -21,6 +22,8 @@ typedef struct {
 #define GPS_BUFFER_LENGTH 2
 
 /* Private variables ---------------------------------------------------------*/
+static char gpsLogFilename[] = GPS_LOG_FILENAME;
+static char* gpsUniqueLogFilename = GPS_LOG_FILENAME;
 /* Threads */
 static osThreadId GPSMonitorTaskHandle;
 /* Queues */
@@ -37,9 +40,17 @@ static osPoolId GPSDataPool;
 void APP_GPS_MonitorTask(void const* argument);
 
 /* Exported functions --------------------------------------------------------*/
+void APP_GPS_Init(void)
+{
+    BSP_GPS_Init();
+
+    // Create a unique log filename for each new new session
+    gpsUniqueLogFilename = APP_FATFS_GetUniqueFilename(gpsLogFilename);
+}
+
 void APP_GPS_InitTasks(void)
 {
-    osThreadDef(GPSMonitorTask, APP_GPS_MonitorTask, osPriorityNormal, 0, 128);
+    osThreadDef(GPSMonitorTask, APP_GPS_MonitorTask, osPriorityNormal, 0, 256);
     GPSMonitorTaskHandle = osThreadCreate(osThread(GPSMonitorTask), NULL);
 
     osMessageQDef(UARTGprmcQueue, GPS_BUFFER_LENGTH, GPSData);
@@ -67,6 +78,9 @@ void APP_GPS_MonitorTask(void const* argument)
     GPSData* data;
 
     for (;;) {
+       const uint8_t adata[] = "YELLOW";
+       APP_FATFS_WriteSD(adata, 6, (const char*)gpsUniqueLogFilename);
+
         // Pend on GPS data sent via UART
         event = osMessageGet(UARTGprmcQueueHandle, 0);
         if (event.status == osEventMessage) {
@@ -75,7 +89,7 @@ void APP_GPS_MonitorTask(void const* argument)
             //if (mAppConfiguration.SDStorage == APP_ENABLE) {
             if (1) {
                 // Write data to SD card
-                APP_FATFS_WriteSD((const uint8_t*)data->raw, 128, "GPSData.log");
+                APP_FATFS_WriteSD((const uint8_t*)data->raw, 128, gpsUniqueLogFilename);
             }
             // TODO: BO: Moving around configurations, fix this
             //if (mAppConfiguration.USBStream == APP_ENABLE) {

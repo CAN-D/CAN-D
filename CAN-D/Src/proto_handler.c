@@ -8,6 +8,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "proto_handler.h"
+#include "can.h"
+#include "fatfs.h"
+#include "rtc.h"
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -61,15 +64,19 @@ void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg)
 
 void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
 {
+    uint8_t* utc_str;
+
     switch (controlCommandMsg->commandtype) {
     case CONTROL_COMMAND_TYPE__STOP_LOG:
-        /* code */
+        APP_CAN_Start();
         break;
     case CONTROL_COMMAND_TYPE__START_LOG:
-        /* code */
+        APP_CAN_Stop();
         break;
     case CONTROL_COMMAND_TYPE__MARK_LOG:
-        /* code */
+        // Add a UTC Timestampt to the Mark.log
+        utc_str = APP_RTC_GetUTCTime();
+        APP_FATFS_WriteSD((const uint8_t*)utc_str, UTC_TIME_STR_LEN, "Mark.log");
         break;
     case CONTROL_COMMAND_TYPE__GET_LOGFS_INFO:
         /* code */

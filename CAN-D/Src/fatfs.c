@@ -9,6 +9,7 @@
 #include "fatfs.h"
 #include "cmsis_os.h"
 #include "stm32302c_custom_sd.h"
+#include <string.h>
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -39,6 +40,35 @@ void APP_FATFS_Deinit(void)
     f_mount(NULL, 0, 0); // Unmount
     FATFS_UnLinkDriver(SDPath); // Unlink the SD Driver
     SDInitialized = 0;
+}
+
+char* APP_FATFS_GetUniqueFilename(char* filename)
+{
+    uint8_t appendCount = 0;
+    char toAppend[3];
+    FILINFO fno;
+
+    // Only generate a unique filename if SD Card is present
+    if (BSP_SD_IsDetected() == SD_PRESENT) {
+        strcat(filename, "_");
+        while (appendCount < 100) {
+            appendCount++;
+            sprintf(toAppend, "%d", appendCount);
+            strcat(filename, toAppend);
+            strcat(filename, ".log");
+            if (f_stat(filename, &fno) != FR_OK) {
+                // File already exists.
+                filename[strlen(filename) - 5] = '\0'; // Remove "appendCount.log"
+            } else {
+                // Filename is unique
+                break;
+            }
+        }
+    } else {
+        strcat(filename, ".log");
+    }
+
+    return filename;
 }
 
 /**

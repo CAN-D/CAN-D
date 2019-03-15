@@ -95,13 +95,13 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="/Users/marky/GitHub/CAN-D/CAN-D/Middlewares/Third_Party/FatFs/src"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="/Users/marky/GitHub/CAN-D/CAN-D/Drivers/BSP/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Proto"/>
-                                    									
                                     <listOptionValue builtIn="false" value="/usr/local/Cellar/protobuf-c/1.3.1_2/include/"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Proto&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/FatFs/src&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Drivers/BSP/Inc&quot;"/>
                                     								
                                 </option>
                                 								
