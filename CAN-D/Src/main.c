@@ -11,9 +11,9 @@
 #include "cmsis_os.h"
 #include "fatfs.h"
 #include "gpio.h"
+#include "gps.h"
 #include "rtc.h"
 #include "stm32302c_custom.h"
-#include "stm32302c_custom_gps.h"
 #include "stm32f3xx_hal_pwr.h"
 #include "tim.h"
 #include "usb_device.h"
@@ -53,12 +53,12 @@ int main(void)
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    APP_RTC_Init();
     BSP_PB_Init(BUTTON_LOG, BUTTON_MODE_EXTI);
     MX_CAN_Init();
     MX_TIM2_Init();
     MX_USB_DEVICE_Init();
-    BSP_GPS_Init();
-    APP_RTC_Init();
+    APP_GPS_Init();
 
     /* Call init function for freertos objects (in freertos.c) */
     MX_FREERTOS_Init();

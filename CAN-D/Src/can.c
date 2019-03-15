@@ -258,8 +258,9 @@ void APP_CAN_MonitorTask(void const* argument)
     CANRxMessage* msg;
 
     for (;;) {
-         const uint8_t data[] = "YELLOW";
-         APP_FATFS_WriteSD(data, 6, (const char*)canUniqueLogFilename);
+        /* This is just used to test */
+        // const uint8_t data[] = "YELLOW";
+        // APP_FATFS_WriteSD(data, 6, (const char*)canUniqueLogFilename);
 
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
