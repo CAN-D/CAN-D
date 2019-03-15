@@ -8,7 +8,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "fatfs.h"
 #include "cmsis_os.h"
-#include "rtc.h"
 #include "stm32302c_custom_sd.h"
 #include <string.h>
 
@@ -25,7 +24,7 @@ FRESULT resSD; /* Return value for SD */
 char SDPath[4]; /* SD logical drive path */
 FATFS SDFatFS; /* File system object for SD logical drive */
 FIL SDFile; /* File object for SD */
-
+static uint8_t SDInitialized = 0; /* Keeps track of if the SD card is initialized or not */
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
@@ -33,6 +32,14 @@ void APP_FATFS_Init(void)
 {
     // Link the SD driver
     resSD = FATFS_LinkDriver(&SD_Driver, SDPath);
+    SDInitialized = 1;
+}
+
+void APP_FATFS_Deinit(void)
+{
+    f_mount(NULL, 0, 0); // Unmount
+    FATFS_UnLinkDriver(SDPath); // Unlink the SD Driver
+    SDInitialized = 0;
 }
 
 char* APP_FATFS_GetUniqueFilename(char* filename)
@@ -75,17 +82,24 @@ uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* 
 {
     uint32_t writtenBytes = 0;
 
-    // If already mounted, this should return FR_OK
-    if (f_mount(&SDFatFS, (TCHAR const*)SDPath, FATFS_FORCED_MOUNTING) == FR_OK) {
-        // Open the file for writing. Create new file if it doesn't exist
-        // osThreadResumeAll();
-        if ((f_open(&SDFile, fileName, FA_WRITE | FA_OPEN_ALWAYS)) == FR_OK) {
-            // Move the write pointer to the end of the file (append)
-            if (f_lseek(&SDFile, f_size(&SDFile)) == FR_OK) {
-                f_write(&SDFile, writeData, bytes, (void*)&writtenBytes);
-                f_close(&SDFile);
+    if (BSP_SD_IsDetected() == SD_PRESENT) {
+        // If the SD card was ejected but is now detected
+        if (SDInitialized == 0) {
+            APP_FATFS_Init();
+        }
+        if (f_mount(&SDFatFS, (TCHAR const*)SDPath, FATFS_FORCED_MOUNTING) == FR_OK) {
+            // Open the file for writing. Create new file if it doesn't exist
+            if ((f_open(&SDFile, fileName, FA_WRITE | FA_OPEN_ALWAYS)) == FR_OK) {
+                // Move the write pointer to the end of the file (append)
+                if (f_lseek(&SDFile, f_size(&SDFile)) == FR_OK) {
+                    f_write(&SDFile, writeData, bytes, (void*)&writtenBytes);
+                    f_close(&SDFile);
+                }
             }
         }
+        f_mount(NULL, 0, 0);
+    } else if (SDInitialized == 1) {
+        APP_FATFS_Deinit();
     }
 
     return writtenBytes;
