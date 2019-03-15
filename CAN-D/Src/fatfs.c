@@ -8,6 +8,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "fatfs.h"
 #include "cmsis_os.h"
+#include "rtc.h"
+#include <string.h>
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -30,6 +32,22 @@ void APP_FATFS_Init(void)
 {
     // Link the SD driver
     resSD = FATFS_LinkDriver(&SD_Driver, SDPath);
+}
+
+char* APP_FATFS_GetUniqueFilename(char* filename)
+{
+    uint8_t* utc_str = APP_RTC_GetUTCTime();
+    char toAppend[3];
+
+    strcat(filename, "_");
+    sprintf(toAppend, "%d", utc_str[0]);
+    strcat(filename, toAppend);
+    sprintf(toAppend, "%d", utc_str[1]);
+    strcat(filename, toAppend);
+    sprintf(toAppend, "%d", utc_str[2]);
+    strcat(filename, toAppend);
+    strcat(filename, ".log");
+    return filename;
 }
 
 /**

@@ -20,6 +20,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 static APP_ConfigType mAppConfiguration = { 0 };
+static char canLogFilename[] = CAN_LOG_FILENAME;
+static char* canUniqueLogFilename = CAN_LOG_FILENAME;
 /* Threads */
 static osThreadId CANMonitorTaskHandle;
 static osThreadId CANTransmitTaskHandle;
@@ -205,6 +207,8 @@ void APP_CAN_Start(void)
     // Changes the hcan.State to HAL_CAN_STATE_LISTENING
     if (HAL_CAN_Start(&hcan) == HAL_OK) {
         HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
+        // Create a unique log filename for each new new session
+        canUniqueLogFilename = APP_FATFS_GetUniqueFilename(canLogFilename);
     }
 }
 
@@ -252,21 +256,18 @@ void APP_CAN_MonitorTask(void const* argument)
 {
     osEvent event;
     CANRxMessage* msg;
-    uint8_t yesno = 0;
 
     for (;;) {
-        if (yesno == 0) {
-            const uint8_t data[] = "Y";
-            APP_FATFS_WriteSD(data, 1, "CAN_data.log");
-            yesno = 1;
-        }
+         const uint8_t data[] = "YELLOW";
+         APP_FATFS_WriteSD(data, 6, (const char*)canUniqueLogFilename);
+
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
             msg = event.value.p;
             if (mAppConfiguration.SDStorage == APP_ENABLE) {
                 // Write data to SD card
-                APP_FATFS_WriteSD((const uint8_t*)msg->data, 8, "CAN_data.log");
+                APP_FATFS_WriteSD((const uint8_t*)msg->data, 8, canUniqueLogFilename);
             }
             if (mAppConfiguration.USBStream == APP_ENABLE) {
                 // Fill the USB TX buffer with the CAN data
