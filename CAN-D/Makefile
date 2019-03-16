@@ -98,7 +98,9 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c  \
-Proto/can-d.pb-c.c
+Proto/can-d.pb-c.c \
+Src/usbSpam.c 
+
 
 # ASM sources
 ASM_SOURCES =  \

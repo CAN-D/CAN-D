@@ -16,6 +16,7 @@
 #include "stm32302c_custom.h"
 #include "stm32f3xx_hal_pwr.h"
 #include "tim.h"
+#include "usbSpam.h"
 #include "usb_device.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,6 +60,7 @@ int main(void)
     MX_TIM2_Init();
     MX_USB_DEVICE_Init();
     APP_GPS_Init();
+    APP_USBSpam_InitTasks();
 
     /* Call init function for freertos objects (in freertos.c) */
     MX_FREERTOS_Init();
