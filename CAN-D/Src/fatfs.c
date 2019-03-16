@@ -25,6 +25,8 @@ char SDPath[4]; /* SD logical drive path */
 FATFS SDFatFS; /* File system object for SD logical drive */
 FIL SDFile; /* File object for SD */
 static uint8_t SDInitialized = 0; /* Keeps track of if the SD card is initialized or not */
+static uint16_t sessionCount = 0; /* 0 if no session started */
+static uint16_t prevSessionCount = 0;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
@@ -42,33 +44,57 @@ void APP_FATFS_Deinit(void)
     SDInitialized = 0;
 }
 
-char* APP_FATFS_GetUniqueFilename(char* filename)
+void APP_FATFS_StartSession(void)
 {
-    uint8_t appendCount = 0;
-    char toAppend[3];
     FILINFO fno;
+    char toAppend[4]; // Temp buf
+    char filename[] = "CAN_Data";
+    uint16_t appendCount = prevSessionCount;
 
-    // Only generate a unique filename if SD Card is present
-    if (BSP_SD_IsDetected() == SD_PRESENT) {
-        strcat(filename, "_");
-        while (appendCount < 100) {
-            appendCount++;
-            sprintf(toAppend, "%d", appendCount);
-            strcat(filename, toAppend);
-            strcat(filename, ".log");
-            if (f_stat(filename, &fno) != FR_OK) {
-                // File already exists.
-                filename[strlen(filename) - 5] = '\0'; // Remove "appendCount.log"
-            } else {
-                // Filename is unique
-                break;
+    if (sessionCount == 0) {
+        // Only generate a unique filename if SD Card is present
+        if (BSP_SD_IsDetected() == SD_PRESENT) {
+            strcat(filename, "_");
+            while (appendCount < 9999) {
+                appendCount++;
+                sprintf(toAppend, "%d", appendCount);
+                strcat(filename, toAppend);
+                strcat(filename, ".log");
+                if (f_stat(filename, &fno) != FR_OK) {
+                    // File already exists.
+                    filename[strlen(filename) - 5] = '\0'; // Remove "appendCount.log"
+                } else {
+                    // Filename is unique. Found our new session count.
+                    sessionCount = appendCount;
+                    break;
+                }
             }
+        } else { // SD not detected
+            sessionCount = 0;
         }
-    } else {
-        strcat(filename, ".log");
+    }
+}
+
+void APP_FATFS_StopSession(void)
+{
+    prevSessionCount = sessionCount;
+    sessionCount = 0;
+}
+
+uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphIdentifier)
+{
+    char uniqueID[4];
+
+    // Check that we have started a session
+    if (sessionCount == 0) {
+        return 0;
     }
 
-    return filename;
+    sprintf(uniqueID, "%d", sessionCount);
+    strcat(periphIdentifier, uniqueID);
+    strcat(periphIdentifier, ".log");
+
+    return APP_FATFS_WriteSD(writeData, bytes, (const char*)periphIdentifier);
 }
 
 /**

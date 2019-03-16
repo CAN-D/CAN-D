@@ -142,26 +142,26 @@ void TIM2_IRQHandler(void)
   */
 void USART2_IRQHandler(void)
 {
-    char rxData[128] = "0";
-    uint8_t rx_idx = 0;
-    // Check if the UART2 Read Data Register has data
-    if (huart.Instance->ISR & USART_ISR_RXNE) {
-        // Read the data from the register
-        rxData[rx_idx] = huart.Instance->RDR;
-
-        // The GPS RX data will be held between '$' and '\n' characters
-        // TODO: BO: This is demo specific code
-        // if (rxData[rx_idx] == '$') {
-        if (1) {
-            // TODO: BO: This is demo specific code
-            // if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
-            //     APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
-            APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
-
-            memset(rxData, 0, sizeof(rxData));
-        }
-    }
-
+//    char rxData[128] = "0";
+//    uint8_t rx_idx = 0;
+//    // Check if the UART2 Read Data Register has data
+//    if (huart.Instance->ISR & USART_ISR_RXNE) {
+//        // Read the data from the register
+//        rxData[rx_idx] = huart.Instance->RDR;
+//
+//        // The GPS RX data will be held between '$' and '\n' characters
+//        // TODO: BO: This is demo specific code
+//        // if (rxData[rx_idx] == '$') {
+//        if (1) {
+//            // TODO: BO: This is demo specific code
+//            // if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
+//            //     APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
+//            APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
+//
+//            memset(rxData, 0, sizeof(rxData));
+//        }
+//    }
+//
     HAL_UART_IRQHandler(&huart);
 }
 

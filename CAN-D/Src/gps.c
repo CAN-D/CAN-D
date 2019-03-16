@@ -22,8 +22,7 @@ typedef struct {
 #define GPS_BUFFER_LENGTH 2
 
 /* Private variables ---------------------------------------------------------*/
-static char gpsLogFilename[] = GPS_LOG_FILENAME;
-static char* gpsUniqueLogFilename = GPS_LOG_FILENAME;
+static char gpsLogIdentifier[] = GPS_LOG_FILENAME;
 /* Threads */
 static osThreadId GPSMonitorTaskHandle;
 /* Queues */
@@ -43,9 +42,6 @@ void APP_GPS_MonitorTask(void const* argument);
 void APP_GPS_Init(void)
 {
     BSP_GPS_Init();
-
-    // Create a unique log filename for each new new session
-    gpsUniqueLogFilename = APP_FATFS_GetUniqueFilename(gpsLogFilename);
 }
 
 void APP_GPS_InitTasks(void)
@@ -78,9 +74,6 @@ void APP_GPS_MonitorTask(void const* argument)
     GPSData* data;
 
     for (;;) {
-       const uint8_t adata[] = "YELLOW";
-       APP_FATFS_WriteSD(adata, 6, (const char*)gpsUniqueLogFilename);
-
         // Pend on GPS data sent via UART
         event = osMessageGet(UARTGprmcQueueHandle, 0);
         if (event.status == osEventMessage) {
@@ -89,7 +82,7 @@ void APP_GPS_MonitorTask(void const* argument)
             //if (mAppConfiguration.SDStorage == APP_ENABLE) {
             if (1) {
                 // Write data to SD card
-                APP_FATFS_WriteSD((const uint8_t*)data->raw, 128, gpsUniqueLogFilename);
+                APP_FATFS_LogSD((const uint8_t*)data->raw, 128, gpsLogIdentifier);
             }
             // TODO: BO: Moving around configurations, fix this
             //if (mAppConfiguration.USBStream == APP_ENABLE) {
