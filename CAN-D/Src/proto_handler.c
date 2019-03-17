@@ -76,7 +76,10 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
     case CONTROL_COMMAND_TYPE__MARK_LOG:
         // Add a UTC Timestampt to the Mark.log
         utc_str = APP_RTC_GetUTCTime();
-        APP_FATFS_WriteSD((const uint8_t*)utc_str, UTC_TIME_STR_LEN, "Mark.log");
+
+        // TODO: figure out if we are logging the marks in their own log file
+        //       or bundled in the CAN Data log.
+        APP_FATFS_LogSD((const uint8_t*)utc_str, UTC_TIME_STR_LEN, "CAN_Data");
         break;
     case CONTROL_COMMAND_TYPE__GET_LOGFS_INFO:
         /* code */
