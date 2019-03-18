@@ -1,6 +1,8 @@
 import ui.widgets.resources
 from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
 from PyQt5.QtWidgets import QWidget
+from models.clock_frequency import ClockFrequency
+from models.bit_rate import BitRate
 
 
 class ConnectionsTab(QWidget):
@@ -82,6 +84,9 @@ class ConnectionsTab(QWidget):
         self.clockFrequencyComboBox = QtWidgets.QComboBox(self.groupBox)
         self.clockFrequencyComboBox.setObjectName("clockFrequencyComboBox")
         self.verticalLayout_5.addWidget(self.clockFrequencyComboBox)
+        self.setClockFrequencyOptions()
+        self.clockFrequencyComboBox.currentIndexChanged.connect(
+            self.clockFrequencyOptionsChanged)
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_5)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
@@ -95,6 +100,9 @@ class ConnectionsTab(QWidget):
         self.bitRateComboBox = QtWidgets.QComboBox(self.groupBox)
         self.bitRateComboBox.setObjectName("bitRateComboBox")
         self.verticalLayout_4.addWidget(self.bitRateComboBox)
+        self.setBitRateOptions()
+        self.bitRateComboBox.currentIndexChanged.connect(
+            self.bitRateOptionsChanged)
 
         # Set Settings button
         self.horizontalLayout_2.addLayout(self.verticalLayout_4)
@@ -175,10 +183,20 @@ class ConnectionsTab(QWidget):
             _translate("ConnectionsTab", "Disconnect"))
 
     def setClockFrequencyOptions(self):
-        self.clockFrequencyComboBox.addItems([])
+        self.clockFrequencyComboBox.addItems([e.value for e in ClockFrequency])
 
     def setBitRateOptions(self):
-        self.bitRateComboBox.addItems([])
+        self.bitRateComboBox.addItems([e.value for e in BitRate])
+
+    def clockFrequencyOptionsChanged(self, i):
+        print("Clock changed to index: ", i, " which is: ",
+              self.clockFrequencyComboBox.currentText())
+        # TODO update connection model
+
+    def bitRateOptionsChanged(self, i):
+        print("Clock changed to index: ", i,
+              " which is: ", self.bitRateComboBox.currentText())
+        # TODO update connection model
 
 
 if __name__ == "__main__":
