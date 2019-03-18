@@ -251,14 +251,17 @@ class CAND_MainWindow(QMainWindow):
         newmsg = TransmitMessage(
             "TestTransmit", "DLC", "Data", "cycle_time", "Count", "Trigger")
         self.rxtxTab.appendTransmitTable(newmsg)
-        self.statusbar.showMessage("Test Transmit")
+
+        test = QtWidgets.QRadioButton()
+        self.statusbar.showMessage("Test Transmit | Disconnected")
+        self.statusbar.addWidget(test)
 
     def insertReceive(self):
         print("testReceive")
         newmsg = ReceiveMessage(
             "TestReceive", "DLC", "Data", "cycle_time", "Count")
         self.rxtxTab.appendReceiveTable(newmsg)
-        self.statusbar.showMessage("Test Receive")
+        self.statusbar.showMessage("Test Receive | Connected")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
