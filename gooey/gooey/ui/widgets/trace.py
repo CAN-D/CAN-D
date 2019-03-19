@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QWidget
+from models.trace_table_model import TraceTableModel
+from models.trace import Trace
 
 
 class TraceTab(QWidget):
@@ -19,12 +21,17 @@ class TraceTab(QWidget):
         self.TraceTable.setObjectName("TraceTable")
         self.gridLayout.addWidget(self.TraceTable, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.TraceGroup)
+        header = self.TraceTable.horizontalHeader()
+        header.setStretchLastSection(True)
 
-        # Set models for testing
-        traceModel = QtGui.QStandardItemModel()
-        traceModel.setHorizontalHeaderLabels(
-            ['Time', 'CAN-ID', 'Rx/Tx', 'Type', 'Length', 'Data'])
-        self.TraceTable.setModel(traceModel)
+        self.traceTableModel = TraceTableModel()
+        newmsg = Trace(
+            "30018", "18F00200h", "Rx", "FD,BRS", "32", "00 00 C4 FB 0F FE 0F FE 00 00 C4 FB 0F FE 0F FE 00 00 C4 FB")
+        self.traceTableModel.traces.append(newmsg)
+        self.TraceTable.setModel(self.traceTableModel)
+        newmsg2 = Trace(
+            "30111", "17F00100h", "Tx", "FD", "8", "00 00 C4 FB")
+        self.traceTableModel.traces.append(newmsg2)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
