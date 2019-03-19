@@ -1,83 +1,88 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QScrollArea, QFrame, QToolButton, QGridLayout, QSizePolicy
-from PyQt5.QtCore import QParallelAnimationGroup, Qt, QAbstractAnimation, QPropertyAnimation
+import sys
+from PyQt5.QtWidgets import (QPushButton, QDialog, QTreeWidget,
+                             QTreeWidgetItem, QVBoxLayout,
+                             QHBoxLayout, QFrame, QLabel,
+                             QApplication)
 
 
-class Expander(QWidget):
-    def __init__(self, parent=None, title='', animationDuration=300):
+class SectionExpandButton(QPushButton):
+    """a QPushbutton that can expand or collapse its section
+    """
+
+    def __init__(self, item, text="", parent=None):
+        super().__init__(text, parent)
+        self.section = item
+        self.clicked.connect(self.on_clicked)
+
+    def on_clicked(self):
+        """toggle expand/collapse of section by clicking
         """
-        References:
-            # Adapted from c++ version
-            http://stackoverflow.com/questions/32476006/how-to-make-an-expandable-collapsable-section-widget-in-qt
+        if self.section.isExpanded():
+            self.section.setExpanded(False)
+        else:
+            self.section.setExpanded(True)
+
+
+class CollapsibleDialog(QDialog):
+    """a dialog to which collapsible sections can be added;
+    subclass and reimplement define_sections() to define sections and
+        add them as (title, widget) tuples to self.sections
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.tree = QTreeWidget()
+        self.tree.setHeaderHidden(True)
+        layout = QVBoxLayout()
+        layout.addWidget(self.tree)
+        self.setLayout(layout)
+        self.tree.setIndentation(0)
+
+        self.sections = []
+        self.define_sections()
+        self.add_sections()
+
+    def add_sections(self):
+        """adds a collapsible sections for every 
+        (title, widget) tuple in self.sections
         """
-        super(Expander, self).__init__(parent=parent)
+        for (title, widget) in self.sections:
+            button1 = self.add_button(title)
+            section1 = self.add_widget(button1, widget)
+            button1.addChild(section1)
 
-        self.animationDuration = 300
-        self.toggleAnimation = QParallelAnimationGroup()
-        self.contentArea = QScrollArea()
-        self.headerLine = QFrame()
-        self.toggleButton = QToolButton()
-        self.mainLayout = QGridLayout()
+    def define_sections(self):
+        """reimplement this to define all your sections
+        and add them as (title, widget) tuples to self.sections
+        """
+        widget = QFrame(self.tree)
+        layout = QHBoxLayout(widget)
+        layout.addWidget(QLabel("Bla"))
+        layout.addWidget(QLabel("Blubb"))
+        title = "Section 1"
+        self.sections.append((title, widget))
 
-        toggleButton = self.toggleButton
-        toggleButton.setStyleSheet("QToolButton { border: none; }")
-        toggleButton.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-        toggleButton.setArrowType(Qt.RightArrow)
-        toggleButton.setText(str(title))
-        toggleButton.setCheckable(True)
-        toggleButton.setChecked(False)
+    def add_button(self, title):
+        """creates a QTreeWidgetItem containing a button 
+        to expand or collapse its section
+        """
+        item = QTreeWidgetItem()
+        self.tree.addTopLevelItem(item)
+        self.tree.setItemWidget(item, 0, SectionExpandButton(item, text=title))
+        return item
 
-        headerLine = self.headerLine
-        headerLine.setFrameShape(QFrame.HLine)
-        headerLine.setFrameShadow(QFrame.Sunken)
-        headerLine.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+    def add_widget(self, button, widget):
+        """creates a QWidgetItem containing the widget,
+        as child of the button-QWidgetItem
+        """
+        section = QTreeWidgetItem(button)
+        section.setDisabled(True)
+        self.tree.setItemWidget(section, 0, widget)
+        return section
 
-        self.contentArea.setStyleSheet("QScrollArea { border: none; }")
-        self.contentArea.setSizePolicy(
-            QSizePolicy.Expanding, QSizePolicy.Fixed)
-        # start out collapsed
-        self.contentArea.setMaximumHeight(0)
-        self.contentArea.setMinimumHeight(0)
-        # let the entire widget grow and shrink with its content
-        toggleAnimation = self.toggleAnimation
-        toggleAnimation.addAnimation(
-            QPropertyAnimation(self, b"minimumHeight"))
-        toggleAnimation.addAnimation(
-            QPropertyAnimation(self, b"maximumHeight"))
-        toggleAnimation.addAnimation(QPropertyAnimation(
-            self.contentArea, b"maximumHeight"))
-        # don't waste space
-        mainLayout = self.mainLayout
-        mainLayout.setVerticalSpacing(0)
-        mainLayout.setContentsMargins(0, 0, 0, 0)
-        row = 0
-        mainLayout.addWidget(self.toggleButton, row, 0, 1, 1, Qt.AlignLeft)
-        mainLayout.addWidget(self.headerLine, row, 2, 1, 1)
-        row += 1
-        mainLayout.addWidget(self.contentArea, row, 0, 1, 3)
-        self.setLayout(self.mainLayout)
 
-        def start_animation(checked):
-            arrow_type = Qt.DownArrow if checked else Qt.RightArrow
-            direction = QAbstractAnimation.Forward if checked else QAbstractAnimation.Backward
-            toggleButton.setArrowType(arrow_type)
-            self.toggleAnimation.setDirection(direction)
-            self.toggleAnimation.start()
-
-        self.toggleButton.clicked.connect(start_animation)
-
-    def setContentLayout(self, contentLayout):
-        # Not sure if this is equivalent to self.contentArea.destroy()
-        self.contentArea.destroy()
-        self.contentArea.setLayout(contentLayout)
-        collapsedHeight = self.sizeHint().height() - self.contentArea.maximumHeight()
-        contentHeight = contentLayout.sizeHint().height()
-        for i in range(self.toggleAnimation.animationCount()-1):
-            spoilerAnimation = self.toggleAnimation.animationAt(i)
-            spoilerAnimation.setDuration(self.animationDuration)
-            spoilerAnimation.setStartValue(collapsedHeight)
-            spoilerAnimation.setEndValue(collapsedHeight + contentHeight)
-        contentAnimation = self.toggleAnimation.animationAt(
-            self.toggleAnimation.animationCount() - 1)
-        contentAnimation.setDuration(self.animationDuration)
-        contentAnimation.setStartValue(0)
-        contentAnimation.setEndValue(contentHeight)
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = CollapsibleDialog()
+    window.show()
+    sys.exit(app.exec_())
