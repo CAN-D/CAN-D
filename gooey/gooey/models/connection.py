@@ -1,7 +1,7 @@
-from enum import ENUM
+from enum import Enum
 
 
-class ConnectionType(ENUM):
+class ConnectionType(Enum):
     USB = 1
     WIRELESS = 2
 
@@ -19,9 +19,11 @@ class Connection():
 
     def connect(self):
         # TODO
+        return
 
     def disconnect(self):
         # TODO
+        return
 
     def setBitRate(self, bitrate):
         self.bitrate = bitrate
@@ -31,6 +33,8 @@ class Connection():
 
     def transmitMessage(self, message):
         # TODO
+        return
 
     def receiveMessage(self, message):
         # TODO
+        return

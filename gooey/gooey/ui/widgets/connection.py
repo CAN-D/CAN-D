@@ -3,13 +3,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
 from PyQt5.QtWidgets import QWidget
 from models.clock_frequency import ClockFrequency
 from models.bit_rate import BitRate
+from models.connection import Connection
 
 
 class ConnectionsTab(QWidget):
     def __init__(self):
         super().__init__()
 
-        # TODO: set models instead of standard model,
+        # TODO : set default value for connection
+        self.model = Connection(
+            clk_freq=ClockFrequency['ONE_MEGAHERTZ'],
+            bitrate=BitRate['ONE_THOUSAND']
+        )
 
         self.setObjectName("ConnectionsTab")
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
@@ -87,6 +92,8 @@ class ConnectionsTab(QWidget):
         self.setClockFrequencyOptions()
         self.clockFrequencyComboBox.currentIndexChanged.connect(
             self.clockFrequencyOptionsChanged)
+        self.clockFrequencyComboBox.setCurrentIndex(
+            self.getClockFrequencyIndex(self.model.clk_freq.value))
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_5)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
@@ -103,6 +110,8 @@ class ConnectionsTab(QWidget):
         self.setBitRateOptions()
         self.bitRateComboBox.currentIndexChanged.connect(
             self.bitRateOptionsChanged)
+        self.bitRateComboBox.setCurrentIndex(
+            self.getBitRateIndex(self.model.bitrate.value))
 
         # Set Settings button
         self.horizontalLayout_2.addLayout(self.verticalLayout_4)
@@ -183,20 +192,30 @@ class ConnectionsTab(QWidget):
             _translate("ConnectionsTab", "Disconnect"))
 
     def setClockFrequencyOptions(self):
-        self.clockFrequencyComboBox.addItems([e.value for e in ClockFrequency])
+        self.clockFrequencyItems = [e.value for e in ClockFrequency]
+        self.clockFrequencyComboBox.addItems(self.clockFrequencyItems)
+
+    def getClockFrequencyIndex(self, selectedItem):
+        return self.clockFrequencyItems.index(selectedItem)
 
     def setBitRateOptions(self):
-        self.bitRateComboBox.addItems([e.value for e in BitRate])
+        self.bitRateItems = [e.value for e in BitRate]
+        self.bitRateComboBox.addItems(self.bitRateItems)
+
+    def getBitRateIndex(self, selectedItem):
+        return self.bitRateItems.index(selectedItem)
 
     def clockFrequencyOptionsChanged(self, i):
         print("Clock changed to index: ", i, " which is: ",
               self.clockFrequencyComboBox.currentText())
-        # TODO update connection model
+
+        self.model.setClockFrequency(self.clockFrequencyComboBox.currentText())
 
     def bitRateOptionsChanged(self, i):
         print("Clock changed to index: ", i,
               " which is: ", self.bitRateComboBox.currentText())
-        # TODO update connection model
+
+        self.model.setBitRate(self.bitRateComboBox.currentText())
 
 
 if __name__ == "__main__":
