@@ -1,0 +1,10 @@
+from enum import Enum
+
+
+class ClockFrequency(Enum):
+    FIFTY_KILOHERTZ = '50 kHz'
+    ONE_HUNDRED_TWENTY_FIVE_KILOHERTZ = '125 kHz'
+    TWO_HUNDRED_FIFTY_KILOHERTZ = '250 kHz'
+    FIVE_HUNDRED_KILOHERTZ = '500 kHz'
+    EIGHT_HUNDRED_KILOHERTZ = '800 kHz'
+    ONE_MEGAHERTZ = '1 MHz'

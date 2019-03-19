@@ -1,13 +1,20 @@
 import ui.widgets.resources
 from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
 from PyQt5.QtWidgets import QWidget
+from models.clock_frequency import ClockFrequency
+from models.bit_rate import BitRate
+from models.connection import Connection
 
 
 class ConnectionsTab(QWidget):
     def __init__(self):
         super().__init__()
 
-        # TODO: set models instead of standard model,
+        # TODO : set default value for connection
+        self.model = Connection(
+            clk_freq=ClockFrequency['ONE_MEGAHERTZ'],
+            bitrate=BitRate['ONE_THOUSAND']
+        )
 
         self.setObjectName("ConnectionsTab")
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
@@ -73,6 +80,8 @@ class ConnectionsTab(QWidget):
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setContentsMargins(-1, -1, 40, -1)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
+
+        # Clock Frequency Combo Box
         self.clockFrequencyLabel = QtWidgets.QLabel(self.groupBox)
         self.clockFrequencyLabel.setMinimumSize(QtCore.QSize(0, 0))
         self.clockFrequencyLabel.setObjectName("clockFrequencyLabel")
@@ -80,47 +89,36 @@ class ConnectionsTab(QWidget):
         self.clockFrequencyComboBox = QtWidgets.QComboBox(self.groupBox)
         self.clockFrequencyComboBox.setObjectName("clockFrequencyComboBox")
         self.verticalLayout_5.addWidget(self.clockFrequencyComboBox)
+        self.setClockFrequencyOptions()
+        self.clockFrequencyComboBox.currentIndexChanged.connect(
+            self.clockFrequencyOptionsChanged)
+        self.clockFrequencyComboBox.setCurrentIndex(
+            self.getClockFrequencyIndex(self.model.clk_freq.value))
+
         self.horizontalLayout_2.addLayout(self.verticalLayout_5)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setContentsMargins(-1, -1, 40, -1)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
+
+        # Bit Rate Combo Box
         self.bitRateLabel = QtWidgets.QLabel(self.groupBox)
         self.bitRateLabel.setObjectName("bitRateLabel")
         self.verticalLayout_4.addWidget(self.bitRateLabel)
         self.bitRateComboBox = QtWidgets.QComboBox(self.groupBox)
         self.bitRateComboBox.setObjectName("bitRateComboBox")
         self.verticalLayout_4.addWidget(self.bitRateComboBox)
+        self.setBitRateOptions()
+        self.bitRateComboBox.currentIndexChanged.connect(
+            self.bitRateOptionsChanged)
+        self.bitRateComboBox.setCurrentIndex(
+            self.getBitRateIndex(self.model.bitrate.value))
+
+        # Set Settings button
         self.horizontalLayout_2.addLayout(self.verticalLayout_4)
         self.SetButton = QtWidgets.QPushButton(self.groupBox)
         self.SetButton.setMinimumSize(QtCore.QSize(36, 36))
         self.SetButton.setMaximumSize(QtCore.QSize(36, 36))
         self.SetButton.setAutoFillBackground(False)
-        # self.SetButton.setStyleSheet("QPushButton {\n"
-        #                              "    color: #333;\n"
-        #                              "    border: 2px solid #555;\n"
-        #                              "    border-radius: 20px;\n"
-        #                              "    border-style: outset;\n"
-        #                              "    background: qradialgradient(\n"
-        #                              "        cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,\n"
-        #                              "        radius: 1.35, stop: 0 #fff, stop: 1 #888\n"
-        #                              "        );\n"
-        #                              "    padding: 5px;\n"
-        #                              "    }\n"
-        #                              "\n"
-        #                              "QPushButton:hover {\n"
-        #                              "    background: qradialgradient(\n"
-        #                              "        cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,\n"
-        #                              "        radius: 1.35, stop: 0 #fff, stop: 1 #bbb\n"
-        #                              "        );\n"
-        #                              "    }\n"
-        #                              "\n"
-        #                              "QPushButton:pressed {\n"
-        #                              "    border-style: inset;\n"
-        #                              "    background: qradialgradient(\n"
-        #                              "        cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1,\n"
-        #                              "        radius: 1.35, stop: 0 #fff, stop: 1 #ddd\n"
-        #                              "        );\n"
-        #                              "    }")
         self.SetButton.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/check_circle.svg"),
@@ -129,36 +127,12 @@ class ConnectionsTab(QWidget):
         self.SetButton.setIconSize(QtCore.QSize(36, 36))
         self.SetButton.setObjectName("SetButton")
         self.horizontalLayout_2.addWidget(self.SetButton)
+
+        # Reset Settings Button
         self.ResetDefaultButton = QtWidgets.QPushButton(self.groupBox)
         self.ResetDefaultButton.setEnabled(True)
         self.ResetDefaultButton.setMinimumSize(QtCore.QSize(36, 36))
         self.ResetDefaultButton.setMaximumSize(QtCore.QSize(36, 36))
-        # self.ResetDefaultButton.setStyleSheet("QPushButton {\n"
-        #                                       "    color: #333;\n"
-        #                                       "    border: 2px solid #555;\n"
-        #                                       "    border-radius: 20px;\n"
-        #                                       "    border-style: outset;\n"
-        #                                       "    background: qradialgradient(\n"
-        #                                       "        cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,\n"
-        #                                       "        radius: 1.35, stop: 0 #fff, stop: 1 #888\n"
-        #                                       "        );\n"
-        #                                       "    padding: 5px;\n"
-        #                                       "    }\n"
-        #                                       "\n"
-        #                                       "QPushButton:hover {\n"
-        #                                       "    background: qradialgradient(\n"
-        #                                       "        cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,\n"
-        #                                       "        radius: 1.35, stop: 0 #fff, stop: 1 #bbb\n"
-        #                                       "        );\n"
-        #                                       "    }\n"
-        #                                       "\n"
-        #                                       "QPushButton:pressed {\n"
-        #                                       "    border-style: inset;\n"
-        #                                       "    background: qradialgradient(\n"
-        #                                       "        cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1,\n"
-        #                                       "        radius: 1.35, stop: 0 #fff, stop: 1 #ddd\n"
-        #                                       "        );\n"
-        #                                       "    }")
         self.ResetDefaultButton.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/replay.svg"),
@@ -167,6 +141,7 @@ class ConnectionsTab(QWidget):
         self.ResetDefaultButton.setIconSize(QtCore.QSize(36, 36))
         self.ResetDefaultButton.setObjectName("ResetDefaultButton")
         self.horizontalLayout_2.addWidget(self.ResetDefaultButton)
+
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
         self.ConnectionsLayout.addWidget(self.groupBox)
         spacerItem = QtWidgets.QSpacerItem(
@@ -215,6 +190,32 @@ class ConnectionsTab(QWidget):
         self.connectButton.setText(_translate("ConnectionsTab", "Connect"))
         self.disconnectButton.setText(
             _translate("ConnectionsTab", "Disconnect"))
+
+    def setClockFrequencyOptions(self):
+        self.clockFrequencyItems = [e.value for e in ClockFrequency]
+        self.clockFrequencyComboBox.addItems(self.clockFrequencyItems)
+
+    def getClockFrequencyIndex(self, selectedItem):
+        return self.clockFrequencyItems.index(selectedItem)
+
+    def setBitRateOptions(self):
+        self.bitRateItems = [e.value for e in BitRate]
+        self.bitRateComboBox.addItems(self.bitRateItems)
+
+    def getBitRateIndex(self, selectedItem):
+        return self.bitRateItems.index(selectedItem)
+
+    def clockFrequencyOptionsChanged(self, i):
+        print("Clock changed to index: ", i, " which is: ",
+              self.clockFrequencyComboBox.currentText())
+
+        self.model.setClockFrequency(self.clockFrequencyComboBox.currentText())
+
+    def bitRateOptionsChanged(self, i):
+        print("Clock changed to index: ", i,
+              " which is: ", self.bitRateComboBox.currentText())
+
+        self.model.setBitRate(self.bitRateComboBox.currentText())
 
 
 if __name__ == "__main__":
