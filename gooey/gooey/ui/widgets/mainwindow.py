@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QMainWindow
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
 from ui.widgets.connection import ConnectionsTab
+from ui.widgets.transmit import TransmitWindow
 
 # TODO: remove below
 from models.transmit_message import TransmitMessage
@@ -243,8 +244,14 @@ class CAND_MainWindow(QMainWindow):
         # TODO REMOVE THESE, ONLY FOR TEST
         self.openButton.clicked.connect(self.insertReceive)
         self.saveButton.clicked.connect(self.insertTransmit)
+        self.playButton.clicked.connect(self.transmitMessage)
 
         QtCore.QMetaObject.connectSlotsByName(self)
+
+    def transmitMessage(self):
+        print('tst')
+        transmitWindow = TransmitWindow(self)
+        transmitWindow.show()
 
     # TODO: REMOVE THESE, ONLY FOR TEST
     def insertTransmit(self):

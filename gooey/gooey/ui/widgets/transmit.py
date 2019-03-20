@@ -3,8 +3,8 @@ from PyQt5.QtWidgets import QDialog
 
 
 class TransmitWindow(QDialog):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super(TransmitWindow, self).__init__(parent)
         self.setObjectName("Dialog")
         self.resize(311, 330)
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
