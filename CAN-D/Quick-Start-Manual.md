@@ -66,7 +66,7 @@ Java 8 *should* be installed at `/Library/Java/JavaVirtualMachines/jdk1.8.xxx.jd
 ```
 $ /Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/bin/java -jar SetupSTM32CubeProgrammer-1.0.0.exe
 ```
-**Pro Tip**: Create a symbolic link to one of the binary directory searched by your `$PATH` variable:
+**Pro Tip**: Create a symbolic link to link the binary to your `$PATH` variable:
 ```
 $ ln -sv /Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin/STM32_Programmer_CLI /usr/local/bin/
 ```
@@ -85,8 +85,51 @@ Generic commands:
 ...
 ```
 
-## 1. Get the CAN-D Project
+## 1. Getting the CAN-D Project
 ```
 $ git clone https://github.com/CAN-D/CAN-D.git
-$ cd CAN-D/CAN-D/ # This is the Firwmare project directory
+$ cd CAN-D/CAN-D # This is the Firwmare project directory
+```
+
+## 2. Building the CAN-D Project
+Navigate to the CAN-D firmware project directory and use `make` to compile the project
+```
+$ cd CAN-D/CAN-D
+$ make
+...
+arm-none-eabi-size workspace/CAN-D/CAN-D/build/CAN-D.elf
+   text    data     bss     dec     hex filename
+  43164     504   13264   56932    de64
+```
+All build artifacts will be located in the `CAN-D/build` directory
+
+## 3. Programming the Board
+
+There are a few different methods for programming the board.
+
+### Method 1 - Using the STM32CubeProgrammer CLI:
+Here are a few example commands for erasing and programming the target device using the CLI:
+
+```
+/usr/local/bin/STM32_Programmer_CLI -c port=SWD -e all
+/usr/local/bin/STM32_Programmer_CLI -c port=SWD -w build/CAN-D.elf
+```
+
+*Note: these commands assume that your STM32_Programmer_CLI executable is located at `/usr/local/bin/STM32_Programmer_CLI`*
+
+### Method 2 - Using texane/stlink:
+If you want to program the board without debugging use one of the following commands:
+```
+$ st-flash write ./build/*.bin 0x08000000
+$ st-flash --format ihex write ./build/*.hex
+```
+
+### Method 3 - Using OpenOCD
+The openOCD configuration files used for the CAN-D board can be found in `CAN-D/ST-Link`.
+
+The floowing commands cna be used to program and verify:
+```
+$ openocd -f ST-Link/stlink-v2.cfg -c "program build/CAN-D.hex verify reset exit"
+$ openocd -f ST-Link/stlink-v2.cfg -c "program build/CAN-D.elf verify reset exit"
+$ openocd -f ST-Link/stlink-v2.cfg -c "program build/CAN-D.bin 0x08000000 verify exit"
 ```
