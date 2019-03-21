@@ -1,5 +1,5 @@
 class Trace():
-    def __init__(self, time=None, can_id=None, rxtx=None, msgtype=None, length=None, data=None):
+    def __init__(self, time=None, can_id=None, rxtx=None, msgtype=None, length=None, data=None, cycle_time=None):
         self.time = time
         self.can_id = can_id
 
@@ -11,3 +11,4 @@ class Trace():
 
         self.length = length
         self.data = data
+        self.cycle_time = cycle_time

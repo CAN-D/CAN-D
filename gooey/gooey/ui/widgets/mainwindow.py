@@ -249,9 +249,18 @@ class CAND_MainWindow(QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(self)
 
     def transmitMessage(self):
-        print('tst')
         transmitWindow = TransmitWindow(self)
         transmitWindow.show()
+
+        if transmitWindow.exec_():
+            # TODO: send the transmit message to hardware
+
+            print(transmitWindow.message.can_id)
+            print(transmitWindow.message.length)
+            print(transmitWindow.message.cycle_time)
+            print(transmitWindow.message.data)
+            print(transmitWindow.message.msgtype)
+            print(transmitWindow.message.rxtx)
 
     # TODO: REMOVE THESE, ONLY FOR TEST
     def insertTransmit(self):

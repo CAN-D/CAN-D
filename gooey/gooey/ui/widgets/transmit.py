@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog, QPushButton
+from models.trace import Trace
 
 
 class TransmitWindow(QDialog):
@@ -123,15 +124,25 @@ class TransmitWindow(QDialog):
         self.buttonBox = QtWidgets.QDialogButtonBox(self)
         self.buttonBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(
-            QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
+        # self.buttonBox.setStandardButtons(
+        #     QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout.addWidget(self.buttonBox)
 
+        self.sendButton = self.buttonBox.addButton(
+            "Send", QtWidgets.QDialogButtonBox.AcceptRole)
+        self.cancelButton = self.buttonBox.addButton(
+            "Cancel", QtWidgets.QDialogButtonBox.RejectRole)
+        self.clearButton = self.buttonBox.addButton(
+            "Clear", QtWidgets.QDialogButtonBox.ResetRole)
+
         self.retranslateUi()
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
+        self.buttonBox.accepted.connect(self.sendmessage)
+        self.buttonBox.rejected.connect(self.canceled)
+        self.buttonBox.buttons()[2].clicked.connect(self.cleared)
+
         QtCore.QMetaObject.connectSlotsByName(self)
+        self.message = Trace()
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -147,6 +158,40 @@ class TransmitWindow(QDialog):
         self.rrCheckBox.setText(_translate("Dialog", "Remote Request"))
         self.fdCheckBox.setText(_translate("Dialog", "CAN FD"))
         self.brsCheckBox.setText(_translate("Dialog", "Bit Rate Switch (BRS)"))
+
+    def sendmessage(self):
+        self.message.can_id = self.idInput.toPlainText()
+        self.message.data = self.dataInput.toPlainText()
+        self.message.length = self.lengthInput.value()
+        self.message.cycle_time = self.cycleInput.toPlainText()
+        self.message.rxtx = "TX"
+
+        msgtype = []
+        if (self.efCheckBox.isChecked):
+            msgtype.append("EF")
+        if (self.rrCheckBox.isChecked):
+            msgtype.append("RR")
+        if (self.fdCheckBox.isChecked):
+            msgtype.append("FD")
+        if (self.brsCheckBox.isChecked):
+            msgtype.append("BRS")
+
+        self.message.msgtype = ",".join(msgtype)
+
+        self.accept()
+
+    def canceled(self):
+        self.reject()
+
+    def cleared(self):
+        self.dataInput.clear()
+        self.lengthInput.clear()
+        self.idInput.clear()
+        self.cycleInput.clear()
+        self.efCheckBox.setChecked(False)
+        self.rrCheckBox.setChecked(False)
+        self.fdCheckBox.setChecked(False)
+        self.brsCheckBox.setChecked(False)
 
 
 if __name__ == "__main__":
