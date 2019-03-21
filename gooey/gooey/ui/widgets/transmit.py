@@ -26,6 +26,7 @@ class TransmitWindow(QDialog):
         self.idInput.setMaximumSize(QtCore.QSize(100, 25))
         self.idInput.setObjectName("idInput")
         self.idInput.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.idInput.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.idInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.idForm.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.idInput)
 
@@ -57,6 +58,8 @@ class TransmitWindow(QDialog):
         self.cycleInput.setObjectName("cycleInput")
         self.cycleInput.setVerticalScrollBarPolicy(
             QtCore.Qt.ScrollBarAlwaysOff)
+        self.cycleInput.setHorizontalScrollBarPolicy(
+            QtCore.Qt.ScrollBarAlwaysOff)
         self.cycleInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.cycleForm.setWidget(
             1, QtWidgets.QFormLayout.LabelRole, self.cycleInput)
@@ -82,6 +85,8 @@ class TransmitWindow(QDialog):
         self.dataInput.setMaximumSize(QtCore.QSize(16777215, 25))
         self.dataInput.setObjectName("dataInput")
         self.dataInput.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.dataInput.setHorizontalScrollBarPolicy(
+            QtCore.Qt.ScrollBarAlwaysOff)
         self.dataInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.dataForm.setWidget(
             1, QtWidgets.QFormLayout.LabelRole, self.dataInput)
