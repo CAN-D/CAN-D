@@ -19,6 +19,8 @@ class TraceTab(QWidget):
         self.TraceTable.setObjectName("TraceTable")
         self.gridLayout.addWidget(self.TraceTable, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.TraceGroup)
+        self.TraceTable.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers)
 
         # Set models for testing
         traceModel = QtGui.QStandardItemModel()
