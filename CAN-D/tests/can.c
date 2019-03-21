@@ -6,7 +6,7 @@ extern hcan;
 Describe(can);
 BeforeEach(can)
 {
-    MX_CAN_Init();
+    APP_CAN_Init();
     APP_CAN_InitTasks();
     HAL_CAN_MspInit(hcan);
 }

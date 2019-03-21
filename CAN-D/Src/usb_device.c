@@ -31,7 +31,7 @@ USBD_HandleTypeDef hUsbDeviceFS;
   * Init USB device Library, add supported class and start the library
   * @retval None
   */
-void MX_USB_DEVICE_Init(void)
+void APP_USB_DEVICE_Init(void)
 {
     /* Init Device Library, add supported class and start the library. */
     USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS);

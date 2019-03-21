@@ -31,7 +31,7 @@ extern osMessageQId CANTxQueueHandle;
 extern osMessageQId UARTGprmcQueueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
-void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+void APP_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* Exported functions --------------------------------------------------------*/
 /**
@@ -39,7 +39,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void)
+void APP_FREERTOS_Init(void)
 {
     APP_CAN_InitTasks();
     APP_GPS_InitTasks();

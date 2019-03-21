@@ -44,7 +44,7 @@ void APP_CAN_TransmitTask(void const* argument);
 
 /* Exported functions --------------------------------------------------------*/
 /* CAN init function */
-void MX_CAN_Init(void)
+void APP_CAN_Init(void)
 {
     hcan.Instance = CAN;
     hcan.Init.Prescaler = 16;
