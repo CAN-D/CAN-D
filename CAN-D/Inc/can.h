@@ -44,7 +44,7 @@ typedef struct
 
 extern CAN_HandleTypeDef hcan;
 
-void MX_CAN_Init(void);
+void APP_CAN_Init(void);
 void APP_CAN_InitTasks(void);
 void APP_CAN_StartStop(void);
 void APP_CAN_Start(void);

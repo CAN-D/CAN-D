@@ -15,7 +15,7 @@ extern "C" {
 
 #include "main.h"
 
-void MX_GPIO_Init(void);
+void APP_GPIO_Init(void);
 
 #ifdef __cplusplus
 }
