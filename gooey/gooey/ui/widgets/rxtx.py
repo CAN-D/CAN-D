@@ -20,6 +20,8 @@ class RxTxTab(QWidget):
         self.gridLayout.setObjectName("gridLayout")
 
         self.receiveTable = QtWidgets.QTableView(self.receiveGroup)
+        self.receiveTable.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers)
         self.receiveTable.setObjectName("receiveTable")
         self.receiveTable.setStyleSheet("font: 13pt;")
 
@@ -34,6 +36,8 @@ class RxTxTab(QWidget):
         self.gridLayout_2.setObjectName("gridLayout_2")
 
         self.transmitTable = QtWidgets.QTableView(self.transmitGroup)
+        self.transmitTable.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers)
         self.transmitTable.setObjectName("transmitTable")
         self.transmitTable.setStyleSheet("font: 13pt;")
 

@@ -27,7 +27,7 @@
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
-void MX_GPIO_Init(void)
+void APP_GPIO_Init(void)
 {
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOF_CLK_ENABLE();

@@ -24,7 +24,7 @@ TIM_HandleTypeDef htim2;
 
 /* Exported functions --------------------------------------------------------*/
 /* TIM2 init function */
-void MX_TIM2_Init(void)
+void APP_TIM2_Init(void)
 {
     TIM_ClockConfigTypeDef sClockSourceConfig = { 0 };
     TIM_MasterConfigTypeDef sMasterConfig = { 0 };

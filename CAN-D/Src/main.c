@@ -31,9 +31,9 @@
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
-void MX_USB_DEVICE_Init(void);
+void APP_USB_DEVICE_Init(void);
 void SystemClock_Config(void);
-void MX_FREERTOS_Init(void);
+void APP_FREERTOS_Init(void);
 
 /**
   * @brief  The application entry point.
@@ -52,16 +52,16 @@ int main(void)
     APP_FATFS_Init();
 
     /* Initialize all configured peripherals */
-    MX_GPIO_Init();
+    APP_GPIO_Init();
     APP_RTC_Init();
     BSP_PB_Init(BUTTON_LOG, BUTTON_MODE_EXTI);
-    MX_CAN_Init();
-    MX_TIM2_Init();
-    MX_USB_DEVICE_Init();
+    APP_CAN_Init();
+    APP_TIM2_Init();
+    APP_USB_DEVICE_Init();
     APP_GPS_Init();
 
     /* Call init function for freertos objects (in freertos.c) */
-    MX_FREERTOS_Init();
+    APP_FREERTOS_Init();
 
     /* Start scheduler */
     osKernelStart();

@@ -17,7 +17,7 @@ extern "C" {
 
 extern TIM_HandleTypeDef htim2;
 
-void MX_TIM2_Init(void);
+void APP_TIM2_Init(void);
 
 #ifdef __cplusplus
 }

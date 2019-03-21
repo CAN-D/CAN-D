@@ -19,8 +19,11 @@ class TraceTab(QWidget):
         self.gridLayout.setObjectName("gridLayout")
         self.TraceTable = QtWidgets.QTableView(self.TraceGroup)
         self.TraceTable.setObjectName("TraceTable")
+        self.TraceTable.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers)
         self.gridLayout.addWidget(self.TraceTable, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.TraceGroup)
+
         header = self.TraceTable.horizontalHeader()
         header.setStretchLastSection(True)
 
