@@ -21,6 +21,8 @@ extern "C" {
 #define CAN_IT_START CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO1_FULL | CAN_IT_ERROR /* Interrupts to be enabled on CAN start */
 #define CAN_MESSAGE_LENGTH 8
 #define CAN_LOG_FILENAME "CAN_Data"
+#define CAN_USB_DATA_SZ_BYTES ((uint16_t)8)
+#define CAN_USB_TX_MAX_TRY 3
 
 typedef struct {
     CAN_HandleTypeDef* handle;
@@ -37,8 +39,7 @@ typedef struct {
 typedef struct
 {
     APP_ConfigurationState SDStorage; /* Store CAN Data on SD Card */
-    APP_ConfigurationState USBStream; /* Transfer all SD Card data to PC via USB */
-    APP_ConfigurationState USBTransfer; /* Transfer CAN Data directly to USB Device */
+    APP_ConfigurationState USBTransfer; /* Transfer all SD Card data to PC via USB */
     APP_ConfigurationState CANTransmit; /* Transmit data over the CAN bus */
 } APP_ConfigType;
 

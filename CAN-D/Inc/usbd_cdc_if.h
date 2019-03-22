@@ -18,6 +18,7 @@ extern "C" {
 /** CDC Interface callback. */
 extern USBD_CDC_ItfTypeDef USBD_Interface_fops_FS;
 
+uint8_t APP_USB_Transmit(uint8_t* data, uint16_t size);
 uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
 #ifdef __cplusplus

@@ -70,6 +70,7 @@ void APP_GPS_BufferGPSString(char* dataString, size_t dataLength)
   */
 void APP_GPS_MonitorTask(void const* argument)
 {
+    uint8_t usbTxCnt = 0;
     osEvent event;
     GPSData* data;
 
@@ -84,12 +85,13 @@ void APP_GPS_MonitorTask(void const* argument)
                 // Write data to SD card
                 APP_FATFS_LogSD((const uint8_t*)data->raw, 128, gpsLogIdentifier);
             }
-            // TODO: BO: Moving around configurations, fix this
-            //if (mAppConfiguration.USBStream == APP_ENABLE) {
-            if (1) {
-                // Fill the USB TX buffer with the GPS data
-                while (CDC_Transmit_FS((uint8_t*)data->raw, (uint16_t)128) == 1) {
-                    // USB TX State is BUSY. Wait for it to be free.
+
+            usbTxCnt = 0;
+            while (APP_USB_Transmit((uint8_t*)data->raw, GPS_USB_DATA_SZ_BYTES) == 1) {
+                // USB TX State is BUSY. Wait for it to be free.
+                osDelay(1);
+                if (++usbTxCnt >= GPS_USB_TX_MAX_TRY) {
+                    break;
                 }
             }
             osPoolFree(GPSDataPool, data);
