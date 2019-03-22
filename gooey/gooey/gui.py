@@ -3,7 +3,6 @@ import stylesheet.breeze_resources
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout
 from PyQt5.QtCore import QFile, QTextStream
 from ui.widgets.mainwindow import CAND_MainWindow
-from ui.widgets.Expander import Expander
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

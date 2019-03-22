@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/qtdesigner/rxtx.ui'
+# Form implementation generated from reading ui file 'qtdesigner/rxtx.ui'
 #
 # Created by: PyQt5 UI code generator 5.12
 #
