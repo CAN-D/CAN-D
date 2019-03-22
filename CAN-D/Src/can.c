@@ -70,7 +70,6 @@ void MX_CAN_Init(void)
 
     // TODO: configure CAN reception filters using HAL_CAN_ConfigFilter()
     mAppConfiguration.SDStorage = APP_DISABLE;
-    mAppConfiguration.USBStream = APP_DISABLE;
     mAppConfiguration.USBTransfer = APP_DISABLE;
     mAppConfiguration.CANTransmit = APP_DISABLE;
 }
@@ -253,6 +252,7 @@ void APP_CAN_SetConfiguration(APP_ConfigType newConfig)
   */
 void APP_CAN_MonitorTask(void const* argument)
 {
+    uint8_t usbTxCnt = 0;
     osEvent event;
     CANRxMessage* msg;
 
@@ -269,10 +269,13 @@ void APP_CAN_MonitorTask(void const* argument)
                 // Write data to SD card
                 APP_FATFS_LogSD((const uint8_t*)msg->data, 8, canLogIdentifier);
             }
-            if (mAppConfiguration.USBStream == APP_ENABLE) {
-                // Fill the USB TX buffer with the CAN data
-                while (CDC_Transmit_FS((uint8_t*)msg->data, (uint16_t)8) == 1) {
-                    // USB TX State is BUSY. Wait for it to be free.
+
+            usbTxCnt = 0;
+            while (APP_USB_Transmit((uint8_t*)msg->data, CAN_USB_DATA_SZ_BYTES) == 1) {
+                // USB TX State is BUSY. Wait for it to be free.
+                osDelay(1);
+                if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
+                    break;
                 }
             }
             osPoolFree(CANRxPool, msg);

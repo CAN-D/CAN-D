@@ -45,6 +45,16 @@ USBD_CDC_ItfTypeDef USBD_Interface_fops_FS = {
 };
 
 /* Exported functions --------------------------------------------------------*/
+uint8_t APP_USB_Transmit(uint8_t* data, uint16_t size)
+{
+    // Check that USB device is connected
+    if (hUsbDeviceFS.dev_state == USBD_STATE_CONFIGURED) {
+        // Fill the USB TX buffer with the CAN data
+        return CDC_Transmit_FS(data, size);
+    }
+    return USBD_FAIL;
+}
+
 /**
   * @brief  Data to send over USB IN endpoint are sent over CDC interface
   *         through this function.
