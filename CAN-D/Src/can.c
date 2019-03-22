@@ -110,11 +110,6 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
         HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
         /* CAN interrupt Init */
-        // Disabling unused interrupts for now
-        //    HAL_NVIC_SetPriority(USB_HP_CAN_TX_IRQn, 5, 0);
-        //    HAL_NVIC_EnableIRQ(USB_HP_CAN_TX_IRQn);
-        //    HAL_NVIC_SetPriority(USB_LP_CAN_RX0_IRQn, 5, 0);
-        //    HAL_NVIC_EnableIRQ(USB_LP_CAN_RX0_IRQn);
         HAL_NVIC_SetPriority(CAN_RX1_IRQn, 1, 0);
         HAL_NVIC_EnableIRQ(CAN_RX1_IRQn);
     }
@@ -131,24 +126,6 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
             PB9     ------> CAN_TX 
         */
         HAL_GPIO_DeInit(GPIOB, GPIO_PIN_8 | GPIO_PIN_9);
-
-        /* CAN interrupt Deinit */
-        /* BEGIN CAN:USB_HP_CAN_TX_IRQn disable */
-        /**
-    * Uncomment the line below to disable the "USB_HP_CAN_TX_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
-        /* HAL_NVIC_DisableIRQ(USB_HP_CAN_TX_IRQn); */
-        /* END CAN:USB_HP_CAN_TX_IRQn disable */
-
-        /* BEGIN CAN:USB_LP_CAN_RX0_IRQn disable */
-        /**
-    * Uncomment the line below to disable the "USB_LP_CAN_RX0_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
-        /* HAL_NVIC_DisableIRQ(USB_LP_CAN_RX0_IRQn); */
-        /* END CAN:USB_LP_CAN_RX0_IRQn disable */
-
         HAL_NVIC_DisableIRQ(CAN_RX1_IRQn);
     }
 }
