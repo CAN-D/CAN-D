@@ -1,13 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QWidget
-from models.transmit_table_model import TransmitTableModel
-from models.receive_table_model import ReceiveTableModel
 from models.transmit_message import TransmitMessage
 
 
 class RxTxTab(QWidget):
-    def __init__(self):
+    def __init__(self, controller):
         super().__init__()
+        self.controller = controller
+        self.controller.setTest()
+
         self.setObjectName("RxTxTab")
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -45,17 +46,8 @@ class RxTxTab(QWidget):
         self.verticalLayout.addWidget(self.transmitGroup)
 
         # Set models for testing
-        self.receiveTableModel = ReceiveTableModel()
-        self.receiveTable.setModel(self.receiveTableModel)
-
-        self.transmitTableModel = TransmitTableModel()
-        newmsg = TransmitMessage(
-            "Test1", "DLC", "Data", "cycle_time", "Count", "Trigger")
-        self.transmitTableModel.messages.append(newmsg)
-        self.transmitTable.setModel(self.transmitTableModel)
-        newmsg2 = TransmitMessage(
-            "Test2", "DLC", "Data", "cycle_time", "Count", "Trigger")
-        self.transmitTableModel.messages.append(newmsg2)
+        self.receiveTable.setModel(self.controller.receivetable)
+        self.transmitTable.setModel(self.controller.transmittable)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -64,20 +56,3 @@ class RxTxTab(QWidget):
         _translate = QtCore.QCoreApplication.translate
         self.receiveGroup.setTitle(_translate("RxTxTab", "Receive"))
         self.transmitGroup.setTitle(_translate("RxTxTab", "Transmit"))
-
-    # TODO: REMOVE BELOW, ONLY USED FOR TESTING
-    def appendTransmitTable(self, message):
-        num_msgs = self.transmitTableModel.rowCount()
-        self.transmitTableModel.insertRow(message, num_msgs)
-
-    def appendReceiveTable(self, message):
-        num_msgs = self.receiveTableModel.rowCount()
-        self.receiveTableModel.insertRow(message, num_msgs)
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    ui = RxTxTab()
-    ui.show()
-    sys.exit(app.exec_())
