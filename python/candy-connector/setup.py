@@ -3,7 +3,7 @@ import os
 import sys
 
 _here = os.path.abspath(os.path.dirname(__file__))
-_pkg_name = "candy-connector"
+_pkg_name = "candy_connector"
 _read_me = "README.md"
 
 if sys.version_info[0] < 3:
