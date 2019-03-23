@@ -27,6 +27,7 @@ FIL SDFile; /* File object for SD */
 static uint8_t SDInitialized = 0; /* Keeps track of if the SD card is initialized or not */
 static uint16_t sessionCount = 0; /* 0 if no session started */
 static uint16_t prevSessionCount = 0;
+static uint32_t lineNumber = 0; /* Number of messages written to the SD card */
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
@@ -81,8 +82,15 @@ void APP_FATFS_StopSession(void)
     sessionCount = 0;
 }
 
+uint32_t APP_FATFS_GetLineCount(void)
+{
+    return lineNumber;
+}
+
 uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphIdentifier)
 {
+    uint8_t ret;
+    uint8_t incLineNumber; // Increment line number
     char uniqueID[4];
 
     // Check that we have started a session
@@ -90,11 +98,21 @@ uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphId
         return 0;
     }
 
+    incLineNumber = strcmp(periphIdentifier, CAN_LOG_FILENAME);
+
     sprintf(uniqueID, "%d", sessionCount);
     strcat(periphIdentifier, uniqueID);
     strcat(periphIdentifier, ".log");
 
-    return APP_FATFS_WriteSD(writeData, bytes, (const char*)periphIdentifier);
+    ret = APP_FATFS_WriteSD(writeData, bytes, (const char*)periphIdentifier);
+
+    if ((ret == bytes) && (incLineNumber == 0)) {
+        // Successful write. Increment the number of messages written
+        // to the SD Card.
+        lineNumber++;
+    }
+
+    return ret;
 }
 
 /**

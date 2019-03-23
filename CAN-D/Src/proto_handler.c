@@ -10,6 +10,7 @@
 #include "proto_handler.h"
 #include "can.h"
 #include "fatfs.h"
+#include "gps.h"
 #include "rtc.h"
 #include <pb_decode.h>
 #include <pb_encode.h>
@@ -54,7 +55,8 @@ void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg)
 
 void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
 {
-    uint8_t* utc_str;
+    uint8_t markData[4];
+    uint32_t lineCount = 0;
 
     if (controlCommandMsg->has_commandType) {
         switch (controlCommandMsg->commandType) {
@@ -65,12 +67,12 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
             APP_CAN_Start();
             break;
         case ControlCommandType_MARK_LOG:
-            // Add a UTC Timestampt to the Mark.log
-            utc_str = APP_RTC_GetUTCTime();
-
-            // TODO: figure out if we are logging the marks in their own log file
-            //       or bundled in the CAN Data log.
-            APP_FATFS_LogSD((const uint8_t*)utc_str, UTC_TIME_STR_LEN, "CAN_Data");
+            lineCount = APP_FATFS_GetLineCount();
+            markData[0] = (lineCount & 0x000F);
+            markData[1] = (lineCount & 0x00F0);
+            markData[2] = (lineCount & 0x0F00);
+            markData[3] = (lineCount & 0xF000);
+            APP_FATFS_LogSD((const uint8_t*)markData, sizeof(uint32_t), MARK_LOG_FILENAME);
             break;
         case ControlCommandType_GET_LOGFS_INFO:
             /* code */
@@ -81,7 +83,6 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
         case ControlCommandType_DELETE_LOG:
             /* code */
             break;
-
         default:
             break;
         }
