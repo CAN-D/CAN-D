@@ -3,13 +3,15 @@
 """
 # Builtin Python
 import asyncio
+import logging
 from queue import Queue
-from typing import List, Queue
+from typing import List, Dict, Optional
 
 # External Python
 import usb.core
 import usb.util
 from can import BusABC, Message
+from google.protobuf.message import DecodeError
 
 # Package Python
 import candy_connector.proto.can_d_pb2 as pb
@@ -27,7 +29,7 @@ class CanDBus(BusABC):
     """
 
     def __init__(
-        self, channel: int = None, can_filters: List[str:int] = None, **config
+        self, channel: int = None, can_filters: Dict[str, int] = None, **config
     ):
         """
         :param channel:
@@ -44,11 +46,11 @@ class CanDBus(BusABC):
         :param dict config:
             Any backend dependent configurations are passed in this dictionary
         """
-        super(CanDBus, self).__init__()
+        super(CanDBus, self).__init__(channel=channel)
         # Init data structures
-        self.can_queue: Queue[Message] = Queue()
-        self.gps_queue: Queue[bytes] = Queue()
-        self.most_recent_fs_info: pb.LogFSInfo = []
+        self.can_queue = asyncio.Queue()
+        self.gps_queue = asyncio.Queue()
+        self.most_recent_fs_info = []
 
         # Setup the USB connection
         if channel != None:
@@ -83,16 +85,11 @@ class CanDBus(BusABC):
             raise ValueError(
                 "Could not establish an incoming endpoint for the CAN-D device."
             )
-        # # write the data
-        # usb_endpoint_out.write("test")
-        # # read some data
-        # while True:
-        #     print(bytes(usb_endpoint_in.read(18)))
 
         # Start polling from the USB
-        asyncio.run(self._poll_usb())
+        asyncio.run(self._async_poll_usb())
 
-    def recv(self, timeout=None):
+    def recv(self, timeout: float = None) -> Optional[Message]:
         """Block waiting for a message from the Bus.
 
         :param float timeout: Seconds to wait for a message.
@@ -102,7 +99,7 @@ class CanDBus(BusABC):
         """
         return self.can_queue.get(block=True)
 
-    def send(self, msg, timeout=None):
+    def send(self, msg: Message, timeout=None):
         """Transmit a message to CAN bus.
         Override this method to enable the transmit path.
 
@@ -117,7 +114,7 @@ class CanDBus(BusABC):
             if the message could not be written.
         """
 
-    def set_filters(self, can_filters=None):
+    def set_filters(self, can_filters: Dict[str, int] = None):
         """Apply filtering to all messages received by this Bus.
 
         Calling without passing any filters will reset the applied filters.
@@ -136,28 +133,34 @@ class CanDBus(BusABC):
         """
         pass
 
-    async def _poll_usb(self):
+    async def _async_poll_usb(self):
         """Asyncronously poll the usb device for data forever."""
         while True:
             in_bytes = await self._read_usb()
+            print(f"Got bytes: {in_bytes}")
             self._handle_raw(in_bytes)
 
-    async def _read_usb(self) -> bytes:
+    async def _read_usb(self, max_len: int = 100) -> bytes:
         """Asynchronously read from the usb device."""
-        message_len = self.usb_endpoint_in.read(2)
-        return bytes(self.usb_endpoint_in.read(message_len, 2))
+        try:
+            return bytes(self.usb_endpoint_in.read(max_len))
+        except usb.core.USBError:
+            logging.warning("Unable to read from the USB.")
+            return bytes()
 
     def _handle_raw(self, raw_bytes: bytes):
         """Interpret incoming raw protobuf data."""
-        from_embedded = pb.FromEmbedded()
-        from_embedded.ParseFromString(raw_bytes)
-
-        if from_embedded.HasField("canDataChunk"):
-            self._handle_can_data(from_embedded.canDataChunk)
-        if from_embedded.HasField("gpsDataChunk"):
-            self._handle_gps_data(from_embedded.gpsDataChunk)
-        if from_embedded.HasField("logFSInfo"):
-            self._handle_fs_info(from_embedded.logFSInfo)
+        try:
+            from_embedded = pb.FromEmbedded()
+            from_embedded.ParseFromString(raw_bytes)
+            if from_embedded.HasField("canDataChunk"):
+                self._handle_can_data(from_embedded.canDataChunk)
+            if from_embedded.HasField("gpsDataChunk"):
+                self._handle_gps_data(from_embedded.gpsDataChunk)
+            if from_embedded.HasField("logFSInfo"):
+                self._handle_fs_info(from_embedded.logFSInfo)
+        except DecodeError:
+            logging.warning("Unable to decode bytes: %s", raw_bytes)
 
     def _handle_can_data(self, can_data: pb.DataPayload):
         """Handle incoming CAN data."""
