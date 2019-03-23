@@ -32,4 +32,11 @@ setup(
         "Intended Audience :: Science/Research",
         "Programming Language :: Python :: 3.7",
     ],
+    entry_points={
+        "console_scripts": [
+            "start_log=candy_connector.scripts.start_log:send_start_log",
+            "stop_log=candy_connector.scripts.stop_log:send_stop_log",
+            "mark_log=candy_connector.scripts.mark_log:send_mark_log",
+        ]
+    },
 )
