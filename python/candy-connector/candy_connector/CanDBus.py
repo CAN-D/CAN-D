@@ -15,6 +15,7 @@ from google.protobuf.message import DecodeError
 
 # Package Python
 import candy_connector.proto.can_d_pb2 as pb
+from candy_connector.enums import Commands
 
 
 class CanDBus(BusABC):
@@ -26,6 +27,9 @@ class CanDBus(BusABC):
         flush_tx_buffer
     Additional API:
         send_command
+        start_log
+        stop_log
+        mark_log
     """
 
     def __init__(
@@ -51,6 +55,7 @@ class CanDBus(BusABC):
         self.can_queue = asyncio.Queue()
         self.gps_queue = asyncio.Queue()
         self.most_recent_fs_info = []
+        self.is_polling = True
 
         # Setup the USB connection
         if channel != None:
@@ -87,7 +92,7 @@ class CanDBus(BusABC):
             )
 
         # Start polling from the USB
-        asyncio.run(self._async_poll_usb())
+        self.start_usb_polling()
 
     def recv(self, timeout: float = None) -> Optional[Message]:
         """Block waiting for a message from the Bus.
@@ -129,16 +134,46 @@ class CanDBus(BusABC):
         """
 
     def flush_tx_buffer(self):
-        """Discard every message that may be queued in the output buffer(s).
-        """
+        """Discard every message that may be queued in the output buffer(s)."""
         pass
+
+    def stop_log(self):
+        self.send_command(Commands.STOP_LOG)
+
+    def start_log(self):
+        self.send_command(Commands.START_LOG)
+
+    def mark_log(self):
+        self.send_command(Commands.MARK_LOG)
+
+    def send_command(self, command: int):
+        """Send a command to the device."""
+        command_msg = pb.ToEmbedded()
+        if command == Commands.START_LOG:
+            command_msg.command.commandType = pb.START_LOG
+        elif command == Commands.STOP_LOG:
+            command_msg.command.commandType = pb.STOP_LOG
+        elif command == Commands.MARK_LOG:
+            command_msg.command.commandType = pb.MARK_LOG
+        out_bytes = command_msg.SerializeToString()
+        self.usb_endpoint_out.write(out_bytes)
 
     async def _async_poll_usb(self):
         """Asyncronously poll the usb device for data forever."""
-        while True:
+        while self.is_polling:
             in_bytes = await self._read_usb()
             print(f"Got bytes: {in_bytes}")
             self._handle_raw(in_bytes)
+
+    def stop_usb_polling(self):
+        """Stop polling the device."""
+        self.is_polling = False
+
+    def start_usb_polling(self):
+        """Start polling the device."""
+        if not self.is_polling:
+            self.is_polling = True
+            asyncio.run(self._async_poll_usb())
 
     async def _read_usb(self, max_len: int = 100) -> bytes:
         """Asynchronously read from the usb device."""
@@ -172,6 +207,6 @@ class CanDBus(BusABC):
 
     def _handle_fs_info(self, fs_info_list: pb.LogFSInfo):
         """Handle incoming information about the embedded file system."""
-        # TODO: Probably dont need to actually store this. Should pass to a listener
+        # TODO: Probably dont need to actually store this. Should pass to a listener.
         self.fs_info = fs_info_list
 
