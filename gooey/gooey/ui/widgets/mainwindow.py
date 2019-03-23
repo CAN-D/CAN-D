@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 import ui.widgets.resources
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import QMainWindow
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
@@ -199,7 +199,6 @@ class CAND_MainWindow(QMainWindow):
 
         # Pause Button
         self.pauseButton = QtWidgets.QToolButton(self)
-        self.pauseButton.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -251,7 +250,9 @@ class CAND_MainWindow(QMainWindow):
         # TODO REMOVE THESE, ONLY FOR TEST
         self.openButton.clicked.connect(self.insertReceive)
         self.saveButton.clicked.connect(self.insertTransmit)
+
         self.playButton.clicked.connect(self.transmitMessage)
+        self.pauseButton.clicked.connect(self.retransmitMessage)
 
         QtCore.QMetaObject.connectSlotsByName(self)
 
@@ -268,6 +269,16 @@ class CAND_MainWindow(QMainWindow):
             print(transmitWindow.message.data)
             print(transmitWindow.message.msgtype)
             print(transmitWindow.message.rxtx)
+
+    def retransmitMessage(self):
+        selected = self.rxtxTab.transmitTable.selectionModel()
+        if selected.hasSelection():
+            for rows in selected.selectedRows():
+                print(
+                    self.rxtxTab.controller.transmittable.messages[rows.row(
+                    )].message
+                )
+                # TODO, transmit from here
 
     # TODO: REMOVE THESE, ONLY FOR TEST
     def insertTransmit(self):
