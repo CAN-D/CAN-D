@@ -9,6 +9,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "can.h"
 #include "fatfs.h"
+#include "proto_handler.h"
 #include "stm32302c_custom.h"
 #include "usbd_cdc_if.h"
 
@@ -231,31 +232,41 @@ void APP_CAN_MonitorTask(void const* argument)
 {
     uint8_t usbTxCnt = 0;
     osEvent event;
-    CANRxMessage* msg;
+    CANRxMessage* canRxMsg;
+    FromEmbedded fromEmbeddedMsg;
+    uint8_t* usbTxMsg; // Serialized (packaged) protobuf data
+    size_t usbMaxMsgLen = 20; // Max length of the serialized data
 
     for (;;) {
         /* This is just used to test the SD card functionality */
-        //  const uint8_t data[] = "YELLOW";
-        //  APP_FATFS_LogSD(data, 6, "CAN_data.log");
+        // const uint8_t data[] = "YELLOW";
+        // APP_FATFS_LogSD(data, 6, CAN_LOG_FILENAME);
 
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
-            msg = event.value.p;
+            canRxMsg = event.value.p;
             if (mAppConfiguration.SDStorage == APP_ENABLE) {
                 // Write data to SD card
-                APP_FATFS_LogSD((const uint8_t*)msg->data, 8, canLogIdentifier);
+                APP_FATFS_LogSD((const uint8_t*)canRxMsg->data, 8, canLogIdentifier);
             }
 
+            // Construct FromEmbedded protobuf message
+            from_embedded__init(&fromEmbeddedMsg);
+            fromEmbeddedMsg.candatachunk->data.data = canRxMsg->data;
+            usbTxMsg = malloc(usbMaxMsgLen);
+            APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, usbTxMsg, usbMaxMsgLen);
+
             usbTxCnt = 0;
-            while (APP_USB_Transmit((uint8_t*)msg->data, CAN_USB_DATA_SZ_BYTES) == 1) {
+            while (APP_USB_Transmit(usbTxMsg, CAN_USB_DATA_SZ_BYTES) == 1) {
                 // USB TX State is BUSY. Wait for it to be free.
                 osDelay(1);
                 if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
                     break;
                 }
             }
-            osPoolFree(CANRxPool, msg);
+            free(usbTxMsg); // Free the allocated serialized buffer
+            osPoolFree(CANRxPool, canRxMsg);
         }
         osDelay(1);
     }
