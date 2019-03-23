@@ -14,6 +14,8 @@ from ui.widgets.trace import TraceTab
 from ui.widgets.connection import ConnectionsTab
 from ui.widgets.transmit import TransmitWindow
 
+from controllers.maincontroller import MainController
+
 # TODO: remove below
 from models.transmit_message import TransmitMessage
 from models.receive_message import ReceiveMessage
@@ -22,6 +24,7 @@ from models.receive_message import ReceiveMessage
 class CAND_MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.controller = MainController()
         self.title = 'CAN-D Automotive Datalogger'
 
         self.setObjectName("MainWindow")
@@ -36,16 +39,20 @@ class CAND_MainWindow(QMainWindow):
         self.tabWidget.setObjectName("tabWidget")
 
         # Trace Tab
-        self.traceTab = TraceTab()
+        self.traceTab = TraceTab(self.controller.tracecontroller)
         self.tabWidget.addTab(self.traceTab, "")
 
         # Receive/Transmit Tab
-        self.rxtxTab = RxTxTab()
+        self.rxtxTab = RxTxTab(self.controller.rxtxcontroller)
         self.tabWidget.addTab(self.rxtxTab, "")
 
         # Connections Tab
         self.connectionTab = ConnectionsTab()
         self.tabWidget.addTab(self.connectionTab, "")
+
+        # GPS Tab
+        self.gpsTab = QtWidgets.QWidget()
+        self.tabWidget.addTab(self.gpsTab, "")
 
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(0, 20, 82, 731))
@@ -266,7 +273,7 @@ class CAND_MainWindow(QMainWindow):
     def insertTransmit(self):
         newmsg = TransmitMessage(
             "TestTransmit", "DLC", "Data", "cycle_time", "Count", "Trigger")
-        self.rxtxTab.appendTransmitTable(newmsg)
+        self.controller.rxtxcontroller.appendTransmitTable(newmsg)
 
         test = QtWidgets.QRadioButton()
         self.statusbar.showMessage("Test Transmit | Disconnected")
@@ -276,7 +283,7 @@ class CAND_MainWindow(QMainWindow):
         print("testReceive")
         newmsg = ReceiveMessage(
             "TestReceive", "DLC", "Data", "cycle_time", "Count")
-        self.rxtxTab.appendReceiveTable(newmsg)
+        self.controller.rxtxcontroller.appendReceiveTable(newmsg)
         self.statusbar.showMessage("Test Receive | Connected")
 
     def retranslateUi(self, MainWindow):
@@ -289,6 +296,8 @@ class CAND_MainWindow(QMainWindow):
             self.rxtxTab), _translate("MainWindow", "Receive/Transmit"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(
             self.connectionTab), _translate("MainWindow", "Connections"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(
+            self.gpsTab), _translate("MainWindow", "GPS"))
         self.saveButton.setText(_translate("MainWindow", "..."))
         self.connectButton.setText(_translate("MainWindow", "..."))
         self.disconnectButton.setText(_translate("MainWindow", "..."))
