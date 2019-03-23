@@ -4,6 +4,7 @@
 
 ## 0. Requirements:
 * CAN-D printed circuit board
+* [protobuf-c](https://github.com/protobuf-c/protobuf-c)
 * [GNU ARM Embedded Toolchain](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm) (arm-none-eabi)
 * [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) for easy programming of the STM32 MCU
 * [OpenOCD](http://openocd.org) (>= 0.10.0) or [texane/stlink](https://github.com/texane/stlink) for optional programming using a GDB server 
@@ -11,21 +12,17 @@
 * [Homebrew](https://brew.sh) (package manager): recommended for installing several of the above packages
 
 1. Install Xcode CLT. This installs necessary UNIX components such as *Make*:
-
 ```
 $ xcode-select --install
 ```
 
 2. Install *Homebrew*
-
 ```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-
 Additional instructions can be found at [brew.sh](https://brew.sh)
 
 3. Install the GCC Arm Embedded Toolchain:
-
 ```
 $ brew install caskroom/cask/gcc-arm-embedded
 $ arm-none-eabi-gcc --version
@@ -41,17 +38,15 @@ For bug reports, read
         http://openocd.org/doc/doxygen/bugs.html
 ```
 
-5. Install open source [texane/stlink] (>= 1.4.0):
+5. Install open source [texane/stlink](https://github.com/texane/stlink) (>= 1.4.0):
 ```
 $ brew install stlink
 $ st-info --version
 v1.5.1
 ```
 
-7. Install [STM32CubeProgrammer].
-
+7. Install [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html):
 *Note: if the installer from the website doesn't work, use:*
-
 ```
 $ unzip en.stm32cubeprog.zip -d en.stm32cubeprog
 $ cd en.stm32cubeprog
@@ -83,6 +78,11 @@ STM32_Programmer_CLI.exe [command_1] [Arguments_1][[command_2] [Arguments_2]...]
 
 Generic commands:
 ...
+```
+
+7. Install [protobuf-c](https://github.com/protobuf-c/protobuf-c):
+```
+brew install protobuf-c
 ```
 
 ## 1. Getting the CAN-D Project
