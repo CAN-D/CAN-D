@@ -75,11 +75,28 @@ class ReceiveTableModel(QAbstractTableModel):
 
     """ Insert a row into the model. """
 
-    def insertRow(self, message, position, index=QModelIndex()):
-        self.beginInsertRows(QModelIndex(), position, position)
-        self.messages.insert(position, message)
-        self.endInsertRows()
+    def insertRow(self, newMessage, index=QModelIndex()):
+        # Check if Table already has a message with the same name
+        messageInTable = [
+            m for m in self.messages if m.message == newMessage.message]
+
+        if len(messageInTable) > 0:
+            self.updateMessage(messageInTable[0], newMessage)
+            self.dataChanged.emit(index, index)
+        else:
+            position = len(self.messages)
+            self.beginInsertRows(QModelIndex(), position, position)
+            self.messages.insert(position, newMessage)
+            self.endInsertRows()
+
         return True
+
+    def updateMessage(self, oldMessage, newMessage):
+        oldMessage.message = newMessage.message
+        oldMessage.dlc = newMessage.dlc
+        oldMessage.data = newMessage.data
+        oldMessage.cycle_time = newMessage.cycle_time
+        oldMessage.count = newMessage.count
 
     """ Remove a row from the model. """
 

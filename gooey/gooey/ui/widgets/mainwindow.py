@@ -250,6 +250,7 @@ class CAND_MainWindow(QMainWindow):
         # TODO REMOVE THESE, ONLY FOR TEST
         self.openButton.clicked.connect(self.insertReceive)
         self.saveButton.clicked.connect(self.insertTransmit)
+        self.count = 0
 
         self.playButton.clicked.connect(self.transmitMessage)
         self.pauseButton.clicked.connect(self.retransmitMessage)
@@ -282,8 +283,9 @@ class CAND_MainWindow(QMainWindow):
 
     # TODO: REMOVE THESE, ONLY FOR TEST
     def insertTransmit(self):
+        self.count = self.count + 1
         newmsg = TransmitMessage(
-            "TestTransmit", "DLC", "Data", "cycle_time", "Count", "Trigger")
+            "TestTransmit" + str(self.count % 5), "DLC", "Data" + str(self.count), "cycle_time", "Count", "Trigger")
         self.controller.rxtxcontroller.appendTransmitTable(newmsg)
 
         test = QtWidgets.QRadioButton()
@@ -291,7 +293,6 @@ class CAND_MainWindow(QMainWindow):
         self.statusbar.addWidget(test)
 
     def insertReceive(self):
-        print("testReceive")
         newmsg = ReceiveMessage(
             "TestReceive", "DLC", "Data", "cycle_time", "Count")
         self.controller.rxtxcontroller.appendReceiveTable(newmsg)

@@ -16,12 +16,10 @@ class RxtxController():
             self.transmittable = TransmitTableModel()
 
     def appendTransmitTable(self, message):
-        num_msgs = self.transmittable.rowCount()
-        self.transmittable.insertRow(message, num_msgs)
+        self.transmittable.insertRow(message)
 
     def appendReceiveTable(self, message):
-        num_msgs = self.receivetable.rowCount()
-        self.receivetable.insertRow(message, num_msgs)
+        self.receivetable.insertRow(message)
 
     def setTest(self):
         newmsg = TransmitMessage(
