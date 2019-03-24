@@ -235,7 +235,7 @@ void APP_CAN_MonitorTask(void const* argument)
     CANRxMessage* canRxMsg;
     FromEmbedded fromEmbeddedMsg;
     uint8_t* usbTxMsg; // Serialized (packaged) protobuf data
-    size_t usbMaxMsgLen = 20; // Max length of the serialized data
+    size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
 
     for (;;) {
         /* This is just used to test the SD card functionality */
@@ -248,7 +248,7 @@ void APP_CAN_MonitorTask(void const* argument)
             canRxMsg = event.value.p;
             if (mAppConfiguration.SDStorage == APP_ENABLE) {
                 // Write data to SD card
-                APP_FATFS_LogSD((const uint8_t*)canRxMsg->data, 8, canLogIdentifier);
+                APP_FATFS_LogSD((const uint8_t*)canRxMsg->data, CAN_SD_DATA_SZ_BYTES, canLogIdentifier);
             }
 
             // Construct FromEmbedded protobuf message
