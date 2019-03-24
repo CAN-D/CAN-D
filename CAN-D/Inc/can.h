@@ -21,6 +21,7 @@ extern "C" {
 #define CAN_IT_START CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO1_FULL | CAN_IT_ERROR /* Interrupts to be enabled on CAN start */
 #define CAN_MESSAGE_LENGTH 8
 #define CAN_LOG_FILENAME "CAN_Data"
+#define CAN_SD_DATA_SZ_BYTES ((uint16_t)8)
 #define CAN_USB_DATA_SZ_BYTES ((uint16_t)8)
 #define CAN_USB_TX_MAX_TRY 3
 
