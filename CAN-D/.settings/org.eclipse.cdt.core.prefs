@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/fr.ac6.managedbuild.config.gnu.cross.exe.debug.1205493945/PATH/delimiter=\:
+environment/project/fr.ac6.managedbuild.config.gnu.cross.exe.debug.1205493945/PATH/operation=replace
+environment/project/fr.ac6.managedbuild.config.gnu.cross.exe.debug.1205493945/PATH/value=/Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin\:/usr/bin\:/bin\:/usr/sbin\:/sbin\:/usr/local/bin
+environment/project/fr.ac6.managedbuild.config.gnu.cross.exe.debug.1205493945/append=true
+environment/project/fr.ac6.managedbuild.config.gnu.cross.exe.debug.1205493945/appendContributed=true
