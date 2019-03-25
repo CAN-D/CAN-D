@@ -162,6 +162,8 @@ typedef struct
     uint32_t CardBlockSize; /* Card Block Size */
 } SD_CardInfo;
 
+#define SD_UNUSED_BITS_MASK 0x1F
+
 /**
   * @brief  Start Data tokens:
   *         Tokens (necessary because at nop/idle (and CS active) only 0xff is 
@@ -209,6 +211,20 @@ typedef struct
 #define SD_CMD_SD_APP_OP_COND 41 /* CMD41 = 0x69 */
 #define SD_CMD_APP_CMD 55 /* CMD55 = 0x77 */
 #define SD_CMD_READ_OCR 58 /* CMD55 = 0x79 */
+
+/**
+  * @brief  SD CRC codes for various commands
+  */
+#define SD_CRC_GO_IDLE_STATE 0x95
+#define SD_CRC_SEND_IF_COND 0x87
+#define SD_CRC_DEFAULT 0xFF
+
+/**
+  * @brief  SD Command Arguments
+  */
+#define SD_ARG_NONE 0x00000000
+#define SD_ARG_SEND_IF_COND 0x000001AA
+#define SD_ARG_APP_OP 0x40000000
 
 uint8_t BSP_SD_Init(void);
 uint8_t BSP_SD_IsDetected(void);
