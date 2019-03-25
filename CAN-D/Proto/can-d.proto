@@ -1,46 +1,35 @@
 syntax = "proto3";
 
 message FromEmbedded {
-    oneof contents {
-        DataPayload canDataChunk = 1;
-        DataPayload gpsDataChunk = 2;
-        LogFSInfo logFSInfo = 3;
-    }
+  oneof contents {
+    DataPayload canDataChunk = 1;
+    DataPayload gpsDataChunk = 2;
+    LogFSInfo logFSInfo = 3;
+  }
 }
 
-message ToEmbedded {
-    oneof contents {
-        ControlCommand command = 1;
-    }
-}
+message ToEmbedded { ControlCommand command = 1; }
 
-message ControlCommand {
-    ControlCommandType commandType = 1;
-    oneof info {
-        string logName = 2;
-    }
-}
+message ControlCommand { ControlCommandType commandType = 1; }
 
-message LogFSInfo {
-    repeated LogFileInfo logFiles = 1;
-}
+message LogFSInfo { repeated LogFileInfo logFiles = 1; }
 
 message LogFileInfo {
-    uint32 size = 1;
-    uint64 unixTime = 2;
-    string fileName = 3;
+  uint32 size = 1;
+  uint64 unixTime = 2;
+  string fileName = 3;
 }
 
 message DataPayload {
-    uint32 dataLength = 1;
-    bytes data = 2;
+  uint32 dataLength = 1;
+  bytes data = 2;
 }
 
 enum ControlCommandType {
-    STOP_LOG = 0;
-    START_LOG = 1;
-    MARK_LOG = 2;
-    GET_LOGFS_INFO = 3;
-    GET_LOG = 4;
-    DELETE_LOG = 5;
+  STOP_LOG = 0;
+  START_LOG = 1;
+  MARK_LOG = 2;
+  GET_LOGFS_INFO = 3;
+  GET_LOG = 4;
+  DELETE_LOG = 5;
 }

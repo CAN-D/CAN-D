@@ -31,6 +31,7 @@ OPT = -Og
 # Build path
 PROJ_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR = $(PROJ_DIR)/build
+PROTO_DIR = $(PROJ_DIR)/Proto
 
 ######################################
 # source
@@ -98,7 +99,10 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c  \
-Proto/can-d.pb-c.c
+Proto/can-d.pb.c \
+Proto/nanopb/pb_encode.c \
+Proto/nanopb/pb_decode.c \
+Proto/nanopb/pb_common.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -168,7 +172,8 @@ C_INCLUDES =  \
 -I$(PROJ_DIR)/Drivers/CMSIS/Device/ST/STM32F3xx/Include \
 -I$(PROJ_DIR)/Drivers/CMSIS/Include \
 -I$(PROJ_DIR)/Drivers/BSP/Inc \
--I$(PROJ_DIR)/Proto
+-I$(PROTO_DIR) \
+-I$(PROTO_DIR)/nanopb
 
 
 # compile gcc flags
@@ -184,10 +189,6 @@ endif
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
-# Include Protobuf Headers
-CFLAGS += `pkg-config --cflags 'libprotobuf-c >= 1.0.0'`
-
-
 #######################################
 # LDFLAGS
 #######################################
@@ -199,12 +200,12 @@ LIBS = -lc -lm -lnosys
 LIBDIR = 
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
-# Protobuf Libraries
-LDFLAGS += `pkg-config --libs 'libprotobuf-c >= 1.0.0'`
-
 # default action: build all
-all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+all: 
+	make gen_proto
+	make application
 
+application: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 
 #######################################
 # build the application
@@ -239,10 +240,29 @@ $(BUILD_DIR):
 	mkdir $@		
 
 #######################################
+# generate proto
+#######################################
+CFLAGS += -DPB_NO_ERRMSG -DPB_BUFFER_ONLY
+
+gen_proto: Proto/nanopb
+	protoc --plugin=protoc-gen-nanopb=$(PROTO_DIR)/nanopb/generator/protoc-gen-nanopb  --nanopb_out=. Proto/can-d.proto
+
+%.pb.c %.pb.h: %.proto $(PROTO_DIR)/nanopb
+	protoc --plugin=protoc-gen-nanopb=$(PROTO_DIR)/nanopb/generator/protoc-gen-nanopb  --nanopb_out=. $(PROTO_DIR)/can-d.proto
+
+Proto/nanopb:
+	rm -rf Proto/nanopb
+	tar xzf Proto/nanopb-0.3.4.tar.gz -C Proto/
+	make -BC Proto/nanopb/generator/proto
+
+#######################################
 # clean up
 #######################################
 clean:
 	-rm -fR $(BUILD_DIR)
+	-rm -fR $(PROTO_DIR)/can-d.pb.c
+	-rm -fR $(PROTO_DIR)/can-d.pb.h
+	-rm -fR $(PROTO_DIR)/nanopb
   
 #######################################
 # dependencies

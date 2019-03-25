@@ -2,6 +2,13 @@
 CAN-D.wiki/
 *.DS_Store
 
+# -------- Proto -----------
+CAN-D/Proto/nanopb/
+
+# -------- Generated -------
+*can-d.pb.h
+*can-d.pb.c
+
 # -------- Firmware --------
 CAN-D/Debug
 
