@@ -13,16 +13,9 @@
 extern "C" {
 #endif
 
-#include "can-d.pb-c.h"
+#include "can-d.pb.h"
 
-typedef enum {
-    PROTO_OK,
-    PROTO_ERROR,
-    PROTO_MSG_TOO_LONG,
-    PROTO_NULL_MSG,
-} ProtoStatus;
-
-ProtoStatus APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len);
+bool APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len);
 size_t APP_PROTO_HANDLE_bufferFromEmbeddedMsg(FromEmbedded* msg, uint8_t* buffer, size_t max_buffer_len);
 
 #ifdef __cplusplus
