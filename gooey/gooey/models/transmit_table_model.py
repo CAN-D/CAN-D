@@ -20,7 +20,7 @@ class TransmitTableModel(QAbstractTableModel):
 
     def columnCount(self, index=QModelIndex()):
         # Documentation seem to always return a hard coded value. Probably in case self.messages is empty.
-        return 6
+        return 7
 
     """ Depending on the index and role given, return data.
         If not returning data, return None
@@ -34,6 +34,7 @@ class TransmitTableModel(QAbstractTableModel):
             return None
 
         if role == Qt.DisplayRole:
+            can_id = self.messages[index.row()].can_id
             message = self.messages[index.row()].message
             dlc = self.messages[index.row()].dlc
             data = self.messages[index.row()].data
@@ -42,16 +43,18 @@ class TransmitTableModel(QAbstractTableModel):
             trigger = self.messages[index.row()].trigger
 
             if index.column() == 0:
-                return message
+                return can_id
             elif index.column() == 1:
-                return dlc
+                return message
             elif index.column() == 2:
-                return data
+                return dlc
             elif index.column() == 3:
-                return cycle_time
+                return data
             elif index.column() == 4:
-                return count
+                return cycle_time
             elif index.column() == 5:
+                return count
+            elif index.column() == 6:
                 return trigger
 
         return None
@@ -64,16 +67,18 @@ class TransmitTableModel(QAbstractTableModel):
 
         if orientation == Qt.Horizontal:
             if section == 0:
-                return "Message"
+                return "CAN ID"
             elif section == 1:
-                return "DLC"
+                return "Message"
             elif section == 2:
-                return "Data"
+                return "DLC"
             elif section == 3:
-                return "Cycle Time"
+                return "Data"
             elif section == 4:
-                return "Count"
+                return "Cycle Time"
             elif section == 5:
+                return "Count"
+            elif section == 6:
                 return "Trigger"
 
         return None
@@ -83,7 +88,7 @@ class TransmitTableModel(QAbstractTableModel):
     def insertRow(self, newMessage, index=QModelIndex()):
         # Check if Table already has a message with the same name
         messageInTable = [
-            m for m in self.messages if m.message == newMessage.message]
+            m for m in self.messages if m.can_id == newMessage.can_id]
 
         if len(messageInTable) > 0:
             self.updateMessage(messageInTable[0], newMessage)
@@ -97,11 +102,12 @@ class TransmitTableModel(QAbstractTableModel):
         return True
 
     def updateMessage(self, oldMessage, newMessage):
+        oldMessage.can_id = newMessage.can_id
         oldMessage.message = newMessage.message
         oldMessage.dlc = newMessage.dlc
         oldMessage.data = newMessage.data
         oldMessage.cycle_time = newMessage.cycle_time
-        oldMessage.count = newMessage.count
+        oldMessage.count = oldMessage.count + 1
         oldMessage.trigger = newMessage.trigger
 
     """ Remove a row from the model. """
@@ -124,16 +130,18 @@ class TransmitTableModel(QAbstractTableModel):
         if index.isValid() and 0 <= index.row() < len(self.messages):
             message = self.messages[index.row()]
             if index.column() == 0:
-                message.message = value
+                message.can_id = value
             elif index.column() == 1:
-                message.dlc = value
+                message.message = value
             elif index.column() == 2:
-                message.data = value
+                message.dlc = value
             elif index.column() == 3:
-                message.cycle_time = value
+                message.data = value
             elif index.column() == 4:
-                message.count = value
+                message.cycle_time = value
             elif index.column() == 5:
+                message.count = value
+            elif index.column() == 6:
                 message.trigger = value
             else:
                 False

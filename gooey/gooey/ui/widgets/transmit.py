@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import QDialog, QPushButton
-from models.trace import Trace
+from models.transmit_message import TransmitMessage
 
 
 class TransmitWindow(QDialog):
@@ -147,7 +147,7 @@ class TransmitWindow(QDialog):
         self.buttonBox.buttons()[2].clicked.connect(self.cleared)
 
         QtCore.QMetaObject.connectSlotsByName(self)
-        self.message = Trace()
+        self.message = TransmitMessage()
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -170,6 +170,7 @@ class TransmitWindow(QDialog):
         self.message.length = self.lengthInput.value()
         self.message.cycle_time = self.cycleInput.toPlainText()
         self.message.rxtx = "TX"
+        self.message.count = 1
 
         msgtype = []
         if (self.efCheckBox.isChecked):
