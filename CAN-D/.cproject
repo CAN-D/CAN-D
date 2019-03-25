@@ -57,7 +57,7 @@
                             							
                             <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross.1321415333" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
                             							
-                            <builder buildPath="${workspace_loc:/CAN-D}/Debug" id="fr.ac6.managedbuild.builder.gnu.cross.2007195476" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="fr.ac6.managedbuild.builder.gnu.cross">
+                            <builder buildPath="${workspace_loc:/CAN-D}" id="fr.ac6.managedbuild.builder.gnu.cross.2007195476" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="fr.ac6.managedbuild.builder.gnu.cross">
                                 								
                                 <outputEntries>
                                     									
@@ -528,11 +528,13 @@
     	
     <storageModule moduleId="refreshScope" versionNumber="2">
         		
-        <configuration artifactName="${ProjName}" configurationName="Debug">
+        <configuration configurationName="Debug">
             			
-            <resource resourceType="PROJECT" workspacePath="CAN-D"/>
+            <resource resourceType="PROJECT" workspacePath="/CAN-D"/>
             		
         </configuration>
+        		
+        <configuration configurationName="Release"/>
         	
     </storageModule>
     	
