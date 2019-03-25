@@ -241,7 +241,7 @@ $(BUILD_DIR):
 #######################################
 CFLAGS += -DPB_NO_ERRMSG -DPB_BUFFER_ONLY
 
-gen_proto:
+gen_proto: Proto/nanopb
 	protoc --plugin=protoc-gen-nanopb=$(PROTO_DIR)/nanopb/generator/protoc-gen-nanopb  --nanopb_out=. Proto/can-d.proto
 
 %.pb.c %.pb.h: %.proto $(PROTO_DIR)/nanopb
@@ -259,6 +259,7 @@ clean:
 	-rm -fR $(BUILD_DIR)
 	-rm -fR $(PROTO_DIR)/can-d.pb.c
 	-rm -fR $(PROTO_DIR)/can-d.pb.h
+	-rm -fR $(PROTO_DIR)/nanopb
   
 #######################################
 # dependencies
