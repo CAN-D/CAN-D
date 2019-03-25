@@ -1,6 +1,7 @@
 from models.transmit_table_model import TransmitTableModel
 from models.receive_table_model import ReceiveTableModel
 from models.transmit_message import TransmitMessage
+import datetime
 
 
 class RxtxController():
@@ -15,18 +16,20 @@ class RxtxController():
         else:
             self.transmittable = TransmitTableModel()
 
+    def transmitMessage(self, message):
+        # TODO, call api to transmit message here
+        self.appendTransmitTable(message)
+
     def appendTransmitTable(self, message):
-        num_msgs = self.transmittable.rowCount()
-        self.transmittable.insertRow(message, num_msgs)
+        self.transmittable.insertRow(message)
 
     def appendReceiveTable(self, message):
-        num_msgs = self.receivetable.rowCount()
-        self.receivetable.insertRow(message, num_msgs)
+        self.receivetable.insertRow(message)
 
     def setTest(self):
         newmsg = TransmitMessage(
-            "Test1", "DLC", "Data", "cycle_time", "Count", "Trigger")
+            "CAN-ID1", "Message1", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", 1, "Trigger")
         self.transmittable.messages.append(newmsg)
         newmsg2 = TransmitMessage(
-            "Test2", "DLC", "Data", "cycle_time", "Count", "Trigger")
+            "CAN-ID2", "Message2", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", 1, "Trigger")
         self.transmittable.messages.append(newmsg2)

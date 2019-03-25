@@ -23,6 +23,7 @@ class RxTxTab(QWidget):
         self.receiveTable = QtWidgets.QTableView(self.receiveGroup)
         self.receiveTable.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.receiveTable.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
         self.receiveTable.setObjectName("receiveTable")
         self.receiveTable.setStyleSheet("font: 13pt;")
 
@@ -39,6 +40,8 @@ class RxTxTab(QWidget):
         self.transmitTable = QtWidgets.QTableView(self.transmitGroup)
         self.transmitTable.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.transmitTable.setSelectionBehavior(
+            QtWidgets.QTableView.SelectRows)
         self.transmitTable.setObjectName("transmitTable")
         self.transmitTable.setStyleSheet("font: 13pt;")
 
@@ -49,8 +52,19 @@ class RxTxTab(QWidget):
         self.receiveTable.setModel(self.controller.receivetable)
         self.transmitTable.setModel(self.controller.transmittable)
 
+        self.controller.transmittable.rowsInserted.connect(
+            self.scrollTransmitToBottom)
+        self.controller.receivetable.rowsInserted.connect(
+            self.scrollReceiveToBottom)
+
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
+
+    def scrollTransmitToBottom(self, parent, start, end):
+        QtCore.QTimer.singleShot(0, self.transmitTable.scrollToBottom)
+
+    def scrollReceiveToBottom(self, parent, start, end):
+        QtCore.QTimer.singleShot(0, self.receiveTable.scrollToBottom)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate

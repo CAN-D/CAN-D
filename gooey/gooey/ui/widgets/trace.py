@@ -29,9 +29,14 @@ class TraceTab(QWidget):
         header.setStretchLastSection(True)
 
         self.TraceTable.setModel(self.controller.tracetable)
+        self.controller.tracetable.rowsInserted.connect(
+            self.scrollTraceToBottom)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
+
+    def scrollTraceToBottom(self, parent, start, end):
+        QtCore.QTimer.singleShot(0, self.TraceTable.scrollToBottom)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate

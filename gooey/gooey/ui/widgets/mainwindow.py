@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 import ui.widgets.resources
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import QMainWindow
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
@@ -19,6 +19,7 @@ from controllers.maincontroller import MainController
 # TODO: remove below
 from models.transmit_message import TransmitMessage
 from models.receive_message import ReceiveMessage
+import datetime
 
 
 class CAND_MainWindow(QMainWindow):
@@ -199,7 +200,6 @@ class CAND_MainWindow(QMainWindow):
 
         # Pause Button
         self.pauseButton = QtWidgets.QToolButton(self)
-        self.pauseButton.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -251,7 +251,10 @@ class CAND_MainWindow(QMainWindow):
         # TODO REMOVE THESE, ONLY FOR TEST
         self.openButton.clicked.connect(self.insertReceive)
         self.saveButton.clicked.connect(self.insertTransmit)
+        self.count = 0
+
         self.playButton.clicked.connect(self.transmitMessage)
+        self.pauseButton.clicked.connect(self.retransmitMessage)
 
         QtCore.QMetaObject.connectSlotsByName(self)
 
@@ -260,29 +263,32 @@ class CAND_MainWindow(QMainWindow):
         transmitWindow.show()
 
         if transmitWindow.exec_():
-            # TODO: send the transmit message to hardware
+            self.controller.rxtxcontroller.transmitMessage(
+                transmitWindow.message)
 
-            print(transmitWindow.message.can_id)
-            print(transmitWindow.message.length)
-            print(transmitWindow.message.cycle_time)
-            print(transmitWindow.message.data)
-            print(transmitWindow.message.msgtype)
-            print(transmitWindow.message.rxtx)
+    def retransmitMessage(self):
+        selected = self.rxtxTab.transmitTable.selectionModel()
+        if selected.hasSelection():
+            for row in selected.selectedRows():
+                message = self.rxtxTab.controller.transmittable.messages[row.row(
+                )]
+                self.controller.rxtxcontroller.transmitMessage(message)
 
     # TODO: REMOVE THESE, ONLY FOR TEST
     def insertTransmit(self):
+        self.count = self.count + 1
         newmsg = TransmitMessage(
-            "TestTransmit", "DLC", "Data", "cycle_time", "Count", "Trigger")
-        self.controller.rxtxcontroller.appendTransmitTable(newmsg)
+            "CAN-ID " + str(self.count % 5), "Message", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", self.count, "Trigger")
+
+        self.controller.rxtxcontroller.transmitMessage(newmsg)
 
         test = QtWidgets.QRadioButton()
         self.statusbar.showMessage("Test Transmit | Disconnected")
         self.statusbar.addWidget(test)
 
     def insertReceive(self):
-        print("testReceive")
-        newmsg = ReceiveMessage(
-            "TestReceive", "DLC", "Data", "cycle_time", "Count")
+        newmsg = TransmitMessage(
+            "CAN-ID", "Message", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", 1)
         self.controller.rxtxcontroller.appendReceiveTable(newmsg)
         self.statusbar.showMessage("Test Receive | Connected")
 
@@ -315,7 +321,6 @@ class CAND_MainWindow(QMainWindow):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = CAND_MainWindow(MainWindow)
+    ui = CAND_MainWindow()
     ui.show()
     sys.exit(app.exec_())

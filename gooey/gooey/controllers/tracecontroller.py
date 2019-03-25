@@ -10,10 +10,10 @@ class TraceController():
             self.tracetable = TraceTableModel()
 
     def setTest(self):
-        newmsg = Trace(
-            "30018", "18F00200h", "Rx", "FD,BRS", "32", "00 00 C4 FB 0F FE 0F FE 00 00 C4 FB 0F FE 0F FE 00 00 C4 FB")
+        newmsg = Trace("18F00200h", "MSG",
+                       "30018", "Rx", "FD,BRS", "DLC", "32", "00 00 C4 FB 0F FE 0F FE 00 00 C4 FB 0F FE 0F FE 00 00 C4 FB", None)
         self.tracetable.traces.append(newmsg)
 
-        newmsg2 = Trace(
-            "30111", "17F00100h", "Tx", "FD", "8", "00 00 C4 FB")
+        newmsg2 = Trace("17F00100h", "MSG",
+                        "30111", "TX", "FD", "DLC", "8", "00 00 C4 FB", None)
         self.tracetable.traces.append(newmsg2)
