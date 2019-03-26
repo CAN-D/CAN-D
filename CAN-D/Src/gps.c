@@ -74,9 +74,9 @@ void APP_GPS_MonitorTask(void const* argument)
     uint8_t usbTxCnt = 0;
     osEvent event;
     GPSData* gpsRxMsg;
-    FromEmbedded fromEmbeddedMsg;
     uint8_t* usbTxMsg; // Serialized (packaged) protobuf data
     size_t usbMaxMsgLen = GPS_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
+    FromEmbedded fromEmbeddedMsg = FromEmbedded_init_zero;
 
     for (;;) {
         // Pend on GPS data sent via UART
@@ -91,8 +91,7 @@ void APP_GPS_MonitorTask(void const* argument)
             }
 
             // Construct FromEmbedded protobuf message
-            from_embedded__init(&fromEmbeddedMsg);
-            fromEmbeddedMsg.gpsdatachunk->data.data = (uint8_t*)gpsRxMsg->raw;
+            memcpy(fromEmbeddedMsg.contents.gpsDataChunk.bytes, (uint8_t*)gpsRxMsg->raw, GPS_USB_DATA_SZ_BYTES);
             usbTxMsg = malloc(usbMaxMsgLen);
             APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, usbTxMsg, usbMaxMsgLen);
 
