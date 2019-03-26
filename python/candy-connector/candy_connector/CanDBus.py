@@ -52,8 +52,8 @@ class CanDBus(BusABC):
         """
         super(CanDBus, self).__init__(channel=channel)
         # Init data structures
-        self.can_queue = asyncio.Queue()
-        self.gps_queue = asyncio.Queue()
+        self.can_queue = Queue()
+        self.gps_queue = Queue()
         self.most_recent_fs_info = []
         self.is_polling = True
 
@@ -102,7 +102,7 @@ class CanDBus(BusABC):
         :return:
             None on timeout or a :class:`can.Message` object.
         """
-        return self.can_queue.get(block=True)
+        return self.can_queue.get()
 
     def send(self, msg: Message, timeout=None):
         """Transmit a message to CAN bus.
