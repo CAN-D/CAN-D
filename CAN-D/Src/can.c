@@ -233,9 +233,9 @@ void APP_CAN_MonitorTask(void const* argument)
     uint8_t usbTxCnt = 0;
     osEvent event;
     CANRxMessage* canRxMsg;
-    FromEmbedded fromEmbeddedMsg;
     uint8_t* usbTxMsg; // Serialized (packaged) protobuf data
     size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
+    FromEmbedded fromEmbeddedMsg = FromEmbedded_init_zero;
 
     for (;;) {
         /* This is just used to test the SD card functionality */
@@ -252,8 +252,7 @@ void APP_CAN_MonitorTask(void const* argument)
             }
 
             // Construct FromEmbedded protobuf message
-            from_embedded__init(&fromEmbeddedMsg);
-            fromEmbeddedMsg.candatachunk->data.data = canRxMsg->data;
+            memcpy(fromEmbeddedMsg.contents.canDataChunk.bytes, canRxMsg->data, CAN_USB_DATA_SZ_BYTES);
             usbTxMsg = malloc(usbMaxMsgLen);
             APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, usbTxMsg, usbMaxMsgLen);
 
