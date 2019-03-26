@@ -2,8 +2,8 @@ syntax = "proto3";
 
 message FromEmbedded {
   oneof contents {
-    DataPayload canDataChunk = 1;
-    DataPayload gpsDataChunk = 2;
+    bytes canDataChunk = 1;
+    bytes gpsDataChunk = 2;
     LogFSInfo logFSInfo = 3;
   }
 }
@@ -18,11 +18,6 @@ message LogFileInfo {
   uint32 size = 1;
   uint64 unixTime = 2;
   string fileName = 3;
-}
-
-message DataPayload {
-  uint32 dataLength = 1;
-  bytes data = 2;
 }
 
 enum ControlCommandType {
