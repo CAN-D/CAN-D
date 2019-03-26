@@ -29,11 +29,12 @@ void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg);
 void interpretControlCommandMessage(ControlCommand* controlCommandMsg);
 
 /* Exported functions --------------------------------------------------------*/
-bool APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len)
+void APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len)
 {
     ToEmbedded message = ToEmbedded_init_zero;
     pb_istream_t stream = pb_istream_from_buffer(data, data_len);
-    return pb_decode(&stream, ToEmbedded_fields, &message);
+    pb_decode(&stream, ToEmbedded_fields, &message);
+    interpretToEmbeddedMessage(&message);
 }
 
 size_t APP_PROTO_HANDLE_bufferFromEmbeddedMsg(FromEmbedded* msg, uint8_t* buffer, size_t max_buffer_len)
@@ -58,10 +59,10 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
     if (controlCommandMsg->has_commandType) {
         switch (controlCommandMsg->commandType) {
         case ControlCommandType_STOP_LOG:
-            APP_CAN_Start();
+            APP_CAN_Stop();
             break;
         case ControlCommandType_START_LOG:
-            APP_CAN_Stop();
+            APP_CAN_Start();
             break;
         case ControlCommandType_MARK_LOG:
             // Add a UTC Timestampt to the Mark.log

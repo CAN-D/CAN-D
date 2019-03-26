@@ -15,7 +15,7 @@ extern "C" {
 
 #include "can-d.pb.h"
 
-bool APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len);
+void APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len);
 size_t APP_PROTO_HANDLE_bufferFromEmbeddedMsg(FromEmbedded* msg, uint8_t* buffer, size_t max_buffer_len);
 
 #ifdef __cplusplus
