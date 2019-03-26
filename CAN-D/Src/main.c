@@ -57,7 +57,10 @@ int main(void)
     BSP_PB_Init(BUTTON_LOG, BUTTON_MODE_EXTI);
     APP_CAN_Init();
     APP_TIM2_Init();
+
+    APP_USB_ForceEnumeration(); // Call this before APP_USB_DEVICE_Init() to force re-enumeration
     APP_USB_DEVICE_Init();
+
     APP_GPS_Init();
 
     /* Call init function for freertos objects (in freertos.c) */
