@@ -8,6 +8,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_cdc_if.h"
+#include "proto_handler.h"
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -16,6 +17,9 @@
 /* It's up to user to redefine and/or remove those define */
 #define APP_RX_DATA_SIZE 1000
 #define APP_TX_DATA_SIZE 1000
+
+/* Uncomment this line to unpack all USB messages into protobuf messages */
+#define USB_UNPACK_PROTOBUF
 
 /* Private variables ---------------------------------------------------------*/
 /* Create buffer for reception and transmission           */
@@ -172,6 +176,9 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
   */
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t* Len)
 {
+#if defined(USB_UNPACK_PROTOBUF)
+    APP_PROTO_HANDLE_interpretData(Buf, (size_t)*Len);
+#endif
     // CDC_Transmit_FS(Buf, *Len); // ADD THIS LINE to echo back all incoming data
     USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
     USBD_CDC_ReceivePacket(&hUsbDeviceFS);
