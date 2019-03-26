@@ -19,6 +19,7 @@ extern "C" {
 
 /** USB Device initialization function. */
 void APP_USB_DEVICE_Init(void);
+void APP_USB_ForceEnumeration(void);
 
 #ifdef __cplusplus
 }
