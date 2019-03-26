@@ -4,7 +4,7 @@
 
 ## 0. Requirements:
 * CAN-D printed circuit board
-* [protobuf-c](https://github.com/protobuf-c/protobuf-c)
+* [protobuf](https://developers.google.com/protocol-buffers/)
 * [GNU ARM Embedded Toolchain](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm) (arm-none-eabi)
 * [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) for easy programming of the STM32 MCU
 * [OpenOCD](http://openocd.org) (>= 0.10.0) or [texane/stlink](https://github.com/texane/stlink) for optional programming using a GDB server 
@@ -80,9 +80,9 @@ Generic commands:
 ...
 ```
 
-7. Install [protobuf-c](https://github.com/protobuf-c/protobuf-c):
+7. Install [protobuf](https://developers.google.com/protocol-buffers/):
 ```
-brew install protobuf-c
+brew install protobuf
 ```
 
 ## 1. Getting the CAN-D Project
