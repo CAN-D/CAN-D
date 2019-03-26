@@ -1,13 +1,48 @@
 # Gooey - CAN-D Explorer
 
-This package contains the graphical user interface for the CAN-D data logger.
+A cross-platform Graphical User Interface (GUI) for the CAN-D vehicle data logger.
 
-# Setup
+## Getting Started
 
-* Install python3 (3.7 if you can)
-* Install the dependancies: `pip install -r requirements`
-* Install this package: `pip install -e .`
+These instructions lists the steps required to run the CAN-D GUI.
 
-# Usage
+### Prerequisites
 
-Coming Soon to a readme near you.
+What things you need to install the software and how to install them
+
+1. Python3 (3.7 if possible). Install either through https://www.python.org/ or brew
+
+```
+brew install python
+```
+
+2. Install the dependencies
+
+```
+pip install -r requirements
+```
+
+3. Install this package
+
+```
+pip install -e .
+```
+
+### Running
+
+Go to the ./gooey/ directory
+
+```
+cd ./gooey/
+```
+
+Run gui.py using python 3
+
+```
+python3 gui.py
+```
+
+## Built With
+
+- [PyQt5](https://pypi.org/project/PyQt5/) - Cross-platform UI toolkit
+- [pip](https://pypi.org/project/pip/) - Dependency Management
