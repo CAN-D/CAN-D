@@ -1,7 +1,7 @@
 from candy_connector.CanDBus import CanDBus
 
 
-def send_mark_command():
+def send_mark_log():
     bus = CanDBus()
     bus.mark_log()
     bus.stop_usb_polling()
