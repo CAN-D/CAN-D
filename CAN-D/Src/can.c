@@ -77,7 +77,7 @@ void APP_CAN_Init(void)
 
 void APP_CAN_InitTasks(void)
 {
-    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
+    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 512);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 128);
@@ -233,8 +233,8 @@ void APP_CAN_MonitorTask(void const* argument)
     uint8_t usbTxCnt = 0;
     osEvent event;
     CANRxMessage* canRxMsg;
-    uint8_t* usbTxMsg; // Serialized (packaged) protobuf data
     size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
+    uint8_t usbTxMsg[usbMaxMsgLen]; // Serialized (packaged) protobuf data
     FromEmbedded fromEmbeddedMsg = FromEmbedded_init_zero;
 
     for (;;) {
@@ -252,9 +252,10 @@ void APP_CAN_MonitorTask(void const* argument)
             }
 
             // Construct FromEmbedded protobuf message
+            fromEmbeddedMsg.contents.canDataChunk.size = 8;
+            fromEmbeddedMsg.which_contents = 1;
             memcpy(fromEmbeddedMsg.contents.canDataChunk.bytes, canRxMsg->data, CAN_USB_DATA_SZ_BYTES);
-            usbTxMsg = malloc(usbMaxMsgLen);
-            APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, usbTxMsg, usbMaxMsgLen);
+            APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
             usbTxCnt = 0;
             while (APP_USB_Transmit(usbTxMsg, CAN_USB_DATA_SZ_BYTES) == 1) {
@@ -264,7 +265,6 @@ void APP_CAN_MonitorTask(void const* argument)
                     break;
                 }
             }
-            free(usbTxMsg); // Free the allocated serialized buffer
             osPoolFree(CANRxPool, canRxMsg);
         }
         osDelay(1);
