@@ -46,3 +46,4 @@ python3 gui.py
 
 - [PyQt5](https://pypi.org/project/PyQt5/) - Cross-platform UI toolkit
 - [pip](https://pypi.org/project/pip/) - Dependency Management
+- [cantools](https://pypi.org/project/cantools/) - CAN python package for decoding/encoding
