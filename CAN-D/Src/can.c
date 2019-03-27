@@ -77,7 +77,7 @@ void APP_CAN_Init(void)
 
 void APP_CAN_InitTasks(void)
 {
-    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 512);
+    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 128);
