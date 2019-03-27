@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QWidget
 
 
 class TraceTab(QWidget):
@@ -98,6 +98,7 @@ class TraceTab(QWidget):
 
     def applyFilter(self):
         # TODO
+        return
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
