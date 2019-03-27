@@ -206,15 +206,9 @@ class ConnectionsTab(QWidget):
         return self.bitRateItems.index(selectedItem)
 
     def clockFrequencyOptionsChanged(self, i):
-        print("Clock changed to index: ", i, " which is: ",
-              self.clockFrequencyComboBox.currentText())
-
         self.model.setClockFrequency(self.clockFrequencyComboBox.currentText())
 
     def bitRateOptionsChanged(self, i):
-        print("Clock changed to index: ", i,
-              " which is: ", self.bitRateComboBox.currentText())
-
         self.model.setBitRate(self.bitRateComboBox.currentText())
 
 
