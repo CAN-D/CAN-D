@@ -248,6 +248,9 @@ class CAND_MainWindow(QMainWindow):
         self.retranslateUi(self)
         self.tabWidget.setCurrentIndex(0)
 
+        self.connectButton.clicked.connect(self.connectUsb)
+        self.disconnectButton.clicked.connect(self.disconnectUsb)
+
         # TODO REMOVE THESE, ONLY FOR TEST
         self.openButton.clicked.connect(self.insertReceive)
         self.saveButton.clicked.connect(self.insertTransmit)
@@ -257,6 +260,47 @@ class CAND_MainWindow(QMainWindow):
         self.pauseButton.clicked.connect(self.retransmitMessage)
 
         QtCore.QMetaObject.connectSlotsByName(self)
+
+    def connectUsb(self):
+        if self.controller.connect():
+            self.statusbar.showMessage(
+                "Connected | SD Card Logging " + u"\u274C")
+            self.connectButton.setEnabled(False)
+            self.disconnectButton.setEnabled(True)
+            self.controller.startPoll()
+        else:
+            # TODO show pop-up for cant connect
+            return
+
+    def disconnectUsb(self):
+        if not self.controller.disconnect():
+            self.statusbar.showMessage(
+                "Disconnected | SD Card Logging " + u"\u274C")
+            self.connectButton.setEnabled(True)
+            self.disconnectButton.setEnabled(False)
+        else:
+            # TODO show pop-up for cant disconnect
+            return
+
+    def startLoggingSD(self):
+        if self.controller.startLog():
+            self.statusbar.showMessage(
+                "Connected | SD Card Logging " + u"\u2713")
+            self.recordButton.setEnabled(False)
+            self.stopButton.setEnabled(True)
+        else:
+            # TODO show pop-up for cant log SD
+            return
+
+    def stopLoggingSD(self):
+        if not self.controller.stopLog():
+            self.statusbar.showMessage(
+                "Connected | SD Card Logging " + u"\u274C")
+            self.recordButton.setEnabled(False)
+            self.stopButton.setEnabled(True)
+        else:
+            # TODO show pop-up for cant log SD
+            return
 
     def transmitMessage(self):
         transmitWindow = TransmitWindow(self)
