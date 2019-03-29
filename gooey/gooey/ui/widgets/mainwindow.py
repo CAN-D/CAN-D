@@ -322,7 +322,7 @@ class CAND_MainWindow(QMainWindow):
     def insertTransmit(self):
         self.count = self.count + 1
         newmsg = TransmitMessage(
-            "CAN-ID " + str(self.count % 5), "Message", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", self.count, "Trigger")
+            "CAN-ID " + str(self.count % 5), "Message", datetime.datetime.now().strftime("%H:%M:%S"), "DLC", 32, "Data", "cycle_time", self.count, "Trigger")
 
         self.controller.rxtxcontroller.transmitMessage(newmsg)
 
@@ -332,7 +332,7 @@ class CAND_MainWindow(QMainWindow):
 
     def insertReceive(self):
         newmsg = TransmitMessage(
-            "CAN-ID", "Message", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", 1)
+            "CAN-ID", "Message", datetime.datetime.now().strftime("%H:%M:%S"), "DLC", 32, "Data", "cycle_time", 1)
         self.controller.rxtxcontroller.appendReceiveTable(newmsg)
         self.statusbar.showMessage("Test Receive | Connected")
 

@@ -7,7 +7,7 @@ class TransmitWindow(QDialog):
     def __init__(self, parent=None):
         super(TransmitWindow, self).__init__(parent)
         self.setObjectName("Dialog")
-        self.resize(350, 330)
+        self.resize(350, 220)
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")
         self.windowLabel = QtWidgets.QLabel(self)
@@ -98,33 +98,6 @@ class TransmitWindow(QDialog):
             0, QtWidgets.QFormLayout.LabelRole, self.dataLabel)
         self.verticalLayout.addLayout(self.dataForm)
 
-        # Message Type Group Box
-        self.msgTypeGroupBox = QtWidgets.QGroupBox(self)
-        self.msgTypeGroupBox.setObjectName("msgTypeGroupBox")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.msgTypeGroupBox)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-
-        # EF check box
-        self.efCheckBox = QtWidgets.QCheckBox(self.msgTypeGroupBox)
-        self.efCheckBox.setObjectName("efCheckBox")
-        self.verticalLayout_2.addWidget(self.efCheckBox)
-
-        # RR Check box
-        self.rrCheckBox = QtWidgets.QCheckBox(self.msgTypeGroupBox)
-        self.rrCheckBox.setObjectName("rrCheckBox")
-        self.verticalLayout_2.addWidget(self.rrCheckBox)
-
-        # FD Check box
-        self.fdCheckBox = QtWidgets.QCheckBox(self.msgTypeGroupBox)
-        self.fdCheckBox.setObjectName("fdCheckBox")
-        self.verticalLayout_2.addWidget(self.fdCheckBox)
-
-        # BRS Check box
-        self.brsCheckBox = QtWidgets.QCheckBox(self.msgTypeGroupBox)
-        self.brsCheckBox.setObjectName("brsCheckBox")
-        self.verticalLayout_2.addWidget(self.brsCheckBox)
-        self.verticalLayout.addWidget(self.msgTypeGroupBox)
-
         # Button Box
         self.buttonBox = QtWidgets.QDialogButtonBox(self)
         self.buttonBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
@@ -158,11 +131,6 @@ class TransmitWindow(QDialog):
         self.cycleLabel.setText(_translate("Dialog", "Cycle"))
         self.msLabel.setText(_translate("Dialog", "ms"))
         self.dataLabel.setText(_translate("Dialog", "Data: (hex)"))
-        self.msgTypeGroupBox.setTitle(_translate("Dialog", "Message Type"))
-        self.efCheckBox.setText(_translate("Dialog", "Extended Frame"))
-        self.rrCheckBox.setText(_translate("Dialog", "Remote Request"))
-        self.fdCheckBox.setText(_translate("Dialog", "CAN FD"))
-        self.brsCheckBox.setText(_translate("Dialog", "Bit Rate Switch (BRS)"))
 
     def sendmessage(self):
         self.message.can_id = self.idInput.toPlainText()
@@ -171,18 +139,6 @@ class TransmitWindow(QDialog):
         self.message.cycle_time = self.cycleInput.toPlainText()
         self.message.rxtx = "TX"
         self.message.count = 1
-
-        msgtype = []
-        if (self.efCheckBox.isChecked):
-            msgtype.append("EF")
-        if (self.rrCheckBox.isChecked):
-            msgtype.append("RR")
-        if (self.fdCheckBox.isChecked):
-            msgtype.append("FD")
-        if (self.brsCheckBox.isChecked):
-            msgtype.append("BRS")
-
-        self.message.msgtype = ",".join(msgtype)
 
         self.accept()
 
@@ -194,10 +150,6 @@ class TransmitWindow(QDialog):
         self.lengthInput.clear()
         self.idInput.clear()
         self.cycleInput.clear()
-        self.efCheckBox.setChecked(False)
-        self.rrCheckBox.setChecked(False)
-        self.fdCheckBox.setChecked(False)
-        self.brsCheckBox.setChecked(False)
 
 
 if __name__ == "__main__":

@@ -12,11 +12,14 @@ class TraceController():
         self.can_id = can_id
         self.can_mask = can_mask
 
+    def appendTraceTable(self, message):
+        self.tracetable.insertRow(message)
+
     def setTest(self):
         newmsg = Trace("18F00200h", "MSG",
-                       "30018", "Rx", "FD,BRS", "DLC", "32", "00 00 C4 FB 0F FE 0F FE 00 00 C4 FB 0F FE 0F FE 00 00 C4 FB", None)
+                       "30018", "Rx", "DLC", "32", "00 00 C4 FB 0F FE 0F FE 00 00 C4 FB 0F FE 0F FE 00 00 C4 FB", None)
         self.tracetable.traces.append(newmsg)
 
         newmsg2 = Trace("17F00100h", "MSG",
-                        "30111", "TX", "FD", "DLC", "8", "00 00 C4 FB", None)
+                        "30111", "TX", "DLC", "8", "00 00 C4 FB", None)
         self.tracetable.traces.append(newmsg2)
