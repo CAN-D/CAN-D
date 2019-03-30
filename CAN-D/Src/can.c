@@ -230,22 +230,9 @@ void APP_CAN_SetConfiguration(APP_ConfigType newConfig)
   */
 void APP_CAN_MonitorTask(void const* argument)
 {
-    CAN_RxHeaderTypeDef testHeader = {
-        .StdId = 0x45,
-        .ExtId = 0,
-        .IDE = 0,
-        .RTR = 0x00000000U,
-        .DLC = 8,
-        .Timestamp = 0,
-        .FilterMatchIndex = 0
-    };
-
-    CANRxMessage canRx
-        = { .data = "01234567", .header = &testHeader, .handle = NULL };
-
-    volatile uint8_t usbTxCnt = 0;
+    uint8_t usbTxCnt = 0;
     osEvent event;
-    CANRxMessage* canRxMsg = &canRx;
+    CANRxMessage* canRxMsg;
     size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
     uint8_t usbTxMsg[usbMaxMsgLen]; // Serialized (packaged) protobuf data
     size_t usbTxNumBytes = 0; // Number of bytes in serialized data
@@ -256,22 +243,6 @@ void APP_CAN_MonitorTask(void const* argument)
         // const uint8_t data[] = "YELLOW";
         // APP_FATFS_LogSD(data, 6, CAN_LOG_FILENAME);
 
-        fromEmbeddedMsg.contents.canDataChunk.size = 8;
-        fromEmbeddedMsg.which_contents = 1;
-        memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES);
-        memcpy(fromEmbeddedMsg.contents.canDataChunk.id, (canRxMsg->header->StdId & CAN_RX_MSG_STDID_MASK), CAN_RX_MSG_ID_SZ_BYTES);
-        usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
-
-        usbTxCnt = 0;
-        while (APP_USB_Transmit((uint8_t*)usbTxMsg, usbTxNumBytes) == 1) {
-            // USB TX State is BUSY. Wait for it to be free.
-            osDelay(1);
-            if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
-                usbTxCnt = 0;
-                break;
-            }
-        }
-
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
@@ -281,20 +252,25 @@ void APP_CAN_MonitorTask(void const* argument)
                 APP_FATFS_LogSD((const uint8_t*)canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES, canLogIdentifier);
             }
 
-            // // Construct FromEmbedded protobuf message
-            // fromEmbeddedMsg.contents.canDataChunk.size = 8;
-            // fromEmbeddedMsg.which_contents = 1;
-            // memcpy(fromEmbeddedMsg.contents.canDataChunk.bytes, canRxMsg->data, CAN_USB_DATA_SZ_BYTES);
-            // APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
+            // Pack the protobuf message
+            fromEmbeddedMsg.contents.canDataChunk.data.size = 8;
+            fromEmbeddedMsg.contents.canDataChunk.has_id = 1;
+            fromEmbeddedMsg.contents.canDataChunk.has_data = 1;
+            fromEmbeddedMsg.which_contents = 1;
 
-            // usbTxCnt = 0;
-            // while (APP_USB_Transmit(usbTxMsg, CAN_USB_DATA_SZ_BYTES) == 1) {
-            //     // USB TX State is BUSY. Wait for it to be free.
-            //     osDelay(1);
-            //     if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
-            //         break;
-            //     }
-            // }
+            memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES);
+            fromEmbeddedMsg.contents.canDataChunk.id = (canRxMsg->header->StdId & CAN_RX_MSG_STDID_MASK);
+            usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
+
+            usbTxCnt = 0;
+            while (APP_USB_Transmit((uint8_t*)usbTxMsg, usbTxNumBytes) == 1) {
+                // USB TX State is BUSY. Wait for it to be free.
+                osDelay(1);
+                if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
+                    usbTxCnt = 0;
+                    break;
+                }
+            }
             osPoolFree(CANRxPool, canRxMsg);
         }
         osDelay(1);
