@@ -217,6 +217,7 @@ class CannedBus(BusABC):
     def __init__(
         self,
         log_path: str,
+        data_rate_s: float = 0.01,
         channel: int = None,
         can_filters: Dict[str, int] = None,
         **config,
@@ -234,7 +235,30 @@ class CannedBus(BusABC):
     def send(self, msg: Message, timeout=None):
         pass
 
+    def set_filters(self, can_filters: Dict[str, int] = None):
+        pass
+
+    def flush_tx_buffer(self):
+        """Discard every message that may be queued in the output buffer(s)."""
+        pass
+
+    def stop_log(self):
+        pass
+
+    def start_log(self):
+        pass
+
+    def mark_log(self):
+        pass
+
+    def stop_usb_polling(self):
+        pass
+
+    def start_usb_polling(self):
+        pass
+
     async def send_data(self, log_path, message_sleep_time=0.00):
+        print("sending")
         with open(log_path, "r") as log_file:
             for log_line in log_file.readlines():
                 frame_id, payload = parse_line(log_line)
@@ -242,6 +266,7 @@ class CannedBus(BusABC):
                 msg.arbitration_id = frame_id
                 msg.dlc = len(payload)
                 msg.data = bytes(payload)
+                print("Put messges")
                 self.data_queue.put_nowait(msg)
                 await asyncio.sleep(message_sleep_time)
 
