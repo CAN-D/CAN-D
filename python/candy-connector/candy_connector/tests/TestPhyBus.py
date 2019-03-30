@@ -1,5 +1,5 @@
 from candy_connector.CanDBus import CanDBus
-import candy_connector.proto as pb
+import candy_connector.proto.can_d_pb2 as pb
 
 
 bus = CanDBus()

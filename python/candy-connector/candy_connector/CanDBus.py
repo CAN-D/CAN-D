@@ -6,6 +6,7 @@ import asyncio
 import logging
 from queue import Queue
 from typing import List, Dict, Optional
+from time import sleep
 
 # External Python
 import usb.core
@@ -16,6 +17,7 @@ from google.protobuf.message import DecodeError
 # Package Python
 import candy_connector.proto.can_d_pb2 as pb
 from candy_connector.enums import Commands
+from candy_connector.parsers import parse_line
 
 
 class CanDBus(BusABC):
@@ -209,4 +211,37 @@ class CanDBus(BusABC):
         """Handle incoming information about the embedded file system."""
         # TODO: Probably dont need to actually store this. Should pass to a listener.
         self.fs_info = fs_info_list
+
+
+class CannedBus(BusABC):
+    def __init__(
+        self,
+        log_path: str,
+        channel: int = None,
+        can_filters: Dict[str, int] = None,
+        **config,
+    ):
+        super(CannedBus, self).__init__(channel=channel, can_filters=can_filters)
+        self.data_queue = Queue()
+        print("File read")
+        asyncio.run(self.send_data(log_path))
+        print("Async")
+
+    def recv(self, timeout: float = None) -> Optional[Message]:
+        sleep(0.01)
+        return self.data_queue.get()
+
+    def send(self, msg: Message, timeout=None):
+        pass
+
+    async def send_data(self, log_path, message_sleep_time=0.00):
+        with open(log_path, "r") as log_file:
+            for log_line in log_file.readlines():
+                frame_id, payload = parse_line(log_line)
+                msg = Message()
+                msg.arbitration_id = frame_id
+                msg.dlc = len(payload)
+                msg.data = bytes(payload)
+                self.data_queue.put_nowait(msg)
+                await asyncio.sleep(message_sleep_time)
 
