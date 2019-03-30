@@ -245,10 +245,10 @@ class CAND_MainWindow(QMainWindow):
 
         self.connectButton.clicked.connect(self.connectUsb)
         self.disconnectButton.clicked.connect(self.disconnectUsb)
+        self.recordButton.clicked.connect(self.startLoggingSD)
+        self.stopButton.clicked.connect(self.stopLoggingSD)
 
         # TODO REMOVE THESE, ONLY FOR TEST
-        self.saveButton.clicked.connect(self.insertTransmit)
-
         self.playButton.clicked.connect(self.transmitMessage)
         self.pauseButton.clicked.connect(self.retransmitMessage)
 
@@ -294,8 +294,8 @@ class CAND_MainWindow(QMainWindow):
         if not self.controller.stopLog():
             self.statusbar.showMessage(
                 "Connected | SD Card Logging " + u"\u2718")
-            self.recordButton.setEnabled(False)
-            self.stopButton.setEnabled(True)
+            self.recordButton.setEnabled(True)
+            self.stopButton.setEnabled(False)
         else:
             # TODO show pop-up for cant log SD
             return
