@@ -10,7 +10,10 @@ from PyQt5 import QtCore
 
 
 class MainController():
-    def __init__(self, tracecontroller=None, rxtxcontroller=None, gpscontroller=None):
+    def __init__(self, isdemo, trace_location, tracecontroller=None, rxtxcontroller=None, gpscontroller=None):
+        self.isdemo = isdemo
+        self.trace_location = trace_location
+
         if tracecontroller is not None:
             self.tracecontroller = tracecontroller
         else:
@@ -33,9 +36,10 @@ class MainController():
 
     def connect(self):
         try:
-            # self.candbus = CanDBus()
-            self.candbus = CannedBus(
-                log_path="../../python/candy-connector/candy_connector/tests/data/can_trace_255.log.test")
+            if self.isdemo:
+                self.candbus = CannedBus(log_path=self.trace_location)
+            else:
+                self.candbus = CanDBus()
 
             self.connected = True
 

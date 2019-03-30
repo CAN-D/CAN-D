@@ -15,9 +15,10 @@ from models.trace import Trace
 
 
 class CAND_MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, isdemo=False, trace_location=None):
         super().__init__()
-        self.controller = MainController()
+
+        self.controller = MainController(isdemo, trace_location)
         self.title = 'CAN-D Automotive Datalogger'
 
         self.setObjectName("MainWindow")
