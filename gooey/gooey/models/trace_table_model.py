@@ -38,7 +38,7 @@ class TraceTableModel(QAbstractTableModel):
             can_id = self.traces[index.row()].can_id
             data = self.traces[index.row()].data
             rxtx = self.traces[index.row()].rxtx
-            length = self.traces[index.row()].length
+            dlc = self.traces[index.row()].dlc
 
             if index.column() == 0:
                 return time
@@ -47,7 +47,7 @@ class TraceTableModel(QAbstractTableModel):
             elif index.column() == 2:
                 return rxtx
             elif index.column() == 3:
-                return length
+                return dlc
             elif index.column() == 4:
                 return data
 
@@ -76,7 +76,7 @@ class TraceTableModel(QAbstractTableModel):
     """ Insert a row into the model. """
 
     def insertRow(self, trace, index=QModelIndex()):
-        position = len(self.messages)
+        position = len(self.traces)
         self.beginInsertRows(QModelIndex(), position, position)
         self.traces.insert(position, trace)
         self.endInsertRows()
@@ -108,7 +108,7 @@ class TraceTableModel(QAbstractTableModel):
             elif index.column() == 2:
                 trace.rxtx = value
             elif index.column() == 3:
-                trace.length = value
+                trace.dlc = value
             elif index.column() == 4:
                 trace.data = value
             else:

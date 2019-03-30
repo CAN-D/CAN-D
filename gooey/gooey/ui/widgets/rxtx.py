@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QHeaderView
 from models.transmit_message import TransmitMessage
 
 
@@ -7,7 +7,6 @@ class RxTxTab(QWidget):
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
-        self.controller.setTest()
 
         self.setObjectName("RxTxTab")
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
@@ -47,6 +46,12 @@ class RxTxTab(QWidget):
 
         self.gridLayout_2.addWidget(self.transmitTable, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.transmitGroup)
+
+        receiveheader = self.receiveTable.horizontalHeader()
+        receiveheader.setStretchLastSection(True)
+
+        transmitheader = self.transmitTable.horizontalHeader()
+        transmitheader.setStretchLastSection(True)
 
         # Set models for testing
         self.receiveTable.setModel(self.controller.receivetable)

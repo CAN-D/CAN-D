@@ -48,11 +48,11 @@ class ReceiveTableModel(QAbstractTableModel):
             elif index.column() == 2:
                 return dlc
             elif index.column() == 3:
-                return data
-            elif index.column() == 4:
                 return cycle_time
-            elif index.column() == 5:
+            elif index.column() == 4:
                 return count
+            elif index.column() == 5:
+                return data
 
         return None
 
@@ -70,11 +70,11 @@ class ReceiveTableModel(QAbstractTableModel):
             elif section == 2:
                 return "DLC"
             elif section == 3:
-                return "Data"
-            elif section == 4:
                 return "Cycle Time"
-            elif section == 5:
+            elif section == 4:
                 return "Count"
+            elif section == 5:
+                return "Data"
 
         return None
 
@@ -83,7 +83,7 @@ class ReceiveTableModel(QAbstractTableModel):
     def insertRow(self, newMessage, index=QModelIndex()):
         # Check if Table already has a message with the same name
         messageInTable = [
-            m for m in self.messages if m.message == newMessage.message]
+            m for m in self.messages if m.can_id == newMessage.can_id]
 
         if len(messageInTable) > 0:
             self.updateMessage(messageInTable[0], newMessage)
@@ -101,8 +101,8 @@ class ReceiveTableModel(QAbstractTableModel):
         oldMessage.message = newMessage.message
         oldMessage.dlc = newMessage.dlc
         oldMessage.data = newMessage.data
-        oldMessage.cycle_time = newMessage.cycle_time
-        oldMessage.count = newMessage.count
+        oldMessage.cycle_time = float(newMessage.time) - float(oldMessage.time)
+        oldMessage.count = oldMessage.count + 1
 
     """ Remove a row from the model. """
 
@@ -130,11 +130,11 @@ class ReceiveTableModel(QAbstractTableModel):
             elif index.column() == 2:
                 message.dlc = value
             elif index.column() == 3:
-                message.data = value
-            elif index.column() == 4:
                 message.cycle_time = value
-            elif index.column() == 5:
+            elif index.column() == 4:
                 message.count = value
+            elif index.column() == 5:
+                message.data = value
             else:
                 False
 

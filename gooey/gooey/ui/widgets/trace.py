@@ -6,7 +6,6 @@ class TraceTab(QWidget):
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
-        self.controller.setTest()
         self.setObjectName("TraceTab")
         self.resize(1280, 778)
         self.verticalLayout = QtWidgets.QVBoxLayout(self)

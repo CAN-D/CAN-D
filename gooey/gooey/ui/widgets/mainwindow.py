@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 import ui.widgets.resources
+import time
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import QMainWindow
 from ui.widgets.rxtx import RxTxTab
@@ -14,12 +15,12 @@ from ui.widgets.trace import TraceTab
 from ui.widgets.connection import ConnectionsTab
 from ui.widgets.transmit import TransmitWindow
 
-from controllers.maincontroller import MainController
+from controllers.maincontroller import MainController, DataPollThread
 
 # TODO: remove below
 from models.transmit_message import TransmitMessage
 from models.receive_message import ReceiveMessage
-import datetime
+from models.trace import Trace
 
 
 class CAND_MainWindow(QMainWindow):
@@ -252,9 +253,7 @@ class CAND_MainWindow(QMainWindow):
         self.disconnectButton.clicked.connect(self.disconnectUsb)
 
         # TODO REMOVE THESE, ONLY FOR TEST
-        self.openButton.clicked.connect(self.insertReceive)
         self.saveButton.clicked.connect(self.insertTransmit)
-        self.count = 0
 
         self.playButton.clicked.connect(self.transmitMessage)
         self.pauseButton.clicked.connect(self.retransmitMessage)
@@ -267,10 +266,15 @@ class CAND_MainWindow(QMainWindow):
                 "Connected | SD Card Logging " + u"\u274C")
             self.connectButton.setEnabled(False)
             self.disconnectButton.setEnabled(True)
-            self.controller.startPoll()
+            self.startPoll()
         else:
             # TODO show pop-up for cant connect
             return
+
+    def startPoll(self):
+        self.poller = DataPollThread(self.controller.candbus)
+        self.poller.start()
+        self.poller.data_incoming.connect(self.insertTrace)
 
     def disconnectUsb(self):
         if not self.controller.disconnect():
@@ -318,23 +322,24 @@ class CAND_MainWindow(QMainWindow):
                 )]
                 self.controller.rxtxcontroller.transmitMessage(message)
 
-    # TODO: REMOVE THESE, ONLY FOR TEST
-    def insertTransmit(self):
-        self.count = self.count + 1
-        newmsg = TransmitMessage(
-            "CAN-ID " + str(self.count % 5), "Message", datetime.datetime.now().strftime("%H:%M:%S"), "DLC", 32, "Data", "cycle_time", self.count, "Trigger")
+    def insertTrace(self, data):
+        if data.timestamp is None:
+            timestamp = int(round(time.time() * 1000))
+        else:
+            timestamp = data.timestamp
 
-        self.controller.rxtxcontroller.transmitMessage(newmsg)
+        # TODO, get message by using DBC
+        messagename = ""
 
-        test = QtWidgets.QRadioButton()
-        self.statusbar.showMessage("Test Transmit | Disconnected")
-        self.statusbar.addWidget(test)
+        msg = ReceiveMessage(hex(data.arbitration_id), messagename,
+                             timestamp, data.dlc, data.data.hex(), 0, 1)
 
-    def insertReceive(self):
-        newmsg = TransmitMessage(
-            "CAN-ID", "Message", datetime.datetime.now().strftime("%H:%M:%S"), "DLC", 32, "Data", "cycle_time", 1)
-        self.controller.rxtxcontroller.appendReceiveTable(newmsg)
-        self.statusbar.showMessage("Test Receive | Connected")
+        self.controller.rxtxcontroller.appendReceiveTable(msg)
+        self.controller.tracecontroller.appendTraceTable(msg)
+
+    def insertTransmit(self, data):
+        msg = TransmitMessage()
+        self.controller.rxtxcontroller.transmitMessage(msg)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

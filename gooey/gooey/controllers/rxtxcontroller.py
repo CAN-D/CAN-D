@@ -25,11 +25,3 @@ class RxtxController():
 
     def appendReceiveTable(self, message):
         self.receivetable.insertRow(message)
-
-    def setTest(self):
-        newmsg = TransmitMessage(
-            "CAN-ID1", "Message1", datetime.datetime.now().strftime("%H:%M:%S"), "DLC", 32, "Data", "cycle_time", 1, "Trigger")
-        self.transmittable.messages.append(newmsg)
-        newmsg2 = TransmitMessage(
-            "CAN-ID2", "Message2", datetime.datetime.now().strftime("%H:%M:%S"), "DLC", 32, "Data", "cycle_time", 1, "Trigger")
-        self.transmittable.messages.append(newmsg2)
