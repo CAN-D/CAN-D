@@ -2,7 +2,7 @@ syntax = "proto3";
 
 message FromEmbedded {
   oneof contents {
-    bytes canDataChunk = 1;
+    CanDataChunk canDataChunk = 1;
     bytes gpsDataChunk = 2;
     LogFSInfo logFSInfo = 3;
   }
@@ -13,6 +13,11 @@ message ToEmbedded { ControlCommand command = 1; }
 message ControlCommand { ControlCommandType commandType = 1; }
 
 message LogFSInfo { repeated LogFileInfo logFiles = 1; }
+
+message CanDataChunk {
+  uint32 id = 1;
+  bytes data = 2;
+}
 
 message LogFileInfo {
   uint32 size = 1;
