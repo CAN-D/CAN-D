@@ -248,6 +248,7 @@ void APP_CAN_MonitorTask(void const* argument)
     CANRxMessage* canRxMsg = &canRx;
     size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
     uint8_t usbTxMsg[usbMaxMsgLen]; // Serialized (packaged) protobuf data
+    size_t usbTxNumBytes = 0; // Number of bytes in serialized data
     FromEmbedded fromEmbeddedMsg = FromEmbedded_init_zero;
 
     for (;;) {
@@ -257,11 +258,12 @@ void APP_CAN_MonitorTask(void const* argument)
 
         fromEmbeddedMsg.contents.canDataChunk.size = 8;
         fromEmbeddedMsg.which_contents = 1;
-        memcpy(fromEmbeddedMsg.contents.canDataChunk.bytes, canRxMsg->data, CAN_USB_DATA_SZ_BYTES);
-        APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
+        memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES);
+        memcpy(fromEmbeddedMsg.contents.canDataChunk.id, (canRxMsg->header->StdId & CAN_RX_MSG_STDID_MASK), CAN_RX_MSG_ID_SZ_BYTES);
+        usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
         usbTxCnt = 0;
-        while (APP_USB_Transmit((uint8_t*)usbTxMsg, CAN_USB_DATA_SZ_BYTES) == 1) {
+        while (APP_USB_Transmit((uint8_t*)usbTxMsg, usbTxNumBytes) == 1) {
             // USB TX State is BUSY. Wait for it to be free.
             osDelay(1);
             if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
@@ -276,23 +278,23 @@ void APP_CAN_MonitorTask(void const* argument)
             canRxMsg = event.value.p;
             if (mAppConfiguration.SDStorage == APP_ENABLE) {
                 // Write data to SD card
-                APP_FATFS_LogSD((const uint8_t*)canRxMsg->data, CAN_SD_DATA_SZ_BYTES, canLogIdentifier);
+                APP_FATFS_LogSD((const uint8_t*)canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES, canLogIdentifier);
             }
 
-            // Construct FromEmbedded protobuf message
-            fromEmbeddedMsg.contents.canDataChunk.size = 8;
-            fromEmbeddedMsg.which_contents = 1;
-            memcpy(fromEmbeddedMsg.contents.canDataChunk.bytes, canRxMsg->data, CAN_USB_DATA_SZ_BYTES);
-            APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
+            // // Construct FromEmbedded protobuf message
+            // fromEmbeddedMsg.contents.canDataChunk.size = 8;
+            // fromEmbeddedMsg.which_contents = 1;
+            // memcpy(fromEmbeddedMsg.contents.canDataChunk.bytes, canRxMsg->data, CAN_USB_DATA_SZ_BYTES);
+            // APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
-            usbTxCnt = 0;
-            while (APP_USB_Transmit(usbTxMsg, CAN_USB_DATA_SZ_BYTES) == 1) {
-                // USB TX State is BUSY. Wait for it to be free.
-                osDelay(1);
-                if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
-                    break;
-                }
-            }
+            // usbTxCnt = 0;
+            // while (APP_USB_Transmit(usbTxMsg, CAN_USB_DATA_SZ_BYTES) == 1) {
+            //     // USB TX State is BUSY. Wait for it to be free.
+            //     osDelay(1);
+            //     if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
+            //         break;
+            //     }
+            // }
             osPoolFree(CANRxPool, canRxMsg);
         }
         osDelay(1);
