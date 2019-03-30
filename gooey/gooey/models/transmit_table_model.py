@@ -20,7 +20,7 @@ class TransmitTableModel(QAbstractTableModel):
 
     def columnCount(self, index=QModelIndex()):
         # Documentation seem to always return a hard coded value. Probably in case self.messages is empty.
-        return 7
+        return 6
 
     """ Depending on the index and role given, return data.
         If not returning data, return None
@@ -40,7 +40,6 @@ class TransmitTableModel(QAbstractTableModel):
             data = self.messages[index.row()].data
             cycle_time = self.messages[index.row()].cycle_time
             count = self.messages[index.row()].count
-            trigger = self.messages[index.row()].trigger
 
             if index.column() == 0:
                 return can_id
@@ -49,13 +48,11 @@ class TransmitTableModel(QAbstractTableModel):
             elif index.column() == 2:
                 return dlc
             elif index.column() == 3:
-                return data
-            elif index.column() == 4:
                 return cycle_time
-            elif index.column() == 5:
+            elif index.column() == 4:
                 return count
-            elif index.column() == 6:
-                return trigger
+            elif index.column() == 5:
+                return data
 
         return None
 
@@ -73,13 +70,11 @@ class TransmitTableModel(QAbstractTableModel):
             elif section == 2:
                 return "DLC"
             elif section == 3:
-                return "Data"
-            elif section == 4:
                 return "Cycle Time"
-            elif section == 5:
+            elif section == 4:
                 return "Count"
-            elif section == 6:
-                return "Trigger"
+            elif section == 5:
+                return "Data"
 
         return None
 
@@ -108,7 +103,6 @@ class TransmitTableModel(QAbstractTableModel):
         oldMessage.data = newMessage.data
         oldMessage.cycle_time = newMessage.cycle_time
         oldMessage.count = oldMessage.count + 1
-        oldMessage.trigger = newMessage.trigger
 
     """ Remove a row from the model. """
 
@@ -136,13 +130,11 @@ class TransmitTableModel(QAbstractTableModel):
             elif index.column() == 2:
                 message.dlc = value
             elif index.column() == 3:
-                message.data = value
-            elif index.column() == 4:
                 message.cycle_time = value
-            elif index.column() == 5:
+            elif index.column() == 4:
                 message.count = value
-            elif index.column() == 6:
-                message.trigger = value
+            elif index.column() == 5:
+                message.data = value
             else:
                 False
 

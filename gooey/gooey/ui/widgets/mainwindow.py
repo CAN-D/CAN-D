@@ -1,12 +1,5 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'qtdesigner/mainwindow.ui'
-#
-# Created by: PyQt5 UI code generator 5.12
-#
-# WARNING! All changes made in this file will be lost!
-
 import ui.widgets.resources
+import time
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import QMainWindow
 from ui.widgets.rxtx import RxTxTab
@@ -14,18 +7,18 @@ from ui.widgets.trace import TraceTab
 from ui.widgets.connection import ConnectionsTab
 from ui.widgets.transmit import TransmitWindow
 
-from controllers.maincontroller import MainController
+from controllers.maincontroller import MainController, DataPollThread
 
-# TODO: remove below
 from models.transmit_message import TransmitMessage
 from models.receive_message import ReceiveMessage
-import datetime
+from models.trace import Trace
 
 
 class CAND_MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, isdemo=False, trace_location=None):
         super().__init__()
-        self.controller = MainController()
+
+        self.controller = MainController(isdemo, trace_location)
         self.title = 'CAN-D Automotive Datalogger'
 
         self.setObjectName("MainWindow")
@@ -231,6 +224,8 @@ class CAND_MainWindow(QMainWindow):
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
+        self.statusbar.showMessage(
+            "Disconnected | SD Card Logging " + u"\u2718")
 
         # Actions
         self.actionFile_2 = QtWidgets.QAction(self)
@@ -248,15 +243,62 @@ class CAND_MainWindow(QMainWindow):
         self.retranslateUi(self)
         self.tabWidget.setCurrentIndex(0)
 
-        # TODO REMOVE THESE, ONLY FOR TEST
-        self.openButton.clicked.connect(self.insertReceive)
-        self.saveButton.clicked.connect(self.insertTransmit)
-        self.count = 0
+        self.connectButton.clicked.connect(self.connectUsb)
+        self.disconnectButton.clicked.connect(self.disconnectUsb)
+        self.recordButton.clicked.connect(self.startLoggingSD)
+        self.stopButton.clicked.connect(self.stopLoggingSD)
 
+        # TODO REMOVE THESE, ONLY FOR TEST
         self.playButton.clicked.connect(self.transmitMessage)
         self.pauseButton.clicked.connect(self.retransmitMessage)
 
         QtCore.QMetaObject.connectSlotsByName(self)
+
+    def connectUsb(self):
+        if self.controller.connect():
+            self.statusbar.showMessage(
+                "Connected | SD Card Logging " + u"\u2718")
+            self.connectButton.setEnabled(False)
+            self.disconnectButton.setEnabled(True)
+            self.startPoll()
+        else:
+            # TODO show pop-up for cant connect
+            return
+
+    def startPoll(self):
+        self.poller = DataPollThread(self.controller.candbus)
+        self.poller.start()
+        self.poller.data_incoming.connect(self.insertTrace)
+
+    def disconnectUsb(self):
+        if not self.controller.disconnect():
+            self.statusbar.showMessage(
+                "Disconnected | SD Card Logging " + u"\u2718")
+            self.connectButton.setEnabled(True)
+            self.disconnectButton.setEnabled(False)
+        else:
+            # TODO show pop-up for cant disconnect
+            return
+
+    def startLoggingSD(self):
+        if self.controller.startLog():
+            self.statusbar.showMessage(
+                "Connected | SD Card Logging " + u"\u2713")
+            self.recordButton.setEnabled(False)
+            self.stopButton.setEnabled(True)
+        else:
+            # TODO show pop-up for cant log SD
+            return
+
+    def stopLoggingSD(self):
+        if not self.controller.stopLog():
+            self.statusbar.showMessage(
+                "Connected | SD Card Logging " + u"\u2718")
+            self.recordButton.setEnabled(True)
+            self.stopButton.setEnabled(False)
+        else:
+            # TODO show pop-up for cant log SD
+            return
 
     def transmitMessage(self):
         transmitWindow = TransmitWindow(self)
@@ -274,23 +316,24 @@ class CAND_MainWindow(QMainWindow):
                 )]
                 self.controller.rxtxcontroller.transmitMessage(message)
 
-    # TODO: REMOVE THESE, ONLY FOR TEST
-    def insertTransmit(self):
-        self.count = self.count + 1
-        newmsg = TransmitMessage(
-            "CAN-ID " + str(self.count % 5), "Message", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", self.count, "Trigger")
+    def insertTrace(self, data):
+        if data.timestamp is None:
+            timestamp = int(round(time.time() * 1000))
+        else:
+            timestamp = data.timestamp
 
-        self.controller.rxtxcontroller.transmitMessage(newmsg)
+        # TODO, get message by using DBC
+        messagename = ""
 
-        test = QtWidgets.QRadioButton()
-        self.statusbar.showMessage("Test Transmit | Disconnected")
-        self.statusbar.addWidget(test)
+        msg = ReceiveMessage(hex(data.arbitration_id), messagename,
+                             timestamp, data.dlc, data.data.hex(), 0, 1)
 
-    def insertReceive(self):
-        newmsg = TransmitMessage(
-            "CAN-ID", "Message", datetime.datetime.now().strftime("%H:%M:%S"), "FD,BRS", "DLC", 32, "Data", "cycle_time", 1)
-        self.controller.rxtxcontroller.appendReceiveTable(newmsg)
-        self.statusbar.showMessage("Test Receive | Connected")
+        self.controller.rxtxcontroller.appendReceiveTable(msg)
+        self.controller.tracecontroller.appendTraceTable(msg)
+
+    def insertTransmit(self, data):
+        msg = TransmitMessage()
+        self.controller.rxtxcontroller.transmitMessage(msg)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
