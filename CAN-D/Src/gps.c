@@ -71,10 +71,12 @@ void APP_GPS_BufferGPSString(char* dataString, size_t dataLength)
   */
 void APP_GPS_MonitorTask(void const* argument)
 {
+    GPSData gpsRx = { 0 };
     volatile uint8_t usbTxCnt = 0;
     osEvent event;
-    GPSData* gpsRxMsg;
+    GPSData* gpsRxMsg = &gpsRx;
     size_t usbMaxMsgLen = GPS_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
+    size_t usbTxNumBytes = 0; // Number of bytes in serialized data
     uint8_t usbTxMsg[usbMaxMsgLen]; // Serialized (packaged) protobuf data
     FromEmbedded fromEmbeddedMsg = FromEmbedded_init_zero;
 
@@ -90,17 +92,17 @@ void APP_GPS_MonitorTask(void const* argument)
                 APP_FATFS_LogSD((const uint8_t*)gpsRxMsg->raw, GPS_SD_DATA_SZ_BYTES, gpsLogIdentifier);
             }
 
-            // Construct FromEmbedded protobuf message
-            fromEmbeddedMsg.contents.canDataChunk.size = 128;
+            fromEmbeddedMsg.contents.gpsDataChunk.size = 128;
             fromEmbeddedMsg.which_contents = 2;
-            memcpy(fromEmbeddedMsg.contents.gpsDataChunk.bytes, (uint8_t*)gpsRxMsg->raw, GPS_USB_DATA_SZ_BYTES);
-            APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
+            memcpy(fromEmbeddedMsg.contents.gpsDataChunk.bytes, gpsRxMsg->raw, GPS_USB_DATA_SZ_BYTES);
+            usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
             usbTxCnt = 0;
-            while (APP_USB_Transmit((uint8_t*)usbTxMsg, GPS_USB_DATA_SZ_BYTES) == 1) {
+            while (APP_USB_Transmit((uint8_t*)usbTxMsg, usbTxNumBytes) == 1) {
                 // USB TX State is BUSY. Wait for it to be free.
                 osDelay(1);
                 if (++usbTxCnt >= GPS_USB_TX_MAX_TRY) {
+                    usbTxCnt = 0;
                     break;
                 }
             }

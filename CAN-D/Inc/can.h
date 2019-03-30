@@ -21,9 +21,11 @@ extern "C" {
 #define CAN_IT_START CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO1_FULL | CAN_IT_ERROR /* Interrupts to be enabled on CAN start */
 #define CAN_MESSAGE_LENGTH 8
 #define CAN_LOG_FILENAME "CAN_Data"
-#define CAN_SD_DATA_SZ_BYTES ((uint16_t)8)
-#define CAN_USB_DATA_SZ_BYTES ((uint16_t)8)
+#define CAN_RX_MSG_DATA_SZ_BYTES ((uint16_t)8) /* 64 bits */
+#define CAN_RX_MSG_ID_SZ_BYTES ((uint16_t)4) /* 32 bits */
+#define CAN_USB_DATA_SZ_BYTES ((uint16_t)(CAN_RX_MSG_DATA_SZ_BYTES + CAN_RX_MSG_ID_SZ_BYTES))
 #define CAN_USB_TX_MAX_TRY 3
+#define CAN_RX_MSG_STDID_MASK 0x7FF
 
 typedef struct {
     CAN_HandleTypeDef* handle;
