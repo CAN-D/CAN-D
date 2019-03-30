@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'qtdesigner/mainwindow.ui'
-#
-# Created by: PyQt5 UI code generator 5.12
-#
-# WARNING! All changes made in this file will be lost!
-
 import ui.widgets.resources
 import time
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
@@ -17,7 +9,6 @@ from ui.widgets.transmit import TransmitWindow
 
 from controllers.maincontroller import MainController, DataPollThread
 
-# TODO: remove below
 from models.transmit_message import TransmitMessage
 from models.receive_message import ReceiveMessage
 from models.trace import Trace
@@ -232,6 +223,8 @@ class CAND_MainWindow(QMainWindow):
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
+        self.statusbar.showMessage(
+            "Disconnected | SD Card Logging " + u"\u2718")
 
         # Actions
         self.actionFile_2 = QtWidgets.QAction(self)
@@ -263,7 +256,7 @@ class CAND_MainWindow(QMainWindow):
     def connectUsb(self):
         if self.controller.connect():
             self.statusbar.showMessage(
-                "Connected | SD Card Logging " + u"\u274C")
+                "Connected | SD Card Logging " + u"\u2718")
             self.connectButton.setEnabled(False)
             self.disconnectButton.setEnabled(True)
             self.startPoll()
@@ -279,7 +272,7 @@ class CAND_MainWindow(QMainWindow):
     def disconnectUsb(self):
         if not self.controller.disconnect():
             self.statusbar.showMessage(
-                "Disconnected | SD Card Logging " + u"\u274C")
+                "Disconnected | SD Card Logging " + u"\u2718")
             self.connectButton.setEnabled(True)
             self.disconnectButton.setEnabled(False)
         else:
@@ -299,7 +292,7 @@ class CAND_MainWindow(QMainWindow):
     def stopLoggingSD(self):
         if not self.controller.stopLog():
             self.statusbar.showMessage(
-                "Connected | SD Card Logging " + u"\u274C")
+                "Connected | SD Card Logging " + u"\u2718")
             self.recordButton.setEnabled(False)
             self.stopButton.setEnabled(True)
         else:

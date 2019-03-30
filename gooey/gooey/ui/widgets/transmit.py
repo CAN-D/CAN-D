@@ -1,3 +1,4 @@
+import time
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import QDialog, QPushButton
 from models.transmit_message import TransmitMessage
@@ -41,6 +42,8 @@ class TransmitWindow(QDialog):
         self.lengthInput = QtWidgets.QSpinBox(self)
         self.lengthInput.setMinimumSize(QtCore.QSize(45, 0))
         self.lengthInput.setObjectName("lengthInput")
+        self.lengthInput.setMinimum(0)
+        self.lengthInput.setMaximum(8)
         self.lengthForm.setWidget(
             1, QtWidgets.QFormLayout.LabelRole, self.lengthInput)
 
@@ -135,10 +138,13 @@ class TransmitWindow(QDialog):
     def sendmessage(self):
         self.message.can_id = self.idInput.toPlainText()
         self.message.data = self.dataInput.toPlainText()
-        self.message.length = self.lengthInput.value()
+        self.message.dlc = self.lengthInput.value()
         self.message.cycle_time = self.cycleInput.toPlainText()
+        self.message.time = int(round(time.time() * 1000))
         self.message.rxtx = "TX"
         self.message.count = 1
+
+        # TODO: dbc message field
 
         self.accept()
 
