@@ -1,2 +1,2 @@
-FromEmbedded.canDataChunk max_size:100
+CanDataChunk.data max_size:8
 FromEmbedded.gpsDataChunk max_size:100

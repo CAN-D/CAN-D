@@ -8,6 +8,7 @@ CAN-D/Proto/nanopb/
 # -------- Generated -------
 *can-d.pb.h
 *can-d.pb.c
+*can_d_pb2.py
 
 # -------- Firmware --------
 CAN-D/Debug
