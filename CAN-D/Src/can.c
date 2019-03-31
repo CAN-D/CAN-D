@@ -233,7 +233,7 @@ void APP_CAN_MonitorTask(void const* argument)
     uint8_t usbTxCnt = 0;
     osEvent event;
     CANRxMessage* canRxMsg;
-    size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + 10; // Max length of the serialized data
+    size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + PROTO_BUFFER_OVERHEAD; // Max length of the serialized data
     uint8_t usbTxMsg[usbMaxMsgLen]; // Serialized (packaged) protobuf data
     size_t usbTxNumBytes = 0; // Number of bytes in serialized data
     FromEmbedded fromEmbeddedMsg = FromEmbedded_init_zero;
@@ -253,17 +253,17 @@ void APP_CAN_MonitorTask(void const* argument)
             }
 
             // Pack the protobuf message
-            fromEmbeddedMsg.contents.canDataChunk.data.size = 8;
-            fromEmbeddedMsg.contents.canDataChunk.has_id = 1;
-            fromEmbeddedMsg.contents.canDataChunk.has_data = 1;
-            fromEmbeddedMsg.which_contents = 1;
+            fromEmbeddedMsg.contents.canDataChunk.data.size = CAN_RX_MSG_DATA_SZ_BYTES;
+            fromEmbeddedMsg.contents.canDataChunk.has_id = true;
+            fromEmbeddedMsg.contents.canDataChunk.has_data = true;
+            fromEmbeddedMsg.which_contents = FromEmbedded_canDataChunk_tag;
 
             memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES);
             fromEmbeddedMsg.contents.canDataChunk.id = (canRxMsg->header->StdId & CAN_RX_MSG_STDID_MASK);
             usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
             usbTxCnt = 0;
-            while (APP_USB_Transmit((uint8_t*)usbTxMsg, usbTxNumBytes) == 1) {
+            while (APP_USB_Transmit((uint8_t*)usbTxMsg, usbTxNumBytes) == USBD_BUSY) {
                 // USB TX State is BUSY. Wait for it to be free.
                 osDelay(1);
                 if (++usbTxCnt >= CAN_USB_TX_MAX_TRY) {
