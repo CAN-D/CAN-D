@@ -3,13 +3,15 @@ from models.receive_table_model import ReceiveTableModel
 from models.transmit_message import TransmitMessage
 import datetime
 
+from models.receivetest import ReceiveTreeModel
+
 
 class RxtxController():
     def __init__(self, receivetable=None, transmittable=None):
         if receivetable is not None:
             self.receivetable = receivetable
         else:
-            self.receivetable = ReceiveTableModel()
+            self.receivetable = ReceiveTreeModel()
 
         if transmittable is not None:
             self.transmittable = transmittable
