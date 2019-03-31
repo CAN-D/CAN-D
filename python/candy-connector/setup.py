@@ -6,6 +6,12 @@ _here = os.path.abspath(os.path.dirname(__file__))
 _pkg_name = "candy_connector"
 _read_me = "README.md"
 
+_requirement_path = _here + '/requirements.txt'
+_install_requires = []
+if os.path.isfile(_requirement_path):
+    with open(_requirement_path) as f:
+        _install_requires = f.read().splitlines()
+
 if sys.version_info[0] < 3:
     with open(os.path.join(_here, _read_me)) as readme:
         long_description = readme.read()
@@ -39,4 +45,5 @@ setup(
             "mark_log=candy_connector.scripts.mark_log:send_mark_log",
         ]
     },
+    install_requires=_install_requires,
 )
