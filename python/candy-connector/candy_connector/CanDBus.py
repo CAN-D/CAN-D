@@ -7,6 +7,7 @@ import logging
 from queue import Queue
 from typing import List, Dict, Optional
 from time import sleep
+from threading import Thread
 
 # External Python
 import usb.core
@@ -57,7 +58,8 @@ class CanDBus(BusABC):
         self.can_queue = Queue()
         self.gps_queue = Queue()
         self.most_recent_fs_info = []
-        self.is_polling = True
+        self.is_polling = False
+        self.poll_thread = None
 
         # Setup the USB connection
         if channel != None:
@@ -93,7 +95,6 @@ class CanDBus(BusABC):
                 "Could not establish an incoming endpoint for the CAN-D device."
             )
 
-        # Start polling from the USB
         self.start_usb_polling()
 
     def recv(self, timeout: float = None) -> Optional[Message]:
@@ -160,13 +161,6 @@ class CanDBus(BusABC):
         out_bytes = command_msg.SerializeToString()
         self.usb_endpoint_out.write(out_bytes)
 
-    async def _async_poll_usb(self):
-        """Asyncronously poll the usb device for data forever."""
-        while self.is_polling:
-            in_bytes = await self._read_usb()
-            print(f"Got bytes: {in_bytes}")
-            self._handle_raw(in_bytes)
-
     def stop_usb_polling(self):
         """Stop polling the device."""
         self.is_polling = False
@@ -175,14 +169,27 @@ class CanDBus(BusABC):
         """Start polling the device."""
         if not self.is_polling:
             self.is_polling = True
-            asyncio.run(self._async_poll_usb())
+            self.poll_thread = Thread(target=self._usb_poll_thread)
+            self.poll_thread.start()
+
+    async def _async_poll_usb(self):
+        """Asyncronously poll the usb device for data forever or until stopped."""
+        while self.is_polling:
+            in_bytes = await self._read_usb()
+            self._handle_raw(in_bytes)
+
+    def _usb_poll_thread(self):
+        """Entry point for a thread dedicated to polling the USB."""
+        poll_loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(poll_loop)
+        poll_loop.run_until_complete(self._async_poll_usb())
 
     async def _read_usb(self, max_len: int = 100) -> bytes:
         """Asynchronously read from the usb device."""
         try:
             return bytes(self.usb_endpoint_in.read(max_len))
-        except usb.core.USBError:
-            logging.warning("Unable to read from the USB.")
+        except usb.core.USBError as e:
+            logging.warning("Unable to read from the USB: %s", e)
             return bytes()
 
     def _handle_raw(self, raw_bytes: bytes):
@@ -199,11 +206,13 @@ class CanDBus(BusABC):
         except DecodeError:
             logging.warning("Unable to decode bytes: %s", raw_bytes)
 
-    def _handle_can_data(self, can_data: pb.DataPayload):
+    def _handle_can_data(self, can_data: pb.CanDataChunk):
         """Handle incoming CAN data."""
-        self.can_queue.put_nowait(Message(data=can_data.data))
+        self.can_queue.put_nowait(
+            Message(arbitration_id=can_data.id, data=can_data.data)
+        )
 
-    def _handle_gps_data(self, gps_data: pb.DataPayload):
+    def _handle_gps_data(self, gps_data: bytes):
         """Handle incoming GPS data."""
         self.gps_queue.put_nowait(gps_data.data)
 
@@ -214,6 +223,8 @@ class CanDBus(BusABC):
 
 
 class CannedBus(BusABC):
+    """A Mock data source."""
+
     def __init__(
         self,
         log_path: str,
@@ -224,12 +235,9 @@ class CannedBus(BusABC):
     ):
         super(CannedBus, self).__init__(channel=channel, can_filters=can_filters)
         self.data_queue = Queue()
-        print("File read")
-        asyncio.run(self.send_data(log_path))
-        print("Async")
+        Thread(target=self._sender_thread, args=(log_path, data_rate_s)).start()
 
     def recv(self, timeout: float = None) -> Optional[Message]:
-        sleep(0.01)
         return self.data_queue.get()
 
     def send(self, msg: Message, timeout=None):
@@ -257,8 +265,12 @@ class CannedBus(BusABC):
     def start_usb_polling(self):
         pass
 
-    async def send_data(self, log_path, message_sleep_time=0.00):
-        print("sending")
+    def _sender_thread(self, log_path, messge_sleep_time=0.00):
+        sender_loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(sender_loop)
+        sender_loop.run_until_complete(self._send_data(log_path, messge_sleep_time))
+
+    async def _send_data(self, log_path, message_sleep_time=0.00):
         with open(log_path, "r") as log_file:
             for log_line in log_file.readlines():
                 frame_id, payload = parse_line(log_line)
@@ -266,7 +278,6 @@ class CannedBus(BusABC):
                 msg.arbitration_id = frame_id
                 msg.dlc = len(payload)
                 msg.data = bytes(payload)
-                print("Put messges")
                 self.data_queue.put_nowait(msg)
                 await asyncio.sleep(message_sleep_time)
 
