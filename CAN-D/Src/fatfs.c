@@ -100,8 +100,7 @@ uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphId
 {
     uint8_t ret;
     uint8_t incLineNumber; // Increment line number
-    char uniqueID[2];
-    char toWrite[bytes + 9];
+    char filename[sizeof(periphIdentifier) + 3];
 
     // Check that we have started a session
     if (sessionCount == 0) {
@@ -110,14 +109,10 @@ uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphId
 
     incLineNumber = strcmp(periphIdentifier, CAN_LOG_FILENAME);
 
-    strcpy(toWrite, periphIdentifier);
+    strcpy(filename, periphIdentifier);
+    strcat(filename, ".log");
 
-    sprintf(uniqueID, "%d", sessionCount);
-    strcat(toWrite, "_");
-    strcat(toWrite, uniqueID);
-    strcat(toWrite, ".log");
-
-    ret = APP_FATFS_WriteSD(writeData, bytes, (const char*)toWrite);
+    ret = APP_FATFS_WriteSD(writeData, bytes, (const char*)filename);
 
     if ((ret == bytes) && (incLineNumber == 0)) {
         // Successful write. Increment the number of messages written
