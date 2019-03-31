@@ -18,9 +18,9 @@ extern "C" {
 
 #define FATFS_NO_FORCED_MOUNTING 0
 #define FATFS_FORCED_MOUNTING 1
-#define CAN_LOG_FILENAME "CAN_Data"
-#define GPS_LOG_FILENAME "GPS_Data"
-#define MARK_LOG_FILENAME "MARK_Data"
+#define CAN_LOG_FILENAME "CAN_Data.log"
+#define GPS_LOG_FILENAME "GPS_Data.log"
+#define MARK_LOG_FILENAME "MARK_Data.log"
 
 extern FRESULT resSD; /* Return value for SD */
 extern char SDPath[4]; /* USER logical drive path */

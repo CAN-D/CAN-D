@@ -14,6 +14,7 @@
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
+#define SD_PATH_LEN 4
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -21,7 +22,7 @@
 
 /* Exported variables --------------------------------------------------------*/
 FRESULT resSD; /* Return value for SD */
-char SDPath[4]; /* SD logical drive path */
+char SDPath[SD_PATH_LEN]; /* SD logical drive path */
 FATFS SDFatFS; /* File system object for SD logical drive */
 FIL SDFile; /* File object for SD */
 static uint8_t SDInitialized = 0; /* Keeps track of if the SD card is initialized or not */
@@ -29,12 +30,46 @@ static uint16_t sessionCount = 0; /* 0 if no session started */
 static uint16_t prevSessionCount = 0;
 static uint32_t lineNumber = 0; /* Number of messages written to the SD card */
 /* Private function prototypes -----------------------------------------------*/
+static FRESULT APP_FATFS_RemoveFile(const char* file, size_t size);
+
+/* Private functions ---------------------------------------------------------*/
+/**
+  * @brief  Removes all of the log files in the root directory
+  *         of the SD card.
+  */
+static FRESULT APP_FATFS_RemoveFile(const char* file, size_t size)
+{
+    char path[SD_PATH_LEN + size];
+    FRESULT ret = FR_OK;
+
+    // get the path to our SD drive
+    path[0] = SDPath[0];
+    path[1] = SDPath[1];
+    path[2] = SDPath[2];
+    path[3] = SDPath[3];
+
+    ret = f_mount(&SDFatFS, (TCHAR const*)SDPath, FATFS_FORCED_MOUNTING);
+    if (ret == FR_OK) {
+        // Remove file if it exists
+        strcat(path, file);
+        ret = f_unlink((const TCHAR*)path);
+    }
+    f_mount(NULL, 0, 0);
+
+    return ret;
+}
 
 /* Exported functions --------------------------------------------------------*/
 void APP_FATFS_Init(void)
 {
     // Link the SD driver
     resSD = FATFS_LinkDriver(&SD_Driver, SDPath);
+
+    // Remove all log files
+    APP_FATFS_RemoveFile(CAN_LOG_FILENAME, sizeof(CAN_LOG_FILENAME));
+    APP_FATFS_RemoveFile(GPS_LOG_FILENAME, sizeof(GPS_LOG_FILENAME));
+    APP_FATFS_RemoveFile(MARK_LOG_FILENAME, sizeof(MARK_LOG_FILENAME));
+
     SDInitialized = 1;
 }
 
@@ -47,33 +82,7 @@ void APP_FATFS_Deinit(void)
 
 void APP_FATFS_StartSession(void)
 {
-    FILINFO fno;
-    char toAppend[4]; // Temp buf
-    char filename[] = "CAN_Data";
-    uint16_t appendCount = prevSessionCount;
-
-    if (sessionCount == 0) {
-        // Only generate a unique filename if SD Card is present
-        if (BSP_SD_IsDetected() == SD_PRESENT) {
-            strcat(filename, "_");
-            while (appendCount < 9999) {
-                appendCount++;
-                sprintf(toAppend, "%d", appendCount);
-                strcat(filename, toAppend);
-                strcat(filename, ".log");
-                if (f_stat(filename, &fno) != FR_OK) {
-                    // File already exists.
-                    filename[strlen(filename) - 5] = '\0'; // Remove "appendCount.log"
-                } else {
-                    // Filename is unique. Found our new session count.
-                    sessionCount = appendCount;
-                    break;
-                }
-            }
-        } else { // SD not detected
-            sessionCount = 0;
-        }
-    }
+    sessionCount = 1;
 }
 
 void APP_FATFS_StopSession(void)
@@ -91,7 +100,8 @@ uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphId
 {
     uint8_t ret;
     uint8_t incLineNumber; // Increment line number
-    char uniqueID[4];
+    char uniqueID[2];
+    char toWrite[bytes + 9];
 
     // Check that we have started a session
     if (sessionCount == 0) {
@@ -100,11 +110,14 @@ uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphId
 
     incLineNumber = strcmp(periphIdentifier, CAN_LOG_FILENAME);
 
-    sprintf(uniqueID, "%d", sessionCount);
-    strcat(periphIdentifier, uniqueID);
-    strcat(periphIdentifier, ".log");
+    strcpy(toWrite, periphIdentifier);
 
-    ret = APP_FATFS_WriteSD(writeData, bytes, (const char*)periphIdentifier);
+    sprintf(uniqueID, "%d", sessionCount);
+    strcat(toWrite, "_");
+    strcat(toWrite, uniqueID);
+    strcat(toWrite, ".log");
+
+    ret = APP_FATFS_WriteSD(writeData, bytes, (const char*)toWrite);
 
     if ((ret == bytes) && (incLineNumber == 0)) {
         // Successful write. Increment the number of messages written
@@ -148,5 +161,3 @@ uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* 
 
     return writtenBytes;
 }
-
-/* Private functions ---------------------------------------------------------*/
