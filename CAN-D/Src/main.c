@@ -47,20 +47,25 @@ int main(void)
     /* Configure the system clock */
     SystemClock_Config();
 
+    /* Initialize all GPIO Clock Sources */
+    APP_GPIO_Init();
+
     // Link SD Driver to SPI peripheral
     // This will initialize our SPI peripheral as well
     APP_FATFS_Init();
 
     /* Initialize all configured peripherals */
-    APP_GPIO_Init();
     APP_RTC_Init();
     BSP_PB_Init(BUTTON_LOG, BUTTON_MODE_EXTI);
     APP_CAN_Init();
     APP_TIM2_Init();
 
-    APP_USB_ForceEnumeration(); // Call this before APP_USB_DEVICE_Init() to force re-enumeration
+    // APP_USB_ForceEnumeration() should be called before APP_USB_DEVICE_Init()
+    // to force re-enumeration
+    APP_USB_ForceEnumeration();
     APP_USB_DEVICE_Init();
 
+    /* Initialize GPS last */
     APP_GPS_Init();
 
     /* Call init function for freertos objects (in freertos.c) */
