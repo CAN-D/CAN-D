@@ -3,7 +3,7 @@ from models.trace import Trace
 
 
 class TraceController():
-    def __init__(self, tracetable=None, can_id=None, can_mask=None):
+    def __init__(self, tracetable=None, can_id=None, can_mask=None, dbcpath=None):
         if tracetable is not None:
             self.tracetable = tracetable
         else:
@@ -11,6 +11,7 @@ class TraceController():
 
         self.can_id = can_id
         self.can_mask = can_mask
+        self.dbcpath = dbcpath
 
     def appendTraceTable(self, message):
         self.tracetable.insertRow(message)

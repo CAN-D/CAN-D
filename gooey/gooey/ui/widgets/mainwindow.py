@@ -1,5 +1,7 @@
 import ui.widgets.resources
 import time
+import cantools
+import os.path
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import QMainWindow
 from ui.widgets.rxtx import RxTxTab
@@ -248,6 +250,8 @@ class CAND_MainWindow(QMainWindow):
         self.recordButton.clicked.connect(self.startLoggingSD)
         self.stopButton.clicked.connect(self.stopLoggingSD)
 
+        self.traceTab.setDbcButton.clicked.connect(self.setDbcCallback)
+
         # TODO REMOVE THESE, ONLY FOR TEST
         self.playButton.clicked.connect(self.transmitMessage)
         self.pauseButton.clicked.connect(self.retransmitMessage)
@@ -322,8 +326,11 @@ class CAND_MainWindow(QMainWindow):
         else:
             timestamp = data.timestamp
 
-        # TODO, get message by using DBC
-        messagename = ""
+        try:
+            messagename = self.controller.dbc.get_message_by_frame_id(
+                data.arbitration_id).name
+        except:
+            messagename = ""
 
         msg = ReceiveMessage(hex(data.arbitration_id), messagename,
                              timestamp, data.dlc, data.data.hex(), 0, 1)
@@ -334,6 +341,13 @@ class CAND_MainWindow(QMainWindow):
     def insertTransmit(self, data):
         msg = TransmitMessage()
         self.controller.rxtxcontroller.transmitMessage(msg)
+
+    def setDbcCallback(self):
+        if self.controller.tracecontroller.dbcpath is not None and os.path.exists(self.controller.tracecontroller.dbcpath):
+            self.controller.dbc = cantools.database.load_file(
+                self.controller.tracecontroller.dbcpath)
+        else:
+            self.controller.dbc = None
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
