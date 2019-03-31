@@ -78,6 +78,19 @@ class TraceTab(QWidget):
         self.fileopenButton.setObjectName("fileopenButton")
         self.horizontalLayout_3.addWidget(
             self.fileopenButton, 0, QtCore.Qt.AlignLeft)
+
+        self.setDbcButton = QtWidgets.QPushButton(self.groupBox_2)
+        self.setDbcButton.setMaximumSize(QtCore.QSize(48, 48))
+        self.setDbcButton.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/check_circle.svg"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.setDbcButton.setIcon(icon)
+        self.setDbcButton.setIconSize(QtCore.QSize(24, 24))
+        self.setDbcButton.setObjectName("setButton")
+        self.horizontalLayout_3.addWidget(
+            self.setDbcButton, 0, QtCore.Qt.AlignTop)
+
         self.horizontalLayout_4.addWidget(
             self.groupBox_2, 0, QtCore.Qt.AlignRight)
         self.verticalLayout_2.addLayout(self.horizontalLayout_4)

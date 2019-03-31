@@ -33,6 +33,7 @@ class MainController():
         self.connected = False
         self.candbus = None
         self.logging = False
+        self.dbc = None
 
     def connect(self):
         try:
