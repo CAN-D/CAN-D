@@ -91,14 +91,27 @@ void APP_FATFS_StopSession(void)
     sessionCount = 0;
 }
 
+/**
+  * @brief  Gets the number of log entries for the
+  *         current logging session
+  * @retval lineNumber: number of entries in logs
+  */
 uint32_t APP_FATFS_GetLineCount(void)
 {
     return lineNumber;
 }
 
+/**
+  * @brief  Writes a buffer to the SD Card based on a Peripheral Idfentifier String
+  * @param  writeData: buffer containing the data to write
+  * @param  bytes: Number of bytes in writeData buffer
+  * @param  periphIdentifier: Peripheral Idfentifier String
+  *         Can be one of FATFS_Peripher_Identifiers
+  * @retval writtenBytes: The number of bytes written to the SD card
+  */
 uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphIdentifier)
 {
-    uint8_t ret;
+    uint8_t writtenBytes;
     uint8_t incLineNumber; // Increment line number
     char filename[sizeof(periphIdentifier) + 3];
 
@@ -112,15 +125,15 @@ uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphId
     strcpy(filename, periphIdentifier);
     strcat(filename, ".log");
 
-    ret = APP_FATFS_WriteSD(writeData, bytes, (const char*)filename);
+    writtenBytes = APP_FATFS_WriteSD(writeData, bytes, (const char*)filename);
 
-    if ((ret == bytes) && (incLineNumber == 0)) {
+    if ((writtenBytes == bytes) && (incLineNumber == 0)) {
         // Successful write. Increment the number of messages written
         // to the SD Card.
         lineNumber++;
     }
 
-    return ret;
+    return writtenBytes;
 }
 
 /**
