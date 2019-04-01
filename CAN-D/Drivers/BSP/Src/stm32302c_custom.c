@@ -32,16 +32,13 @@ const uint16_t LED_PIN[LEDn] = { LED1_PIN,
  * @brief BUTTON variables
  */
 GPIO_TypeDef* BUTTON_PORT[BUTTONn] = { LOG_BUTTON_GPIO_PORT,
-    MARK_BUTTON_GPIO_PORT,
-    RST_BUTTON_GPIO_PORT };
+    MARK_BUTTON_GPIO_PORT };
 
 const uint16_t BUTTON_PIN[BUTTONn] = { LOG_BUTTON_PIN,
-    MARK_BUTTON_PIN,
-    RST_BUTTON_PIN };
+    MARK_BUTTON_PIN };
 
 const uint16_t BUTTON_IRQn[BUTTONn] = { LOG_BUTTON_EXTI_IRQn,
-    MARK_BUTTON_EXTI_IRQn,
-    RST_BUTTON_EXTI_IRQn };
+    MARK_BUTTON_EXTI_IRQn };
 
 /**
  * @brief COM variables
@@ -193,7 +190,7 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
     }
 
     if (Button_Mode == BUTTON_MODE_EXTI) {
-        if (Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST) {
+        if (Button == BUTTON_LOG || Button == BUTTON_MARK) {
             /* Configure Push Button pins as input with External interrupt, falling edge */
             GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
         }

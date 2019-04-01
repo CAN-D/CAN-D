@@ -38,7 +38,6 @@ typedef enum {
 typedef enum {
     BUTTON_LOG = 0,
     BUTTON_MARK = 1,
-    BUTTON_RST = 2
 } Button_TypeDef;
 
 typedef enum {
@@ -84,7 +83,7 @@ typedef enum {
  *       This external line interrupt is also used for the
  *       SD Detect pin
  */
-#define BUTTONn 3
+#define BUTTONn 2
 
 #define LOG_BUTTON_PIN GPIO_PIN_14 // PB.14
 #define LOG_BUTTON_GPIO_PORT GPIOB
@@ -98,23 +97,15 @@ typedef enum {
 #define MARK_BUTTON_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
 #define MARK_BUTTON_EXTI_IRQn EXTI15_10_IRQn
 
-#define RST_BUTTON_PIN GPIO_PIN_12 // PB.12
-#define RST_BUTTON_GPIO_PORT GPIOB
-#define RST_BUTTON_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
-#define RST_BUTTON_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
-#define RST_BUTTON_EXTI_IRQn EXTI15_10_IRQn
-
 #define BUTTONx_GPIO_CLK_ENABLE(__BUTTON__)   \
     do {                                      \
         if ((__BUTTON__) == BUTTON_LOG)       \
             LOG_BUTTON_GPIO_CLK_ENABLE();     \
         else if ((__BUTTON__) == BUTTON_MARK) \
             MARK_BUTTON_GPIO_CLK_ENABLE();    \
-        else if ((__BUTTON__) == BUTTON_RST)  \
-            RST_BUTTON_GPIO_CLK_ENABLE();     \
     } while (0)
 
-#define BUTTONx_GPIO_CLK_DISABLE(__BUTTON__) (((__BUTTON__) == BUTTON_LOG) ? LOG_BUTTON_GPIO_CLK_DISABLE() : ((__BUTTON__) == BUTTON_MARK) ? MARK_BUTTON_GPIO_CLK_DISABLE() : ((__BUTTON__) == BUTTON_RST) ? RST_BUTTON_GPIO_CLK_DISABLE() : 0)
+#define BUTTONx_GPIO_CLK_DISABLE(__BUTTON__) (((__BUTTON__) == BUTTON_LOG) ? LOG_BUTTON_GPIO_CLK_DISABLE() : ((__BUTTON__) == BUTTON_MARK) ? MARK_BUTTON_GPIO_CLK_DISABLE() : 0)
 
 #if defined(HAL_UART_MODULE_ENABLED)
 
