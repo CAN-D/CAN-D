@@ -20,7 +20,9 @@ extern "C" {
 #define CAN_RXQ_TIMEOUT_MS ((uint32_t)250) /* Timeout when waiting on the can RX queue*/
 #define CAN_IT_START CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO1_FULL | CAN_IT_ERROR /* Interrupts to be enabled on CAN start */
 #define CAN_MESSAGE_LENGTH 8
-#define CAN_LOG_FILENAME "CAN_Data"
+#define CAN_LOG_IDENTIFIER "CAN_Data"
+#define CAN_SD_DATA_SZ_BYTES ((uint16_t)(CAN_RX_MSG_DATA_SZ_BYTES * 2) + CAN_RX_MSG_ID_SZ_BYTES + CAN_SD_DATA_FORMAT_CHARS) /* "{ID_bytes} {num_bytes} XX XX XX XX XX XX XX XX" */
+#define CAN_SD_DATA_FORMAT_CHARS ((uint16_t)11)
 #define CAN_RX_MSG_DATA_SZ_BYTES ((uint16_t)8) /* 64 bits */
 #define CAN_RX_MSG_ID_SZ_BYTES ((uint16_t)4) /* 32 bits */
 #define CAN_USB_DATA_SZ_BYTES ((uint16_t)(CAN_RX_MSG_DATA_SZ_BYTES + CAN_RX_MSG_ID_SZ_BYTES))

@@ -21,7 +21,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 static APP_ConfigType mAppConfiguration = { 0 };
-static char canLogIdentifier[] = CAN_LOG_FILENAME;
+static char canLogIdentifier[] = CAN_LOG_IDENTIFIER;
 /* Threads */
 static osThreadId CANMonitorTaskHandle;
 static osThreadId CANTransmitTaskHandle;
@@ -42,6 +42,7 @@ CAN_HandleTypeDef hcan;
 /* Private function prototypes -----------------------------------------------*/
 void APP_CAN_MonitorTask(void const* argument);
 void APP_CAN_TransmitTask(void const* argument);
+static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg);
 
 /* Exported functions --------------------------------------------------------*/
 /* CAN init function */
@@ -237,6 +238,7 @@ void APP_CAN_MonitorTask(void const* argument)
     uint8_t usbTxMsg[usbMaxMsgLen]; // Serialized (packaged) protobuf data
     size_t usbTxNumBytes = 0; // Number of bytes in serialized data
     FromEmbedded fromEmbeddedMsg = FromEmbedded_init_zero;
+    uint8_t sdTxMsg[CAN_SD_DATA_SZ_BYTES];
 
     for (;;) {
         /* This is just used to test the SD card functionality */
@@ -249,7 +251,9 @@ void APP_CAN_MonitorTask(void const* argument)
             canRxMsg = event.value.p;
             if (mAppConfiguration.SDStorage == APP_ENABLE) {
                 // Write data to SD card
-                APP_FATFS_LogSD((const uint8_t*)canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES, canLogIdentifier);
+                uint8_t formattedMsgLen = 0;
+                formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
+                APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
             }
 
             // Pack the protobuf message
@@ -314,4 +318,16 @@ void APP_CAN_TransmitTask(void const* argument)
         }
         osDelay(1);
     }
+}
+
+static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg)
+{
+    char data_str[80];
+    int str_idx = 0;
+    // Should stop at min(dlc, sizeof(data))
+    for (int i = 0; i < srcRxMsg->header->DLC; i++) {
+        str_idx += sprintf(&data_str[str_idx], " %02X", srcRxMsg->data[i] & 0xFF);
+    }
+
+    return sprintf((char* restrict)dest, "%X [%X]%s\r\n", (uint8_t)srcRxMsg->header->StdId, (uint8_t)srcRxMsg->header->DLC, data_str);
 }

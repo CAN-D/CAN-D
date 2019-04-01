@@ -198,4 +198,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin)
     }
 }
 
+void EXTI1_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(SD_DETECT_PIN);
+}
+
 /* Private functions ---------------------------------------------------------*/

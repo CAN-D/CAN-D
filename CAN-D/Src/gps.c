@@ -23,7 +23,7 @@ typedef struct {
 #define GPS_BUFFER_LENGTH 2
 
 /* Private variables ---------------------------------------------------------*/
-static char gpsLogIdentifier[] = GPS_LOG_FILENAME;
+static char gpsLogIdentifier[] = GPS_LOG_IDENTIFIER;
 /* Threads */
 static osThreadId GPSMonitorTaskHandle;
 /* Queues */
