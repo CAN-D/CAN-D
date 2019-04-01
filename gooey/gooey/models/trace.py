@@ -1,5 +1,9 @@
-class Trace():
-    def __init__(self, can_id=None, message=None, time=None, rxtx=None, dlc=None, data=None, cycle_time=None):
+from models.treeitem import TreeItem
+
+
+class Trace(TreeItem):
+    def __init__(self, parent=None, can_id=None, message=None, time=None, rxtx=None, dlc=None, data=None, cycle_time=None):
+        super().__init__(self, parent)
         self.can_id = can_id
         self.message = message
         self.time = time

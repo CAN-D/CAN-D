@@ -142,26 +142,26 @@ void TIM2_IRQHandler(void)
   */
 void USART2_IRQHandler(void)
 {
-    // char rxData[128] = "0";
-    // uint8_t rx_idx = 0;
-    // // Check if the UART2 Read Data Register has data
-    // if (huart.Instance->ISR & USART_ISR_RXNE) {
-    //     // Read the data from the register
-    //     rxData[rx_idx] = huart.Instance->RDR;
-
-    //     // The GPS RX data will be held between '$' and '\n' characters
-    //     // TODO: BO: This is demo specific code
-    //     // if (rxData[rx_idx] == '$') {
-    //     if (1) {
-    //         // TODO: BO: This is demo specific code
-    //         // if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
-    //         //     APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
-    //         APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
-
-    //         memset(rxData, 0, sizeof(rxData));
-    //     }
-    // }
-
+    //    char rxData[128] = "0";
+    //    uint8_t rx_idx = 0;
+    //    // Check if the UART2 Read Data Register has data
+    //    if (huart.Instance->ISR & USART_ISR_RXNE) {
+    //        // Read the data from the register
+    //        rxData[rx_idx] = huart.Instance->RDR;
+    //
+    //        // The GPS RX data will be held between '$' and '\n' characters
+    //        // TODO: BO: This is demo specific code
+    //        // if (rxData[rx_idx] == '$') {
+    //        if (1) {
+    //            // TODO: BO: This is demo specific code
+    //            // if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
+    //            //     APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
+    //            APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
+    //
+    //            memset(rxData, 0, sizeof(rxData));
+    //        }
+    //    }
+    //
     HAL_UART_IRQHandler(&huart);
 }
 
@@ -175,9 +175,26 @@ void USB_LP_IRQHandler(void)
 
 void EXTI15_10_IRQHandler(void)
 {
-    HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
-    if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_RESET) {
+    if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_SET) {
+      HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
+    }
+    if (BSP_PB_GetState(BUTTON_MARK) == GPIO_PIN_SET) {
+      HAL_GPIO_EXTI_IRQHandler(MARK_BUTTON_PIN);
+    }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t pin)
+{
+    switch (pin) {
+    case LOG_BUTTON_PIN:
+        // Toggle the CAN Controller Peripheral
         APP_CAN_StartStop();
+        break;
+    case MARK_BUTTON_PIN:
+        // Mark the log file
+        break;
+    default:
+        break;
     }
 }
 

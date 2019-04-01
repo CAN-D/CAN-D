@@ -42,14 +42,6 @@ class CAND_MainWindow(QMainWindow):
         self.rxtxTab = RxTxTab(self.controller.rxtxcontroller)
         self.tabWidget.addTab(self.rxtxTab, "")
 
-        # Connections Tab
-        self.connectionTab = ConnectionsTab()
-        self.tabWidget.addTab(self.connectionTab, "")
-
-        # GPS Tab
-        self.gpsTab = QtWidgets.QWidget()
-        self.tabWidget.addTab(self.gpsTab, "")
-
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(0, 20, 82, 731))
         sizePolicy = QtWidgets.QSizePolicy(
@@ -332,11 +324,25 @@ class CAND_MainWindow(QMainWindow):
         except:
             messagename = ""
 
-        msg = ReceiveMessage(hex(data.arbitration_id), messagename,
+        msg = ReceiveMessage(self.controller.rxtxcontroller.receivetable.rootItem, hex(data.arbitration_id), messagename,
                              timestamp, data.dlc, data.data.hex(), 0, 1)
 
         self.controller.rxtxcontroller.appendReceiveTable(msg)
         self.controller.tracecontroller.appendTraceTable(msg)
+        self.insertSignals(data, msg)
+
+        return
+
+    def insertSignals(self, data, msg):
+        if self.controller.dbc is not None and msg.message is not "":
+            decoded = self.controller.dbc.decode_message(
+                data.arbitration_id, data.data)
+
+            if len(decoded) > 0:
+                for k, v in decoded.items():
+                    signal = ReceiveMessage(parent=msg, message=k, data=v)
+                    self.controller.rxtxcontroller.appendReceiveSignal(
+                        msg, signal)
 
     def insertTransmit(self, data):
         msg = TransmitMessage()
@@ -357,10 +363,6 @@ class CAND_MainWindow(QMainWindow):
             self.traceTab), _translate("MainWindow", "Trace"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(
             self.rxtxTab), _translate("MainWindow", "Receive/Transmit"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(
-            self.connectionTab), _translate("MainWindow", "Connections"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(
-            self.gpsTab), _translate("MainWindow", "GPS"))
         self.saveButton.setText(_translate("MainWindow", "..."))
         self.connectButton.setText(_translate("MainWindow", "..."))
         self.disconnectButton.setText(_translate("MainWindow", "..."))
