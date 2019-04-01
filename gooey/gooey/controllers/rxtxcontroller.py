@@ -1,9 +1,7 @@
-from models.transmit_table_model import TransmitTableModel
-from models.receive_table_model import ReceiveTableModel
+from models.transmit_tree_model import TransmitTreeModel
+from models.receive_tree_model import ReceiveTreeModel
 from models.transmit_message import TransmitMessage
 import datetime
-
-from models.receivetest import ReceiveTreeModel
 
 
 class RxtxController():
@@ -16,7 +14,7 @@ class RxtxController():
         if transmittable is not None:
             self.transmittable = transmittable
         else:
-            self.transmittable = TransmitTableModel()
+            self.transmittable = TransmitTreeModel()
 
     def transmitMessage(self, message):
         # TODO, call api to transmit message here
@@ -27,3 +25,9 @@ class RxtxController():
 
     def appendReceiveTable(self, message):
         self.receivetable.insertRow(message)
+
+    def appendReceiveSignal(self, parent, signal):
+        self.receivetable.insertChildRow(parent, signal)
+
+    def appendTransmitSignal(self, parent, signal):
+        self.transmittable.insertChildRow(parent, signal)

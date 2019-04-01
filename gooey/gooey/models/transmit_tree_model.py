@@ -1,54 +1,12 @@
+from models.transmit_message import TransmitMessage
 from PyQt5 import QtCore
 from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt
-from models.receive_message import ReceiveMessage
 
 
-class TreeItem(object):
-    def __init__(self, model, parent=None):
-        self.parentItem = parent
-        self.itemModel = model
-        self.childItems = []
-
-    def appendChild(self, item):
-        self.childItems.append(item)
-
-    def child(self, row):
-        return self.childItems[row]
-
-    def childCount(self):
-        return len(self.childItems)
-
-    def columnCount(self):
-        return 6
-
-    def data(self, column):
-        if column == 0:
-            return self.itemModel.can_id
-        elif column == 1:
-            return self.itemModel.message
-        elif column == 2:
-            return self.itemModel.dlc
-        elif column == 3:
-            return self.itemModel.cycle_time
-        elif column == 4:
-            return self.itemModel.count
-        elif column == 5:
-            return self.itemModel.data
-
-    def parent(self):
-        return self.parentItem
-
-    def row(self):
-        if self.parentItem:
-            return self.parentItem.childItems.index(self)
-
-        return 0
-
-
-class ReceiveTreeModel(QAbstractItemModel):
+class TransmitTreeModel(QAbstractItemModel):
     def __init__(self, parent=None):
-        super(ReceiveTreeModel, self).__init__(parent)
-        self.rootItem = TreeItem(ReceiveMessage())
+        super(TransmitTreeModel, self).__init__(parent)
+        self.rootItem = TransmitMessage()
 
     def columnCount(self, parent):
         if parent.isValid():
@@ -65,7 +23,7 @@ class ReceiveTreeModel(QAbstractItemModel):
 
         item = index.internalPointer()
 
-        return item.data(index.column())
+        return item.properties(index.column())
 
     def flags(self, index):
         if not index.isValid():
@@ -147,6 +105,21 @@ class ReceiveTreeModel(QAbstractItemModel):
 
         return True
 
+    def insertChildRow(self, parent, newChildMessage, index=QModelIndex()):
+        childMessages = [
+            m for m in parent.childItems if m.message == newChildMessage.message]
+
+        if len(childMessages) > 0:
+            self.updateChild(childMessages[0], newChildMessage)
+            self.dataChanged.emit(index, index)
+        else:
+            position = len(parent.childItems)
+            self.beginInsertRows(QModelIndex(), position, position)
+            parent.appendChild(newChildMessage)
+            self.endInsertRows()
+
+        return True
+
     def updateMessage(self, oldMessage, newMessage):
         oldMessage.can_id = newMessage.can_id
         oldMessage.message = newMessage.message
@@ -154,3 +127,6 @@ class ReceiveTreeModel(QAbstractItemModel):
         oldMessage.data = newMessage.data
         oldMessage.cycle_time = float(newMessage.time) - float(oldMessage.time)
         oldMessage.count = oldMessage.count + 1
+
+    def updateChild(self, oldChild, newChild):
+        oldChild.data = newChild.data

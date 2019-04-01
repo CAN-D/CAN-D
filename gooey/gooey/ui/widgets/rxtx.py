@@ -47,11 +47,8 @@ class RxTxTab(QWidget):
         self.gridLayout_2.addWidget(self.transmitTable, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.transmitGroup)
 
-        # receiveheader = self.receiveTable.horizontalHeader()
-        # receiveheader.setStretchLastSection(True)
-
-        # transmitheader = self.transmitTable.horizontalHeader()
-        # transmitheader.setStretchLastSection(True)
+        self.transmitTable.resizeColumnToContents(1)
+        self.receiveTable.resizeColumnToContents(1)
 
         # Set models for testing
         self.receiveTable.setModel(self.controller.receivetable)
@@ -67,9 +64,11 @@ class RxTxTab(QWidget):
 
     def scrollTransmitToBottom(self, parent, start, end):
         QtCore.QTimer.singleShot(0, self.transmitTable.scrollToBottom)
+        self.transmitTable.resizeColumnToContents(1)
 
     def scrollReceiveToBottom(self, parent, start, end):
         QtCore.QTimer.singleShot(0, self.receiveTable.scrollToBottom)
+        self.receiveTable.resizeColumnToContents(1)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate

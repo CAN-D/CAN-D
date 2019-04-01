@@ -332,11 +332,25 @@ class CAND_MainWindow(QMainWindow):
         except:
             messagename = ""
 
-        msg = ReceiveMessage(hex(data.arbitration_id), messagename,
+        msg = ReceiveMessage(self.controller.rxtxcontroller.receivetable.rootItem, hex(data.arbitration_id), messagename,
                              timestamp, data.dlc, data.data.hex(), 0, 1)
 
         self.controller.rxtxcontroller.appendReceiveTable(msg)
         self.controller.tracecontroller.appendTraceTable(msg)
+        self.insertSignals(data, msg)
+
+        return
+
+    def insertSignals(self, data, msg):
+        if self.controller.dbc is not None and msg.message is not "":
+            decoded = self.controller.dbc.decode_message(
+                data.arbitration_id, data.data)
+
+            if len(decoded) > 0:
+                for k, v in decoded.items():
+                    signal = ReceiveMessage(parent=msg, message=k, data=v)
+                    self.controller.rxtxcontroller.appendReceiveSignal(
+                        msg, signal)
 
     def insertTransmit(self, data):
         msg = TransmitMessage()

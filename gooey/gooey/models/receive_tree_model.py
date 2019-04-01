@@ -1,53 +1,11 @@
-from PyQt5 import QtCore, Qt
-from PyQt5.QtCore import QAbstractItemModel, QModelIndex
 from models.receive_message import ReceiveMessage
+from PyQt5 import QtCore
+from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt
 
 
-class TreeItem(object):
-    def __init__(self, model, parent=None):
-        self.parentItem = parent
-        self.itemModel = model
-        self.childItems = []
-
-    def appendChild(self, item):
-        self.childItems.append(item)
-
-    def child(self, row):
-        return self.childItems[row]
-
-    def childCount(self):
-        return len(self.childItems)
-
-    def columnCount(self):
-        return 6
-
-    def data(self, column):
-        if column == 0:
-            return self.itemModel.can_id
-        elif column == 1:
-            return self.itemModel.message
-        elif column == 2:
-            return self.itemModel.dlc
-        elif column == 3:
-            return self.itemModel.cycle_time
-        elif column == 4:
-            return self.itemModel.count
-        elif column == 5:
-            return self.itemModel.data
-
-    def parent(self):
-        return self.parentItem
-
-    def row(self):
-        if self.parentItem:
-            return self.parentItem.childItems.index(self)
-
-        return 0
-
-
-class TreeModel(QAbstractItemModel):
-    def __init__(self, data, parent=None):
-        super(TreeModel, self).__init__(parent)
+class ReceiveTreeModel(QAbstractItemModel):
+    def __init__(self, parent=None):
+        super(ReceiveTreeModel, self).__init__(parent)
         self.rootItem = ReceiveMessage()
 
     def columnCount(self, parent):
@@ -60,18 +18,18 @@ class TreeModel(QAbstractItemModel):
         if not index.isValid():
             return None
 
-        if role != QtCore.Qt.DisplayRole:
+        if role != Qt.DisplayRole:
             return None
 
         item = index.internalPointer()
 
-        return item.data(index.column())
+        return item.properties(index.column())
 
     def flags(self, index):
         if not index.isValid():
             return QtCore.Qt.NoItemFlags
 
-        return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+        return QtCore.Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if role != Qt.DisplayRole:
@@ -140,9 +98,24 @@ class TreeModel(QAbstractItemModel):
             self.updateMessage(messageInTable[0], newMessage)
             self.dataChanged.emit(index, index)
         else:
-            position = len(self.messages)
+            position = len(self.rootItem.childItems)
             self.beginInsertRows(QModelIndex(), position, position)
             self.rootItem.childItems.insert(position, newMessage)
+            self.endInsertRows()
+
+        return True
+
+    def insertChildRow(self, parent, newChildMessage, index=QModelIndex()):
+        childMessages = [
+            m for m in parent.childItems if m.message == newChildMessage.message]
+
+        if len(childMessages) > 0:
+            self.updateChild(childMessages[0], newChildMessage)
+            self.dataChanged.emit(index, index)
+        else:
+            position = len(parent.childItems)
+            self.beginInsertRows(QModelIndex(), position, position)
+            parent.appendChild(newChildMessage)
             self.endInsertRows()
 
         return True
@@ -154,3 +127,6 @@ class TreeModel(QAbstractItemModel):
         oldMessage.data = newMessage.data
         oldMessage.cycle_time = float(newMessage.time) - float(oldMessage.time)
         oldMessage.count = oldMessage.count + 1
+
+    def updateChild(self, oldChild, newChild):
+        oldChild.data = newChild.data
