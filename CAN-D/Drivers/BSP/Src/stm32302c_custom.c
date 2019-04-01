@@ -195,7 +195,7 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
     if (Button_Mode == BUTTON_MODE_EXTI) {
         if (Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST) {
             /* Configure Push Button pins as input with External interrupt, falling edge */
-            GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+            GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
         }
 
         HAL_GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStruct);
