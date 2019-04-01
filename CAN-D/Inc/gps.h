@@ -15,7 +15,7 @@ extern "C" {
 
 #define GPS_DATA_LENGTH 128
 #define GPS_LOG_FILENAME "GPS_Data"
-#define GPS_USB_DATA_SZ_BYTES ((uint16_t)128)
+#define GPS_DATA_SZ_BYTES ((uint16_t)128)
 #define GPS_USB_TX_MAX_TRY 3
 
 void APP_GPS_Init(void);

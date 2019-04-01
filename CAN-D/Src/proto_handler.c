@@ -40,7 +40,7 @@ void APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len)
 size_t APP_PROTO_HANDLE_bufferFromEmbeddedMsg(FromEmbedded* msg, uint8_t* buffer, size_t max_buffer_len)
 {
     pb_ostream_t stream = pb_ostream_from_buffer(buffer, max_buffer_len);
-    if (pb_encode(&stream, FromEmbedded_fields, &msg) == 0)
+    if (pb_encode(&stream, FromEmbedded_fields, msg) == 0)
         return -1;
     return stream.bytes_written;
 }
