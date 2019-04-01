@@ -231,22 +231,9 @@ void APP_CAN_SetConfiguration(APP_ConfigType newConfig)
   */
 void APP_CAN_MonitorTask(void const* argument)
 {
-    CAN_RxHeaderTypeDef testHeader = {
-        .StdId = 0x45,
-        .ExtId = 0,
-        .IDE = 0,
-        .RTR = 0x00000000U,
-        .DLC = 8,
-        .Timestamp = 0,
-        .FilterMatchIndex = 0
-    };
-
-    CANRxMessage canRx
-        = { .data = {0, 1, 2, 3, 4, 5, 6, 7}, .header = &testHeader, .handle = NULL };
-
     uint8_t usbTxCnt = 0;
     osEvent event;
-    CANRxMessage* canRxMsg = &canRx;
+    CANRxMessage* canRxMsg;
     size_t usbMaxMsgLen = CAN_USB_DATA_SZ_BYTES + PROTO_BUFFER_OVERHEAD; // Max length of the serialized data
     uint8_t usbTxMsg[usbMaxMsgLen]; // Serialized (packaged) protobuf data
     size_t usbTxNumBytes = 0; // Number of bytes in serialized data
@@ -257,10 +244,6 @@ void APP_CAN_MonitorTask(void const* argument)
         /* This is just used to test the SD card functionality */
         // const uint8_t data[] = "YELLOW";
         // APP_FATFS_LogSD(data, 6, CAN_LOG_FILENAME);
-
-        uint8_t formattedMsgLen = 0;
-        formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
-        APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
 
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
