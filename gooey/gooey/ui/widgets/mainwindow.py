@@ -3,7 +3,7 @@ import time
 import cantools
 import os.path
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QLabel
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
 from ui.widgets.connection import ConnectionsTab
@@ -17,6 +17,11 @@ from models.trace import Trace
 
 
 class CAND_MainWindow(QMainWindow):
+    sd_logging = "SD Card Logging " + u"\u2713"
+    sd_not_logging = "SD Card Logging " + u"\u2718"
+    connected = "   Connected to CAN-D USB!"
+    disconnected = "   Disconnected"
+
     def __init__(self, isdemo=False, trace_location=None):
         super().__init__()
 
@@ -218,8 +223,6 @@ class CAND_MainWindow(QMainWindow):
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
-        self.statusbar.showMessage(
-            "Disconnected | SD Card Logging " + u"\u2718")
 
         # Actions
         self.actionFile_2 = QtWidgets.QAction(self)
@@ -248,12 +251,24 @@ class CAND_MainWindow(QMainWindow):
         self.playButton.clicked.connect(self.transmitMessage)
         self.pauseButton.clicked.connect(self.retransmitMessage)
 
+        self.connectedStatus = QLabel()
+        self.connectedStatus.setText(CAND_MainWindow.disconnected)
+
+        self.sdLoggingStatus = QLabel()
+        self.sdLoggingStatus.setText(CAND_MainWindow.sd_not_logging)
+
+        self.dbcStatus = QLabel()
+        self.dbcStatus.setText("No DBC file selected")
+
+        self.statusbar.addWidget(self.connectedStatus, 2)
+        self.statusbar.addWidget(self.sdLoggingStatus, 3)
+        self.statusbar.addPermanentWidget(self.dbcStatus)
+
         QtCore.QMetaObject.connectSlotsByName(self)
 
     def connectUsb(self):
         if self.controller.connect():
-            self.statusbar.showMessage(
-                "Connected | SD Card Logging " + u"\u2718")
+            self.connectedStatus.setText(CAND_MainWindow.connected)
             self.connectButton.setEnabled(False)
             self.disconnectButton.setEnabled(True)
             self.startPoll()
@@ -268,8 +283,7 @@ class CAND_MainWindow(QMainWindow):
 
     def disconnectUsb(self):
         if not self.controller.disconnect():
-            self.statusbar.showMessage(
-                "Disconnected | SD Card Logging " + u"\u2718")
+            self.connectedStatus.setText(CAND_MainWindow.disconnected)
             self.connectButton.setEnabled(True)
             self.disconnectButton.setEnabled(False)
         else:
@@ -278,8 +292,7 @@ class CAND_MainWindow(QMainWindow):
 
     def startLoggingSD(self):
         if self.controller.startLog():
-            self.statusbar.showMessage(
-                "Connected | SD Card Logging " + u"\u2713")
+            self.sdLoggingStatus.setText(CAND_MainWindow.sd_logging)
             self.recordButton.setEnabled(False)
             self.stopButton.setEnabled(True)
         else:
@@ -288,8 +301,7 @@ class CAND_MainWindow(QMainWindow):
 
     def stopLoggingSD(self):
         if not self.controller.stopLog():
-            self.statusbar.showMessage(
-                "Connected | SD Card Logging " + u"\u2718")
+            self.sdLoggingStatus.setText(CAND_MainWindow.sd_not_logging)
             self.recordButton.setEnabled(True)
             self.stopButton.setEnabled(False)
         else:
@@ -350,8 +362,14 @@ class CAND_MainWindow(QMainWindow):
 
     def setDbcCallback(self):
         if self.controller.tracecontroller.dbcpath is not None and os.path.exists(self.controller.tracecontroller.dbcpath):
-            self.controller.dbc = cantools.database.load_file(
-                self.controller.tracecontroller.dbcpath)
+            try:
+                self.controller.dbc = cantools.database.load_file(
+                    self.controller.tracecontroller.dbcpath)
+                self.dbcStatus.setText(
+                    "DBC file selected:  " + self.controller.tracecontroller.dbcpath)
+            except ValueError:
+                # TODO, show error, .dbc file format only
+                return
         else:
             self.controller.dbc = None
 

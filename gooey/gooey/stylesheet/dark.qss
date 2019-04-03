@@ -1327,7 +1327,7 @@ QSlider::sub-page:vertical
 QToolButton
 {
     background-color: transparent;
-    border: 0.1ex solid #76797c;
+    border: 0px;
     border-radius: 0.2ex;
     margin: 0.3ex;
     padding: 0.5ex;
@@ -1515,11 +1515,6 @@ QToolBox:selected
 QToolBox:hover
 {
     border-color: #3daee9;
-}
-
-QStatusBar::item
-{
-    border: 0px transparent dark;
 }
 
 QFrame[height="3"],
