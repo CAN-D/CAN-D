@@ -273,7 +273,8 @@ class CAND_MainWindow(QMainWindow):
             self.disconnectButton.setEnabled(True)
             self.startPoll()
         else:
-            # TODO show pop-up for cant connect
+            popup = QtWidgets.QMessageBox.critical(
+                self, "Error", "CAN-D device not found. \n\nPlease make sure that the CAN-D is connected properly.")
             return
 
     def startPoll(self):
@@ -287,7 +288,8 @@ class CAND_MainWindow(QMainWindow):
             self.connectButton.setEnabled(True)
             self.disconnectButton.setEnabled(False)
         else:
-            # TODO show pop-up for cant disconnect
+            popup = QtWidgets.QMessageBox.critical(
+                self, "Error", "CAN-D device not found. \n\nPlease make sure that the CAN-D is connected properly.")
             return
 
     def startLoggingSD(self):
@@ -296,7 +298,8 @@ class CAND_MainWindow(QMainWindow):
             self.recordButton.setEnabled(False)
             self.stopButton.setEnabled(True)
         else:
-            # TODO show pop-up for cant log SD
+            popup = QtWidgets.QMessageBox.critical(
+                self, "Error", "CAN-D device is not connected. \n\nPlease connect to the CAN-D USB device.")
             return
 
     def stopLoggingSD(self):
@@ -305,7 +308,8 @@ class CAND_MainWindow(QMainWindow):
             self.recordButton.setEnabled(True)
             self.stopButton.setEnabled(False)
         else:
-            # TODO show pop-up for cant log SD
+            popup = QtWidgets.QMessageBox.critical(
+                self, "Error", "Stop logging SD card failed. \n\nPlease try again.")
             return
 
     def transmitMessage(self):
@@ -367,8 +371,9 @@ class CAND_MainWindow(QMainWindow):
                     self.controller.tracecontroller.dbcpath)
                 self.dbcStatus.setText(
                     "DBC file selected:  " + self.controller.tracecontroller.dbcpath)
-            except ValueError:
-                # TODO, show error, .dbc file format only
+            except ValueError as e:
+                popup = QtWidgets.QMessageBox.critical(
+                    self, "Error", "Failed to import DBC file. \n\n" + str(e))
                 return
         else:
             self.controller.dbc = None
