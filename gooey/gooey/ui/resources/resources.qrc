@@ -1,5 +1,16 @@
 <RCC>
   <qresource prefix="icons">
+    <file>sdstop.png</file>
+    <file>mark.png</file>
+    <file>connect1.png</file>
+    <file>open.png</file>
+    <file>sdstart.png</file>
+    <file>transmit.png</file>
+    <file>save.png</file>
+    <file>connect2.png</file>
+    <file>retransmit.png</file>
+    <file>disconnect1.png</file>
+    <file>disconnect2.png</file>
     <file>power.svg</file>
     <file>pause.svg</file>
     <file>play.svg</file>

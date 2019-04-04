@@ -77,7 +77,7 @@ class CAND_MainWindow(QMainWindow):
         self.openButton.setSizePolicy(sizePolicy)
 
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/open.svg"),
+        icon.addPixmap(QtGui.QPixmap(":/icons/open.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.openButton.setIcon(icon)
         self.openButton.setIconSize(QtCore.QSize(70, 70))
@@ -97,7 +97,7 @@ class CAND_MainWindow(QMainWindow):
         self.saveButton.setSizePolicy(sizePolicy)
 
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/save.svg"),
+        icon1.addPixmap(QtGui.QPixmap(":/icons/save.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveButton.setIcon(icon1)
         self.saveButton.setIconSize(QtCore.QSize(70, 70))
@@ -115,7 +115,7 @@ class CAND_MainWindow(QMainWindow):
             self.connectButton.sizePolicy().hasHeightForWidth())
         self.connectButton.setSizePolicy(sizePolicy)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/connect.svg"),
+        icon2.addPixmap(QtGui.QPixmap(":/icons/connect1.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.connectButton.setIcon(icon2)
         self.connectButton.setIconSize(QtCore.QSize(70, 70))
@@ -133,7 +133,7 @@ class CAND_MainWindow(QMainWindow):
             self.disconnectButton.sizePolicy().hasHeightForWidth())
         self.disconnectButton.setSizePolicy(sizePolicy)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/disconnect.svg"),
+        icon3.addPixmap(QtGui.QPixmap(":/icons/disconnect1.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.disconnectButton.setIcon(icon3)
         self.disconnectButton.setIconSize(QtCore.QSize(70, 70))
@@ -150,7 +150,7 @@ class CAND_MainWindow(QMainWindow):
             self.recordButton.sizePolicy().hasHeightForWidth())
         self.recordButton.setSizePolicy(sizePolicy)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/record.svg"),
+        icon4.addPixmap(QtGui.QPixmap(":/icons/sdstart.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.recordButton.setIcon(icon4)
         self.recordButton.setIconSize(QtCore.QSize(70, 70))
@@ -168,7 +168,7 @@ class CAND_MainWindow(QMainWindow):
             self.stopButton.sizePolicy().hasHeightForWidth())
         self.stopButton.setSizePolicy(sizePolicy)
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/stop.svg"),
+        icon5.addPixmap(QtGui.QPixmap(":/icons/sdstop.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.stopButton.setIcon(icon5)
         self.stopButton.setIconSize(QtCore.QSize(70, 70))
@@ -185,11 +185,11 @@ class CAND_MainWindow(QMainWindow):
             self.transmitButton.sizePolicy().hasHeightForWidth())
         self.transmitButton.setSizePolicy(sizePolicy)
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/play.svg"),
+        icon6.addPixmap(QtGui.QPixmap(":/icons/transmit.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.transmitButton.setIcon(icon6)
         self.transmitButton.setIconSize(QtCore.QSize(70, 70))
-        self.transmitButton.setObjectName("playButton")
+        self.transmitButton.setObjectName("transmitButton")
         self.sideBarLayout.addWidget(self.transmitButton)
 
         # Pause Button
@@ -202,11 +202,11 @@ class CAND_MainWindow(QMainWindow):
             self.retransmitButton.sizePolicy().hasHeightForWidth())
         self.retransmitButton.setSizePolicy(sizePolicy)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/icons/pause.svg"),
+        icon7.addPixmap(QtGui.QPixmap(":/icons/retransmit.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.retransmitButton.setIcon(icon7)
         self.retransmitButton.setIconSize(QtCore.QSize(70, 70))
-        self.retransmitButton.setObjectName("pauseButton")
+        self.retransmitButton.setObjectName("retransmitButton")
         self.sideBarLayout.addWidget(self.retransmitButton)
 
         self.setCentralWidget(self.centralwidget)
