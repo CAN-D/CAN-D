@@ -19,7 +19,7 @@ class RxTxTab(QWidget):
         self.gridLayout = QtWidgets.QGridLayout(self.receiveGroup)
         self.gridLayout.setObjectName("gridLayout")
 
-        self.receiveTable = QtWidgets.QTableView(self.receiveGroup)
+        self.receiveTable = QtWidgets.QTreeView(self.receiveGroup)
         self.receiveTable.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers)
         self.receiveTable.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
@@ -36,7 +36,7 @@ class RxTxTab(QWidget):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.transmitGroup)
         self.gridLayout_2.setObjectName("gridLayout_2")
 
-        self.transmitTable = QtWidgets.QTableView(self.transmitGroup)
+        self.transmitTable = QtWidgets.QTreeView(self.transmitGroup)
         self.transmitTable.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers)
         self.transmitTable.setSelectionBehavior(

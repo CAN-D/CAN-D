@@ -3,7 +3,9 @@ import time
 import cantools
 import os.path
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
-from PyQt5.QtWidgets import QMainWindow, QLabel
+from PyQt5.QtWidgets import QMainWindow, QLabel, QFileDialog
+from candy_connector.parsers import parse_line
+from can import Message
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
 from ui.widgets.connection import ConnectionsTab
@@ -174,38 +176,38 @@ class CAND_MainWindow(QMainWindow):
         self.sideBarLayout.addWidget(self.stopButton)
 
         # Play Button
-        self.playButton = QtWidgets.QToolButton(self)
+        self.transmitButton = QtWidgets.QToolButton(self)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.playButton.sizePolicy().hasHeightForWidth())
-        self.playButton.setSizePolicy(sizePolicy)
+            self.transmitButton.sizePolicy().hasHeightForWidth())
+        self.transmitButton.setSizePolicy(sizePolicy)
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap(":/icons/play.svg"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.playButton.setIcon(icon6)
-        self.playButton.setIconSize(QtCore.QSize(70, 70))
-        self.playButton.setObjectName("playButton")
-        self.sideBarLayout.addWidget(self.playButton)
+        self.transmitButton.setIcon(icon6)
+        self.transmitButton.setIconSize(QtCore.QSize(70, 70))
+        self.transmitButton.setObjectName("playButton")
+        self.sideBarLayout.addWidget(self.transmitButton)
 
         # Pause Button
-        self.pauseButton = QtWidgets.QToolButton(self)
+        self.retransmitButton = QtWidgets.QToolButton(self)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.pauseButton.sizePolicy().hasHeightForWidth())
-        self.pauseButton.setSizePolicy(sizePolicy)
+            self.retransmitButton.sizePolicy().hasHeightForWidth())
+        self.retransmitButton.setSizePolicy(sizePolicy)
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(":/icons/pause.svg"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pauseButton.setIcon(icon7)
-        self.pauseButton.setIconSize(QtCore.QSize(70, 70))
-        self.pauseButton.setObjectName("pauseButton")
-        self.sideBarLayout.addWidget(self.pauseButton)
+        self.retransmitButton.setIcon(icon7)
+        self.retransmitButton.setIconSize(QtCore.QSize(70, 70))
+        self.retransmitButton.setObjectName("pauseButton")
+        self.sideBarLayout.addWidget(self.retransmitButton)
 
         self.setCentralWidget(self.centralwidget)
 
@@ -240,16 +242,16 @@ class CAND_MainWindow(QMainWindow):
         self.retranslateUi(self)
         self.tabWidget.setCurrentIndex(0)
 
+        self.openButton.clicked.connect(self.openFile)
+        self.saveButton.clicked.connect(self.saveFile)
         self.connectButton.clicked.connect(self.connectUsb)
         self.disconnectButton.clicked.connect(self.disconnectUsb)
         self.recordButton.clicked.connect(self.startLoggingSD)
         self.stopButton.clicked.connect(self.stopLoggingSD)
+        self.transmitButton.clicked.connect(self.transmitMessage)
+        self.retransmitButton.clicked.connect(self.retransmitMessage)
 
         self.traceTab.setDbcButton.clicked.connect(self.setDbcCallback)
-
-        # TODO REMOVE THESE, ONLY FOR TEST
-        self.playButton.clicked.connect(self.transmitMessage)
-        self.pauseButton.clicked.connect(self.retransmitMessage)
 
         self.connectedStatus = QLabel()
         self.connectedStatus.setText(CAND_MainWindow.disconnected)
@@ -265,6 +267,40 @@ class CAND_MainWindow(QMainWindow):
         self.statusbar.addPermanentWidget(self.dbcStatus)
 
         QtCore.QMetaObject.connectSlotsByName(self)
+
+    def openFile(self):
+        self.controller.open_file_path = QFileDialog.getOpenFileName(self, 'Open File', './',
+                                                                     filter="CAN-D Trace Files(*.cand);;All Files(*.*);;Text Files(*.txt)")[0]
+        if self.controller.open_file_path is not '':
+            try:
+                file = open(self.controller.open_file_path, "r")
+                lines = file.readlines()
+                for l in lines:
+                    frame_id, payload = parse_line(l)
+                    msg = Message()
+                    msg.arbitration_id = frame_id
+                    msg.dlc = len(payload)
+                    msg.data = bytes(payload)
+                    self.insertTrace(msg)
+            except:
+                popup = QtWidgets.QMessageBox.critical(
+                    self, "Error", "Failed to open CAN-D trace file. \n\nFile must be of type .cand or .txt")
+                return
+
+    def saveFile(self):
+        if self.controller.open_file_path is '':
+            self.controller.open_file_path = QFileDialog.getSaveFileName(self, 'Save File', './',
+                                                                         filter="CAN-D Trace Files (*.cand)")[0]
+
+        try:
+            file = open(self.controller.open_file_path, "w")
+            for trace in self.controller.tracecontroller.tracetable.traces:
+                arbitration_id = trace.can_id
+                data = trace.data
+                file.write(arbitration_id + " " + data + "\n")
+        except:
+            popup = QtWidgets.QMessageBox.critical(
+                self, "Error", "Failed to save CAN-D trace file.")
 
     def connectUsb(self):
         if self.controller.connect():
@@ -340,8 +376,14 @@ class CAND_MainWindow(QMainWindow):
         except:
             messagename = ""
 
-        msg = ReceiveMessage(self.controller.rxtxcontroller.receivetable.rootItem, hex(data.arbitration_id), messagename,
-                             timestamp, data.dlc, data.data.hex(), 0, 1)
+        msg = ReceiveMessage(self.controller.rxtxcontroller.receivetable.rootItem,
+                             self.formatId(hex(data.arbitration_id)),
+                             messagename,
+                             timestamp,
+                             data.dlc,
+                             self.formatHexData(data.data.hex()),
+                             0,
+                             1)
 
         self.controller.rxtxcontroller.appendReceiveTable(msg)
         self.controller.tracecontroller.appendTraceTable(msg)
@@ -378,6 +420,12 @@ class CAND_MainWindow(QMainWindow):
         else:
             self.controller.dbc = None
 
+    def formatHexData(self, s):
+        return (" ".join(s[i:i+2] for i in range(0, len(s), 2))).upper()
+
+    def formatId(self, id):
+        return id[0:2] + id[2:len(id)].upper()
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate(
@@ -391,8 +439,8 @@ class CAND_MainWindow(QMainWindow):
         self.disconnectButton.setText(_translate("MainWindow", "..."))
         self.recordButton.setText(_translate("MainWindow", "..."))
         self.stopButton.setText(_translate("MainWindow", "..."))
-        self.playButton.setText(_translate("MainWindow", "..."))
-        self.pauseButton.setText(_translate("MainWindow", "..."))
+        self.transmitButton.setText(_translate("MainWindow", "..."))
+        self.retransmitButton.setText(_translate("MainWindow", "..."))
         self.menuCAN_D.setTitle(_translate("MainWindow", "CAN-D"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionFile_2.setText(_translate("MainWindow", "Open..."))
