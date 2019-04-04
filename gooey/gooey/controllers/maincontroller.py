@@ -34,6 +34,7 @@ class MainController():
         self.candbus = None
         self.logging = False
         self.dbc = None
+        self.open_file_path = ""
 
     def connect(self):
         try:
