@@ -13,7 +13,7 @@ class RxTxTab(QWidget):
         self.verticalLayout.setObjectName("verticalLayout")
 
         self.receiveGroup = QtWidgets.QGroupBox(self)
-        self.receiveGroup.setStyleSheet("font: 18pt \".SF NS Text\";")
+        self.receiveGroup.setStyleSheet("font: 18pt \".Avenir Next LT Pro\";")
         self.receiveGroup.setObjectName("receiveGroup")
 
         self.gridLayout = QtWidgets.QGridLayout(self.receiveGroup)
@@ -30,7 +30,7 @@ class RxTxTab(QWidget):
         self.verticalLayout.addWidget(self.receiveGroup)
 
         self.transmitGroup = QtWidgets.QGroupBox(self)
-        self.transmitGroup.setStyleSheet("font: 18pt \".SF NS Text\";")
+        self.transmitGroup.setStyleSheet("font: 18pt \".Avenir Next LT Pro\";")
         self.transmitGroup.setObjectName("transmitGroup")
 
         self.gridLayout_2 = QtWidgets.QGridLayout(self.transmitGroup)

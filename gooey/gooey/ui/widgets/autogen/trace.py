@@ -6,6 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+from widgets import resources_rc
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -17,13 +18,13 @@ class Ui_TraceTab(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.TraceGroup = QtWidgets.QGroupBox(TraceTab)
         font = QtGui.QFont()
-        font.setFamily(".SF NS Text")
+        font.setFamily(".Avenir Next LT Pro")
         font.setPointSize(18)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         self.TraceGroup.setFont(font)
-        self.TraceGroup.setStyleSheet("font: 18pt \".SF NS Text\";")
+        self.TraceGroup.setStyleSheet("font: 18pt \".Avenir Next LT Pro\";")
         self.TraceGroup.setTitle("")
         self.TraceGroup.setObjectName("TraceGroup")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.TraceGroup)
@@ -32,7 +33,7 @@ class Ui_TraceTab(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.groupBox = QtWidgets.QGroupBox(self.TraceGroup)
         font = QtGui.QFont()
-        font.setFamily(".SF NS Text")
+        font.setFamily(".Avenir Next LT Pro")
         font.setPointSize(18)
         font.setBold(False)
         font.setItalic(False)
@@ -43,7 +44,8 @@ class Ui_TraceTab(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.CanIDLabel = QtWidgets.QLabel(self.groupBox)
         self.CanIDLabel.setObjectName("CanIDLabel")
-        self.horizontalLayout.addWidget(self.CanIDLabel, 0, QtCore.Qt.AlignVCenter)
+        self.horizontalLayout.addWidget(
+            self.CanIDLabel, 0, QtCore.Qt.AlignVCenter)
         self.maskLineEdit = QtWidgets.QLineEdit(self.groupBox)
         self.maskLineEdit.setMaximumSize(QtCore.QSize(100, 16777215))
         self.maskLineEdit.setObjectName("maskLineEdit")
@@ -59,7 +61,8 @@ class Ui_TraceTab(object):
         self.setButton.setMaximumSize(QtCore.QSize(48, 48))
         self.setButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/check_circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/check_circle.svg"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setButton.setIcon(icon)
         self.setButton.setIconSize(QtCore.QSize(24, 24))
         self.setButton.setObjectName("setButton")
@@ -68,15 +71,17 @@ class Ui_TraceTab(object):
         self.resetButton.setMaximumSize(QtCore.QSize(48, 48))
         self.resetButton.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/replay.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icons/replay.svg"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.resetButton.setIcon(icon1)
         self.resetButton.setIconSize(QtCore.QSize(24, 24))
         self.resetButton.setObjectName("resetButton")
         self.horizontalLayout.addWidget(self.resetButton)
-        self.horizontalLayout_4.addWidget(self.groupBox, 0, QtCore.Qt.AlignLeft)
+        self.horizontalLayout_4.addWidget(
+            self.groupBox, 0, QtCore.Qt.AlignLeft)
         self.groupBox_2 = QtWidgets.QGroupBox(self.TraceGroup)
         font = QtGui.QFont()
-        font.setFamily(".SF NS Text")
+        font.setFamily("Avenir Next LT Pro")
         font.setPointSize(18)
         font.setBold(False)
         font.setItalic(False)
@@ -93,15 +98,17 @@ class Ui_TraceTab(object):
         self.fileopenButton = QtWidgets.QPushButton(self.groupBox_2)
         self.fileopenButton.setMaximumSize(QtCore.QSize(40, 30))
         font = QtGui.QFont()
-        font.setFamily(".SF NS Text")
+        font.setFamily("Avenir Next LT Pro")
         font.setPointSize(18)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         self.fileopenButton.setFont(font)
         self.fileopenButton.setObjectName("fileopenButton")
-        self.horizontalLayout_3.addWidget(self.fileopenButton, 0, QtCore.Qt.AlignLeft)
-        self.horizontalLayout_4.addWidget(self.groupBox_2, 0, QtCore.Qt.AlignRight)
+        self.horizontalLayout_3.addWidget(
+            self.fileopenButton, 0, QtCore.Qt.AlignLeft)
+        self.horizontalLayout_4.addWidget(
+            self.groupBox_2, 0, QtCore.Qt.AlignRight)
         self.verticalLayout_2.addLayout(self.horizontalLayout_4)
         self.TraceTable = QtWidgets.QTableView(self.TraceGroup)
         self.TraceTable.setObjectName("TraceTable")
@@ -119,9 +126,6 @@ class Ui_TraceTab(object):
         self.maskLabel.setText(_translate("TraceTab", "Mask"))
         self.groupBox_2.setTitle(_translate("TraceTab", "Import DBC File"))
         self.fileopenButton.setText(_translate("TraceTab", "..."))
-
-
-from widgets import resources_rc
 
 
 if __name__ == "__main__":

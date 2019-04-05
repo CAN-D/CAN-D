@@ -276,6 +276,7 @@ class CAND_MainWindow(QMainWindow):
         self.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
+        self.statusbar.setStyleSheet("font: 13pt\".Avenir Next LT Pro\";")
         self.setStatusBar(self.statusbar)
 
         self.retranslateUi(self)
