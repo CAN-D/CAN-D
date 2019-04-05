@@ -57,7 +57,7 @@ class CAND_MainWindow(QMainWindow):
         self.openButton.setMinimumSize(QtCore.QSize(60, 60))
         self.openButton.setMaximumSize(QtCore.QSize(60, 60))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/black/open.png"),
+        icon.addPixmap(QtGui.QPixmap(":/icons/white/open.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon.addPixmap(QtGui.QPixmap(":/icons/white/open.png"),
                        QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -80,7 +80,7 @@ class CAND_MainWindow(QMainWindow):
         self.saveButton.setMinimumSize(QtCore.QSize(60, 60))
         self.saveButton.setMaximumSize(QtCore.QSize(60, 60))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/black/save.png"),
+        icon1.addPixmap(QtGui.QPixmap(":/icons/white/save.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon1.addPixmap(QtGui.QPixmap(":/icons/white/save.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -103,7 +103,7 @@ class CAND_MainWindow(QMainWindow):
         self.connectButton.setMinimumSize(QtCore.QSize(60, 60))
         self.connectButton.setMaximumSize(QtCore.QSize(60, 60))
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/black/connect1.png"),
+        icon2.addPixmap(QtGui.QPixmap(":/icons/white/connect1.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon2.addPixmap(QtGui.QPixmap(":/icons/white/connect1.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -128,7 +128,7 @@ class CAND_MainWindow(QMainWindow):
         self.disconnectButton.setMinimumSize(QtCore.QSize(60, 60))
         self.disconnectButton.setMaximumSize(QtCore.QSize(60, 60))
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/black/disconnect1.png"),
+        icon3.addPixmap(QtGui.QPixmap(":/icons/white/disconnect1.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon3.addPixmap(QtGui.QPixmap(":/icons/white/disconnect1.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -152,7 +152,7 @@ class CAND_MainWindow(QMainWindow):
         self.startSdButton.setMinimumSize(QtCore.QSize(60, 60))
         self.startSdButton.setMaximumSize(QtCore.QSize(60, 60))
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/black/sdstart.png"),
+        icon4.addPixmap(QtGui.QPixmap(":/icons/white/sdstart.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon4.addPixmap(QtGui.QPixmap(":/icons/white/sdstart.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -177,7 +177,7 @@ class CAND_MainWindow(QMainWindow):
         self.stopSdButton.setMinimumSize(QtCore.QSize(60, 60))
         self.stopSdButton.setMaximumSize(QtCore.QSize(60, 60))
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/black/sdstop.png"),
+        icon5.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon5.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -200,7 +200,7 @@ class CAND_MainWindow(QMainWindow):
         self.transmitButton.setMinimumSize(QtCore.QSize(60, 60))
         self.transmitButton.setMaximumSize(QtCore.QSize(60, 60))
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/black/transmit.png"),
+        icon6.addPixmap(QtGui.QPixmap(":/icons/white/transmit.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon6.addPixmap(QtGui.QPixmap(":/icons/white/transmit.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -225,7 +225,7 @@ class CAND_MainWindow(QMainWindow):
         self.retransmitButton.setMinimumSize(QtCore.QSize(60, 60))
         self.retransmitButton.setMaximumSize(QtCore.QSize(60, 60))
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/icons/black/retransmit.png"),
+        icon7.addPixmap(QtGui.QPixmap(":/icons/white/retransmit.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon7.addPixmap(QtGui.QPixmap(":/icons/white/retransmit.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)
@@ -248,7 +248,7 @@ class CAND_MainWindow(QMainWindow):
         self.markButton.setSizePolicy(sizePolicy)
         self.markButton.setMaximumSize(QtCore.QSize(60, 60))
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(":/icons/black/mark.png"),
+        icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
                         QtGui.QIcon.Active, QtGui.QIcon.Off)

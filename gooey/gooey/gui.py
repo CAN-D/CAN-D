@@ -1,6 +1,6 @@
 import sys
 import argparse
-import stylesheet.breeze_resources
+import stylesheet.qdarkstyle.pyqt5_style_rc
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout
 from PyQt5.QtCore import QFile, QTextStream
 from ui.widgets.mainwindow import CAND_MainWindow
@@ -20,10 +20,14 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # set stylesheet
-    file = QFile("stylesheet/dark.qss")
-    file.open(QFile.ReadOnly | QFile.Text)
-    stream = QTextStream(file)
-    app.setStyleSheet(stream.readAll())
+    f = QFile("stylesheet/qdarkstyle/style.qss")
+    if not f.exists():
+        print("Stylesheet not found.")
+    else:
+        f.open(QFile.ReadOnly | QFile.Text)
+        ts = QTextStream(f)
+        stylesheet = ts.readAll()
+        app.setStyleSheet(stylesheet)
 
     cand = CAND_MainWindow(args.is_demo, args.trace_location)
     cand.showMaximized()

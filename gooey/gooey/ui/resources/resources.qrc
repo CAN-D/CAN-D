@@ -1,12 +1,14 @@
 <RCC>
   <qresource prefix="icons">
-    <file>black/check_circle.svg</file>
-    <file>black/replay.svg</file>
     <file>white/connect1.png</file>
     <file>white/open.png</file>
     <file>white/save.png</file>
     <file>white/mark.png</file>
     <file>white/sdstart.png</file>
+    <file>white/replay.png</file>
+    <file>white/check_circle.png</file>
+    <file>black/replay.png</file>
+    <file>black/check_circle.png</file>
     <file>white/disconnect1.png</file>
     <file>white/retransmit.png</file>
     <file>white/sdstop.png</file>
