@@ -64,7 +64,7 @@ class CAND_MainWindow(QMainWindow):
         icon.addPixmap(QtGui.QPixmap(":/icons/white/open.png"),
                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.openButton.setIcon(icon)
-        self.openButton.setIconSize(QtCore.QSize(48, 48))
+        self.openButton.setIconSize(QtCore.QSize(30, 30))
         self.openButton.setObjectName("openButton")
         self.sideBarLayout.addWidget(self.openButton, 0, QtCore.Qt.AlignLeft)
 
@@ -87,7 +87,7 @@ class CAND_MainWindow(QMainWindow):
         icon1.addPixmap(QtGui.QPixmap(":/icons/white/save.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.saveButton.setIcon(icon1)
-        self.saveButton.setIconSize(QtCore.QSize(48, 48))
+        self.saveButton.setIconSize(QtCore.QSize(30, 30))
         self.saveButton.setObjectName("saveButton")
         self.sideBarLayout.addWidget(self.saveButton, 0, QtCore.Qt.AlignLeft)
 
@@ -110,7 +110,7 @@ class CAND_MainWindow(QMainWindow):
         icon2.addPixmap(QtGui.QPixmap(":/icons/white/connect1.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.connectButton.setIcon(icon2)
-        self.connectButton.setIconSize(QtCore.QSize(48, 48))
+        self.connectButton.setIconSize(QtCore.QSize(30, 30))
         self.connectButton.setObjectName("connectButton")
         self.sideBarLayout.addWidget(
             self.connectButton, 0, QtCore.Qt.AlignLeft)
@@ -135,7 +135,7 @@ class CAND_MainWindow(QMainWindow):
         icon3.addPixmap(QtGui.QPixmap(":/icons/white/disconnect1.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.disconnectButton.setIcon(icon3)
-        self.disconnectButton.setIconSize(QtCore.QSize(48, 48))
+        self.disconnectButton.setIconSize(QtCore.QSize(30, 30))
         self.disconnectButton.setObjectName("disconnectButton")
         self.sideBarLayout.addWidget(
             self.disconnectButton, 0, QtCore.Qt.AlignLeft)
@@ -159,7 +159,7 @@ class CAND_MainWindow(QMainWindow):
         icon4.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.startSdButton.setIcon(icon4)
-        self.startSdButton.setIconSize(QtCore.QSize(48, 48))
+        self.startSdButton.setIconSize(QtCore.QSize(30, 30))
         self.startSdButton.setObjectName("startSdButton")
         self.sideBarLayout.addWidget(
             self.startSdButton, 0, QtCore.Qt.AlignLeft)
@@ -184,7 +184,7 @@ class CAND_MainWindow(QMainWindow):
         icon5.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.stopSdButton.setIcon(icon5)
-        self.stopSdButton.setIconSize(QtCore.QSize(48, 48))
+        self.stopSdButton.setIconSize(QtCore.QSize(30, 30))
         self.stopSdButton.setObjectName("stopSdButton")
         self.sideBarLayout.addWidget(self.stopSdButton, 0, QtCore.Qt.AlignLeft)
 
@@ -207,7 +207,7 @@ class CAND_MainWindow(QMainWindow):
         icon6.addPixmap(QtGui.QPixmap(":/icons/white/transmit.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.transmitButton.setIcon(icon6)
-        self.transmitButton.setIconSize(QtCore.QSize(48, 48))
+        self.transmitButton.setIconSize(QtCore.QSize(30, 30))
         self.transmitButton.setObjectName("transmitButton")
         self.sideBarLayout.addWidget(
             self.transmitButton, 0, QtCore.Qt.AlignLeft)
@@ -232,7 +232,7 @@ class CAND_MainWindow(QMainWindow):
         icon7.addPixmap(QtGui.QPixmap(":/icons/white/retransmit.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.retransmitButton.setIcon(icon7)
-        self.retransmitButton.setIconSize(QtCore.QSize(48, 48))
+        self.retransmitButton.setIconSize(QtCore.QSize(30, 30))
         self.retransmitButton.setObjectName("retransmitButton")
         self.sideBarLayout.addWidget(
             self.retransmitButton, 0, QtCore.Qt.AlignLeft)
@@ -255,7 +255,7 @@ class CAND_MainWindow(QMainWindow):
         icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
                         QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.markButton.setIcon(icon8)
-        self.markButton.setIconSize(QtCore.QSize(48, 48))
+        self.markButton.setIconSize(QtCore.QSize(30, 30))
         self.markButton.setObjectName("markButton")
         self.sideBarLayout.addWidget(self.markButton)
         self.horizontalLayout_2.addLayout(self.sideBarLayout)

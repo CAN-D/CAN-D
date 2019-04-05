@@ -1328,8 +1328,7 @@ QToolButton
 {
     background-color: #31363b;
     border: 0px;
-    /* margin: 0.3ex;
-    padding: 0.5ex; */
+    border-radius: 4px;
 }
 
 QToolButton[popupMode="1"]  /* only for MenuButtonPopup */
