@@ -33,10 +33,234 @@ class CAND_MainWindow(QMainWindow):
         self.setObjectName("MainWindow")
         self.resize(1280, 778)
         self.setAutoFillBackground(False)
+
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
+
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.sideBarLayout = QtWidgets.QVBoxLayout()
+        self.sideBarLayout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
+        self.sideBarLayout.setObjectName("sideBarLayout")
+
+        ###  Buttons  ###
+
+        # Open Button
+        self.openButton = QtWidgets.QToolButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.openButton.sizePolicy().hasHeightForWidth())
+        self.openButton.setSizePolicy(sizePolicy)
+        self.openButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.openButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/white/open.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/white/open.png"),
+                       QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/white/open.png"),
+                       QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.openButton.setIcon(icon)
+        self.openButton.setIconSize(QtCore.QSize(30, 30))
+        self.openButton.setObjectName("openButton")
+        self.sideBarLayout.addWidget(self.openButton, 0, QtCore.Qt.AlignLeft)
+
+        # Save Button
+        self.saveButton = QtWidgets.QToolButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.saveButton.sizePolicy().hasHeightForWidth())
+        self.saveButton.setSizePolicy(sizePolicy)
+        self.saveButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.saveButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/white/save.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icons/white/save.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icons/white/save.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.saveButton.setIcon(icon1)
+        self.saveButton.setIconSize(QtCore.QSize(30, 30))
+        self.saveButton.setObjectName("saveButton")
+        self.sideBarLayout.addWidget(self.saveButton, 0, QtCore.Qt.AlignLeft)
+
+        # Connect Button
+        self.connectButton = QtWidgets.QToolButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.connectButton.sizePolicy().hasHeightForWidth())
+        self.connectButton.setSizePolicy(sizePolicy)
+        self.connectButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.connectButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/white/connect1.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/icons/white/connect1.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/icons/white/connect1.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.connectButton.setIcon(icon2)
+        self.connectButton.setIconSize(QtCore.QSize(30, 30))
+        self.connectButton.setObjectName("connectButton")
+        self.sideBarLayout.addWidget(
+            self.connectButton, 0, QtCore.Qt.AlignLeft)
+
+        # Disconnect Button
+        self.disconnectButton = QtWidgets.QToolButton(self.centralwidget)
+        self.disconnectButton.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.disconnectButton.sizePolicy().hasHeightForWidth())
+        self.disconnectButton.setSizePolicy(sizePolicy)
+        self.disconnectButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.disconnectButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icons/white/disconnect1.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/icons/white/disconnect1.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/icons/white/disconnect1.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.disconnectButton.setIcon(icon3)
+        self.disconnectButton.setIconSize(QtCore.QSize(30, 30))
+        self.disconnectButton.setObjectName("disconnectButton")
+        self.sideBarLayout.addWidget(
+            self.disconnectButton, 0, QtCore.Qt.AlignLeft)
+
+        # Start SD Button
+        self.startSdButton = QtWidgets.QToolButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.startSdButton.sizePolicy().hasHeightForWidth())
+        self.startSdButton.setSizePolicy(sizePolicy)
+        self.startSdButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.startSdButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icons/white/sdstart.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/icons/white/sdstart.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.startSdButton.setIcon(icon4)
+        self.startSdButton.setIconSize(QtCore.QSize(30, 30))
+        self.startSdButton.setObjectName("startSdButton")
+        self.sideBarLayout.addWidget(
+            self.startSdButton, 0, QtCore.Qt.AlignLeft)
+
+        # Stop SD Button
+        self.stopSdButton = QtWidgets.QToolButton(self.centralwidget)
+        self.stopSdButton.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.stopSdButton.sizePolicy().hasHeightForWidth())
+        self.stopSdButton.setSizePolicy(sizePolicy)
+        self.stopSdButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.stopSdButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/icons/white/sdstop.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.stopSdButton.setIcon(icon5)
+        self.stopSdButton.setIconSize(QtCore.QSize(30, 30))
+        self.stopSdButton.setObjectName("stopSdButton")
+        self.sideBarLayout.addWidget(self.stopSdButton, 0, QtCore.Qt.AlignLeft)
+
+        # Transmit Button
+        self.transmitButton = QtWidgets.QToolButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.transmitButton.sizePolicy().hasHeightForWidth())
+        self.transmitButton.setSizePolicy(sizePolicy)
+        self.transmitButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.transmitButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/icons/white/transmit.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/icons/white/transmit.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/icons/white/transmit.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.transmitButton.setIcon(icon6)
+        self.transmitButton.setIconSize(QtCore.QSize(30, 30))
+        self.transmitButton.setObjectName("transmitButton")
+        self.sideBarLayout.addWidget(
+            self.transmitButton, 0, QtCore.Qt.AlignLeft)
+
+        # Retransmit Button
+        self.retransmitButton = QtWidgets.QToolButton(self.centralwidget)
+        self.retransmitButton.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.retransmitButton.sizePolicy().hasHeightForWidth())
+        self.retransmitButton.setSizePolicy(sizePolicy)
+        self.retransmitButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.retransmitButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons/white/retransmit.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(":/icons/white/retransmit.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(":/icons/white/retransmit.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.retransmitButton.setIcon(icon7)
+        self.retransmitButton.setIconSize(QtCore.QSize(30, 30))
+        self.retransmitButton.setObjectName("retransmitButton")
+        self.sideBarLayout.addWidget(
+            self.retransmitButton, 0, QtCore.Qt.AlignLeft)
+
+        # Mark Button
+        self.markButton = QtWidgets.QToolButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.markButton.sizePolicy().hasHeightForWidth())
+        self.markButton.setSizePolicy(sizePolicy)
+        self.markButton.setMaximumSize(QtCore.QSize(60, 60))
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
+                        QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
+                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
+        self.markButton.setIcon(icon8)
+        self.markButton.setIconSize(QtCore.QSize(30, 30))
+        self.markButton.setObjectName("markButton")
+        self.sideBarLayout.addWidget(self.markButton)
+        self.horizontalLayout_2.addLayout(self.sideBarLayout)
+
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(90, 10, 1181, 741))
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
         self.tabWidget.setMovable(True)
         self.tabWidget.setObjectName("tabWidget")
@@ -49,195 +273,11 @@ class CAND_MainWindow(QMainWindow):
         self.rxtxTab = RxTxTab(self.controller.rxtxcontroller)
         self.tabWidget.addTab(self.rxtxTab, "")
 
-        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(0, 20, 82, 731))
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.layoutWidget.sizePolicy().hasHeightForWidth())
-        self.layoutWidget.setSizePolicy(sizePolicy)
-        self.layoutWidget.setObjectName("layoutWidget")
-
-        self.sideBarLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
-        self.sideBarLayout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
-        self.sideBarLayout.setContentsMargins(0, 0, 0, 0)
-        self.sideBarLayout.setObjectName("sideBarLayout")
-
-        # Open Button
-        self.openButton = QtWidgets.QToolButton(self)
-
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.openButton.sizePolicy().hasHeightForWidth())
-        self.openButton.setSizePolicy(sizePolicy)
-
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/open.png"),
-                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.openButton.setIcon(icon)
-        self.openButton.setIconSize(QtCore.QSize(70, 70))
-        self.openButton.setObjectName("openButton")
-
-        self.sideBarLayout.addWidget(self.openButton)
-
-        # Save Button
-        self.saveButton = QtWidgets.QToolButton(self)
-
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.saveButton.sizePolicy().hasHeightForWidth())
-        self.saveButton.setSizePolicy(sizePolicy)
-
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/save.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.saveButton.setIcon(icon1)
-        self.saveButton.setIconSize(QtCore.QSize(70, 70))
-        self.saveButton.setObjectName("saveButton")
-
-        self.sideBarLayout.addWidget(self.saveButton)
-
-        # Connect Button
-        self.connectButton = QtWidgets.QToolButton(self)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.connectButton.sizePolicy().hasHeightForWidth())
-        self.connectButton.setSizePolicy(sizePolicy)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/connect1.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.connectButton.setIcon(icon2)
-        self.connectButton.setIconSize(QtCore.QSize(70, 70))
-        self.connectButton.setObjectName("connectButton")
-        self.sideBarLayout.addWidget(self.connectButton)
-
-        # Disconnect Button
-        self.disconnectButton = QtWidgets.QToolButton(self)
-        self.disconnectButton.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.disconnectButton.sizePolicy().hasHeightForWidth())
-        self.disconnectButton.setSizePolicy(sizePolicy)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/disconnect1.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.disconnectButton.setIcon(icon3)
-        self.disconnectButton.setIconSize(QtCore.QSize(70, 70))
-        self.disconnectButton.setObjectName("disconnectButton")
-        self.sideBarLayout.addWidget(self.disconnectButton)
-
-        # Record Button
-        self.recordButton = QtWidgets.QToolButton(self)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.recordButton.sizePolicy().hasHeightForWidth())
-        self.recordButton.setSizePolicy(sizePolicy)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/sdstart.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.recordButton.setIcon(icon4)
-        self.recordButton.setIconSize(QtCore.QSize(70, 70))
-        self.recordButton.setObjectName("recordButton")
-        self.sideBarLayout.addWidget(self.recordButton)
-
-        # Stop Button
-        self.stopButton = QtWidgets.QToolButton(self)
-        self.stopButton.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.stopButton.sizePolicy().hasHeightForWidth())
-        self.stopButton.setSizePolicy(sizePolicy)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/sdstop.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.stopButton.setIcon(icon5)
-        self.stopButton.setIconSize(QtCore.QSize(70, 70))
-        self.stopButton.setObjectName("stopButton")
-        self.sideBarLayout.addWidget(self.stopButton)
-
-        # Play Button
-        self.transmitButton = QtWidgets.QToolButton(self)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.transmitButton.sizePolicy().hasHeightForWidth())
-        self.transmitButton.setSizePolicy(sizePolicy)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/transmit.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.transmitButton.setIcon(icon6)
-        self.transmitButton.setIconSize(QtCore.QSize(70, 70))
-        self.transmitButton.setObjectName("transmitButton")
-        self.sideBarLayout.addWidget(self.transmitButton)
-
-        # Pause Button
-        self.retransmitButton = QtWidgets.QToolButton(self)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.retransmitButton.sizePolicy().hasHeightForWidth())
-        self.retransmitButton.setSizePolicy(sizePolicy)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/icons/retransmit.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.retransmitButton.setIcon(icon7)
-        self.retransmitButton.setIconSize(QtCore.QSize(70, 70))
-        self.retransmitButton.setObjectName("retransmitButton")
-        self.sideBarLayout.addWidget(self.retransmitButton)
-
+        self.horizontalLayout_2.addWidget(self.tabWidget)
         self.setCentralWidget(self.centralwidget)
-
-        # Set MenuBar Widget
-        self.menubar = QtWidgets.QMenuBar(self)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
-        self.menubar.setObjectName("menubar")
-        self.menuCAN_D = QtWidgets.QMenu(self.menubar)
-        self.menuCAN_D.setObjectName("menuCAN_D")
-        self.menuFile = QtWidgets.QMenu(self.menuCAN_D)
-        self.menuFile.setObjectName("menuFile")
-        self.setMenuBar(self.menubar)
-
-        # Status Bar
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
-
-        # Actions
-        self.actionFile_2 = QtWidgets.QAction(self)
-        self.actionFile_2.setObjectName("actionFile_2")
-        self.actionSave = QtWidgets.QAction(self)
-        self.actionSave.setObjectName("actionSave")
-        self.actionSave_As = QtWidgets.QAction(self)
-        self.actionSave_As.setObjectName("actionSave_As")
-        self.menuFile.addAction(self.actionFile_2)
-        self.menuFile.addAction(self.actionSave)
-        self.menuFile.addAction(self.actionSave_As)
-        self.menuCAN_D.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuCAN_D.menuAction())
 
         self.retranslateUi(self)
         self.tabWidget.setCurrentIndex(0)
@@ -246,8 +286,8 @@ class CAND_MainWindow(QMainWindow):
         self.saveButton.clicked.connect(self.saveFile)
         self.connectButton.clicked.connect(self.connectUsb)
         self.disconnectButton.clicked.connect(self.disconnectUsb)
-        self.recordButton.clicked.connect(self.startLoggingSD)
-        self.stopButton.clicked.connect(self.stopLoggingSD)
+        self.startSdButton.clicked.connect(self.startLoggingSD)
+        self.stopSdButton.clicked.connect(self.stopLoggingSD)
         self.transmitButton.clicked.connect(self.transmitMessage)
         self.retransmitButton.clicked.connect(self.retransmitMessage)
 
@@ -331,8 +371,8 @@ class CAND_MainWindow(QMainWindow):
     def startLoggingSD(self):
         if self.controller.startLog():
             self.sdLoggingStatus.setText(CAND_MainWindow.sd_logging)
-            self.recordButton.setEnabled(False)
-            self.stopButton.setEnabled(True)
+            self.startSdButton.setEnabled(False)
+            self.stopSdButton.setEnabled(True)
         else:
             popup = QtWidgets.QMessageBox.critical(
                 self, "Error", "CAN-D device is not connected. \n\nPlease connect to the CAN-D USB device.")
@@ -341,8 +381,8 @@ class CAND_MainWindow(QMainWindow):
     def stopLoggingSD(self):
         if not self.controller.stopLog():
             self.sdLoggingStatus.setText(CAND_MainWindow.sd_not_logging)
-            self.recordButton.setEnabled(True)
-            self.stopButton.setEnabled(False)
+            self.startSdButton.setEnabled(True)
+            self.stopSdButton.setEnabled(False)
         else:
             popup = QtWidgets.QMessageBox.critical(
                 self, "Error", "Stop logging SD card failed. \n\nPlease try again.")
@@ -428,24 +468,20 @@ class CAND_MainWindow(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate(
+        MainWindow.setWindowTitle(_translate(
             "MainWindow", "CAN-D Data Logger"))
+        self.saveButton.setText(_translate("MainWindow", "..."))
+        self.connectButton.setText(_translate("MainWindow", "..."))
+        self.disconnectButton.setText(_translate("MainWindow", "..."))
+        self.startSdButton.setText(_translate("MainWindow", "..."))
+        self.stopSdButton.setText(_translate("MainWindow", "..."))
+        self.transmitButton.setText(_translate("MainWindow", "..."))
+        self.retransmitButton.setText(_translate("MainWindow", "..."))
+        self.markButton.setText(_translate("MainWindow", "..."))
         self.tabWidget.setTabText(self.tabWidget.indexOf(
             self.traceTab), _translate("MainWindow", "Trace"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(
             self.rxtxTab), _translate("MainWindow", "Receive/Transmit"))
-        self.saveButton.setText(_translate("MainWindow", "..."))
-        self.connectButton.setText(_translate("MainWindow", "..."))
-        self.disconnectButton.setText(_translate("MainWindow", "..."))
-        self.recordButton.setText(_translate("MainWindow", "..."))
-        self.stopButton.setText(_translate("MainWindow", "..."))
-        self.transmitButton.setText(_translate("MainWindow", "..."))
-        self.retransmitButton.setText(_translate("MainWindow", "..."))
-        self.menuCAN_D.setTitle(_translate("MainWindow", "CAN-D"))
-        self.menuFile.setTitle(_translate("MainWindow", "File"))
-        self.actionFile_2.setText(_translate("MainWindow", "Open..."))
-        self.actionSave.setText(_translate("MainWindow", "Save"))
-        self.actionSave_As.setText(_translate("MainWindow", "Save As ..."))
 
 
 if __name__ == "__main__":

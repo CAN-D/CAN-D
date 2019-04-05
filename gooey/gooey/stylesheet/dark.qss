@@ -48,7 +48,7 @@ QToolTip
 QWidget
 {
     color: #eff0f1;
-    background-color: #31363b;
+    background-color: #000000;
     selection-background-color:#3daee9;
     selection-color: #eff0f1;
     background-clip: border;
@@ -207,7 +207,7 @@ QRadioButton::indicator:unchecked:disabled
 
 QMenuBar
 {
-    background-color: #31363b;
+    background-color: #000000;
     color: #eff0f1;
 }
 
@@ -584,7 +584,7 @@ QFrame[frameShape="6"]  /* QFrame::StyledPanel == 0x0006 */
     border-width: 0.1ex;
     padding: 0.1ex;
     border-style: solid;
-    border-color: #31363b;
+    border-color: #000000;
     background-color: #76797c;
     border-radius: 0.5ex;
 }
@@ -597,7 +597,7 @@ QStackedWidget
 QToolBar
 {
     border: 0.1ex transparent #393838;
-    background: 0.1ex solid #31363b;
+    background: 0.1ex solid #000000;
     font-weight: bold;
 }
 
@@ -632,7 +632,7 @@ QToolBar::separator:vertical
 QPushButton
 {
     color: #eff0f1;
-    background-color: qlineargradient(x1: 0.5, y1: 0.5 x2: 0.5, y2: 1, stop: 0 #3b4045, stop: 0.5 #31363b);
+    background-color: #3b4045;
     border-width: 0.1ex;
     border-color: #76797c;
     border-style: solid;
@@ -662,7 +662,7 @@ QPushButton:focus
 
 QPushButton:pressed
 {
-    background-color: #31363b;
+    background-color: #3daee9;
     padding-top: -1.5ex;
     padding-bottom: -1.7ex;
 }
@@ -685,14 +685,14 @@ QPushButton:checked
 
 QPushButton:hover
 {
-    background-color: qlineargradient(x1: 0.5, y1: 0.5 x2: 0.5, y2: 1, stop: 0 #454a4f, stop: 0.5 #3b4045);
+    background-color: #454a4f;
     border: 0.1ex solid #3daee9;
     color: #eff0f1;
 }
 
 QPushButton:checked:hover
 {
-    background-color: qlineargradient(x1: 0.5, y1: 0.5 x2: 0.5, y2: 1, stop: 0 #808386, stop: 0.5 #76797c);
+    background-color: #454a4f;
     border: 0.1ex solid #3daee9;
     color: #eff0f1;
 }
@@ -1326,11 +1326,9 @@ QSlider::sub-page:vertical
 
 QToolButton
 {
-    background-color: transparent;
+    background-color: #31363b;
     border: 0px;
-    border-radius: 0.2ex;
-    margin: 0.3ex;
-    padding: 0.5ex;
+    border-radius: 4px;
 }
 
 QToolButton[popupMode="1"]  /* only for MenuButtonPopup */
@@ -1360,7 +1358,7 @@ QToolButton::menu-arrow
 QToolButton:hover,
 QToolButton::menu-button:hover
 {
-    background-color: transparent;
+    background-color: #3daee9;
     border: 0.1ex solid #3daee9;
 }
 

@@ -43,7 +43,7 @@ class TraceTab(QWidget):
         self.setButton.setMaximumSize(QtCore.QSize(48, 48))
         self.setButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/check_circle.svg"),
+        icon.addPixmap(QtGui.QPixmap(":/icons/white/check_circle.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setButton.setIcon(icon)
         self.setButton.setIconSize(QtCore.QSize(24, 24))
@@ -54,7 +54,7 @@ class TraceTab(QWidget):
         self.resetButton.setMaximumSize(QtCore.QSize(48, 48))
         self.resetButton.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/replay.svg"),
+        icon1.addPixmap(QtGui.QPixmap(":/icons/white/replay.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.resetButton.setIcon(icon1)
         self.resetButton.setIconSize(QtCore.QSize(24, 24))
@@ -83,7 +83,7 @@ class TraceTab(QWidget):
         self.setDbcButton.setMaximumSize(QtCore.QSize(48, 48))
         self.setDbcButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/check_circle.svg"),
+        icon.addPixmap(QtGui.QPixmap(":/icons/white/check_circle.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setDbcButton.setIcon(icon)
         self.setDbcButton.setIconSize(QtCore.QSize(24, 24))
@@ -103,6 +103,10 @@ class TraceTab(QWidget):
         header.setStretchLastSection(True)
         self.verticalLayout_2.addWidget(self.TraceTable)
         self.verticalLayout.addWidget(self.TraceGroup)
+
+        font = header.font()
+        font.setPointSize(13)
+        header.setFont(font)
 
         self.TraceTable.setModel(self.controller.tracetable)
 
