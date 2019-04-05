@@ -25,4 +25,8 @@
     <file>black/connect2.png</file>
     <file>black/connect1.png</file>
   </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/avenir.otf</file>
+    <file>fonts/minimal.otf</file>
+  </qresource>
 </RCC>

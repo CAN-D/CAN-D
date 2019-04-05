@@ -125,7 +125,7 @@ class TransmitTreeModel(QAbstractItemModel):
         oldMessage.message = newMessage.message
         oldMessage.dlc = newMessage.dlc
         oldMessage.data = newMessage.data
-        oldMessage.cycle_time = float(newMessage.time) - float(oldMessage.time)
+        oldMessage.cycle_time = newMessage.cycle_time
         oldMessage.count = oldMessage.count + 1
 
     def updateChild(self, oldChild, newChild):

@@ -3,6 +3,7 @@ import argparse
 import stylesheet.qdarkstyle.pyqt5_style_rc
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout
 from PyQt5.QtCore import QFile, QTextStream
+from PyQt5.QtGui import QFontDatabase, QFont
 from ui.widgets.mainwindow import CAND_MainWindow
 
 if __name__ == "__main__":
@@ -18,6 +19,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = QApplication(sys.argv)
+
+    # load font
+    QFontDatabase.addApplicationFont(":/fonts/avenir.otf")
+    font = QFont("Avenir Next LT Pro", 16)
+    app.setFont(font)
 
     # set stylesheet
     f = QFile("stylesheet/qdarkstyle/style.qss")

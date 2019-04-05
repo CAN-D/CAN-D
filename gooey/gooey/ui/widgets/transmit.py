@@ -5,10 +5,11 @@ from models.transmit_message import TransmitMessage
 
 
 class TransmitWindow(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, controller=None):
         super(TransmitWindow, self).__init__(parent)
+        self.rxtxcontroller = controller
         self.setObjectName("Dialog")
-        self.resize(350, 220)
+        self.resize(350, 180)
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")
         self.windowLabel = QtWidgets.QLabel(self)
@@ -28,6 +29,7 @@ class TransmitWindow(QDialog):
         self.idInput.setObjectName("idInput")
         self.idInput.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.idInput.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.idInput.setTabChangesFocus(True)
         self.idInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.idForm.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.idInput)
 
@@ -63,6 +65,7 @@ class TransmitWindow(QDialog):
             QtCore.Qt.ScrollBarAlwaysOff)
         self.cycleInput.setHorizontalScrollBarPolicy(
             QtCore.Qt.ScrollBarAlwaysOff)
+        self.cycleInput.setTabChangesFocus(True)
         self.cycleInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.cycleForm.setWidget(
             1, QtWidgets.QFormLayout.LabelRole, self.cycleInput)
@@ -90,6 +93,7 @@ class TransmitWindow(QDialog):
         self.dataInput.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.dataInput.setHorizontalScrollBarPolicy(
             QtCore.Qt.ScrollBarAlwaysOff)
+        self.dataInput.setTabChangesFocus(True)
         self.dataInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.dataForm.setWidget(
             1, QtWidgets.QFormLayout.LabelRole, self.dataInput)
@@ -136,6 +140,7 @@ class TransmitWindow(QDialog):
         self.dataLabel.setText(_translate("Dialog", "Data: (hex)"))
 
     def sendmessage(self):
+        self.message.parentItem = self.rxtxcontroller.transmittable.rootItem
         self.message.can_id = self.idInput.toPlainText()
         self.message.data = self.dataInput.toPlainText()
         self.message.dlc = self.lengthInput.value()
@@ -143,9 +148,6 @@ class TransmitWindow(QDialog):
         self.message.time = int(round(time.time() * 1000))
         self.message.rxtx = "TX"
         self.message.count = 1
-
-        # TODO: dbc message field
-
         self.accept()
 
     def canceled(self):

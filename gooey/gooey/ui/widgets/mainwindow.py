@@ -214,7 +214,6 @@ class CAND_MainWindow(QMainWindow):
 
         # Retransmit Button
         self.retransmitButton = QtWidgets.QToolButton(self.centralwidget)
-        self.retransmitButton.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -277,6 +276,7 @@ class CAND_MainWindow(QMainWindow):
         self.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
+        self.statusbar.setStyleSheet("font: 13pt\".Avenir Next LT Pro\";")
         self.setStatusBar(self.statusbar)
 
         self.retranslateUi(self)
@@ -389,7 +389,7 @@ class CAND_MainWindow(QMainWindow):
             return
 
     def transmitMessage(self):
-        transmitWindow = TransmitWindow(self)
+        transmitWindow = TransmitWindow(self, self.controller.rxtxcontroller)
         transmitWindow.show()
 
         if transmitWindow.exec_():
@@ -400,7 +400,7 @@ class CAND_MainWindow(QMainWindow):
         selected = self.rxtxTab.transmitTable.selectionModel()
         if selected.hasSelection():
             for row in selected.selectedRows():
-                message = self.rxtxTab.controller.transmittable.messages[row.row(
+                message = self.rxtxTab.controller.transmittable.rootItem.childItems[row.row(
                 )]
                 self.controller.rxtxcontroller.transmitMessage(message)
 

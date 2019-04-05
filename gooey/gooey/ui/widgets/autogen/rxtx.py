@@ -16,7 +16,7 @@ class Ui_RxTxTab(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(RxTxTab)
         self.verticalLayout.setObjectName("verticalLayout")
         self.receiveGroup = QtWidgets.QGroupBox(RxTxTab)
-        self.receiveGroup.setStyleSheet("font: 18pt \".SF NS Text\";")
+        self.receiveGroup.setStyleSheet("font: 18pt \".Avenir Next LT Pro\";")
         self.receiveGroup.setObjectName("receiveGroup")
         self.gridLayout = QtWidgets.QGridLayout(self.receiveGroup)
         self.gridLayout.setObjectName("gridLayout")
@@ -25,7 +25,7 @@ class Ui_RxTxTab(object):
         self.gridLayout.addWidget(self.receiveTable, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.receiveGroup)
         self.transmitGroup = QtWidgets.QGroupBox(RxTxTab)
-        self.transmitGroup.setStyleSheet("font: 18pt \".SF NS Text\";")
+        self.transmitGroup.setStyleSheet("font: 18pt \".Avenir Next LT Pro\";")
         self.transmitGroup.setObjectName("transmitGroup")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.transmitGroup)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -42,8 +42,6 @@ class Ui_RxTxTab(object):
         RxTxTab.setWindowTitle(_translate("RxTxTab", "Form"))
         self.receiveGroup.setTitle(_translate("RxTxTab", "Receive"))
         self.transmitGroup.setTitle(_translate("RxTxTab", "Transmit"))
-
-
 
 
 if __name__ == "__main__":

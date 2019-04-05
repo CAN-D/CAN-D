@@ -20,6 +20,7 @@ class TraceTab(QWidget):
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.groupBox = QtWidgets.QGroupBox(self.TraceGroup)
+        self.groupBox.setStyleSheet("font: 13pt\".Avenir Next LT Pro\";")
         self.groupBox.setObjectName("groupBox")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.groupBox)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -65,6 +66,7 @@ class TraceTab(QWidget):
 
         self.groupBox_2 = QtWidgets.QGroupBox(self.TraceGroup)
         self.groupBox_2.setObjectName("groupBox_2")
+        self.groupBox_2.setStyleSheet("font: 13pt\".Avenir Next LT Pro\";")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.groupBox_2)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.pathEdit = QtWidgets.QLineEdit(self.groupBox_2)
@@ -96,6 +98,7 @@ class TraceTab(QWidget):
         self.verticalLayout_2.addLayout(self.horizontalLayout_4)
 
         self.TraceTable = QtWidgets.QTableView(self.TraceGroup)
+        self.TraceTable.setStyleSheet("font: 13pt\".Avenir Next LT Pro\";")
         self.TraceTable.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers)
         self.TraceTable.setObjectName("TraceTable")
