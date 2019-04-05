@@ -71,6 +71,7 @@ class ReceiveTreeModel(QAbstractItemModel):
             return QtCore.QModelIndex()
 
         childItem = index.internalPointer()
+        print(childItem)
         parentItem = childItem.parent()
 
         if parentItem == self.rootItem:
