@@ -82,8 +82,11 @@ class MainController():
         return self.logging
 
     def markLog(self):
-        # TODO
-        return
+        if self.candbus is not None:
+            self.candbus.mark_log()
+            return True
+
+        return False
 
 
 class DataPollThread(QtCore.QThread):
