@@ -9,7 +9,7 @@ class TransmitWindow(QDialog):
         super(TransmitWindow, self).__init__(parent)
         self.rxtxcontroller = controller
         self.setObjectName("Dialog")
-        self.resize(350, 180)
+        self.resize(300, 180)
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")
         self.windowLabel = QtWidgets.QLabel(self)
@@ -30,6 +30,7 @@ class TransmitWindow(QDialog):
         self.idInput.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.idInput.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.idInput.setTabChangesFocus(True)
+        self.idInput.setStyleSheet("font: 12pt;")
         self.idInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.idForm.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.idInput)
 
@@ -43,6 +44,7 @@ class TransmitWindow(QDialog):
         self.lengthForm.setObjectName("lengthForm")
         self.lengthInput = QtWidgets.QSpinBox(self)
         self.lengthInput.setMinimumSize(QtCore.QSize(45, 0))
+        self.lengthInput.setStyleSheet("font: 12pt;")
         self.lengthInput.setObjectName("lengthInput")
         self.lengthInput.setMinimum(0)
         self.lengthInput.setMaximum(8)
@@ -61,6 +63,7 @@ class TransmitWindow(QDialog):
         self.cycleInput = QtWidgets.QTextEdit(self)
         self.cycleInput.setMaximumSize(QtCore.QSize(75, 25))
         self.cycleInput.setObjectName("cycleInput")
+        self.cycleInput.setStyleSheet("font: 12pt;")
         self.cycleInput.setVerticalScrollBarPolicy(
             QtCore.Qt.ScrollBarAlwaysOff)
         self.cycleInput.setHorizontalScrollBarPolicy(
@@ -95,6 +98,7 @@ class TransmitWindow(QDialog):
             QtCore.Qt.ScrollBarAlwaysOff)
         self.dataInput.setTabChangesFocus(True)
         self.dataInput.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
+        self.dataInput.setStyleSheet("font: 12pt;")
         self.dataForm.setWidget(
             1, QtWidgets.QFormLayout.LabelRole, self.dataInput)
         self.dataLabel = QtWidgets.QLabel(self)
@@ -109,8 +113,6 @@ class TransmitWindow(QDialog):
         self.buttonBox = QtWidgets.QDialogButtonBox(self)
         self.buttonBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        # self.buttonBox.setStandardButtons(
-        #     QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout.addWidget(self.buttonBox)
 

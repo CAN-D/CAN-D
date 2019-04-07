@@ -290,6 +290,7 @@ class CAND_MainWindow(QMainWindow):
         self.stopSdButton.clicked.connect(self.stopLoggingSD)
         self.transmitButton.clicked.connect(self.transmitMessage)
         self.retransmitButton.clicked.connect(self.retransmitMessage)
+        self.markButton.clicked.connect(self.markLog)
 
         self.traceTab.setDbcButton.clicked.connect(self.setDbcCallback)
 
@@ -347,6 +348,8 @@ class CAND_MainWindow(QMainWindow):
             self.connectedStatus.setText(CAND_MainWindow.connected)
             self.connectButton.setEnabled(False)
             self.disconnectButton.setEnabled(True)
+            self.transmitButton.setEnabled(True)
+            self.retransmitButton.setEnabled(True)
             self.startPoll()
         else:
             popup = QtWidgets.QMessageBox.critical(
@@ -363,6 +366,8 @@ class CAND_MainWindow(QMainWindow):
             self.connectedStatus.setText(CAND_MainWindow.disconnected)
             self.connectButton.setEnabled(True)
             self.disconnectButton.setEnabled(False)
+            self.transmitButton.setEnabled(False)
+            self.retransmitButton.setEnabled(False)
         else:
             popup = QtWidgets.QMessageBox.critical(
                 self, "Error", "CAN-D device not found. \n\nPlease make sure that the CAN-D is connected properly.")
@@ -373,6 +378,7 @@ class CAND_MainWindow(QMainWindow):
             self.sdLoggingStatus.setText(CAND_MainWindow.sd_logging)
             self.startSdButton.setEnabled(False)
             self.stopSdButton.setEnabled(True)
+            self.markButton.setEnabled(True)
         else:
             popup = QtWidgets.QMessageBox.critical(
                 self, "Error", "CAN-D device is not connected. \n\nPlease connect to the CAN-D USB device.")
@@ -383,6 +389,7 @@ class CAND_MainWindow(QMainWindow):
             self.sdLoggingStatus.setText(CAND_MainWindow.sd_not_logging)
             self.startSdButton.setEnabled(True)
             self.stopSdButton.setEnabled(False)
+            self.markButton.setEnabled(False)
         else:
             popup = QtWidgets.QMessageBox.critical(
                 self, "Error", "Stop logging SD card failed. \n\nPlease try again.")
@@ -430,6 +437,12 @@ class CAND_MainWindow(QMainWindow):
         self.insertSignals(data, msg)
 
         return
+
+    def markLog(self):
+        if not self.controller.markLog():
+            popup = QtWidgets.QMessageBox.critical(
+                self, "Error", "Mark data log failed. \n\nPlease try again.")
+            return
 
     def insertSignals(self, data, msg):
         if self.controller.dbc is not None and msg.message is not "":

@@ -22,7 +22,7 @@ class MainController():
         if rxtxcontroller is not None:
             self.rxtxcontroller = rxtxcontroller
         else:
-            self.rxtxcontroller = RxtxController()
+            self.rxtxcontroller = RxtxController(self)
 
         if gpscontroller is not None:
             self.gpscontroller = gpscontroller
@@ -82,8 +82,11 @@ class MainController():
         return self.logging
 
     def markLog(self):
-        # TODO
-        return
+        if self.candbus is not None:
+            self.candbus.mark_log()
+            return True
+
+        return False
 
 
 class DataPollThread(QtCore.QThread):
