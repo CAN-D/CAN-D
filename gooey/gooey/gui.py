@@ -1,9 +1,11 @@
 import sys
 import argparse
+import asyncio
 import stylesheet.qdarkstyle.pyqt5_style_rc
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout
 from PyQt5.QtCore import QFile, QTextStream
 from PyQt5.QtGui import QFontDatabase, QFont
+from quamash import QEventLoop
 from ui.widgets.mainwindow import CAND_MainWindow
 
 if __name__ == "__main__":
@@ -19,6 +21,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = QApplication(sys.argv)
+    loop = QEventLoop(app)
+    asyncio.set_event_loop(loop)
 
     # load font
     QFontDatabase.addApplicationFont(":/fonts/avenir.otf")
@@ -38,4 +42,5 @@ if __name__ == "__main__":
     cand = CAND_MainWindow(args.is_demo, args.trace_location)
     cand.showMaximized()
 
-    sys.exit(app.exec_())
+    with loop:
+        loop.run_forever()

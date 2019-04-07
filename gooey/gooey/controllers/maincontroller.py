@@ -22,7 +22,7 @@ class MainController():
         if rxtxcontroller is not None:
             self.rxtxcontroller = rxtxcontroller
         else:
-            self.rxtxcontroller = RxtxController()
+            self.rxtxcontroller = RxtxController(self)
 
         if gpscontroller is not None:
             self.gpscontroller = gpscontroller
