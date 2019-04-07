@@ -3,7 +3,7 @@ import argparse
 import asyncio
 import stylesheet.qdarkstyle.pyqt5_style_rc
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout
-from PyQt5.QtCore import QFile, QTextStream
+from PyQt5.QtCore import QFile, QTextStream, Qt
 from PyQt5.QtGui import QFontDatabase, QFont
 from quamash import QEventLoop
 from ui.widgets.mainwindow import CAND_MainWindow
@@ -28,6 +28,13 @@ if __name__ == "__main__":
     QFontDatabase.addApplicationFont(":/fonts/avenir.otf")
     font = QFont("Avenir Next LT Pro", 16)
     app.setFont(font)
+    if hasattr(Qt, 'AA_EnableHighDpiScaling'):
+        QApplication.setAttribute(
+            Qt.AA_EnableHighDpiScaling, True)
+
+    if hasattr(Qt, 'AA_UseHighDpiPixmaps'):
+        QApplication.setAttribute(
+            Qt.AA_UseHighDpiPixmaps, True)
 
     # set stylesheet
     f = QFile("stylesheet/qdarkstyle/style.qss")

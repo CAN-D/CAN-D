@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>black/mark.svg</file>
     <file>white/small.png</file>
     <file>white/connect1.png</file>
     <file>white/open.png</file>
