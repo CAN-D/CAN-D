@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
     syntax="proto3",
     serialized_options=None,
     serialized_pb=_b(
-        '\n\x11Proto/can-d.proto"z\n\x0c\x46romEmbedded\x12%\n\x0c\x63\x61nDataChunk\x18\x01 \x01(\x0b\x32\r.CanDataChunkH\x00\x12\x16\n\x0cgpsDataChunk\x18\x02 \x01(\x0cH\x00\x12\x1f\n\tlogFSInfo\x18\x03 \x01(\x0b\x32\n.LogFSInfoH\x00\x42\n\n\x08\x63ontents".\n\nToEmbedded\x12 \n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x0f.ControlCommand":\n\x0e\x43ontrolCommand\x12(\n\x0b\x63ommandType\x18\x01 \x01(\x0e\x32\x13.ControlCommandType"+\n\tLogFSInfo\x12\x1e\n\x08logFiles\x18\x01 \x03(\x0b\x32\x0c.LogFileInfo"(\n\x0c\x43\x61nDataChunk\x12\n\n\x02id\x18\x01 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c"?\n\x0bLogFileInfo\x12\x0c\n\x04size\x18\x01 \x01(\r\x12\x10\n\x08unixTime\x18\x02 \x01(\x04\x12\x10\n\x08\x66ileName\x18\x03 \x01(\t*p\n\x12\x43ontrolCommandType\x12\x0c\n\x08STOP_LOG\x10\x00\x12\r\n\tSTART_LOG\x10\x01\x12\x0c\n\x08MARK_LOG\x10\x02\x12\x12\n\x0eGET_LOGFS_INFO\x10\x03\x12\x0b\n\x07GET_LOG\x10\x04\x12\x0e\n\nDELETE_LOG\x10\x05\x62\x06proto3'
+        '\n\x11Proto/can-d.proto"z\n\x0c\x46romEmbedded\x12%\n\x0c\x63\x61nDataChunk\x18\x01 \x01(\x0b\x32\r.CanDataChunkH\x00\x12\x16\n\x0cgpsDataChunk\x18\x02 \x01(\x0cH\x00\x12\x1f\n\tlogFSInfo\x18\x03 \x01(\x0b\x32\n.LogFSInfoH\x00\x42\n\n\x08\x63ontents"S\n\nToEmbedded\x12 \n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x0f.ControlCommand\x12#\n\x0ctransmitData\x18\x02 \x01(\x0b\x32\r.CanDataChunk":\n\x0e\x43ontrolCommand\x12(\n\x0b\x63ommandType\x18\x01 \x01(\x0e\x32\x13.ControlCommandType"+\n\tLogFSInfo\x12\x1e\n\x08logFiles\x18\x01 \x03(\x0b\x32\x0c.LogFileInfo"(\n\x0c\x43\x61nDataChunk\x12\n\n\x02id\x18\x01 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c"?\n\x0bLogFileInfo\x12\x0c\n\x04size\x18\x01 \x01(\r\x12\x10\n\x08unixTime\x18\x02 \x01(\x04\x12\x10\n\x08\x66ileName\x18\x03 \x01(\t*p\n\x12\x43ontrolCommandType\x12\x0c\n\x08STOP_LOG\x10\x00\x12\r\n\tSTART_LOG\x10\x01\x12\x0c\n\x08MARK_LOG\x10\x02\x12\x12\n\x0eGET_LOGFS_INFO\x10\x03\x12\x0b\n\x07GET_LOG\x10\x04\x12\x0e\n\nDELETE_LOG\x10\x05\x62\x06proto3'
     ),
 )
 
@@ -53,8 +53,8 @@ _CONTROLCOMMANDTYPE = _descriptor.EnumDescriptor(
     ],
     containing_type=None,
     serialized_options=None,
-    serialized_start=405,
-    serialized_end=517,
+    serialized_start=442,
+    serialized_end=554,
 )
 _sym_db.RegisterEnumDescriptor(_CONTROLCOMMANDTYPE)
 
@@ -174,7 +174,25 @@ _TOEMBEDDED = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
-        )
+        ),
+        _descriptor.FieldDescriptor(
+            name="transmitData",
+            full_name="ToEmbedded.transmitData",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -185,7 +203,7 @@ _TOEMBEDDED = _descriptor.Descriptor(
     extension_ranges=[],
     oneofs=[],
     serialized_start=145,
-    serialized_end=191,
+    serialized_end=228,
 )
 
 
@@ -223,8 +241,8 @@ _CONTROLCOMMAND = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=193,
-    serialized_end=251,
+    serialized_start=230,
+    serialized_end=288,
 )
 
 
@@ -262,8 +280,8 @@ _LOGFSINFO = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=253,
-    serialized_end=296,
+    serialized_start=290,
+    serialized_end=333,
 )
 
 
@@ -319,8 +337,8 @@ _CANDATACHUNK = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=298,
-    serialized_end=338,
+    serialized_start=335,
+    serialized_end=375,
 )
 
 
@@ -394,8 +412,8 @@ _LOGFILEINFO = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=340,
-    serialized_end=403,
+    serialized_start=377,
+    serialized_end=440,
 )
 
 _FROMEMBEDDED.fields_by_name["canDataChunk"].message_type = _CANDATACHUNK
@@ -419,6 +437,7 @@ _FROMEMBEDDED.fields_by_name[
     "logFSInfo"
 ].containing_oneof = _FROMEMBEDDED.oneofs_by_name["contents"]
 _TOEMBEDDED.fields_by_name["command"].message_type = _CONTROLCOMMAND
+_TOEMBEDDED.fields_by_name["transmitData"].message_type = _CANDATACHUNK
 _CONTROLCOMMAND.fields_by_name["commandType"].enum_type = _CONTROLCOMMANDTYPE
 _LOGFSINFO.fields_by_name["logFiles"].message_type = _LOGFILEINFO
 DESCRIPTOR.message_types_by_name["FromEmbedded"] = _FROMEMBEDDED
