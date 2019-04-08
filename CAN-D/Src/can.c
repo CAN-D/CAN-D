@@ -400,7 +400,6 @@ void APP_CAN_MarkLogTask(void const* argument)
 {
     osThreadSuspend(NULL);
     for (;;) {
-        BSP_LED_On(LED1);
         uint8_t markData[4];
         uint32_t lineCount = 0;
         lineCount = APP_FATFS_GetLineCount();
