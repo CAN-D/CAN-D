@@ -14,7 +14,6 @@ extern "C" {
 #include "main.h"
 
 #define GPS_DATA_LENGTH 128
-#define GPS_LOG_IDENTIFIER "GPS_Data"
 #define GPS_DATA_SZ_BYTES ((uint16_t)128)
 #define GPS_USB_TX_MAX_TRY 3
 

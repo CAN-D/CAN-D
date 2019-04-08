@@ -55,24 +55,19 @@ void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg)
 
 void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
 {
-    uint8_t markData[4];
-    uint32_t lineCount = 0;
-
     if (controlCommandMsg->has_commandType) {
         switch (controlCommandMsg->commandType) {
         case ControlCommandType_STOP_LOG:
+            // Stop the CAN Controller
             APP_CAN_Stop();
             break;
         case ControlCommandType_START_LOG:
+            // Start the CAN Controller
             APP_CAN_Start();
             break;
         case ControlCommandType_MARK_LOG:
-            lineCount = APP_FATFS_GetLineCount();
-            markData[0] = (lineCount & 0x000F);
-            markData[1] = (lineCount & 0x00F0);
-            markData[2] = (lineCount & 0x0F00);
-            markData[3] = (lineCount & 0xF000);
-            APP_FATFS_LogSD((const uint8_t*)markData, sizeof(uint32_t), MARK_LOG_FILENAME);
+            // Mark the log file
+            APP_CAN_MarkLog();
             break;
         case ControlCommandType_GET_LOGFS_INFO:
             /* code */

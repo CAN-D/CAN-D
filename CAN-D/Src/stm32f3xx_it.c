@@ -9,6 +9,7 @@
 #include "stm32f3xx_it.h"
 #include "can.h"
 #include "cmsis_os.h"
+#include "fatfs.h"
 #include "gps.h" /* for UART message Queues */
 #include "main.h"
 #include "stm32302c_custom.h" /* for UART handle (huart) */
@@ -197,6 +198,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin)
         break;
     case MARK_BUTTON_PIN:
         // Mark the log file
+        APP_CAN_MarkLog();
         break;
     default:
         break;

@@ -27,6 +27,7 @@ static APP_ConfigType mAppConfiguration = { 0 };
 static char canLogIdentifier[] = CAN_LOG_IDENTIFIER;
 /* Threads */
 static osThreadId CANMonitorTaskHandle;
+static osThreadId MarkLogTaskHandle;
 /* Queues */
 static osMessageQId CANRxQueueHandle;
 
@@ -70,6 +71,7 @@ CAN_HandleTypeDef hcan;
 /* Private function prototypes -----------------------------------------------*/
 void APP_CAN_MonitorTask(void const* argument);
 void APP_CAN_TransmitTask(void const* argument);
+void APP_CAN_MarkLogTask(void const* argument);
 static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg);
 
 /* Exported functions --------------------------------------------------------*/
@@ -124,10 +126,12 @@ void APP_CAN_InitTasks(void)
     osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
+    osThreadDef(MarkLogTask, APP_CAN_MarkLogTask, osPriorityNormal, 0, 128);
+    MarkLogTaskHandle = osThreadCreate(osThread(MarkLogTask), NULL);
+
 #if defined(CAN_TX_ON)
     osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 256);
     CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
-
     osMessageQDef(CANTxQueue, TX_BUFFER_SIZE, CANTxMessage);
     CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL);
 #endif
@@ -294,6 +298,15 @@ void APP_CAN_SetConfiguration(APP_ConfigType newConfig)
 }
 
 /**
+  * @brief Resumes the Mark Log Task
+  * @retval None
+  */
+void APP_CAN_MarkLog(void)
+{
+    osThreadResume(MarkLogTaskHandle);
+}
+
+/**
   * @brief  Function implementing the APP_CAN_MonitorTask thread.
   *         Monitors incoming CAN data.
   * @retval None
@@ -378,6 +391,31 @@ void APP_CAN_TransmitTask(void const* argument)
 }
 #endif // CAN_TX_ON
 
+/**
+  * @brief  Function implementing the APP_CAN_TransmitTask thread.
+  *         Writes the current linecount to the Mark Data Log file.
+  * @retval None
+  */
+void APP_CAN_MarkLogTask(void const* argument)
+{
+    osThreadSuspend(NULL);
+    for (;;) {
+        uint8_t markData[4];
+        uint32_t lineCount = 0;
+        lineCount = APP_FATFS_GetLineCount();
+        markData[0] = (lineCount & 0x000F);
+        markData[1] = (lineCount & 0x00F0);
+        markData[2] = (lineCount & 0x0F00);
+        markData[3] = (lineCount & 0xF000);
+        APP_FATFS_LogSD((const uint8_t*)markData, sizeof(uint32_t), MARK_LOG_IDENTIFIER);
+        osThreadSuspend(NULL);
+    }
+}
+
+/**
+  * @brief  Helper function for transforming CAN Data to SD format
+  * @retval None
+  */
 static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg)
 {
     char data_str[80];
