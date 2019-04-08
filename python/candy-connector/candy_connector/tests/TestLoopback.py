@@ -22,3 +22,5 @@ with open("./data/can_trace_255.log.test", "r") as log_file:
             rx_msg.data == tx_msg.data
         ), f"Data did not match. Sent: {tx_msg.data}, got:{rx_msg.data}"
 
+bus.stop_usb_polling()
+
