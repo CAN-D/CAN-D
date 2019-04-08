@@ -28,6 +28,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg);
 void interpretControlCommandMessage(ControlCommand* controlCommandMsg);
+void interpretCanDataChunk(CanDataChunk* canDataChunk);
 
 /* Exported functions --------------------------------------------------------*/
 void APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len)
@@ -51,6 +52,8 @@ void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg)
 {
     if (toEmbeddedMsg->has_command)
         interpretControlCommandMessage(&toEmbeddedMsg->command);
+    if (toEmbeddedMsg->has_transmitData)
+        interpretCanDataChunk(&toEmbeddedMsg->transmitData);
 }
 
 void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
@@ -81,5 +84,12 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
         default:
             break;
         }
+    }
+}
+
+void interpretCanDataChunk(CanDataChunk* canDataChunk)
+{
+    if (canDataChunk->has_id && canDataChunk->has_data && canDataChunk->data.size > 0) {
+        APP_CAN_TransmitData(canDataChunk->data.bytes, canDataChunk->id);
     }
 }
