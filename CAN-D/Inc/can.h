@@ -18,7 +18,7 @@ extern "C" {
 #define CAN_RX_FIFO_0 ((uint32_t)0)
 #define CAN_RX_FIFO_1 ((uint32_t)1)
 #define CAN_RXQ_TIMEOUT_MS ((uint32_t)250) /* Timeout when waiting on the can RX queue*/
-#define CAN_IT_START CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO1_FULL | CAN_IT_ERROR /* Interrupts to be enabled on CAN start */
+#define CAN_IT_START CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO0_FULL | CAN_IT_BUSOFF | CAN_IT_LAST_ERROR_CODE | CAN_IT_ERROR /* Interrupts to be enabled on CAN start */
 #define CAN_MESSAGE_LENGTH 8
 #define CAN_LOG_IDENTIFIER "CAN_Data"
 #define CAN_SD_DATA_SZ_BYTES ((uint16_t)(CAN_RX_MSG_DATA_SZ_BYTES * 2) + CAN_RX_MSG_ID_SZ_BYTES + CAN_SD_DATA_FORMAT_CHARS) /* "{ID_bytes} {num_bytes} XX XX XX XX XX XX XX XX" */

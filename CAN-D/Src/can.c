@@ -19,6 +19,8 @@
 #define TX_BUFFER_SIZE 8
 #define RX_BUFFER_SIZE 8
 
+#define CAN_TX_ON
+
 /* Private variables ---------------------------------------------------------*/
 static APP_ConfigType mAppConfiguration = { 0 };
 static char canLogIdentifier[] = CAN_LOG_IDENTIFIER;
@@ -48,20 +50,34 @@ static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg);
 /* CAN init function */
 void APP_CAN_Init(void)
 {
+    CAN_FilterTypeDef canFilterConfig;
+
     hcan.Instance = CAN;
-    hcan.Init.Prescaler = 16;
+    hcan.Init.Prescaler = 18;
     hcan.Init.Mode = CAN_MODE_NORMAL;
     hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
-    hcan.Init.TimeSeg1 = CAN_BS1_1TQ;
-    hcan.Init.TimeSeg2 = CAN_BS2_1TQ;
+    hcan.Init.TimeSeg1 = CAN_BS1_15TQ;
+    hcan.Init.TimeSeg2 = CAN_BS2_4TQ;
     hcan.Init.TimeTriggeredMode = DISABLE;
     hcan.Init.AutoBusOff = DISABLE;
     hcan.Init.AutoWakeUp = DISABLE;
     hcan.Init.AutoRetransmission = DISABLE;
     hcan.Init.ReceiveFifoLocked = DISABLE;
     hcan.Init.TransmitFifoPriority = DISABLE;
-
     if (HAL_CAN_Init(&hcan) != HAL_OK)
+        Error_Handler();
+
+    canFilterConfig.FilterBank = 0;
+    canFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+    canFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+    canFilterConfig.FilterIdHigh = 0x0000;
+    canFilterConfig.FilterIdLow = 0x0000;
+    canFilterConfig.FilterMaskIdHigh = 0x0000;
+    canFilterConfig.FilterMaskIdLow = 0x0000;
+    canFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
+    canFilterConfig.FilterActivation = ENABLE;
+    canFilterConfig.SlaveStartFilterBank = 14;
+    if (HAL_CAN_ConfigFilter(&hcan, &canFilterConfig) != HAL_OK)
         Error_Handler();
 
     if ((CANTxPool = osPoolCreate(osPool(CANTxPool))) == NULL)
@@ -69,6 +85,21 @@ void APP_CAN_Init(void)
 
     if ((CANRxPool = osPoolCreate(osPool(CANRxPool))) == NULL)
         Error_Handler();
+
+    if (HAL_CAN_Start(&hcan) != HAL_OK)
+        Error_Handler();
+
+    HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
+#if defined(CAN_TX_ON)
+    HAL_CAN_ActivateNotification(&hcan, CAN_IT_TX_MAILBOX_EMPTY);
+#endif
+    // CAN->IER |= 1 << CAN_IER_FMPIE0_Pos; // Enable CAN interrupt
+    BSP_LED_On(LED1);
+
+    if (hcan.Instance->MCR & 0x10000) // Debug Freeze
+    {
+        hcan.Instance->MCR = 0x10;
+    }
 
     // TODO: configure CAN reception filters using HAL_CAN_ConfigFilter()
     mAppConfiguration.SDStorage = APP_DISABLE;
@@ -99,6 +130,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
         __HAL_RCC_CAN1_CLK_ENABLE();
 
         __HAL_RCC_GPIOB_CLK_ENABLE();
+
         /**CAN GPIO Configuration    
             PB8     ------> CAN_RX
             PB9     ------> CAN_TX 
@@ -113,6 +145,12 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
         /* CAN interrupt Init */
         HAL_NVIC_SetPriority(CAN_RX1_IRQn, 1, 0);
         HAL_NVIC_EnableIRQ(CAN_RX1_IRQn);
+        HAL_NVIC_SetPriority(USB_HP_CAN_TX_IRQn, 1, 0);
+        HAL_NVIC_EnableIRQ(USB_HP_CAN_TX_IRQn);
+        HAL_NVIC_SetPriority(USB_LP_CAN_RX0_IRQn, 1, 0);
+        HAL_NVIC_EnableIRQ(USB_LP_CAN_RX0_IRQn);
+        HAL_NVIC_SetPriority(CAN_SCE_IRQn, 1, 0);
+        HAL_NVIC_EnableIRQ(CAN_SCE_IRQn);
     }
 }
 
@@ -132,7 +170,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 }
 
 /**
-  * @brief  Rx FIFO 0 full callback.
+  * @brief  Rx FIFO 0 msg pending callback.
   * @param  CanHandle: pointer to a CAN_HandleTypeDef structure that contains
   *         the configuration information for the specified CAN.
   * @retval None
@@ -142,6 +180,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
     CANRxMessage* msg;
     msg = osPoolAlloc(CANRxPool);
     msg->handle = &hcan;
+
+    BSP_LED_On(LED3);
 
     // Get CAN RX data from the CAN module
     if (HAL_CAN_GetRxMessage(canHandle, CAN_RX_FIFO_0, msg->header, msg->data) != HAL_OK) {
@@ -153,13 +193,26 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* canHandle)
 }
 
 /**
-  * @brief  Rx FIFO 1 full callback.
-  * @param  canHandle: pointer to a CAN_HandleTypeDef structure that contains
+  * @brief  Rx FIFO 0 full callback.
+  * @param  CanHandle: pointer to a CAN_HandleTypeDef structure that contains
   *         the configuration information for the specified CAN.
   * @retval None
   */
-void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef* canHandle)
+void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef* canHandle)
 {
+    CANRxMessage* msg;
+    msg = osPoolAlloc(CANRxPool);
+    msg->handle = &hcan;
+
+    BSP_LED_On(LED3);
+
+    // Get CAN RX data from the CAN module
+    if (HAL_CAN_GetRxMessage(canHandle, CAN_RX_FIFO_0, msg->header, msg->data) != HAL_OK) {
+        Error_Handler();
+    }
+
+    // Pass CAN RX data to the monitor thread
+    osMessagePut(CANRxQueueHandle, (uint32_t)msg, 0);
 }
 
 /**
@@ -185,6 +238,7 @@ void APP_CAN_Start(void)
     if (HAL_CAN_Start(&hcan) == HAL_OK) {
         HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
         APP_FATFS_StartSession(); // start new log session
+        BSP_LED_On(LED1);
     }
 }
 
@@ -197,6 +251,7 @@ void APP_CAN_Stop(void)
     if (HAL_CAN_Stop(&hcan) == HAL_OK) {
         HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
         APP_FATFS_StopSession(); // stop log session
+        BSP_LED_Off(LED1);
     }
 }
 
@@ -244,6 +299,7 @@ void APP_CAN_MonitorTask(void const* argument)
         /* This is just used to test the SD card functionality */
         // const uint8_t data[] = "YELLOW";
         // APP_FATFS_LogSD(data, 6, CAN_LOG_FILENAME);
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, 0);
 
         // Pend on any CAN Rx data
         event = osMessageGet(CANRxQueueHandle, 0);
@@ -288,11 +344,41 @@ void APP_CAN_MonitorTask(void const* argument)
   */
 void APP_CAN_TransmitTask(void const* argument)
 {
+#if defined(CAN_TX_ON)
+    CAN_TxHeaderTypeDef testHeader = {
+        .StdId = 0x45,
+        .ExtId = 0,
+        .IDE = 0,
+        .RTR = 0x00000000U,
+        .DLC = 8,
+        .TransmitGlobalTime = DISABLE
+    };
+#endif
+
     osEvent event;
     CANTxMessage* msg;
     uint32_t mailbox;
 
     for (;;) {
+#if defined(CAN_TX_ON)
+        uint8_t data[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+        uint32_t freelevel = HAL_CAN_GetTxMailboxesFreeLevel(&hcan);
+        if (freelevel > 0 && freelevel != 1) {
+            /* Default to sending on MAILBOX0 */
+            mailbox = CAN_TX_MAILBOX0;
+            /* Check Tx Mailbox 1 status */
+            if ((hcan.Instance->TSR & CAN_TSR_TME1) != 0U) {
+                mailbox = CAN_TX_MAILBOX1;
+            }
+            /* Check Tx Mailbox 2 status */
+            else if ((hcan.Instance->TSR & CAN_TSR_TME2) != 0U) {
+                mailbox = CAN_TX_MAILBOX2;
+            }
+            HAL_CAN_AddTxMessage(&hcan, &testHeader, data, (uint32_t*)mailbox);
+        } else {
+            // Dropped a message!
+        }
+#endif
         // Pend on any CAN Tx data
         event = osMessageGet(CANTxQueueHandle, 0);
         if (event.status == osEventMessage) {

@@ -108,6 +108,7 @@ void USB_HP_CAN_TX_IRQHandler(void)
   */
 void USB_LP_CAN_RX0_IRQHandler(void)
 {
+    BSP_LED_On(LED3);
     HAL_CAN_IRQHandler(&hcan);
 }
 
@@ -115,6 +116,12 @@ void USB_LP_CAN_RX0_IRQHandler(void)
   * @brief This function handles CAN RX1 interrupt.
   */
 void CAN_RX1_IRQHandler(void)
+{
+    BSP_LED_On(LED3);
+    HAL_CAN_IRQHandler(&hcan);
+}
+
+void CAN_SCE_IRQHandler(void)
 {
     HAL_CAN_IRQHandler(&hcan);
 }
@@ -176,10 +183,10 @@ void USB_LP_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
     if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_SET) {
-      HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
+        HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
     }
     if (BSP_PB_GetState(BUTTON_MARK) == GPIO_PIN_SET) {
-      HAL_GPIO_EXTI_IRQHandler(MARK_BUTTON_PIN);
+        HAL_GPIO_EXTI_IRQHandler(MARK_BUTTON_PIN);
     }
 }
 
