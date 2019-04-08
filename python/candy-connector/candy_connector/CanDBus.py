@@ -121,6 +121,11 @@ class CanDBus(BusABC):
         :raise: :class:`can.CanError`
             if the message could not be written.
         """
+        to_embedded = pb.ToEmbedded()
+        to_embedded.transmitData.id = msg.arbitration_id
+        to_embedded.transmitData.data = msg.data
+        out_bytes = to_embedded.SerializeToString()
+        self.usb_endpoint_out.write(out_bytes)
 
     def set_filters(self, can_filters: Dict[str, int] = None):
         """Apply filtering to all messages received by this Bus.
