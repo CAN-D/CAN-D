@@ -275,11 +275,12 @@ void APP_CAN_Stop(void)
  * @brief Queue CAN data for transmission.
  * @retval None
  */
-void APP_CAN_TransmitData(uint8_t* txData)
+void APP_CAN_TransmitData(uint8_t* txData, uint32_t id)
 {
 #if defined(CAN_TX_ON)
     CANTxMessage* msg;
     msg = osPoolAlloc(CANTxPool);
+    CAN_TxHeader.StdId = id;
     msg->handle = &hcan;
     msg->header = &CAN_TxHeader;
     memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
@@ -378,7 +379,7 @@ void APP_CAN_TransmitTask(void const* argument)
             if (mAppConfiguration.CANTransmit == APP_ENABLE) {
                 if (HAL_CAN_GetTxMailboxesFreeLevel(msg->handle) > 1) {
                     if (CAN_TxMailbox != CAN_TX_MAILBOX2) {
-                        HAL_CAN_AddTxMessage(msg->handle, &CAN_TxHeader, msg->data, &CAN_TxMailbox);
+                        HAL_CAN_AddTxMessage(msg->handle, msg->header, msg->data, &CAN_TxMailbox);
                     }
                 } else {
                     // Dropped a message!
