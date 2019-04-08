@@ -249,10 +249,6 @@ class CAND_MainWindow(QMainWindow):
         icon8 = QtGui.QIcon()
         icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
-                        QtGui.QIcon.Active, QtGui.QIcon.Off)
-        icon8.addPixmap(QtGui.QPixmap(":/icons/white/mark.png"),
-                        QtGui.QIcon.Selected, QtGui.QIcon.Off)
         self.markButton.setIcon(icon8)
         self.markButton.setIconSize(QtCore.QSize(30, 30))
         self.markButton.setObjectName("markButton")
