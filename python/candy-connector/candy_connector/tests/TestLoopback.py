@@ -2,11 +2,12 @@ from candy_connector.CanDBus import CanDBus
 import candy_connector.proto.can_d_pb2 as pb
 from candy_connector.parsers import parse_line
 import logging
+from can import Message
 
 
 bus = CanDBus()
 
-with open("./data/can_trace_255.log.test", "r") as log_file:
+with open("./data/can_trace_256.log.test", "r") as log_file:
     for log_line in log_file.readlines():
         frame_id, payload = parse_line(log_line)
         tx_msg = Message()
