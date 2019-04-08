@@ -119,6 +119,11 @@ void CAN_RX1_IRQHandler(void)
     HAL_CAN_IRQHandler(&hcan);
 }
 
+void CAN_SCE_IRQHandler(void)
+{
+    HAL_CAN_IRQHandler(&hcan);
+}
+
 /**
   * @brief This function handles TIM1 update and TIM16 interrupts.
   */
@@ -176,10 +181,10 @@ void USB_LP_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
     if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_SET) {
-      HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
+        HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
     }
     if (BSP_PB_GetState(BUTTON_MARK) == GPIO_PIN_SET) {
-      HAL_GPIO_EXTI_IRQHandler(MARK_BUTTON_PIN);
+        HAL_GPIO_EXTI_IRQHandler(MARK_BUTTON_PIN);
     }
 }
 
