@@ -108,7 +108,6 @@ void USB_HP_CAN_TX_IRQHandler(void)
   */
 void USB_LP_CAN_RX0_IRQHandler(void)
 {
-    BSP_LED_On(LED3);
     HAL_CAN_IRQHandler(&hcan);
 }
 
@@ -117,7 +116,6 @@ void USB_LP_CAN_RX0_IRQHandler(void)
   */
 void CAN_RX1_IRQHandler(void)
 {
-    BSP_LED_On(LED3);
     HAL_CAN_IRQHandler(&hcan);
 }
 
