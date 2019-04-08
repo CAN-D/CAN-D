@@ -8,7 +8,10 @@ message FromEmbedded {
   }
 }
 
-message ToEmbedded { ControlCommand command = 1; }
+message ToEmbedded {
+  ControlCommand command = 1;
+  CanDataChunk transmitData = 2;
+}
 
 message ControlCommand { ControlCommandType commandType = 1; }
 
