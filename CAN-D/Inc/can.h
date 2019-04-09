@@ -55,7 +55,7 @@ void APP_CAN_StartStop(void);
 void APP_CAN_Start(void);
 void APP_CAN_Stop(void);
 void APP_CAN_SetConfiguration(APP_ConfigType newConfig);
-void APP_CAN_TransmitData(uint8_t* txData, uint32_t id);
+void APP_CAN_TransmitData(uint8_t* txData, uint32_t id, uint32_t dlc);
 void APP_CAN_MarkLog(void);
 
 #ifdef __cplusplus

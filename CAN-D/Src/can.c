@@ -282,15 +282,16 @@ void APP_CAN_Stop(void)
  * @brief Queue CAN data for transmission.
  * @retval None
  */
-void APP_CAN_TransmitData(uint8_t* txData, uint32_t id)
+void APP_CAN_TransmitData(uint8_t* txData, uint32_t id, uint32_t dlc)
 {
 #if defined(CAN_TX_ON)
     CANTxMessage* msg;
     msg = osPoolAlloc(CANTxPool);
     CAN_TxHeader.StdId = id;
+    CAN_TxHeader.DLC = dlc;
     msg->handle = &hcan;
     msg->header = &CAN_TxHeader;
-    memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
+    memcpy(msg->data, txData, dlc);
     osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
 #endif // CAN_TX_ON
 }
@@ -348,7 +349,7 @@ void APP_CAN_MonitorTask(void const* argument)
             fromEmbeddedMsg.contents.canDataChunk.has_data = true;
             fromEmbeddedMsg.which_contents = FromEmbedded_canDataChunk_tag;
 
-            memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES);
+            memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, canRxMsg->header->DLC);
             fromEmbeddedMsg.contents.canDataChunk.id = (canRxMsg->header->StdId & CAN_RX_MSG_STDID_MASK);
             usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
