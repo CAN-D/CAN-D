@@ -35,8 +35,16 @@ class RxtxController():
         # Build the Message object
         message = Message()
         message.arbitration_id = int(transmit_message.can_id, 16)
-        message.data = bytes.fromhex(transmit_message.data)
         message.dlc = transmit_message.dlc
+        try:
+            message.data = bytes.fromhex(transmit_message.data)
+        except:
+            return "Data field is not in valid hexadecimal form."
+
+
+        # If there is a task for a given can_id, cancel that task
+        if transmit_message.can_id in self.tasks:
+            self.tasks[transmit_message.can_id].cancel()
 
         loop = asyncio.get_event_loop()
 
