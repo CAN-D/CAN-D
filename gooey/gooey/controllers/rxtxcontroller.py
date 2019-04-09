@@ -34,8 +34,8 @@ class RxtxController():
 
         # Build the Message object
         message = Message()
-        message.arbitration_id = transmit_message.can_id
-        message.data = transmit_message.data
+        message.arbitration_id = int(transmit_message.can_id, 16)
+        message.data = bytes.fromhex(transmit_message.data)
         message.dlc = transmit_message.dlc
 
         # Calculate the cycle time for transmitting messages in ms
@@ -47,9 +47,6 @@ class RxtxController():
         self.tasks[transmit_message.can_id] = loop.create_task(
             do_stuff_every_x_seconds(
                 cycle_time, lambda: self.transmit_and_append(message, transmit_message)))
-
-        # # Populate transmit table
-        # self.appendTransmitTable(transmit_message)
 
     def appendTransmitTable(self, message):
         """ Appends to the transmit table with the CAN message.
@@ -97,7 +94,7 @@ class RxtxController():
         Arguments:
             message {Message} -- A message object containing the CAN data.
         """
-        print("Transmit: " + message.arbitration_id)
+        print("Transmit: " + str(message.arbitration_id))
         if self.maincontroller.candbus is not None:
             self.maincontroller.candbus.send(message)
 

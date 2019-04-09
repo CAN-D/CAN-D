@@ -151,8 +151,8 @@ class TransmitWindow(QDialog):
         """
         
         self.message.parentItem = self.rxtxcontroller.transmittable.rootItem
-        self.message.can_id = int(self.idInput.toPlainText(), 16)
-        self.message.data = bytes.fromhex(self.dataInput.toPlainText())
+        self.message.can_id = self.idInput.toPlainText()
+        self.message.data = self.dataInput.toPlainText()
         self.message.dlc = self.lengthInput.value()
         self.message.cycle_time = self.cycleInput.toPlainText()
         self.message.time = int(round(time.time() * 1000))
