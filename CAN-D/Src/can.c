@@ -37,7 +37,7 @@ osPoolDef(CANRxPool, RX_BUFFER_SIZE, CANRxMessage);
 static osPoolId CANTxPool;
 static osPoolId CANRxPool;
 
-/* RX */
+/* RX Elements */
 CAN_RxHeaderTypeDef CAN_RxHeader = {
     .StdId = 0x45,
     .ExtId = 0,
@@ -48,7 +48,7 @@ CAN_RxHeaderTypeDef CAN_RxHeader = {
     .FilterMatchIndex = 0
 };
 
-/* TX */
+/* TX Elements */
 #if defined(CAN_TX_ON)
 static osThreadId CANTransmitTaskHandle;
 static osMessageQId CANTxQueueHandle;
@@ -75,7 +75,10 @@ void APP_CAN_MarkLogTask(void const* argument);
 static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg);
 
 /* Exported functions --------------------------------------------------------*/
-/* CAN init function */
+/**
+  * @brief  CAN Init Function
+  * @retval None
+  */
 void APP_CAN_Init(void)
 {
     CAN_FilterTypeDef canFilterConfig;
@@ -95,16 +98,17 @@ void APP_CAN_Init(void)
     if (HAL_CAN_Init(&hcan) != HAL_OK)
         Error_Handler();
 
-    canFilterConfig.FilterBank = 0;
+    // Set up CAN filters to receive all incoming messages from the bus
+    canFilterConfig.FilterBank = CAN_FILTER_BANK;
     canFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
     canFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-    canFilterConfig.FilterIdHigh = 0x0000;
-    canFilterConfig.FilterIdLow = 0x0000;
-    canFilterConfig.FilterMaskIdHigh = 0x0000;
-    canFilterConfig.FilterMaskIdLow = 0x0000;
+    canFilterConfig.FilterIdHigh = CAN_FILTER_ID_HIGH;
+    canFilterConfig.FilterIdLow = CAN_FILTER_ID_LOW;
+    canFilterConfig.FilterMaskIdHigh = CAN_FILTER_MASK_ID_HIGH;
+    canFilterConfig.FilterMaskIdLow = CAN_FILTER_MASK_ID_LOW;
     canFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
     canFilterConfig.FilterActivation = ENABLE;
-    canFilterConfig.SlaveStartFilterBank = 14;
+    canFilterConfig.SlaveStartFilterBank = CAN_SLAVE_START_FILTER_BANK;
     if (HAL_CAN_ConfigFilter(&hcan, &canFilterConfig) != HAL_OK)
         Error_Handler();
 
@@ -130,6 +134,10 @@ void APP_CAN_Init(void)
     mAppConfiguration.CANTransmit = APP_ENABLE;
 }
 
+/**
+  * @brief  Initializes RTOS queues and tasks used by the CAN Controller
+  * @retval None
+  */
 void APP_CAN_InitTasks(void)
 {
     osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
@@ -149,6 +157,12 @@ void APP_CAN_InitTasks(void)
     CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
 }
 
+/**
+  * @brief  Initializes the CAN MSP.
+  * @param  canHandle pointer to a CAN_HandleTypeDef structure that contains
+  *         the configuration information for the specified CAN.
+  * @retval None
+  */
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 {
     GPIO_InitTypeDef GPIO_InitStruct = { 0 };
@@ -176,6 +190,12 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
     }
 }
 
+/**
+  * @brief  DeInitializes the CAN MSP.
+  * @param  canHandle pointer to a CAN_HandleTypeDef structure that contains
+  *         the configuration information for the specified CAN.
+  * @retval None
+  */
 void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 {
     if (canHandle->Instance == CAN) {
@@ -336,12 +356,11 @@ void APP_CAN_MonitorTask(void const* argument)
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
             canRxMsg = event.value.p;
-            if (mAppConfiguration.SDStorage == APP_ENABLE) {
-                // Write data to SD card
-                uint8_t formattedMsgLen = 0;
-                formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
-                APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
-            }
+
+            // Write data to SD card
+            uint8_t formattedMsgLen = 0;
+            formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
+            APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
 
             // Pack the protobuf message
             fromEmbeddedMsg.contents.canDataChunk.data.size = CAN_RX_MSG_DATA_SZ_BYTES;
@@ -370,12 +389,12 @@ void APP_CAN_MonitorTask(void const* argument)
     }
 }
 
-#if defined(CAN_TX_ON)
 /**
   * @brief  Function implementing the APP_CAN_TransmitTask thread.
   *         Send outgoing CAN data.
   * @retval None
   */
+#if defined(CAN_TX_ON)
 void APP_CAN_TransmitTask(void const* argument)
 {
     osEvent event;
@@ -403,7 +422,7 @@ void APP_CAN_TransmitTask(void const* argument)
 #endif // CAN_TX_ON
 
 /**
-  * @brief  Function implementing the APP_CAN_TransmitTask thread.
+  * @brief  Function implementing the APP_CAN_MarkLogTask thread.
   *         Writes the current linecount to the Mark Data Log file.
   * @retval None
   */
@@ -425,7 +444,7 @@ void APP_CAN_MarkLogTask(void const* argument)
 
 /**
   * @brief  Helper function for transforming CAN Data to SD format
-  * @retval None
+  * @retval Returns the number of bytes in formatted message
   */
 static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg)
 {

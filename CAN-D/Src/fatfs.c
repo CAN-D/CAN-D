@@ -60,6 +60,10 @@ static FRESULT APP_FATFS_RemoveFile(const char* file, size_t size)
 }
 
 /* Exported functions --------------------------------------------------------*/
+/**
+  * @brief  FatFS Init Function
+  * @retval None
+  */
 void APP_FATFS_Init(void)
 {
     // Link the SD driver
@@ -73,6 +77,10 @@ void APP_FATFS_Init(void)
     SDInitialized = 1;
 }
 
+/**
+  * @brief  FatFS DeInit Function
+  * @retval None
+  */
 void APP_FATFS_Deinit(void)
 {
     f_mount(NULL, 0, 0); // Unmount
@@ -80,6 +88,10 @@ void APP_FATFS_Deinit(void)
     SDInitialized = 0;
 }
 
+/**
+  * @brief  Toggles the Log Session
+  * @retval None
+  */
 void APP_FATFS_ToggleSession(void)
 {
     if (sessionCount == 0)
@@ -88,12 +100,21 @@ void APP_FATFS_ToggleSession(void)
         APP_FATFS_StopSession();
 }
 
+/**
+  * @brief  Starts the Log Session
+  * @retval None
+  */
 void APP_FATFS_StartSession(void)
 {
     sessionCount = 1;
     BSP_LED_On(LED2);
 }
 
+/**
+  * @brief  Stops the Log Session. 
+  *         Calls to APP_FATFS_LogSD() will do nothing.
+  * @retval None
+  */
 void APP_FATFS_StopSession(void)
 {
     prevSessionCount = sessionCount;

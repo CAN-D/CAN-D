@@ -40,11 +40,20 @@ static osPoolId GPSDataPool;
 void APP_GPS_MonitorTask(void const* argument);
 
 /* Exported functions --------------------------------------------------------*/
+
+/**
+  * @brief  GPS Init Function
+  * @retval None
+  */
 void APP_GPS_Init(void)
 {
     BSP_GPS_Init();
 }
 
+/**
+  * @brief  Initializes RTOS tasks and queues used by the GPS Module
+  * @retval None
+  */
 void APP_GPS_InitTasks(void)
 {
     osThreadDef(GPSMonitorTask, APP_GPS_MonitorTask, osPriorityNormal, 0, 256);
@@ -60,6 +69,28 @@ void APP_GPS_BufferGPSString(char* dataString, size_t dataLength)
     data = osPoolAlloc(GPSDataPool);
     memcpy(data->raw, dataString, dataLength);
     osMessagePut(UARTGprmcQueueHandle, (uint32_t)data, 0);
+}
+
+/**
+  * @brief Rx Transfer completed callback.
+  * @param huart UART handle.
+  * @retval None
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
+{
+    char rxData[128] = "0";
+    uint8_t rx_idx = 0;
+
+    // Read the data from the register
+    rxData[rx_idx] = huart->Instance->RDR;
+
+    // The GPS RX data will be held between '$' and '\n' characters
+    if (rxData[rx_idx] == '$') {
+        if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
+            APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
+
+        memset(rxData, 0, sizeof(rxData));
+    }
 }
 
 /* Private functions ---------------------------------------------------------*/
@@ -85,18 +116,17 @@ void APP_GPS_MonitorTask(void const* argument)
         event = osMessageGet(UARTGprmcQueueHandle, 0);
         if (event.status == osEventMessage) {
             gpsRxMsg = event.value.p;
-            // TODO: BO: Moving around configurations, fix this
-            //if (mAppConfiguration.SDStorage == APP_ENABLE) {
-            if (1) {
-                // Write data to SD card
-                APP_FATFS_LogSD((const uint8_t*)gpsRxMsg->raw, GPS_DATA_SZ_BYTES, gpsLogIdentifier);
-            }
 
+            // Write data to SD card
+            APP_FATFS_LogSD((const uint8_t*)gpsRxMsg->raw, GPS_DATA_SZ_BYTES, gpsLogIdentifier);
+
+            // Pack the protobuf message for USB transfer
             fromEmbeddedMsg.contents.gpsDataChunk.size = GPS_DATA_SZ_BYTES;
             fromEmbeddedMsg.which_contents = FromEmbedded_gpsDataChunk_tag;
             memcpy(fromEmbeddedMsg.contents.gpsDataChunk.bytes, gpsRxMsg->raw, GPS_DATA_SZ_BYTES);
             usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
+            // Write serialized data to USB
             usbTxCnt = 0;
             while (APP_USB_Transmit((uint8_t*)usbTxMsg, usbTxNumBytes) == USBD_BUSY) {
                 // USB TX State is BUSY. Wait for it to be free.

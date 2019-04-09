@@ -27,6 +27,12 @@ extern "C" {
 #define CAN_USB_DATA_SZ_BYTES ((uint16_t)(CAN_RX_MSG_DATA_SZ_BYTES + CAN_RX_MSG_ID_SZ_BYTES))
 #define CAN_USB_TX_MAX_TRY 3
 #define CAN_RX_MSG_STDID_MASK 0x7FF
+#define CAN_FILTER_ID_HIGH 0x0000
+#define CAN_FILTER_ID_LOW 0x0000
+#define CAN_FILTER_MASK_ID_HIGH 0x0000
+#define CAN_FILTER_MASK_ID_LOW 0x0000
+#define CAN_FILTER_BANK 0
+#define CAN_SLAVE_START_FILTER_BANK 14
 
 typedef struct {
     CAN_HandleTypeDef* handle;

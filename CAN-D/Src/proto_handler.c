@@ -31,6 +31,13 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg);
 void interpretCanDataChunk(CanDataChunk* canDataChunk);
 
 /* Exported functions --------------------------------------------------------*/
+/**
+  * @brief  Function for decoding 'incoming' data to 
+  *         a ToEmbedded data type.
+  * @param  data incoming byte array
+  * @param  data_len number of bytes in data
+  * @retval None
+  */
 void APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len)
 {
     ToEmbedded message = ToEmbedded_init_zero;
@@ -39,6 +46,15 @@ void APP_PROTO_HANDLE_interpretData(uint8_t* data, size_t data_len)
     interpretToEmbeddedMessage(&message);
 }
 
+/**
+  * @brief  Function for encoding a FromEmbedded message into a
+  *         byte buffer.
+  * @param  msg the FromEmbedded message to encode
+  * @param  buffer the buffer to use. Will be filled with the encoded
+  *                message if successful.
+  * @param  max_buffer_len maximum number of bytes in buffer
+  * @retval Returns the number of bytes encoded to the buffer
+  */
 size_t APP_PROTO_HANDLE_bufferFromEmbeddedMsg(FromEmbedded* msg, uint8_t* buffer, size_t max_buffer_len)
 {
     pb_ostream_t stream = pb_ostream_from_buffer(buffer, max_buffer_len);
@@ -48,6 +64,11 @@ size_t APP_PROTO_HANDLE_bufferFromEmbeddedMsg(FromEmbedded* msg, uint8_t* buffer
 }
 
 /* Private functions ---------------------------------------------------------*/
+/**
+  * @brief  Interprets messages sent to the embedded device
+  * @param  toEmbeddedMsg the incoming protobuf message
+  * @retval None
+  */
 void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg)
 {
     if (toEmbeddedMsg->has_command)
@@ -56,6 +77,12 @@ void interpretToEmbeddedMessage(ToEmbedded* toEmbeddedMsg)
         interpretCanDataChunk(&toEmbeddedMsg->transmitData);
 }
 
+/**
+  * @brief  Helper function to delegate the action taken
+  *         for specific control commands
+  * @param  controlCommandMsg the command to interpret
+  * @retval None
+  */
 void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
 {
     if (controlCommandMsg->has_commandType) {
@@ -87,9 +114,17 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
     }
 }
 
+/**
+  * @brief  Helper function to delegate the action taken
+  *         for specific CAN data
+  * @param  canDataChunk the CAN data to interpret
+  * @retval None
+  */
 void interpretCanDataChunk(CanDataChunk* canDataChunk)
 {
-    if (canDataChunk->has_id && canDataChunk->has_data && canDataChunk->has_dlc && canDataChunk->dlc > 0 && canDataChunk->dlc <= 8) {
+    // Ensure the CAN Data has the required fields
+    if (canDataChunk->has_id && canDataChunk->has_data && canDataChunk->has_dlc
+        && canDataChunk->dlc > 0 && canDataChunk->dlc <= 8) {
         APP_CAN_TransmitData(canDataChunk->data.bytes, canDataChunk->id, canDataChunk->dlc);
     }
 }

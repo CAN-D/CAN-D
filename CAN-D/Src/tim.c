@@ -23,7 +23,10 @@ TIM_HandleTypeDef htim2;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
-/* TIM2 init function */
+/**
+  * @brief  TIM2 Init Function
+  * @retval None
+  */
 void APP_TIM2_Init(void)
 {
     TIM_ClockConfigTypeDef sClockSourceConfig = { 0 };
@@ -49,6 +52,11 @@ void APP_TIM2_Init(void)
     }
 }
 
+/**
+  * @brief  Initializes the TIM Base MSP.
+  * @param  htim TIM handle
+  * @retval None
+  */
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 
@@ -62,7 +70,12 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     }
 }
 
-void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
+/**
+  * @brief  DeInitializes TIM Base MSP.
+  * @param  htim TIM handle
+  * @retval None
+  */
+__weak void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 
     if (tim_baseHandle->Instance == TIM2) {

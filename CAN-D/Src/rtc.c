@@ -11,7 +11,10 @@
 
 RTC_HandleTypeDef hrtc;
 
-/* RTC init function */
+/**
+  * @brief  RTC Init Function
+  * @retval None
+  */
 void APP_RTC_Init(void)
 {
     RTC_TimeTypeDef sTime = { 0 };
@@ -46,6 +49,11 @@ void APP_RTC_Init(void)
     }
 }
 
+/**
+  * @brief  Initialize the RTC MSP.
+  * @param  hrtc RTC handle  
+  * @retval None
+  */
 void HAL_RTC_MspInit(RTC_HandleTypeDef* rtcHandle)
 {
 
@@ -55,6 +63,11 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* rtcHandle)
     }
 }
 
+/**
+  * @brief  DeInitialize the RTC MSP.
+  * @param  hrtc RTC handle 
+  * @retval None
+  */
 void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 {
 
@@ -64,6 +77,10 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
     }
 }
 
+/**
+  * @brief  Gets the current UTC Time via the RTC clk
+  * @retval UTC Time array [Hours, Minutes, Seconds]
+  */
 uint8_t* APP_RTC_GetUTCTime(void)
 {
     RTC_TimeTypeDef currentTime;
