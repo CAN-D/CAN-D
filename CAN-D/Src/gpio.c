@@ -27,6 +27,11 @@
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
+
+/**
+  * @brief  This function initializes all GPIIO clock sources
+  * @retval None
+  */
 void APP_GPIO_Init(void)
 {
     /* GPIO Ports Clock Enable */
