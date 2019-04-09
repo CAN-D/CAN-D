@@ -37,7 +37,7 @@ osPoolDef(CANRxPool, RX_BUFFER_SIZE, CANRxMessage);
 static osPoolId CANTxPool;
 static osPoolId CANRxPool;
 
-/* RX */
+/* RX Elements */
 CAN_RxHeaderTypeDef CAN_RxHeader = {
     .StdId = 0x45,
     .ExtId = 0,
@@ -48,7 +48,7 @@ CAN_RxHeaderTypeDef CAN_RxHeader = {
     .FilterMatchIndex = 0
 };
 
-/* TX */
+/* TX Elements */
 #if defined(CAN_TX_ON)
 static osThreadId CANTransmitTaskHandle;
 static osMessageQId CANTxQueueHandle;
@@ -75,7 +75,10 @@ void APP_CAN_MarkLogTask(void const* argument);
 static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg);
 
 /* Exported functions --------------------------------------------------------*/
-/* CAN init function */
+/**
+  * @brief  CAN Init Function
+  * @retval None
+  */
 void APP_CAN_Init(void)
 {
     CAN_FilterTypeDef canFilterConfig;
@@ -130,6 +133,10 @@ void APP_CAN_Init(void)
     mAppConfiguration.CANTransmit = APP_ENABLE;
 }
 
+/**
+  * @brief  Initializes RTOS tasks used by the CAN Controller
+  * @retval None
+  */
 void APP_CAN_InitTasks(void)
 {
     osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
@@ -149,6 +156,12 @@ void APP_CAN_InitTasks(void)
     CANRxQueueHandle = osMessageCreate(osMessageQ(CANRxQueue), NULL);
 }
 
+/**
+  * @brief  Initializes the CAN MSP.
+  * @param  hcan pointer to a CAN_HandleTypeDef structure that contains
+  *         the configuration information for the specified CAN.
+  * @retval None
+  */
 void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 {
     GPIO_InitTypeDef GPIO_InitStruct = { 0 };
@@ -176,6 +189,12 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
     }
 }
 
+/**
+  * @brief  DeInitializes the CAN MSP.
+  * @param  hcan pointer to a CAN_HandleTypeDef structure that contains
+  *         the configuration information for the specified CAN.
+  * @retval None
+  */
 void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 {
     if (canHandle->Instance == CAN) {
@@ -370,12 +389,12 @@ void APP_CAN_MonitorTask(void const* argument)
     }
 }
 
-#if defined(CAN_TX_ON)
 /**
   * @brief  Function implementing the APP_CAN_TransmitTask thread.
   *         Send outgoing CAN data.
   * @retval None
   */
+#if defined(CAN_TX_ON)
 void APP_CAN_TransmitTask(void const* argument)
 {
     osEvent event;
