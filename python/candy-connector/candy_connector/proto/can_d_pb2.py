@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
     syntax="proto3",
     serialized_options=None,
     serialized_pb=_b(
-        '\n\x11Proto/can-d.proto"z\n\x0c\x46romEmbedded\x12%\n\x0c\x63\x61nDataChunk\x18\x01 \x01(\x0b\x32\r.CanDataChunkH\x00\x12\x16\n\x0cgpsDataChunk\x18\x02 \x01(\x0cH\x00\x12\x1f\n\tlogFSInfo\x18\x03 \x01(\x0b\x32\n.LogFSInfoH\x00\x42\n\n\x08\x63ontents"S\n\nToEmbedded\x12 \n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x0f.ControlCommand\x12#\n\x0ctransmitData\x18\x02 \x01(\x0b\x32\r.CanDataChunk":\n\x0e\x43ontrolCommand\x12(\n\x0b\x63ommandType\x18\x01 \x01(\x0e\x32\x13.ControlCommandType"+\n\tLogFSInfo\x12\x1e\n\x08logFiles\x18\x01 \x03(\x0b\x32\x0c.LogFileInfo"(\n\x0c\x43\x61nDataChunk\x12\n\n\x02id\x18\x01 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c"?\n\x0bLogFileInfo\x12\x0c\n\x04size\x18\x01 \x01(\r\x12\x10\n\x08unixTime\x18\x02 \x01(\x04\x12\x10\n\x08\x66ileName\x18\x03 \x01(\t*|\n\x12\x43ontrolCommandType\x12\n\n\x06NO_CMD\x10\x00\x12\x0c\n\x08STOP_LOG\x10\x01\x12\r\n\tSTART_LOG\x10\x02\x12\x0c\n\x08MARK_LOG\x10\x03\x12\x12\n\x0eGET_LOGFS_INFO\x10\x04\x12\x0b\n\x07GET_LOG\x10\x05\x12\x0e\n\nDELETE_LOG\x10\x06\x62\x06proto3'
+        '\n\x11Proto/can-d.proto"z\n\x0c\x46romEmbedded\x12%\n\x0c\x63\x61nDataChunk\x18\x01 \x01(\x0b\x32\r.CanDataChunkH\x00\x12\x16\n\x0cgpsDataChunk\x18\x02 \x01(\x0cH\x00\x12\x1f\n\tlogFSInfo\x18\x03 \x01(\x0b\x32\n.LogFSInfoH\x00\x42\n\n\x08\x63ontents"S\n\nToEmbedded\x12 \n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x0f.ControlCommand\x12#\n\x0ctransmitData\x18\x02 \x01(\x0b\x32\r.CanDataChunk":\n\x0e\x43ontrolCommand\x12(\n\x0b\x63ommandType\x18\x01 \x01(\x0e\x32\x13.ControlCommandType"+\n\tLogFSInfo\x12\x1e\n\x08logFiles\x18\x01 \x03(\x0b\x32\x0c.LogFileInfo"5\n\x0c\x43\x61nDataChunk\x12\n\n\x02id\x18\x01 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x12\x0b\n\x03\x64lc\x18\x03 \x01(\r"?\n\x0bLogFileInfo\x12\x0c\n\x04size\x18\x01 \x01(\r\x12\x10\n\x08unixTime\x18\x02 \x01(\x04\x12\x10\n\x08\x66ileName\x18\x03 \x01(\t*|\n\x12\x43ontrolCommandType\x12\n\n\x06NO_CMD\x10\x00\x12\x0c\n\x08STOP_LOG\x10\x01\x12\r\n\tSTART_LOG\x10\x02\x12\x0c\n\x08MARK_LOG\x10\x03\x12\x12\n\x0eGET_LOGFS_INFO\x10\x04\x12\x0b\n\x07GET_LOG\x10\x05\x12\x0e\n\nDELETE_LOG\x10\x06\x62\x06proto3'
     ),
 )
 
@@ -56,8 +56,8 @@ _CONTROLCOMMANDTYPE = _descriptor.EnumDescriptor(
     ],
     containing_type=None,
     serialized_options=None,
-    serialized_start=442,
-    serialized_end=566,
+    serialized_start=455,
+    serialized_end=579,
 )
 _sym_db.RegisterEnumDescriptor(_CONTROLCOMMANDTYPE)
 
@@ -332,6 +332,24 @@ _CANDATACHUNK = _descriptor.Descriptor(
             serialized_options=None,
             file=DESCRIPTOR,
         ),
+        _descriptor.FieldDescriptor(
+            name="dlc",
+            full_name="CanDataChunk.dlc",
+            index=2,
+            number=3,
+            type=13,
+            cpp_type=3,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -342,7 +360,7 @@ _CANDATACHUNK = _descriptor.Descriptor(
     extension_ranges=[],
     oneofs=[],
     serialized_start=335,
-    serialized_end=375,
+    serialized_end=388,
 )
 
 
@@ -416,8 +434,8 @@ _LOGFILEINFO = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=377,
-    serialized_end=440,
+    serialized_start=390,
+    serialized_end=453,
 )
 
 _FROMEMBEDDED.fields_by_name["canDataChunk"].message_type = _CANDATACHUNK
