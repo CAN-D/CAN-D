@@ -158,7 +158,7 @@ void APP_CAN_InitTasks(void)
 
 /**
   * @brief  Initializes the CAN MSP.
-  * @param  hcan pointer to a CAN_HandleTypeDef structure that contains
+  * @param  canHandle pointer to a CAN_HandleTypeDef structure that contains
   *         the configuration information for the specified CAN.
   * @retval None
   */
@@ -191,7 +191,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
 
 /**
   * @brief  DeInitializes the CAN MSP.
-  * @param  hcan pointer to a CAN_HandleTypeDef structure that contains
+  * @param  canHandle pointer to a CAN_HandleTypeDef structure that contains
   *         the configuration information for the specified CAN.
   * @retval None
   */
@@ -443,7 +443,7 @@ void APP_CAN_MarkLogTask(void const* argument)
 
 /**
   * @brief  Helper function for transforming CAN Data to SD format
-  * @retval None
+  * @retval Returns the number of bytes in formatted message
   */
 static size_t APP_CAN_FormatSDData(uint8_t* dest, CANRxMessage* srcRxMsg)
 {
