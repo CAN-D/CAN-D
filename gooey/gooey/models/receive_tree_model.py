@@ -148,6 +148,7 @@ class ReceiveTreeModel(QAbstractItemModel):
         oldMessage.dlc = newMessage.dlc
         oldMessage.data = newMessage.data
         oldMessage.cycle_time = float(newMessage.time) - float(oldMessage.time)
+        oldMessage.time = newMessage.time
         oldMessage.count = oldMessage.count + 1
 
     def updateChild(self, oldChild, newChild):

@@ -16,6 +16,9 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--is-demo', action='store_true',
                         help='connect GUI to a CAN trace?')
 
+    parser.add_argument('-l', '--is-loopback', action='store_true',
+                        help='loopback transmitted messages?')
+
     parser.add_argument('-t', '--trace-location',
                         help='location of the trace file in your directory')
 
@@ -51,7 +54,7 @@ if __name__ == "__main__":
         app.setStyleSheet(stylesheet)
 
     # Set the UI to the MainWindow
-    cand = CAND_MainWindow(args.is_demo, args.trace_location)
+    cand = CAND_MainWindow(args.is_demo, args.is_loopback, args.trace_location)
     cand.showMaximized()
 
     # Run event loop forever

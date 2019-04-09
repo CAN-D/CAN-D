@@ -1,5 +1,6 @@
 from candy_connector.CanDBus import CanDBus
 from candy_connector.CanDBus import CannedBus
+from candy_connector.CanDBus import LoopbackBus
 
 from usb.core import NoBackendError
 
@@ -15,8 +16,9 @@ class MainController(object):
         :param `tracecontroller`: A TraceController holding the data for the Trace tab.
         :param `rxtxcontroller`: A RxTxController holding the data for the Receive/Transmit tab.
     """
-    def __init__(self, isdemo, trace_location, tracecontroller=None, rxtxcontroller=None):
+    def __init__(self, isdemo, isloopback, trace_location, tracecontroller=None, rxtxcontroller=None):
         self.isdemo = isdemo
+        self.isloopback = isloopback
         self.trace_location = trace_location
 
         if tracecontroller is not None:
@@ -45,6 +47,8 @@ class MainController(object):
         try:
             if self.isdemo:
                 self.candbus = CannedBus(log_path=self.trace_location)
+            elif self.isloopback:
+                self.candbus = LoopbackBus()
             else:
                 self.candbus = CanDBus()
 
