@@ -4,17 +4,23 @@ from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt
 
 
 class TransmitTreeModel(QAbstractItemModel):
+    """ The model for the transmit table.
+    """
     def __init__(self, parent=None):
         super(TransmitTreeModel, self).__init__(parent)
         self.rootItem = TransmitMessage()
 
     def columnCount(self, parent):
+        """ Returns the number of columns for the table.
+        """
         if parent.isValid():
             return parent.internalPointer().columnCount()
         else:
             return self.rootItem.columnCount()
 
     def data(self, index, role):
+        """ Returns the data in the given index.
+        """
         if not index.isValid():
             return None
 
@@ -32,6 +38,8 @@ class TransmitTreeModel(QAbstractItemModel):
         return QtCore.Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
+        """ Returns the headers for the table.
+        """
         if role != Qt.DisplayRole:
             return None
 
@@ -52,6 +60,8 @@ class TransmitTreeModel(QAbstractItemModel):
         return None
 
     def index(self, row, column, parent):
+        """ Returns the QModelIndex in the given row and column
+        """
         if not self.hasIndex(row, column, parent):
             return QtCore.QModelIndex()
 
@@ -67,6 +77,8 @@ class TransmitTreeModel(QAbstractItemModel):
             return QtCore.QModelIndex()
 
     def parent(self, index):
+        """ Returns the parent of the given QModelIndex
+        """
         if not index.isValid():
             return QtCore.QModelIndex()
 
@@ -79,6 +91,8 @@ class TransmitTreeModel(QAbstractItemModel):
         return self.createIndex(parentItem.row(), 0, parentItem)
 
     def rowCount(self, parent):
+        """ Returns the number of rows under the given parent.
+        """
         if parent.column() > 0:
             return 0
 
@@ -90,6 +104,8 @@ class TransmitTreeModel(QAbstractItemModel):
         return parentItem.childCount()
 
     def insertRow(self, newMessage, index=QModelIndex()):
+        """ Inserts a row to the table.
+        """
         # Check if Table already has a message with the same name
         messageInTable = [
             m for m in self.rootItem.childItems if m.can_id == newMessage.can_id]
@@ -106,6 +122,8 @@ class TransmitTreeModel(QAbstractItemModel):
         return True
 
     def insertChildRow(self, parent, newChildMessage, index=QModelIndex()):
+        """ Inserts a child under the given parent.
+        """
         childMessages = [
             m for m in parent.childItems if m.message == newChildMessage.message]
 
@@ -121,6 +139,8 @@ class TransmitTreeModel(QAbstractItemModel):
         return True
 
     def updateMessage(self, oldMessage, newMessage):
+        """ Updates the data of the old Message object.
+        """
         oldMessage.can_id = newMessage.can_id
         oldMessage.message = newMessage.message
         oldMessage.dlc = newMessage.dlc
@@ -129,4 +149,6 @@ class TransmitTreeModel(QAbstractItemModel):
         oldMessage.count = oldMessage.count + 1
 
     def updateChild(self, oldChild, newChild):
+        """ Update data of the old child Message object.
+        """
         oldChild.data = newChild.data
