@@ -70,15 +70,6 @@ class MainController(object):
 
         return self.connected
 
-    def startPoll(self):
-        """ Start polling the CAN-D device
-        """
-        self.polling = True
-
-        while self.polling and self.connected:
-            data = self.candbus.recv()
-            print(f"Got message: {data}")
-
     def startLog(self):
         """ Start logging data from the CAN-D device to the SD card.
         

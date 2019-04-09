@@ -434,10 +434,7 @@ class CAND_MainWindow(QMainWindow):
     def insertTrace(self, data):
         """ Inserts a trace to the table
         """
-        if data.timestamp is None:
-            timestamp = int(round(time.time() * 1000))
-        else:
-            timestamp = data.timestamp
+        timestamp = int(round(time.time() * 1000))
 
         try:
             messagename = self.controller.dbc.get_message_by_frame_id(

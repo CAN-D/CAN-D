@@ -35,18 +35,29 @@ class RxtxController():
         # Build the Message object
         message = Message()
         message.arbitration_id = int(transmit_message.can_id, 16)
-        message.data = bytes.fromhex(transmit_message.data)
         message.dlc = transmit_message.dlc
+        try:
+            message.data = bytes.fromhex(transmit_message.data)
+        except:
+            return "Data field is not in valid hexadecimal form."
 
-        # Calculate the cycle time for transmitting messages in ms
-        cycle_time = int(transmit_message.cycle_time) / 1000
+
+        # If there is a task for a given can_id, cancel that task
+        if transmit_message.can_id in self.tasks:
+            self.tasks[transmit_message.can_id].cancel()
 
         loop = asyncio.get_event_loop()
 
-        # Create a task, which is re-scheduled every cycle_time ms
-        self.tasks[transmit_message.can_id] = loop.create_task(
-            do_stuff_every_x_seconds(
-                cycle_time, lambda: self.transmit_and_append(message, transmit_message)))
+        if transmit_message.cycle_time is "" or transmit_message.cycle_time is None:
+            loop.create_task(self.transmit_and_append(message, transmit_message))
+        else:
+            # Calculate the cycle time for transmitting messages in ms
+            cycle_time = int(transmit_message.cycle_time) / 1000
+
+            # Create a task, which is re-scheduled every cycle_time ms
+            self.tasks[transmit_message.can_id] = loop.create_task(
+                do_stuff_every_x_seconds(
+                    cycle_time, lambda: self.transmit_and_append(message, transmit_message)))
 
     def appendTransmitTable(self, message):
         """ Appends to the transmit table with the CAN message.

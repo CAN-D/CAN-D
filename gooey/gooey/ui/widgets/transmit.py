@@ -133,8 +133,12 @@ class TransmitWindow(QDialog):
         self.buttonBox.rejected.connect(self.canceled)
         self.buttonBox.buttons()[2].clicked.connect(self.cleared)
 
+        self.dataInput.textChanged.connect(self.data_input_changed)
+        self.lengthInput.valueChanged.connect(self.length_changed)
+
         QtCore.QMetaObject.connectSlotsByName(self)
         self.message = TransmitMessage()
+        self.message.data = ""
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -145,6 +149,28 @@ class TransmitWindow(QDialog):
         self.cycleLabel.setText(_translate("Dialog", "Cycle"))
         self.msLabel.setText(_translate("Dialog", "ms"))
         self.dataLabel.setText(_translate("Dialog", "Data: (hex)"))
+    
+    def length_changed(self, value):
+        """ Called when length input value changes.
+        """
+        self.message.dlc = value
+        self.validate_data_input(value)
+    
+    def data_input_changed(self):
+        """ Called when data input value changes.
+        """
+        self.message.data = self.dataInput.toPlainText()
+        self.validate_data_input(self.message.dlc)
+    
+    def validate_data_input(self, length_input):
+        """ Checks if the input length and input data field is consistent with one another
+        """
+        numchars = len(self.message.data) - self.message.data.count(' ')
+        difference = abs(length_input*2 - numchars)
+        if difference != 0:
+            self.buttonBox.buttons()[0].setEnabled(False)
+        else:
+            self.buttonBox.buttons()[0].setEnabled(True)
 
     def sendmessage(self):
         """ Fills the message object with data from the inputs.
@@ -152,12 +178,12 @@ class TransmitWindow(QDialog):
         
         self.message.parentItem = self.rxtxcontroller.transmittable.rootItem
         self.message.can_id = self.idInput.toPlainText()
-        self.message.data = self.dataInput.toPlainText()
         self.message.dlc = self.lengthInput.value()
         self.message.cycle_time = self.cycleInput.toPlainText()
         self.message.time = int(round(time.time() * 1000))
         self.message.rxtx = "TX"
         self.message.count = 1
+        self.message.data = self.dataInput.toPlainText()
         self.accept()
 
     def canceled(self):
