@@ -134,7 +134,7 @@ void APP_CAN_Init(void)
 }
 
 /**
-  * @brief  Initializes RTOS tasks used by the CAN Controller
+  * @brief  Initializes RTOS queues and tasks used by the CAN Controller
   * @retval None
   */
 void APP_CAN_InitTasks(void)
@@ -355,12 +355,11 @@ void APP_CAN_MonitorTask(void const* argument)
         event = osMessageGet(CANRxQueueHandle, 0);
         if (event.status == osEventMessage) {
             canRxMsg = event.value.p;
-            if (mAppConfiguration.SDStorage == APP_ENABLE) {
-                // Write data to SD card
-                uint8_t formattedMsgLen = 0;
-                formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
-                APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
-            }
+
+            // Write data to SD card
+            uint8_t formattedMsgLen = 0;
+            formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
+            APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
 
             // Pack the protobuf message
             fromEmbeddedMsg.contents.canDataChunk.data.size = CAN_RX_MSG_DATA_SZ_BYTES;
