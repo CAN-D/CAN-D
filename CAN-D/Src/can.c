@@ -108,6 +108,15 @@ void APP_CAN_Init(void)
     if (HAL_CAN_ConfigFilter(&hcan, &canFilterConfig) != HAL_OK)
         Error_Handler();
 
+    if (HAL_CAN_Start(&hcan) != HAL_OK)
+        Error_Handler();
+
+    if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_START) != HAL_OK)
+        Error_Handler();
+
+    // Turn on LED1 to notify that the CAN Controller has started
+    BSP_LED_On(LED1);
+
 #if defined(CAN_TX_ON)
     if ((CANTxPool = osPoolCreate(osPool(CANTxPool))) == NULL)
         Error_Handler();
@@ -253,7 +262,6 @@ void APP_CAN_Start(void)
     // Changes the hcan.State to HAL_CAN_STATE_LISTENING
     if (HAL_CAN_Start(&hcan) == HAL_OK) {
         HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
-        APP_FATFS_StartSession(); // start new log session
         BSP_LED_On(LED1);
     }
 }
@@ -266,7 +274,6 @@ void APP_CAN_Stop(void)
 {
     if (HAL_CAN_Stop(&hcan) == HAL_OK) {
         HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
-        APP_FATFS_StopSession(); // stop log session
         BSP_LED_Off(LED1);
     }
 }

@@ -58,8 +58,8 @@ int main(void)
     APP_RTC_Init();
     BSP_PB_Init(BUTTON_LOG, BUTTON_MODE_EXTI);
     BSP_PB_Init(BUTTON_MARK, BUTTON_MODE_EXTI);
-    BSP_LED_Init(LED1); // CAN Start LED
-    BSP_LED_Init(LED2);
+    BSP_LED_Init(LED1); // CAN Start/Stop LED
+    BSP_LED_Init(LED2); // Logging On/Off LED
     BSP_LED_Init(LED3); // Error LED
     APP_CAN_Init();
     APP_TIM2_Init();

@@ -80,15 +80,25 @@ void APP_FATFS_Deinit(void)
     SDInitialized = 0;
 }
 
+void APP_FATFS_ToggleSession(void)
+{
+    if (sessionCount == 0)
+        APP_FATFS_StartSession();
+    else
+        APP_FATFS_StopSession();
+}
+
 void APP_FATFS_StartSession(void)
 {
     sessionCount = 1;
+    BSP_LED_On(LED2);
 }
 
 void APP_FATFS_StopSession(void)
 {
     prevSessionCount = sessionCount;
     sessionCount = 0;
+    BSP_LED_Off(LED2);
 }
 
 /**

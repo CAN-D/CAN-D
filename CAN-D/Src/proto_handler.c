@@ -61,12 +61,12 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
     if (controlCommandMsg->has_commandType) {
         switch (controlCommandMsg->commandType) {
         case ControlCommandType_STOP_LOG:
-            // Stop the CAN Controller
-            APP_CAN_Stop();
+            // Stop the log session
+            APP_FATFS_StopSession();
             break;
         case ControlCommandType_START_LOG:
-            // Start the CAN Controller
-            APP_CAN_Start();
+            // Start a new log session
+            APP_FATFS_StartSession();
             break;
         case ControlCommandType_MARK_LOG:
             // Mark the log file
