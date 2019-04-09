@@ -193,8 +193,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin)
 {
     switch (pin) {
     case LOG_BUTTON_PIN:
-        // Toggle the CAN Controller Peripheral
-        APP_CAN_StartStop();
+        // Toggle logging session
+        APP_FATFS_ToggleSession();
         break;
     case MARK_BUTTON_PIN:
         // Mark the log file

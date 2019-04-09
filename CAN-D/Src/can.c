@@ -108,6 +108,15 @@ void APP_CAN_Init(void)
     if (HAL_CAN_ConfigFilter(&hcan, &canFilterConfig) != HAL_OK)
         Error_Handler();
 
+    if (HAL_CAN_Start(&hcan) != HAL_OK)
+        Error_Handler();
+
+    if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_START) != HAL_OK)
+        Error_Handler();
+
+    // Turn on LED1 to notify that the CAN Controller has started
+    BSP_LED_On(LED1);
+
 #if defined(CAN_TX_ON)
     if ((CANTxPool = osPoolCreate(osPool(CANTxPool))) == NULL)
         Error_Handler();
@@ -253,7 +262,6 @@ void APP_CAN_Start(void)
     // Changes the hcan.State to HAL_CAN_STATE_LISTENING
     if (HAL_CAN_Start(&hcan) == HAL_OK) {
         HAL_CAN_ActivateNotification(&hcan, CAN_IT_START);
-        APP_FATFS_StartSession(); // start new log session
         BSP_LED_On(LED1);
     }
 }
@@ -266,7 +274,6 @@ void APP_CAN_Stop(void)
 {
     if (HAL_CAN_Stop(&hcan) == HAL_OK) {
         HAL_CAN_DeactivateNotification(&hcan, CAN_IT_START);
-        APP_FATFS_StopSession(); // stop log session
         BSP_LED_Off(LED1);
     }
 }
@@ -275,15 +282,16 @@ void APP_CAN_Stop(void)
  * @brief Queue CAN data for transmission.
  * @retval None
  */
-void APP_CAN_TransmitData(uint8_t* txData, uint32_t id)
+void APP_CAN_TransmitData(uint8_t* txData, uint32_t id, uint32_t dlc)
 {
 #if defined(CAN_TX_ON)
     CANTxMessage* msg;
     msg = osPoolAlloc(CANTxPool);
     CAN_TxHeader.StdId = id;
+    CAN_TxHeader.DLC = dlc;
     msg->handle = &hcan;
     msg->header = &CAN_TxHeader;
-    memcpy(msg->data, txData, CAN_MESSAGE_LENGTH);
+    memcpy(msg->data, txData, dlc);
     osMessagePut(CANTxQueueHandle, (uint32_t)msg, 0);
 #endif // CAN_TX_ON
 }
@@ -339,10 +347,12 @@ void APP_CAN_MonitorTask(void const* argument)
             fromEmbeddedMsg.contents.canDataChunk.data.size = CAN_RX_MSG_DATA_SZ_BYTES;
             fromEmbeddedMsg.contents.canDataChunk.has_id = true;
             fromEmbeddedMsg.contents.canDataChunk.has_data = true;
+            fromEmbeddedMsg.contents.canDataChunk.has_dlc = true;
             fromEmbeddedMsg.which_contents = FromEmbedded_canDataChunk_tag;
 
-            memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, CAN_RX_MSG_DATA_SZ_BYTES);
+            memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, canRxMsg->header->DLC);
             fromEmbeddedMsg.contents.canDataChunk.id = (canRxMsg->header->StdId & CAN_RX_MSG_STDID_MASK);
+            fromEmbeddedMsg.contents.canDataChunk.dlc = canRxMsg->header->DLC;
             usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
             usbTxCnt = 0;

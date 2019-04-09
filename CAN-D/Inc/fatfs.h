@@ -35,6 +35,7 @@ extern FIL SDFile; /* File object for SD card */
 
 void APP_FATFS_Init(void);
 void APP_FATFS_Deinit(void);
+void APP_FATFS_ToggleSession(void);
 void APP_FATFS_StartSession(void);
 void APP_FATFS_StopSession(void);
 uint32_t APP_FATFS_GetLineCount(void);
