@@ -41,7 +41,6 @@ class RxtxController():
         loop = asyncio.get_event_loop()
 
         if transmit_message.cycle_time is "" or transmit_message.cycle_time is None:
-            self.transmit_and_append(message, transmit_message)
             loop.create_task(self.transmit_and_append(message, transmit_message))
         else:
             # Calculate the cycle time for transmitting messages in ms

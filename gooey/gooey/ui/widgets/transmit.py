@@ -152,12 +152,16 @@ class TransmitWindow(QDialog):
         
         self.message.parentItem = self.rxtxcontroller.transmittable.rootItem
         self.message.can_id = self.idInput.toPlainText()
-        self.message.data = self.dataInput.toPlainText()
         self.message.dlc = self.lengthInput.value()
         self.message.cycle_time = self.cycleInput.toPlainText()
         self.message.time = int(round(time.time() * 1000))
         self.message.rxtx = "TX"
         self.message.count = 1
+
+        self.message.data = self.dataInput.toPlainText()
+        if len(self.message.data) % 2 != 0:
+            self.message.data = "0" + self.message.data
+
         self.accept()
 
     def canceled(self):
