@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
     syntax="proto3",
     serialized_options=None,
     serialized_pb=_b(
-        '\n\x11Proto/can-d.proto"z\n\x0c\x46romEmbedded\x12%\n\x0c\x63\x61nDataChunk\x18\x01 \x01(\x0b\x32\r.CanDataChunkH\x00\x12\x16\n\x0cgpsDataChunk\x18\x02 \x01(\x0cH\x00\x12\x1f\n\tlogFSInfo\x18\x03 \x01(\x0b\x32\n.LogFSInfoH\x00\x42\n\n\x08\x63ontents"S\n\nToEmbedded\x12 \n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x0f.ControlCommand\x12#\n\x0ctransmitData\x18\x02 \x01(\x0b\x32\r.CanDataChunk":\n\x0e\x43ontrolCommand\x12(\n\x0b\x63ommandType\x18\x01 \x01(\x0e\x32\x13.ControlCommandType"+\n\tLogFSInfo\x12\x1e\n\x08logFiles\x18\x01 \x03(\x0b\x32\x0c.LogFileInfo"(\n\x0c\x43\x61nDataChunk\x12\n\n\x02id\x18\x01 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c"?\n\x0bLogFileInfo\x12\x0c\n\x04size\x18\x01 \x01(\r\x12\x10\n\x08unixTime\x18\x02 \x01(\x04\x12\x10\n\x08\x66ileName\x18\x03 \x01(\t*p\n\x12\x43ontrolCommandType\x12\x0c\n\x08STOP_LOG\x10\x00\x12\r\n\tSTART_LOG\x10\x01\x12\x0c\n\x08MARK_LOG\x10\x02\x12\x12\n\x0eGET_LOGFS_INFO\x10\x03\x12\x0b\n\x07GET_LOG\x10\x04\x12\x0e\n\nDELETE_LOG\x10\x05\x62\x06proto3'
+        '\n\x11Proto/can-d.proto"z\n\x0c\x46romEmbedded\x12%\n\x0c\x63\x61nDataChunk\x18\x01 \x01(\x0b\x32\r.CanDataChunkH\x00\x12\x16\n\x0cgpsDataChunk\x18\x02 \x01(\x0cH\x00\x12\x1f\n\tlogFSInfo\x18\x03 \x01(\x0b\x32\n.LogFSInfoH\x00\x42\n\n\x08\x63ontents"S\n\nToEmbedded\x12 \n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x0f.ControlCommand\x12#\n\x0ctransmitData\x18\x02 \x01(\x0b\x32\r.CanDataChunk":\n\x0e\x43ontrolCommand\x12(\n\x0b\x63ommandType\x18\x01 \x01(\x0e\x32\x13.ControlCommandType"+\n\tLogFSInfo\x12\x1e\n\x08logFiles\x18\x01 \x03(\x0b\x32\x0c.LogFileInfo"(\n\x0c\x43\x61nDataChunk\x12\n\n\x02id\x18\x01 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c"?\n\x0bLogFileInfo\x12\x0c\n\x04size\x18\x01 \x01(\r\x12\x10\n\x08unixTime\x18\x02 \x01(\x04\x12\x10\n\x08\x66ileName\x18\x03 \x01(\t*|\n\x12\x43ontrolCommandType\x12\n\n\x06NO_CMD\x10\x00\x12\x0c\n\x08STOP_LOG\x10\x01\x12\r\n\tSTART_LOG\x10\x02\x12\x0c\n\x08MARK_LOG\x10\x03\x12\x12\n\x0eGET_LOGFS_INFO\x10\x04\x12\x0b\n\x07GET_LOG\x10\x05\x12\x0e\n\nDELETE_LOG\x10\x06\x62\x06proto3'
     ),
 )
 
@@ -33,38 +33,42 @@ _CONTROLCOMMANDTYPE = _descriptor.EnumDescriptor(
     file=DESCRIPTOR,
     values=[
         _descriptor.EnumValueDescriptor(
-            name="STOP_LOG", index=0, number=0, serialized_options=None, type=None
+            name="NO_CMD", index=0, number=0, serialized_options=None, type=None
         ),
         _descriptor.EnumValueDescriptor(
-            name="START_LOG", index=1, number=1, serialized_options=None, type=None
+            name="STOP_LOG", index=1, number=1, serialized_options=None, type=None
         ),
         _descriptor.EnumValueDescriptor(
-            name="MARK_LOG", index=2, number=2, serialized_options=None, type=None
+            name="START_LOG", index=2, number=2, serialized_options=None, type=None
         ),
         _descriptor.EnumValueDescriptor(
-            name="GET_LOGFS_INFO", index=3, number=3, serialized_options=None, type=None
+            name="MARK_LOG", index=3, number=3, serialized_options=None, type=None
         ),
         _descriptor.EnumValueDescriptor(
-            name="GET_LOG", index=4, number=4, serialized_options=None, type=None
+            name="GET_LOGFS_INFO", index=4, number=4, serialized_options=None, type=None
         ),
         _descriptor.EnumValueDescriptor(
-            name="DELETE_LOG", index=5, number=5, serialized_options=None, type=None
+            name="GET_LOG", index=5, number=5, serialized_options=None, type=None
+        ),
+        _descriptor.EnumValueDescriptor(
+            name="DELETE_LOG", index=6, number=6, serialized_options=None, type=None
         ),
     ],
     containing_type=None,
     serialized_options=None,
     serialized_start=442,
-    serialized_end=554,
+    serialized_end=566,
 )
 _sym_db.RegisterEnumDescriptor(_CONTROLCOMMANDTYPE)
 
 ControlCommandType = enum_type_wrapper.EnumTypeWrapper(_CONTROLCOMMANDTYPE)
-STOP_LOG = 0
-START_LOG = 1
-MARK_LOG = 2
-GET_LOGFS_INFO = 3
-GET_LOG = 4
-DELETE_LOG = 5
+NO_CMD = 0
+STOP_LOG = 1
+START_LOG = 2
+MARK_LOG = 3
+GET_LOGFS_INFO = 4
+GET_LOG = 5
+DELETE_LOG = 6
 
 
 _FROMEMBEDDED = _descriptor.Descriptor(
