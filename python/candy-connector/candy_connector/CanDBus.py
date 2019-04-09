@@ -290,3 +290,40 @@ class CannedBus(BusABC):
                 self.data_queue.put_nowait(msg)
                 await asyncio.sleep(message_sleep_time)
 
+
+class LoopbackBus(BusABC):
+    """A bus that recieves all transmitted messages."""
+
+    def __init__(
+        self, channel: int = None, can_filters: Dict[str, int] = None, **config
+    ):
+        super(LoopbackBus, self).__init__(channel=channel, can_filters=can_filters)
+        self.data_queue = Queue()
+
+    def recv(self, timeout: float = None) -> Optional[Message]:
+        return self.data_queue.get()
+
+    def send(self, msg: Message, timeout=None):
+        self.data_queue.put(msg)
+
+    def set_filters(self, can_filters: Dict[str, int] = None):
+        pass
+
+    def flush_tx_buffer(self):
+        """Discard every message that may be queued in the output buffer(s)."""
+        pass
+
+    def stop_log(self):
+        pass
+
+    def start_log(self):
+        pass
+
+    def mark_log(self):
+        pass
+
+    def stop_usb_polling(self):
+        pass
+
+    def start_usb_polling(self):
+        pass
