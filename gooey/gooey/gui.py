@@ -9,6 +9,7 @@ from quamash import QEventLoop
 from ui.widgets.mainwindow import CAND_MainWindow
 
 if __name__ == "__main__":
+    # Parse the arguments
     parser = argparse.ArgumentParser(
         description="CAN-D Graphical User Interface GUI")
 
@@ -20,7 +21,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # Create a QApplication
     app = QApplication(sys.argv)
+
+    # Set the event_loop of the application
     loop = QEventLoop(app)
     asyncio.set_event_loop(loop)
 
@@ -46,8 +50,10 @@ if __name__ == "__main__":
         stylesheet = ts.readAll()
         app.setStyleSheet(stylesheet)
 
+    # Set the UI to the MainWindow
     cand = CAND_MainWindow(args.is_demo, args.trace_location)
     cand.showMaximized()
 
+    # Run event loop forever
     with loop:
         loop.run_forever()

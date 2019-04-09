@@ -1,6 +1,10 @@
 import cantools
 import random
 
+"""
+    This script is used to generate random CAN traces from the given dbc file.
+"""
+
 
 def formatHexData(s):
     return (" ".join(s[i:i+2] for i in range(0, len(s), 2))).upper()
