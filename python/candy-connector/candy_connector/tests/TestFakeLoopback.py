@@ -1,11 +1,11 @@
-from candy_connector.CanDBus import CanDBus
+from candy_connector.CanDBus import LoopbackBus
 import candy_connector.proto.can_d_pb2 as pb
 from candy_connector.parsers import parse_line
 import logging
 from can import Message
 
 
-bus = CanDBus()
+bus = LoopbackBus()
 
 with open("./data/can_trace_256.log.test", "r") as log_file:
     print("Starting Loopback test...")
@@ -29,4 +29,3 @@ with open("./data/can_trace_256.log.test", "r") as log_file:
     print("Done Loopback test")
 
 bus.stop_usb_polling()
-
