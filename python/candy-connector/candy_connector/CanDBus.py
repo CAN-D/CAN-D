@@ -124,6 +124,7 @@ class CanDBus(BusABC):
         to_embedded = pb.ToEmbedded()
         to_embedded.transmitData.id = msg.arbitration_id
         to_embedded.transmitData.data = msg.data
+        to_embedded.transmitData.dlc = msg.dlc or len(msg.data)
         out_bytes = to_embedded.SerializeToString()
         self.usb_endpoint_out.write(out_bytes)
 
