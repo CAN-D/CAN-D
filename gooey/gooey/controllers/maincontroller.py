@@ -5,7 +5,6 @@ from usb.core import NoBackendError
 
 from controllers.tracecontroller import TraceController
 from controllers.rxtxcontroller import RxtxController
-from controllers.gpscontroller import GpsController
 from PyQt5 import QtCore
 
 class MainController(object):
@@ -15,9 +14,8 @@ class MainController(object):
         :param `trace_location`: a path to the trace file containing the data to be shown in the demo.
         :param `tracecontroller`: A TraceController holding the data for the Trace tab.
         :param `rxtxcontroller`: A RxTxController holding the data for the Receive/Transmit tab.
-        :param `gpscontroller`: A GpsController holding the data for the GPS tab.
     """
-    def __init__(self, isdemo, trace_location, tracecontroller=None, rxtxcontroller=None, gpscontroller=None):
+    def __init__(self, isdemo, trace_location, tracecontroller=None, rxtxcontroller=None):
         self.isdemo = isdemo
         self.trace_location = trace_location
 
@@ -30,11 +28,6 @@ class MainController(object):
             self.rxtxcontroller = rxtxcontroller
         else:
             self.rxtxcontroller = RxtxController(self)
-
-        if gpscontroller is not None:
-            self.gpscontroller = gpscontroller
-        else:
-            self.gpscontroller = GpsController()
 
         self.polling = False
         self.connected = False

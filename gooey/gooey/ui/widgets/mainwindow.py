@@ -8,7 +8,6 @@ from candy_connector.parsers import parse_line
 from can import Message
 from ui.widgets.rxtx import RxTxTab
 from ui.widgets.trace import TraceTab
-from ui.widgets.connection import ConnectionsTab
 from ui.widgets.transmit import TransmitWindow
 
 from controllers.maincontroller import MainController, DataPollThread

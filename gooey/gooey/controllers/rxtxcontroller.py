@@ -46,10 +46,10 @@ class RxtxController():
         # Create a task, which is re-scheduled every cycle_time ms
         self.tasks[transmit_message.can_id] = loop.create_task(
             do_stuff_every_x_seconds(
-                cycle_time, lambda: self.transmit(message)))
+                cycle_time, lambda: self.transmit_and_append(message, transmit_message)))
 
-        # Populate transmit table
-        self.appendTransmitTable(transmit_message)
+        # # Populate transmit table
+        # self.appendTransmitTable(transmit_message)
 
     def appendTransmitTable(self, message):
         """ Appends to the transmit table with the CAN message.
@@ -84,6 +84,12 @@ class RxtxController():
             signal {Dict} -- A dictionary which holds data from the decoded message
         """
         self.transmittable.insertChildRow(parent, signal)
+
+    async def transmit_and_append(self, message, transmit_message):
+        """ Transmit the message to the device and append the message to the table.
+        """
+        await self.transmit(message)
+        self.appendTransmitTable(transmit_message)
 
     async def transmit(self, message):
         """ Transmits the message to the CAN-D device asynchronously.
