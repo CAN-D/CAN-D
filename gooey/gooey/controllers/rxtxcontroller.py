@@ -73,7 +73,7 @@ class RxtxController():
         Arguments:
             message {Message} -- A message object containing CAN data.
         """
-        self.receivetable.insertRow(message)
+        return self.receivetable.insertRow(message)
 
     def appendReceiveSignal(self, parent, signal):
         """ Appends to the receive table under the given parent.

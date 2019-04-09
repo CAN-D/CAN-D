@@ -114,14 +114,14 @@ class ReceiveTreeModel(QAbstractItemModel):
         if len(messageInTable) > 0:
             self.updateMessage(messageInTable[0], newMessage)
             self.dataChanged.emit(index, index)
+            return messageInTable[0]
         # If the can_id does not exist, create and append to the table.
         else:
             position = len(self.rootItem.childItems)
             self.beginInsertRows(QModelIndex(), position, position)
             self.rootItem.childItems.insert(position, newMessage)
             self.endInsertRows()
-
-        return True
+            return newMessage
 
     def insertChildRow(self, parent, newChildMessage, index=QModelIndex()):
         """ Inserts a child under the given parent.

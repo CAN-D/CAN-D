@@ -451,9 +451,9 @@ class CAND_MainWindow(QMainWindow):
                              0,
                              1)
 
-        self.controller.rxtxcontroller.appendReceiveTable(msg)
+        parent = self.controller.rxtxcontroller.appendReceiveTable(msg)
         self.controller.tracecontroller.appendTraceTable(msg)
-        self.insertSignals(data, msg)
+        self.insertSignals(data, parent)
 
         return
 
