@@ -214,7 +214,11 @@ class CanDBus(BusABC):
     def _handle_can_data(self, can_data: pb.CanDataChunk):
         """Handle incoming CAN data."""
         self.can_queue.put_nowait(
-            Message(arbitration_id=can_data.id, data=can_data.data)
+            Message(
+                arbitration_id=can_data.id,
+                data=can_data.data[: can_data.dlc],
+                dlc=can_data.dlc,
+            )
         )
 
     def _handle_gps_data(self, gps_data: bytes):
