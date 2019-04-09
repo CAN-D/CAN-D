@@ -89,7 +89,7 @@ void interpretControlCommandMessage(ControlCommand* controlCommandMsg)
 
 void interpretCanDataChunk(CanDataChunk* canDataChunk)
 {
-    if (canDataChunk->has_id && canDataChunk->has_data && canDataChunk->data.size > 0 && canDataChunk->data.size <= 8) {
+    if (canDataChunk->has_id && canDataChunk->has_data && canDataChunk->has_dlc && canDataChunk->dlc > 0 && canDataChunk->dlc <= 8) {
         APP_CAN_TransmitData(canDataChunk->data.bytes, canDataChunk->id, canDataChunk->data.size);
     }
 }

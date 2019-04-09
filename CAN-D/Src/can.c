@@ -347,10 +347,12 @@ void APP_CAN_MonitorTask(void const* argument)
             fromEmbeddedMsg.contents.canDataChunk.data.size = CAN_RX_MSG_DATA_SZ_BYTES;
             fromEmbeddedMsg.contents.canDataChunk.has_id = true;
             fromEmbeddedMsg.contents.canDataChunk.has_data = true;
+            fromEmbeddedMsg.contents.canDataChunk.has_dlc = true;
             fromEmbeddedMsg.which_contents = FromEmbedded_canDataChunk_tag;
 
             memcpy(fromEmbeddedMsg.contents.canDataChunk.data.bytes, canRxMsg->data, canRxMsg->header->DLC);
             fromEmbeddedMsg.contents.canDataChunk.id = (canRxMsg->header->StdId & CAN_RX_MSG_STDID_MASK);
+            fromEmbeddedMsg.contents.canDataChunk.dlc = canRxMsg->header->DLC;
             usbTxNumBytes = APP_PROTO_HANDLE_bufferFromEmbeddedMsg(&fromEmbeddedMsg, (uint8_t*)usbTxMsg, usbMaxMsgLen);
 
             usbTxCnt = 0;
