@@ -98,16 +98,17 @@ void APP_CAN_Init(void)
     if (HAL_CAN_Init(&hcan) != HAL_OK)
         Error_Handler();
 
-    canFilterConfig.FilterBank = 0;
+    // Set up CAN filters to receive all incoming messages from the bus
+    canFilterConfig.FilterBank = CAN_FILTER_BANK;
     canFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
     canFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-    canFilterConfig.FilterIdHigh = 0x0000;
-    canFilterConfig.FilterIdLow = 0x0000;
-    canFilterConfig.FilterMaskIdHigh = 0x0000;
-    canFilterConfig.FilterMaskIdLow = 0x0000;
+    canFilterConfig.FilterIdHigh = CAN_FILTER_ID_HIGH;
+    canFilterConfig.FilterIdLow = CAN_FILTER_ID_LOW;
+    canFilterConfig.FilterMaskIdHigh = CAN_FILTER_MASK_ID_HIGH;
+    canFilterConfig.FilterMaskIdLow = CAN_FILTER_MASK_ID_LOW;
     canFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
     canFilterConfig.FilterActivation = ENABLE;
-    canFilterConfig.SlaveStartFilterBank = 14;
+    canFilterConfig.SlaveStartFilterBank = CAN_SLAVE_START_FILTER_BANK;
     if (HAL_CAN_ConfigFilter(&hcan, &canFilterConfig) != HAL_OK)
         Error_Handler();
 
@@ -421,7 +422,7 @@ void APP_CAN_TransmitTask(void const* argument)
 #endif // CAN_TX_ON
 
 /**
-  * @brief  Function implementing the APP_CAN_TransmitTask thread.
+  * @brief  Function implementing the APP_CAN_MarkLogTask thread.
   *         Writes the current linecount to the Mark Data Log file.
   * @retval None
   */
