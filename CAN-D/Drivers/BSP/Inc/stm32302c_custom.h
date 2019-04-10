@@ -135,6 +135,8 @@ typedef enum {
 #endif /* HAL_UART_MODULE_ENABLED */
 
 #if defined(HAL_SPI_MODULE_ENABLED)
+extern SPI_HandleTypeDef hspi;
+
 /**
   * @brief  Definition for SPI Interface pins (SPI1 used)
   */
