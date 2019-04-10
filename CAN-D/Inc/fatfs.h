@@ -16,17 +16,20 @@ extern "C" {
 #include "ff_gen_drv.h"
 #include "sd_diskio.h" /* defines SD_Driver as external */
 
+/* Define this to format the SD Card as FatFS Filesystem */
+// #define FATFS_FORMAT_SD
+
 #define FATFS_NO_FORCED_MOUNTING 0
 #define FATFS_FORCED_MOUNTING 1
 
-/* FATFS_Peripher_Identifiers */
-#define CAN_LOG_IDENTIFIER "CAN_Data"
-#define GPS_LOG_IDENTIFIER "GPS_Data"
-#define MARK_LOG_IDENTIFIER "MARK_Data"
+/* @defgroup FATFS_Peripher_Identifiers */
+#define CAN_LOG_IDENTIFIER "CANData"
+#define GPS_LOG_IDENTIFIER "GPSData"
+#define MARK_LOG_IDENTIFIER "MARKData"
 
-#define CAN_LOG_FILENAME "CAN_Data.log"
-#define GPS_LOG_FILENAME "GPS_Data.log"
-#define MARK_LOG_FILENAME "MARK_Data.log"
+#define CAN_LOG_FILENAME "CANData.log"
+#define GPS_LOG_FILENAME "GPSData.log"
+#define MARK_LOG_FILENAME "MARKData.log"
 
 extern FRESULT resSD; /* Return value for SD */
 extern char SDPath[4]; /* USER logical drive path */
