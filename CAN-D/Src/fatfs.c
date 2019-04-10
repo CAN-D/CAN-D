@@ -69,6 +69,17 @@ void APP_FATFS_Init(void)
     // Link the SD driver
     resSD = FATFS_LinkDriver(&SD_Driver, SDPath);
 
+#if defined(FATFS_FORMAT_SD)
+    if (f_mount(&SDFatFS, (TCHAR const*)SDPath, FATFS_FORCED_MOUNTING) == FR_OK) {
+        // Create a FAT file system on the SD card (format the card)
+        // This deletes all content on the device
+        if (f_mkfs((TCHAR const*)SDPath, 0, 0) != FR_OK) {
+            /* FatFs Format Error */
+            Error_Handler();
+        }
+    }
+#endif // FATFS_FORMAT_SD
+
     // Remove all log files
     APP_FATFS_RemoveFile(CAN_LOG_FILENAME, sizeof(CAN_LOG_FILENAME));
     APP_FATFS_RemoveFile(GPS_LOG_FILENAME, sizeof(GPS_LOG_FILENAME));
@@ -137,31 +148,29 @@ uint32_t APP_FATFS_GetLineCount(void)
   * @param  writeData: buffer containing the data to write
   * @param  bytes: Number of bytes in writeData buffer
   * @param  periphIdentifier: Peripheral Idfentifier String
-  *         Can be one of FATFS_Peripher_Identifiers
+  *         Can be one of @defgroup FATFS_Peripher_Identifiers
   * @retval writtenBytes: The number of bytes written to the SD card
   */
 uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphIdentifier)
 {
-    uint8_t writtenBytes;
-    uint8_t incLineNumber; // Increment line number
-    char filename[sizeof(periphIdentifier) + 3];
+    uint8_t writtenBytes = 0;
 
     // Check that we have started a session
     if (sessionCount == 0) {
         return 0;
     }
 
-    incLineNumber = strcmp(periphIdentifier, CAN_LOG_FILENAME);
-
-    strcpy(filename, periphIdentifier);
-    strcat(filename, ".log");
-
-    writtenBytes = APP_FATFS_WriteSD(writeData, bytes, (const char*)filename);
-
-    if ((writtenBytes == bytes) && (incLineNumber == 0)) {
-        // Successful write. Increment the number of messages written
-        // to the SD Card.
-        lineNumber++;
+    if (strcmp(periphIdentifier, CAN_LOG_IDENTIFIER) == 0) {
+        writtenBytes = APP_FATFS_WriteSD(writeData, bytes, (const char*)CAN_LOG_FILENAME);
+        if (writtenBytes == bytes) {
+            // Successful write. Increment the number of messages written
+            // to the SD Card.
+            lineNumber++;
+        }
+    } else if (strcmp(periphIdentifier, GPS_LOG_IDENTIFIER) == 0) {
+        writtenBytes = APP_FATFS_WriteSD(writeData, bytes, (const char*)GPS_LOG_FILENAME);
+    } else if (strcmp(periphIdentifier, MARK_LOG_IDENTIFIER) == 0) {
+        writtenBytes = APP_FATFS_WriteSD(writeData, bytes, (const char*)MARK_LOG_FILENAME);
     }
 
     return writtenBytes;
@@ -171,10 +180,10 @@ uint8_t APP_FATFS_LogSD(const uint8_t* writeData, uint32_t bytes, char* periphId
   * @brief  Writes a buffer to the SD Card
   * @param  writeData: buffer containing the data to write
   * @param  bytes: Number of bytes in writeData buffer
-  * @param  fileName: Name of the file to write to 
+  * @param  filename: Name of the file to write to 
   * @retval writtenBytes: The number of bytes written to the SD card
   */
-uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* fileName)
+uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* filename)
 {
     uint32_t writtenBytes = 0;
 
@@ -185,7 +194,7 @@ uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* 
         }
         if (f_mount(&SDFatFS, (TCHAR const*)SDPath, FATFS_FORCED_MOUNTING) == FR_OK) {
             // Open the file for writing. Create new file if it doesn't exist
-            if ((f_open(&SDFile, fileName, FA_WRITE | FA_OPEN_ALWAYS)) == FR_OK) {
+            if ((f_open(&SDFile, filename, FA_WRITE | FA_OPEN_ALWAYS)) == FR_OK) {
                 // Move the write pointer to the end of the file (append)
                 if (f_lseek(&SDFile, f_size(&SDFile)) == FR_OK) {
                     f_write(&SDFile, writeData, bytes, (void*)&writtenBytes);
