@@ -143,7 +143,7 @@ void APP_CAN_InitTasks(void)
     osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
-    osThreadDef(MarkLogTask, APP_CAN_MarkLogTask, osPriorityNormal, 0, 128);
+    osThreadDef(MarkLogTask, APP_CAN_MarkLogTask, osPriorityNormal, 0, 256);
     MarkLogTaskHandle = osThreadCreate(osThread(MarkLogTask), NULL);
 
 #if defined(CAN_TX_ON)
