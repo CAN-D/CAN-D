@@ -9,6 +9,7 @@
 #include "stm32f3xx_it.h"
 #include "can.h"
 #include "cmsis_os.h"
+#include "fatfs.h"
 #include "gps.h" /* for UART message Queues */
 #include "main.h"
 #include "stm32302c_custom.h" /* for UART handle (huart) */
@@ -29,15 +30,21 @@ extern TIM_HandleTypeDef htim2;
 extern UART_HandleTypeDef huart;
 extern TIM_HandleTypeDef htim1;
 
-/* UART message Queues */
-extern osMessageQId UARTGprmcQueueHandle;
-
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */
+/* Cortex-M4 Processor Interruption and Exception Handlers                    */
+/* The Cortex-M4 Processor Interruption and Exception Handlers                */
+/* are mainly for debugging purposes.                                         */
+/* If they are not defined, we are unable to trace the origin                 */
+/* of the fault.                                                              */
+/* Those interrupt handlers which have an infinite while loop                 */
+/* are designed such that we can 'trap' the running program                   */
+/* loop so that we can use a debugger to re-trace the fault                   */
+/* that occured.                                                              */
 /******************************************************************************/
+
 /**
   * @brief This function handles Non maskable interrupt.
   */
@@ -50,6 +57,8 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
+    // Turn on LED3 to notify user that hardware has faulted
+    BSP_LED_On(LED3);
     while (1) {
     }
 }
@@ -119,6 +128,11 @@ void CAN_RX1_IRQHandler(void)
     HAL_CAN_IRQHandler(&hcan);
 }
 
+void CAN_SCE_IRQHandler(void)
+{
+    HAL_CAN_IRQHandler(&hcan);
+}
+
 /**
   * @brief This function handles TIM1 update and TIM16 interrupts.
   */
@@ -142,26 +156,6 @@ void TIM2_IRQHandler(void)
   */
 void USART2_IRQHandler(void)
 {
-//    char rxData[128] = "0";
-//    uint8_t rx_idx = 0;
-//    // Check if the UART2 Read Data Register has data
-//    if (huart.Instance->ISR & USART_ISR_RXNE) {
-//        // Read the data from the register
-//        rxData[rx_idx] = huart.Instance->RDR;
-//
-//        // The GPS RX data will be held between '$' and '\n' characters
-//        // TODO: BO: This is demo specific code
-//        // if (rxData[rx_idx] == '$') {
-//        if (1) {
-//            // TODO: BO: This is demo specific code
-//            // if (strncmp("$GPRMC", rxData, sizeof("$GPRMC") - 1) == 0)
-//            //     APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
-//            APP_GPS_BufferGPSString(rxData, GPS_DATA_LENGTH);
-//
-//            memset(rxData, 0, sizeof(rxData));
-//        }
-//    }
-//
     HAL_UART_IRQHandler(&huart);
 }
 
@@ -173,12 +167,46 @@ void USB_LP_IRQHandler(void)
     HAL_PCD_IRQHandler(&hpcd_USB_FS);
 }
 
+/**
+  * @brief This function handles external GPIO interrupts
+  *        on lines 10-15.
+  */
 void EXTI15_10_IRQHandler(void)
 {
-    HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
-    if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_RESET) {
-        APP_CAN_StartStop();
+    if (BSP_PB_GetState(BUTTON_LOG) == GPIO_PIN_SET) {
+        HAL_GPIO_EXTI_IRQHandler(LOG_BUTTON_PIN);
+    }
+    if (BSP_PB_GetState(BUTTON_MARK) == GPIO_PIN_SET) {
+        HAL_GPIO_EXTI_IRQHandler(MARK_BUTTON_PIN);
     }
 }
 
+/**
+ * 
+  * @brief This function handles external GPIO interrupts
+  *        on line 1.
+  */
+void EXTI1_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(SD_DETECT_PIN);
+}
+
+/**
+  * @brief Callback for GPIO EXTI interrupts
+  */
+void HAL_GPIO_EXTI_Callback(uint16_t pin)
+{
+    switch (pin) {
+    case LOG_BUTTON_PIN:
+        // Toggle logging session
+        APP_FATFS_ToggleSession();
+        break;
+    case MARK_BUTTON_PIN:
+        // Mark the log file
+        APP_CAN_MarkLog();
+        break;
+    default:
+        break;
+    }
+}
 /* Private functions ---------------------------------------------------------*/

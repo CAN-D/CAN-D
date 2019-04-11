@@ -32,16 +32,13 @@ const uint16_t LED_PIN[LEDn] = { LED1_PIN,
  * @brief BUTTON variables
  */
 GPIO_TypeDef* BUTTON_PORT[BUTTONn] = { LOG_BUTTON_GPIO_PORT,
-    MARK_BUTTON_GPIO_PORT,
-    RST_BUTTON_GPIO_PORT };
+    MARK_BUTTON_GPIO_PORT };
 
 const uint16_t BUTTON_PIN[BUTTONn] = { LOG_BUTTON_PIN,
-    MARK_BUTTON_PIN,
-    RST_BUTTON_PIN };
+    MARK_BUTTON_PIN };
 
 const uint16_t BUTTON_IRQn[BUTTONn] = { LOG_BUTTON_EXTI_IRQn,
-    MARK_BUTTON_EXTI_IRQn,
-    RST_BUTTON_EXTI_IRQn };
+    MARK_BUTTON_EXTI_IRQn };
 
 /**
  * @brief COM variables
@@ -68,14 +65,14 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle);
 #if defined(HAL_SPI_MODULE_ENABLED)
 
 uint32_t SpixTimeout = CUSTOM_SPIx_TIMEOUT_MAX; /*<! Value of Timeout when SPI communication fails */
-static SPI_HandleTypeDef hspi;
+SPI_HandleTypeDef hspi;
 
 /* SPIx bus functions */
-static void SPIx_Init(void);
-static void SPIx_Write(uint8_t Value);
-static uint32_t SPIx_Read(void);
-static void SPIx_Error(void);
-static void SPIx_MspInit(SPI_HandleTypeDef* hspi);
+void SPIx_Init(void);
+void SPIx_Write(uint8_t Value);
+uint32_t SPIx_Read(void);
+void SPIx_Error(void);
+void SPIx_MspInit(SPI_HandleTypeDef* hspi);
 
 /* Link functions for SD Card peripheral over SPI */
 void SD_IO_Init(void);
@@ -114,7 +111,7 @@ void BSP_LED_Init(Led_TypeDef Led)
 
     HAL_GPIO_Init(LED_PORT[Led], &GPIO_InitStruct);
 
-    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
 }
 
 /**
@@ -129,7 +126,7 @@ void BSP_LED_Init(Led_TypeDef Led)
   */
 void BSP_LED_On(Led_TypeDef Led)
 {
-    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
 }
 
 /**
@@ -144,7 +141,7 @@ void BSP_LED_On(Led_TypeDef Led)
   */
 void BSP_LED_Off(Led_TypeDef Led)
 {
-    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
 }
 
 /**
@@ -193,9 +190,9 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
     }
 
     if (Button_Mode == BUTTON_MODE_EXTI) {
-        if (Button == BUTTON_LOG || Button == BUTTON_MARK || Button == BUTTON_RST) {
+        if (Button == BUTTON_LOG || Button == BUTTON_MARK) {
             /* Configure Push Button pins as input with External interrupt, falling edge */
-            GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+            GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
         }
 
         HAL_GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStruct);
@@ -345,9 +342,13 @@ void GPS_IO_WriteString(char Msg[])
   * @param hspi SPI handle
   * @retval None
   */
-static void SPIx_MspInit(SPI_HandleTypeDef* hspi)
+void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
+
+    /*** Configure the SPI peripheral ***/
+    /* Enable SPI clock */
+    CUSTOM_SPIx_CLK_ENABLE();
 
     /*** Configure the GPIOs ***/
     /* Enable GPIO clock */
@@ -369,17 +370,13 @@ static void SPIx_MspInit(SPI_HandleTypeDef* hspi)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = CUSTOM_SPIx_MISO_MOSI_AF;
     HAL_GPIO_Init(CUSTOM_SPIx_MISO_MOSI_GPIO_PORT, &GPIO_InitStruct);
-
-    /*** Configure the SPI peripheral ***/
-    /* Enable SPI clock */
-    CUSTOM_SPIx_CLK_ENABLE();
 }
 
 /**
   * @brief  Initializes SPI HAL.
   * @retval None
   */
-static void SPIx_Init(void)
+void SPIx_Init(void)
 {
     if (HAL_SPI_GetState(&hspi) == HAL_SPI_STATE_RESET) {
         /* SPI Config */
@@ -397,8 +394,6 @@ static void SPIx_Init(void)
         hspi.Init.NSS = SPI_NSS_SOFT;
         hspi.Init.TIMode = SPI_TIMODE_DISABLE;
         hspi.Init.Mode = SPI_MODE_MASTER;
-
-        SPIx_MspInit(&hspi);
         HAL_SPI_Init(&hspi);
     }
 }
@@ -407,7 +402,7 @@ static void SPIx_Init(void)
   * @brief SPI Read 4 bytes from device
   * @retval Read data
 */
-static uint32_t SPIx_Read(void)
+uint32_t SPIx_Read(void)
 {
     HAL_StatusTypeDef status = HAL_OK;
     uint32_t readvalue = 0;
@@ -429,7 +424,7 @@ static uint32_t SPIx_Read(void)
   * @param Value value to be written
   * @retval None
   */
-static void SPIx_Write(uint8_t Value)
+void SPIx_Write(uint8_t Value)
 {
     HAL_StatusTypeDef status = HAL_OK;
 
@@ -446,7 +441,7 @@ static void SPIx_Write(uint8_t Value)
   * @brief SPI error treatment function
   * @retval None
   */
-static void SPIx_Error(void)
+void SPIx_Error(void)
 {
     /* De-initialize the SPI communication BUS */
     HAL_SPI_DeInit(&hspi);

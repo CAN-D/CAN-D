@@ -8,8 +8,8 @@
   *          is using in the C source code, usually in main.c. This file contains:
   *           - Configuration section that allows to select:
   *              - The STM32F3xx device used in the target application
-  *              - To use or not the peripheral’s drivers in application code(i.e. 
-  *                code will be based on direct access to peripheral’s registers 
+  *              - To use or not the peripheralï¿½s drivers in application code(i.e. 
+  *                code will be based on direct access to peripheralï¿½s registers 
   *                rather than drivers API), this option is controlled by 
   *                "#define USE_HAL_DRIVER"
   *  
@@ -79,7 +79,7 @@ extern "C" {
                                    STM32F301R6 and STM32F301R8 Devices */
 /* #define STM32F302x8 */ /*!< STM32F302K6, STM32F302K8, STM32F302C6, STM32F302C8,
                                    STM32F302R6 and STM32F302R8 Devices */
-/* #define STM32F302xC */ /*!< STM32F302CB, STM32F302CC, STM32F302RB, STM32F302RC,
+#define STM32F302xC /*!< STM32F302CB, STM32F302CC, STM32F302RB, STM32F302RC, \
                                    STM32F302VB and STM32F302VC Devices */
 /* #define STM32F302xE */ /*!< STM32F302RE, STM32F302VE, STM32F302ZE, STM32F302RD,
                                    STM32F302VD and STM32F302ZD Devices */

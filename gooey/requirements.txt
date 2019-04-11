@@ -1,1 +1,5 @@
 PyQt5
+cantools
+asyncio
+quamash
+-e 'git+https://github.com/CAN-D/CAN-D#egg=candy_connector&subdirectory=python/candy-connector'

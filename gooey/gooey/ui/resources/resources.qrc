@@ -1,15 +1,34 @@
 <RCC>
   <qresource prefix="icons">
-    <file>power.svg</file>
-    <file>pause.svg</file>
-    <file>play.svg</file>
-    <file>stop.svg</file>
-    <file>record.svg</file>
-    <file>disconnect.svg</file>
-    <file>check_circle.svg</file>
-    <file>connect.svg</file>
-    <file>replay.svg</file>
-    <file>save.svg</file>
-    <file>open.svg</file>
+    <file>black/mark.svg</file>
+    <file>white/small.png</file>
+    <file>white/connect1.png</file>
+    <file>white/open.png</file>
+    <file>white/save.png</file>
+    <file>white/mark.png</file>
+    <file>white/sdstart.png</file>
+    <file>white/replay.png</file>
+    <file>white/check_circle.png</file>
+    <file>black/replay.png</file>
+    <file>black/check_circle.png</file>
+    <file>white/disconnect1.png</file>
+    <file>white/retransmit.png</file>
+    <file>white/sdstop.png</file>
+    <file>white/transmit.png</file>
+    <file>black/transmit.png</file>
+    <file>black/sdstop.png</file>
+    <file>black/sdstart.png</file>
+    <file>black/save.png</file>
+    <file>black/retransmit.png</file>
+    <file>black/open.png</file>
+    <file>black/mark.png</file>
+    <file>black/disconnect2.png</file>
+    <file>black/disconnect1.png</file>
+    <file>black/connect2.png</file>
+    <file>black/connect1.png</file>
+  </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/avenir.otf</file>
+    <file>fonts/minimal.otf</file>
   </qresource>
 </RCC>
