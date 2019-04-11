@@ -45,6 +45,7 @@ class MainController(object):
                 boolean -- True if successfully connected; False, otherwise.
         """
         if self.candbus is not None:
+            self.candbus.start_usb_polling()
             self.connected = True
 
         else:
@@ -141,3 +142,7 @@ class DataPollThread(QtCore.QThread):
         while self.polling:
             data = self.candbus.recv()
             self.data_incoming.emit(data)
+
+    def stop(self):
+        self.threadactive = False
+        self.wait()

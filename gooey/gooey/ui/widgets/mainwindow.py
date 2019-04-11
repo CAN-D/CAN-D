@@ -378,6 +378,7 @@ class CAND_MainWindow(QMainWindow):
             self.disconnectButton.setEnabled(False)
             self.transmitButton.setEnabled(False)
             self.retransmitButton.setEnabled(False)
+            # self.poller.stop()
         else:
             popup = QtWidgets.QMessageBox.critical(
                 self, "Error", "CAN-D device not found. \n\nPlease make sure that the CAN-D is connected properly.")
