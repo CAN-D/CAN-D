@@ -73,9 +73,9 @@ class MainController(object):
         self.connected = False
         self.candbus.stop_usb_polling()
         self.candbus.stop_log()
-        self.candbus = None
         self.polling = False
         self.logging = False
+        self.rxtxcontroller.kill_all_tasks()
 
         return self.connected
 
