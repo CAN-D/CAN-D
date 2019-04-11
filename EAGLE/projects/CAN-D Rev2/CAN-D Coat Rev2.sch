@@ -4626,7 +4626,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <rectangle x1="-0.8382" y1="-0.4318" x2="-0.4318" y2="0.4318" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.4001" x2="0.1999" y2="0.4001" layer="35"/>
 </package>
-<package name="TSM-110-02-L-DV-A-P-TR" urn="urn:adsk.eagle:footprint:10031770/3" library_version="11">
+<package name="TSM-110-02-S-DV-P-TR" urn="urn:adsk.eagle:footprint:10031770/4" library_version="12">
 <description>translated Allegro footprint</description>
 <wire x1="-12.131" y1="-2.476" x2="-17.91" y2="-2.476" width="0" layer="150"/>
 <wire x1="-17.367" y1="-1.842" x2="-17.208" y2="-2.476" width="0" layer="150"/>
@@ -5334,10 +5334,10 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <packageinstance name="R0603"/>
 </packageinstances>
 </package3d>
-<package3d name="SAMTEC-TSM-110-01-X-DV" urn="urn:adsk.eagle:package:10031773/5" type="model" library_version="11">
+<package3d name="SAMTEC-TSM-110-01-X-DV" urn="urn:adsk.eagle:package:10031773/6" type="model" library_version="12">
 <description>translated Allegro footprint</description>
 <packageinstances>
-<packageinstance name="TSM-110-02-L-DV-A-P-TR"/>
+<packageinstance name="TSM-110-02-S-DV-P-TR"/>
 </packageinstances>
 </package3d>
 <package3d name="SSM-106-L-SV-K-TR" urn="urn:adsk.eagle:package:10031897/2" type="model" library_version="5">
@@ -5497,12 +5497,12 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="JTAG-HEADER" urn="urn:adsk.eagle:component:10031774/6" library_version="11">
+<deviceset name="JTAG-HEADER" urn="urn:adsk.eagle:component:10031774/7" library_version="12">
 <gates>
 <gate name="A" symbol="SAMTEC-TSM-110-01-X-DVA" x="0" y="0"/>
 </gates>
 <devices>
-<device name="J" package="TSM-110-02-L-DV-A-P-TR">
+<device name="J" package="TSM-110-02-S-DV-P-TR">
 <connects>
 <connect gate="A" pin="1" pad="1"/>
 <connect gate="A" pin="10" pad="10"/>
@@ -5526,7 +5526,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <connect gate="A" pin="9" pad="9"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:10031773/5"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:10031773/6"/>
 </package3dinstances>
 <technologies>
 <technology name="">
@@ -5660,7 +5660,7 @@ Source: &lt;a href="http://www.lumileds.com/uploads/459/DS208-pdf"&gt; Datasheet
 </class>
 </classes>
 <parts>
-<part name="JTAG" library="CAN-D" library_urn="urn:adsk.eagle:library:10031387" deviceset="JTAG-HEADER" device="J" package3d_urn="urn:adsk.eagle:package:10031773/5"/>
+<part name="JTAG" library="CAN-D" library_urn="urn:adsk.eagle:library:10031387" deviceset="JTAG-HEADER" device="J" package3d_urn="urn:adsk.eagle:package:10031773/6"/>
 <part name="LOG" library="CAN-D" library_urn="urn:adsk.eagle:library:10031387" deviceset="BUTTONS" device="PLUNGER" package3d_urn="urn:adsk.eagle:package:10045811/3" value="BUTTONSPLUNGER"/>
 <part name="MARK" library="CAN-D" library_urn="urn:adsk.eagle:library:10031387" deviceset="BUTTONS" device="PLUNGER" package3d_urn="urn:adsk.eagle:package:10045811/3" value="BUTTONSPLUNGER"/>
 <part name="RESET" library="CAN-D" library_urn="urn:adsk.eagle:library:10031387" deviceset="BUTTONS" device="" package3d_urn="urn:adsk.eagle:package:10031812/2"/>
@@ -5683,6 +5683,7 @@ Source: &lt;a href="http://www.lumileds.com/uploads/459/DS208-pdf"&gt; Datasheet
 <sheets>
 <sheet>
 <plain>
+<text x="58.42" y="38.1" size="1.778" layer="91">CAN-D Coating Rev2</text>
 </plain>
 <instances>
 <instance part="JTAG" gate="A" x="17.78" y="88.9" smashed="yes">
@@ -5871,46 +5872,41 @@ Source: &lt;a href="http://www.lumileds.com/uploads/459/DS208-pdf"&gt; Datasheet
 </net>
 <net name="LED3" class="0">
 <segment>
-<pinref part="J2" gate="G$1" pin="1"/>
-<wire x1="129.54" y1="83.82" x2="127" y2="83.82" width="0.1524" layer="91"/>
-<label x="121.92" y="83.82" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="R3" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="7.62" x2="106.68" y2="7.62" width="0.1524" layer="91"/>
 <label x="101.6" y="7.62" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J2" gate="G$1" pin="6"/>
+<wire x1="129.54" y1="71.12" x2="127" y2="71.12" width="0.1524" layer="91"/>
+<label x="121.92" y="71.12" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="LED2" class="0">
-<segment>
-<pinref part="J2" gate="G$1" pin="2"/>
-<wire x1="129.54" y1="81.28" x2="127" y2="81.28" width="0.1524" layer="91"/>
-<label x="121.92" y="81.28" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="R2" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="25.4" x2="106.68" y2="25.4" width="0.1524" layer="91"/>
 <label x="101.6" y="25.4" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J2" gate="G$1" pin="5"/>
+<wire x1="129.54" y1="73.66" x2="127" y2="73.66" width="0.1524" layer="91"/>
+<label x="121.92" y="73.66" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="LED1" class="0">
-<segment>
-<pinref part="J2" gate="G$1" pin="3"/>
-<wire x1="129.54" y1="78.74" x2="127" y2="78.74" width="0.1524" layer="91"/>
-<label x="121.92" y="78.74" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="40.64" x2="106.68" y2="40.64" width="0.1524" layer="91"/>
 <label x="101.6" y="40.64" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="LOG" class="0">
 <segment>
 <pinref part="J2" gate="G$1" pin="4"/>
 <wire x1="129.54" y1="76.2" x2="127" y2="76.2" width="0.1524" layer="91"/>
 <label x="121.92" y="76.2" size="1.778" layer="95"/>
 </segment>
+</net>
+<net name="LOG" class="0">
 <segment>
 <pinref part="LOG" gate="G$1" pin="C@1"/>
 <pinref part="LOG" gate="G$1" pin="C@2"/>
@@ -5919,13 +5915,13 @@ Source: &lt;a href="http://www.lumileds.com/uploads/459/DS208-pdf"&gt; Datasheet
 <junction x="17.78" y="27.94"/>
 <label x="10.16" y="27.94" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J2" gate="G$1" pin="3"/>
+<wire x1="129.54" y1="78.74" x2="127" y2="78.74" width="0.1524" layer="91"/>
+<label x="121.92" y="78.74" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="MARK" class="0">
-<segment>
-<pinref part="J2" gate="G$1" pin="5"/>
-<wire x1="129.54" y1="73.66" x2="127" y2="73.66" width="0.1524" layer="91"/>
-<label x="121.92" y="73.66" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="MARK" gate="G$1" pin="C@2"/>
 <pinref part="MARK" gate="G$1" pin="C@1"/>
@@ -5934,13 +5930,13 @@ Source: &lt;a href="http://www.lumileds.com/uploads/459/DS208-pdf"&gt; Datasheet
 <junction x="17.78" y="12.7"/>
 <label x="10.16" y="12.7" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J2" gate="G$1" pin="2"/>
+<wire x1="129.54" y1="81.28" x2="127" y2="81.28" width="0.1524" layer="91"/>
+<label x="119.38" y="81.28" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="RESET" class="0">
-<segment>
-<pinref part="J2" gate="G$1" pin="6"/>
-<wire x1="129.54" y1="71.12" x2="127" y2="71.12" width="0.1524" layer="91"/>
-<label x="121.92" y="71.12" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="RESET" gate="G$1" pin="C@2"/>
 <pinref part="RESET" gate="G$1" pin="C@1"/>
@@ -5948,6 +5944,11 @@ Source: &lt;a href="http://www.lumileds.com/uploads/459/DS208-pdf"&gt; Datasheet
 <wire x1="17.78" y1="-2.54" x2="15.24" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="17.78" y="-2.54"/>
 <label x="10.16" y="-2.54" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J2" gate="G$1" pin="1"/>
+<wire x1="129.54" y1="83.82" x2="127" y2="83.82" width="0.1524" layer="91"/>
+<label x="119.38" y="83.82" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$7" class="0">

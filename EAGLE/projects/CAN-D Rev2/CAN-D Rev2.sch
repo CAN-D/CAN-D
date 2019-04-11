@@ -7884,18 +7884,18 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </library>
 <library name="CAN-D" urn="urn:adsk.eagle:library:10031387">
 <packages>
-<package name="1-1740195-2" urn="urn:adsk.eagle:footprint:10031793/1" library_version="5" library_locally_modified="yes">
+<package name="1-1740195-2" urn="urn:adsk.eagle:footprint:10031793/1" locally_modified="yes" library_version="12" library_locally_modified="yes">
 <description>&lt;b&gt;1-1740195-2&lt;/b&gt;&lt;br&gt;
 </description>
-<smd name="1" x="-5.48" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
-<smd name="2" x="-2.74" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="5" x="-5.48" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="4" x="-2.74" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
 <smd name="3" x="0" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
-<smd name="4" x="2.74" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
-<smd name="5" x="5.48" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
-<smd name="6" x="-4.11" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
-<smd name="7" x="-1.37" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
-<smd name="8" x="1.37" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
-<smd name="9" x="4.11" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="2" x="2.74" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="1" x="5.48" y="-16.5" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="9" x="-4.11" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="8" x="-1.37" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="7" x="1.37" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
+<smd name="6" x="4.11" y="-13.1" dx="2.1" dy="1.2" layer="1" rot="R90"/>
 <smd name="10" x="-12.775" y="-13.3" dx="9" dy="5.45" layer="1" rot="R90"/>
 <smd name="11" x="12.775" y="-13.3" dx="9" dy="5.45" layer="1" rot="R90"/>
 <pad name="12" x="-8.3" y="-12.9" drill="2.1" diameter="3"/>
@@ -8237,7 +8237,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </package>
 </packages>
 <packages3d>
-<package3d name="1-1740195-2" urn="urn:adsk.eagle:package:10031821/6" type="model" library_version="7">
+<package3d name="1-1740195-2" urn="urn:adsk.eagle:package:10031821/6" locally_modified="yes" type="model" library_version="12" library_locally_modified="yes">
 <description>&lt;b&gt;1-1740195-2&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="1-1740195-2"/>
@@ -8555,7 +8555,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="DB9" urn="urn:adsk.eagle:component:10031834/3" prefix="J" library_version="7">
+<deviceset name="DB9" urn="urn:adsk.eagle:component:10031834/3" locally_modified="yes" prefix="J" library_version="12" library_locally_modified="yes">
 <description>&lt;b&gt;9 pos smt plug 4-40 threaded/inserts&lt;/b&gt;&lt;p&gt;
 Source: &lt;a href="http://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&amp;DocId=Customer Drawing1740195EpdfEnglishENG_CD_1740195_E.pdf1-1740195-2"&gt; Datasheet &lt;/a&gt;</description>
 <gates>
@@ -9088,6 +9088,7 @@ Source: &lt;a href="http://www.ti.com/lit/gpn/tps2115a"&gt; Datasheet &lt;/a&gt;
 <part name="GND11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C20" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10u"/>
+<part name="GND28" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9362,6 +9363,9 @@ Source: &lt;a href="http://www.ti.com/lit/gpn/tps2115a"&gt; Datasheet &lt;/a&gt;
 <attribute name="NAME" x="230.124" y="140.081" size="1.778" layer="95"/>
 <attribute name="VALUE" x="230.124" y="135.001" size="1.778" layer="96"/>
 </instance>
+<instance part="GND28" gate="1" x="25.4" y="142.24" smashed="yes" rot="MR0">
+<attribute name="VALUE" x="22.86" y="147.32" size="1.778" layer="96" rot="MR180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -9594,6 +9598,11 @@ Source: &lt;a href="http://www.ti.com/lit/gpn/tps2115a"&gt; Datasheet &lt;/a&gt;
 <wire x1="236.22" y1="134.62" x2="236.22" y2="132.08" width="0.1524" layer="91"/>
 <pinref part="GND12" gate="1" pin="GND"/>
 <pinref part="C20" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="X3" gate="G$1" pin="3"/>
+<pinref part="GND28" gate="1" pin="GND"/>
+<wire x1="30.48" y1="144.78" x2="25.4" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="USBVCC" class="0">
