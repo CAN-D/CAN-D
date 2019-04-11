@@ -202,8 +202,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin)
         APP_FATFS_ToggleSession();
         break;
     case MARK_BUTTON_PIN:
+#if !defined(FINAL_DEMO)
         // Mark the log file
         APP_CAN_MarkLog();
+#endif //FINAL_DEMO
         break;
     default:
         break;

@@ -11,6 +11,8 @@
 #include "stm32302c_custom_sd.h"
 #include <string.h>
 
+#define FINAL_DEMO
+
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
@@ -39,8 +41,9 @@ static FRESULT APP_FATFS_RemoveFile(const char* file, size_t size);
   */
 static FRESULT APP_FATFS_RemoveFile(const char* file, size_t size)
 {
-    char path[SD_PATH_LEN + size];
     FRESULT ret = FR_OK;
+#if !defined(FINAL_DEMO)
+    char path[SD_PATH_LEN + size];
 
     // get the path to our SD drive
     path[0] = SDPath[0];
@@ -55,6 +58,7 @@ static FRESULT APP_FATFS_RemoveFile(const char* file, size_t size)
         ret = f_unlink((const TCHAR*)path);
     }
     f_mount(NULL, 0, 0);
+#endif // FINAL_DEMO
 
     return ret;
 }
@@ -187,6 +191,7 @@ uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* 
 {
     uint32_t writtenBytes = 0;
 
+#if !defined(FINAL_DEMO)
     if (BSP_SD_IsDetected() == SD_PRESENT) {
         // If the SD card was ejected but is now detected
         if (SDInitialized == 0) {
@@ -206,6 +211,7 @@ uint8_t APP_FATFS_WriteSD(const uint8_t* writeData, uint32_t bytes, const char* 
     } else if (SDInitialized == 1) {
         APP_FATFS_Deinit();
     }
+#endif // FINAL_DEMO
 
     return writtenBytes;
 }
