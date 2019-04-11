@@ -140,14 +140,14 @@ void APP_CAN_Init(void)
   */
 void APP_CAN_InitTasks(void)
 {
-    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 256);
+    osThreadDef(CANMonitorTask, APP_CAN_MonitorTask, osPriorityNormal, 0, 512);
     CANMonitorTaskHandle = osThreadCreate(osThread(CANMonitorTask), NULL);
 
-    osThreadDef(MarkLogTask, APP_CAN_MarkLogTask, osPriorityNormal, 0, 256);
+    osThreadDef(MarkLogTask, APP_CAN_MarkLogTask, osPriorityNormal, 0, 512);
     MarkLogTaskHandle = osThreadCreate(osThread(MarkLogTask), NULL);
 
 #if defined(CAN_TX_ON)
-    osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 256);
+    osThreadDef(CANTransmitTask, APP_CAN_TransmitTask, osPriorityNormal, 0, 512);
     CANTransmitTaskHandle = osThreadCreate(osThread(CANTransmitTask), NULL);
     osMessageQDef(CANTxQueue, TX_BUFFER_SIZE, CANTxMessage);
     CANTxQueueHandle = osMessageCreate(osMessageQ(CANTxQueue), NULL);
@@ -357,11 +357,6 @@ void APP_CAN_MonitorTask(void const* argument)
         if (event.status == osEventMessage) {
             canRxMsg = event.value.p;
 
-            // Write data to SD card
-            uint8_t formattedMsgLen = 0;
-            formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
-            APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
-
             // Pack the protobuf message
             fromEmbeddedMsg.contents.canDataChunk.data.size = CAN_RX_MSG_DATA_SZ_BYTES;
             fromEmbeddedMsg.contents.canDataChunk.has_id = true;
@@ -383,6 +378,11 @@ void APP_CAN_MonitorTask(void const* argument)
                     break;
                 }
             }
+
+            // Write data to SD card
+            uint8_t formattedMsgLen = 0;
+            formattedMsgLen = APP_CAN_FormatSDData(sdTxMsg, canRxMsg);
+            APP_FATFS_LogSD((const uint8_t*)sdTxMsg, formattedMsgLen, canLogIdentifier);
             osPoolFree(CANRxPool, canRxMsg);
         }
         osDelay(1);
@@ -428,15 +428,12 @@ void APP_CAN_TransmitTask(void const* argument)
   */
 void APP_CAN_MarkLogTask(void const* argument)
 {
+    uint8_t markData[6];
+    volatile uint32_t lineCount = 0;
     osThreadSuspend(NULL);
     for (;;) {
-        uint8_t markData[4];
-        uint32_t lineCount = 0;
         lineCount = APP_FATFS_GetLineCount();
-        markData[0] = (lineCount & 0x000F);
-        markData[1] = (lineCount & 0x00F0);
-        markData[2] = (lineCount & 0x0F00);
-        markData[3] = (lineCount & 0xF000);
+        sprintf((char* restrict)markData, "%lu\r\n", lineCount);
         APP_FATFS_LogSD((const uint8_t*)markData, sizeof(uint32_t), MARK_LOG_IDENTIFIER);
         osThreadSuspend(NULL);
     }
