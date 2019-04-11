@@ -25,6 +25,16 @@ class RxtxController():
 
         self.tasks = {}
 
+    def kill_all_tasks(self):
+        """ Kill all transmitting tasks and reinstantiate the dictionary. 
+        """
+        for t in self.tasks:
+            task = self.tasks[t]
+            task.cancel()
+        
+        self.tasks = {}
+        return
+
     def transmitMessage(self, transmit_message):
         """ Transmits the message to the CAN device and populates the transmit table.
         
