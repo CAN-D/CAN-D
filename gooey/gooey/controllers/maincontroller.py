@@ -44,18 +44,22 @@ class MainController(object):
             Returns:
                 boolean -- True if successfully connected; False, otherwise.
         """
-        try:
-            if self.isdemo:
-                self.candbus = CannedBus(log_path=self.trace_location)
-            elif self.isloopback:
-                self.candbus = LoopbackBus()
-            else:
-                self.candbus = CanDBus()
-
+        if self.candbus is not None:
             self.connected = True
 
-        except NoBackendError:
-            print("No hardware")
+        else:
+            try:
+                if self.isdemo:
+                    self.candbus = CannedBus(log_path=self.trace_location)
+                elif self.isloopback:
+                    self.candbus = LoopbackBus()
+                else:
+                    self.candbus = CanDBus()
+
+                self.connected = True
+
+            except NoBackendError:
+                print("No hardware")
 
         return self.connected
 
