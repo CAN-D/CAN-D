@@ -6,9 +6,9 @@ CAN-D.wiki/
 CAN-D/Proto/nanopb/
 
 # -------- Generated -------
-*can-d.pb.h
-*can-d.pb.c
-*can_d_pb2.py
+CAN-D/Proto/can-d.pb.h
+CAN-D/Proto/can-d.pb.c
+CAN-D/Proto/can_d_pb2.py
 
 # -------- Firmware --------
 CAN-D/Debug
