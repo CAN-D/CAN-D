@@ -44,18 +44,23 @@ class MainController(object):
             Returns:
                 boolean -- True if successfully connected; False, otherwise.
         """
-        try:
-            if self.isdemo:
-                self.candbus = CannedBus(log_path=self.trace_location)
-            elif self.isloopback:
-                self.candbus = LoopbackBus()
-            else:
-                self.candbus = CanDBus()
-
+        if self.candbus is not None:
+            self.candbus.start_usb_polling()
             self.connected = True
 
-        except NoBackendError:
-            print("No hardware")
+        else:
+            try:
+                if self.isdemo:
+                    self.candbus = CannedBus(log_path=self.trace_location)
+                elif self.isloopback:
+                    self.candbus = LoopbackBus()
+                else:
+                    self.candbus = CanDBus()
+
+                self.connected = True
+
+            except NoBackendError:
+                print("No hardware")
 
         return self.connected
 
@@ -68,9 +73,9 @@ class MainController(object):
         self.connected = False
         self.candbus.stop_usb_polling()
         self.candbus.stop_log()
-        self.candbus = None
         self.polling = False
         self.logging = False
+        self.rxtxcontroller.kill_all_tasks()
 
         return self.connected
 
@@ -137,3 +142,7 @@ class DataPollThread(QtCore.QThread):
         while self.polling:
             data = self.candbus.recv()
             self.data_incoming.emit(data)
+
+    def stop(self):
+        self.threadactive = False
+        self.wait()
