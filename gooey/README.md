@@ -16,13 +16,18 @@ What things you need to install the software and how to install them
 brew install python
 ```
 
-2. Install the dependencies
+2. libusb. Install either through https://github.com/libusb/libusb or brew
+```
+brew install libusb
+```
+
+3. Install the dependencies
 
 ```
 pip install -r requirements
 ```
 
-3. Install this package
+4. Install this package
 
 ```
 pip install -e .
